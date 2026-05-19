@@ -20,7 +20,7 @@ Packmind підтримує робочу конфігурацію Claude Code у
 
 ### Патерн 1: Довідковий файл MCP (MCP Reference File)
 
-**Розділ посібника**: [Документування MCP для Claude](../ecosystem/mcp-servers-ecosystem.md#documenting-an-mcp-for-claude-the-reference-file-pattern)
+**Розділ посібника**: [Документування MCP для Claude](../ecosystem/mcp-servers-ecosystem.uk.md#documenting-an-mcp-for-claude-the-reference-file-pattern)
 **Джерело**: `.claude/skills/datadog-analysis/references/datadog_mcp.md`
 
 Файл `references/<mcp-name>.md`, який читається скілом перед будь-яким викликом MCP. Фіксує підводні камені синтаксису запитів, необхідні комбінації параметрів, робочі приклади та правила виключення шуму, специфічні для одного MCP-сервера.

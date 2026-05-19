@@ -420,7 +420,7 @@ Do not stop between tasks to ask for confirmation — keep going until done.
 ## See Also
 
 - [exploration-workflow.uk.md](./exploration-workflow.uk.md) — Досліджуйте альтернативи перед плануванням
-- [../ultimate-guide.md](../ultimate-guide.md) — Розділ 2.3 Plan Mode
+- [../ultimate-guide.md](../ultimate-guide.uk.md) — Розділ 2.3 Plan Mode
 - [tdd-with-claude.uk.md](./tdd-with-claude.uk.md) — Поєднання з TDD
 - [spec-first.uk.md](./spec-first.uk.md) — Поєднання зі Spec-First
 - [iterative-refinement.uk.md](./iterative-refinement.uk.md) — Ітерації після розробки плану

@@ -240,7 +240,7 @@ psql $DATABASE_URL < backups/[latest].sql
 }
 ```
 
-**Критично важливо**: Використовуйте користувачів баз даних із правами тільки для читання (read-only) для MCP. Див. [Посібник із конфіденційності даних](./data-privacy.md#risk-2-mcp-database-access).
+**Критично важливо**: Використовуйте користувачів баз даних із правами тільки для читання (read-only) для MCP. Див. [Посібник із конфіденційності даних](./data-privacy.uk.md#risk-2-mcp-database-access).
 
 ---
 
@@ -793,7 +793,7 @@ echo "💡 Human review can now focus on architecture/UX/business logic"
 - **Правило 2 (Безпека баз даних)**: Тести міграцій виявляють деструктивні операції
 - **Правило 6 (Дотримання патернів)**: Лінтери автоматично контролюють конвенції стилю
 
-Дзеркальним відображенням цього парадоксу на боці агента є патерн "Розрив верифікації" (Verification Gap), описаний у [робочому процесі TDD](../workflows/tdd-with-claude.md#the-verification-gap).
+Дзеркальним відображенням цього парадоксу на боці агента є патерн "Розрив верифікації" (Verification Gap), описаний у [робочому процесі TDD](../workflows/tdd-with-claude.uk.md#the-verification-gap).
 
 ---
 
@@ -915,10 +915,10 @@ jobs:
 ## Див. також
 
 - [Основний посібник, Розділ 9.12 (Git Best Practices)](#912-git-best-practices-workflows) — Робочий процес комітів, патерн Plan ➔ Act
-- [Посібник зі зміцнення безпеки (Security Hardening Guide)](./security-hardening.md) — Безпека MCP, захист секретів, стек хуків
-- [Посібник із конфіденційності даних (Data Privacy Guide)](./data-privacy.md) — Ризики баз даних MCP, політики зберігання даних
-- [Корпоративне керування безпекою ШІ (Enterprise AI Governance)](./enterprise-governance.md) — Безпека на рівні організації: хартії використання, воркфлоу погодження MCP, захисні бар'єри, комплаєнс
-- [Варіанти впровадження (Adoption Approaches)](../roles/adoption-approaches.md) — Організація командної роботи, спільні конвенції, розгортання в компанії
+- [Посібник зі зміцнення безпеки (Security Hardening Guide)](./security-hardening.uk.md) — Безпека MCP, захист секретів, стек хуків
+- [Посібник із конфіденційності даних (Data Privacy Guide)](./data-privacy.uk.md) — Ризики баз даних MCP, політики зберігання даних
+- [Корпоративне керування безпекою ШІ (Enterprise AI Governance)](./enterprise-governance.uk.md) — Безпека на рівні організації: хартії використання, воркфлоу погодження MCP, захисні бар'єри, комплаєнс
+- [Варіанти впровадження (Adoption Approaches)](../roles/adoption-approaches.uk.md) — Організація командної роботи, спільні конвенції, розгортання в компанії
 - [Режим планування (Plan Mode)](#23-plan-mode) — Безпечне проектування змін перед виконанням коду
 - [Система дозволів (Permissions System)](#33-settings-permissions) — Правила дозволів allow/deny, використання хуків
 

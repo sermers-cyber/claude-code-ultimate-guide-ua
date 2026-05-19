@@ -2,7 +2,7 @@
 
 > Комплексний самодостатній гайд з опанування Claude Code — від нуля до досвідченого користувача.
 >
-> Переклад з англійської оригіналу: [ultimate-guide.md](ultimate-guide.md)
+> Переклад з англійської оригіналу: [ultimate-guide.md](ultimate-guide.uk.md)
 
 **Автор оригіналу**: Florian BRUNIAUX | Founding Engineer [@Méthode Aristote](https://methode-aristote.fr)
 **Версія**: 3.40.0 | **Січень 2026**
@@ -721,7 +721,7 @@ cs "authentication"   # Повнотекстовий пошук по всіх с
 ID сесії: abc123def (збережено для відновлення)
 ```
 
-> **Інструменти пошуку сесій**: Для швидкого пошуку сесій див. [session-search.sh](./examples/scripts/session-search.sh) (bash, легкий) та [cc-sessions.py](./examples/scripts/cc-sessions.py) (Python, розширені функції: інкрементальний індекс, часткове відновлення за ID, фільтр за гілкою та `discover` для автоматизованого аналізу патернів — [GitHub](https://github.com/FlorianBruniaux/cc-sessions)). Також: [Посібник зі спостережуваності](./ops/observability.md#session-search--resume).
+> **Інструменти пошуку сесій**: Для швидкого пошуку сесій див. [session-search.sh](./examples/scripts/session-search.sh) (bash, легкий) та [cc-sessions.py](./examples/scripts/cc-sessions.py) (Python, розширені функції: інкрементальний індекс, часткове відновлення за ID, фільтр за гілкою та `discover` для автоматизованого аналізу патернів — [GitHub](https://github.com/FlorianBruniaux/cc-sessions)). Також: [Посібник зі спостережуваності](./ops/observability.uk.md#session-search--resume).
 
 **Типові випадки використання:**
 
@@ -759,7 +759,7 @@ Claude: [Продовжує з повним контекстом роботи Д
 - **Проактивне управління контекстом**: Стежте через `/status` та використовуйте науково-обгрунтовані пороги:
   - **< 70%**: Оптимально — повна здатність до міркувань
   - **75%**: Хороший час для `/compact` вручну — до погіршення якості
-  - **85%**: Зона авто-компакту — Claude Code автоматично стисне, коли залишковий контекст падає нижче його фіксованого буфера (~6-7% вікна). Ручна передача рекомендується до цього моменту ([науково-обгрунтовано](./core/architecture.md#auto-compaction))
+  - **85%**: Зона авто-компакту — Claude Code автоматично стисне, коли залишковий контекст падає нижче його фіксованого буфера (~6-7% вікна). Ручна передача рекомендується до цього моменту ([науково-обгрунтовано](./core/architecture.uk.md#auto-compaction))
   - **95%**: Примусова передача — серйозне погіршення якості, скидайте негайно
 - **Іменування сесій**: Використовуйте `/rename`, щоб давати сесіям описові назви — критично при запуску кількох сесій паралельно (див. [Auto-Rename Pattern](#session-auto-rename) нижче)
 
@@ -1526,7 +1526,7 @@ AI-генерований код потребує **пропорційної п�
 
 **Евристика розділення**: якщо опис вашого завдання потребує "і" між двома поведінками користувача, розділіть його. "Користувачі можуть скидати паролі" — одне завдання. "Користувачі можуть скидати паролі І адміністратори можуть примусово завершувати сесії" — це два.
 
-> **Глибоке занурення**: [Spec-First Workflow — Task Granularity](./workflows/spec-first.md#task-granularity-sizing-work-for-agents) охоплює патерн вертикального зрізу, контрольний список якості PRD та конкретні приклади "до/після".
+> **Глибоке занурення**: [Spec-First Workflow — Task Granularity](./workflows/spec-first.uk.md#task-granularity-sizing-work-for-agents) охоплює патерн вертикального зрізу, контрольний список якості PRD та конкретні приклади "до/після".
 
 ### 8. ❌ Ставлення до Claude Code як до чат-бота
 
@@ -2339,7 +2339,7 @@ print(response.usage.input_tokens)                  # Токени без кеш
 - **--resume/--continue** спричиняє повну перебудову кешу (0% hit ratio) при кожному відновленні, оскільки сесійний JSONL видаляє відкладені записи інструментів перед записом. Обхідний шлях: уникайте `--resume` до виправлення.
 - **Per-session billing header** вставляє унікальний хеш як перший блок system prompt, спричиняючи холодний промах при кожному старті сесії та виклику субагента. Обхідний шлях: `"CLAUDE_CODE_ATTRIBUTION_HEADER": "false"` у `~/.claude/settings.json`.
 
-Див. [Known Issues → Prompt Cache Bugs](./core/known-issues.md) та запустіть `/check-cache-bugs` для повного аудиту.
+Див. [Known Issues → Prompt Cache Bugs](./core/known-issues.uk.md) та запустіть `/check-cache-bugs` для повного аудиту.
 
 > Документація: [prompt caching](https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching)
 
@@ -2389,7 +2389,7 @@ ccusage --model-breakdown  # Вартість за моделями (Sonnet/Opus
 - **Бюджетне планування**: Встановіть місячні цільові витрати
 - **Командна аналітика**: Агрегація витрат між розробниками
 
-> Для повного переліку інструментів спільноти для відстеження витрат, переглядачів сесій, менеджерів конфігурації та альтернативних UI див. [Third-Party Tools](./ecosystem/third-party-tools.md).
+> Для повного переліку інструментів спільноти для відстеження витрат, переглядачів сесій, менеджерів конфігурації та альтернативних UI див. [Third-Party Tools](./ecosystem/third-party-tools.uk.md).
 
 **Щомісячне відстеження**:
 
@@ -2710,7 +2710,7 @@ Claude проаналізує git status, історію розмови та з�
 
 Шаблони, готові до форку, знаходяться в `examples/commands/handoff/` цього репозиторію.
 
-> Патерн натхненний [тріадою команд передачі Packmind](https://github.com/packmind/packmind) (Apache 2.0). Див. [Credits](./core/credits.md).
+> Патерн натхненний [тріадою команд передачі Packmind](https://github.com/packmind/packmind) (Apache 2.0). Див. [Credits](./core/credits.uk.md).
 
 
 ## 2.3 Plan Mode
@@ -4192,13 +4192,13 @@ Semantic anchors потужно працюють з XML-структурован
 }
 ```
 
-> **Попередження**: `permissions.deny` має відомі обмеження. Див. [Security Hardening Guide](./security/security-hardening.md#known-limitations-of-permissionsdeny) для деталей.
+> **Попередження**: `permissions.deny` має відомі обмеження. Див. [Security Hardening Guide](./security/security-hardening.uk.md#known-limitations-of-permissionsdeny) для деталей.
 
 **2. Ніколи не підключайте продукційні бази даних** до MCP серверів. Використовуйте dev/staging з анонімізованими даними.
 
 **3. Використовуйте security hooks** для блокування читання чутливих файлів (див. [Section 7.4](#74-hooks-automating-workflows)).
 
-> **Повний посібник**: Для повної документації з приватності, включаючи відомі ризики, інциденти спільноти та корпоративні міркування, див. [Data Privacy & Retention Guide](./security/data-privacy.md).
+> **Повний посібник**: Для повної документації з приватності, включаючи відомі ризики, інциденти спільноти та корпоративні міркування, див. [Data Privacy & Retention Guide](./security/data-privacy.uk.md).
 
 
 ## 2.11 Under the Hood
@@ -4206,7 +4206,7 @@ Semantic anchors потужно працюють з XML-структурован
 > **Час читання**: 5 хвилин
 > **Мета**: Зрозуміти основну архітектуру, що живить Claude Code
 
-Цей розділ надає підсумок внутрішніх механізмів Claude Code. Для повного технічного занурення з діаграмами та посиланнями на джерела див. [Architecture & Internals Guide](./core/architecture.md).
+Цей розділ надає підсумок внутрішніх механізмів Claude Code. Для повного технічного занурення з діаграмами та посиланнями на джерела див. [Architecture & Internals Guide](./core/architecture.uk.md).
 
 ### The Master Loop
 
@@ -4477,7 +4477,7 @@ Claude генерує: [список завдань]
 
 #### Повний воркфлоу
 
-**→ Див.**: [Воркфлоу керування завданнями](./workflows/task-management.md) для:
+**→ Див.**: [Воркфлоу керування завданнями](./workflows/task-management.uk.md) для:
 - Фази планування завдань (декомпозиція, проектування ієрархії)
 - Патернів виконання завдань
 - Керування та відновлення сесій
@@ -4504,7 +4504,7 @@ Claude Code працює в межах **вікна контексту 200K то
 | Результати інструментів | Змінний |
 | Зарезервовано для відповіді | 40-45K токенів |
 
-Коли контекст заповнюється (~75% у VS Code, ~95% у CLI), старіший вміст автоматично узагальнюється. Однак **дослідження показують, що це погіршує якість** (падіння продуктивності на 50-70% на складних завданнях). Використовуйте `/compact` проактивно на логічних контрольних точках, або запускайте **session handoffs на 85%**, щоб зберегти намір у стислій історії. Див. [Session Handoffs](line 2140) та [Auto-Compaction Research](./core/architecture.md#auto-compaction).
+Коли контекст заповнюється (~75% у VS Code, ~95% у CLI), старіший вміст автоматично узагальнюється. Однак **дослідження показують, що це погіршує якість** (падіння продуктивності на 50-70% на складних завданнях). Використовуйте `/compact` проактивно на логічних контрольних точках, або запускайте **session handoffs на 85%**, щоб зберегти намір у стислій історії. Див. [Session Handoffs](line 2140) та [Auto-Compaction Research](./core/architecture.uk.md#auto-compaction).
 
 ### Sub-Agent Isolation
 
@@ -4700,7 +4700,7 @@ Claude Code довіряє міркуванню моделі замість по
 
 | Тема | Де |
 |-------|-------|
-| Повні деталі архітектури | [Architecture & Internals Guide](./core/architecture.md) |
+| Повні деталі архітектури | [Architecture & Internals Guide](./core/architecture.uk.md) |
 | Система дозволів | [Section 7 - Hooks](#7-hooks) |
 | MCP інтеграція | [Section 8.6 - MCP Security](#86-mcp-security) |
 | Поради з керування контекстом | [Section 2.2](#22-context-management) |
@@ -6326,7 +6326,7 @@ jobs:
 
 Точка беззбитковості приблизно **3+ розробники з 2+ різними AI інструментами**. Нижче цього витрати на управління файлами перевищують вигоди.
 
-> Для повного покрокового робочого процесу впровадження див. [Team AI Instructions](workflows/team-ai-instructions.md).
+> Для повного покрокового робочого процесу впровадження див. [Team AI Instructions](workflows/team-ai-instructions.uk.md).
 
 ### Політика розкриття AI-коду (Командне управління)
 
@@ -6392,7 +6392,7 @@ jobs:
 
 Модульна збірка на основі профілів вирішує проблему узгодженості для окремого розробника. Вона все ще вимагає від вашої команди ручного підтримання модулів і запуску асемблера. При 50+ розробниках у 30+ репозиторіях навіть це стає тертям.
 
-Інструменти на кшталт [Packmind](ecosystem/third-party-tools.md#packmind) розвивають той самий принцип далі: визначте стандарти один раз у центральному плані, і розподіляйте їх автоматично як файли `CLAUDE.md`, slash-команди та skills — через репозиторії та через AI-інструменти (Claude Code, Cursor, Copilot, Windsurf). Книга правил також може поглинати знання з коментарів PR-рев'ю, обговорень у Slack та звітів про інциденти, щоб підтримувати стандарти актуальними без ручного обслуговування.
+Інструменти на кшталт [Packmind](ecosystem/third-party-tools.uk.md#packmind) розвивають той самий принцип далі: визначте стандарти один раз у центральному плані, і розподіляйте їх автоматично як файли `CLAUDE.md`, slash-команди та skills — через репозиторії та через AI-інструменти (Claude Code, Cursor, Copilot, Windsurf). Книга правил також може поглинати знання з коментарів PR-рев'ю, обговорень у Slack та звітів про інциденти, щоб підтримувати стандарти актуальними без ручного обслуговування.
 
 > **Коли розглядати це**: Команди з 10+ розробників, 5+ репозиторіїв, що використовують більше одного AI-агента кодування.
 
@@ -8557,7 +8557,7 @@ Design a fintech app with dark theme
 
 ### DevOps & SRE Guide
 
-Для комплексних DevOps/SRE робочих процесів див. **[DevOps & SRE Guide](./ops/devops-sre.md)**:
+Для комплексних DevOps/SRE робочих процесів див. **[DevOps & SRE Guide](./ops/devops-sre.uk.md)**:
 - **Фреймворк FIRE**: First Response → Investigate → Remediate → Evaluate
 - **Налагодження Kubernetes**: prompts за симптомами (CrashLoopBackOff, OOMKilled тощо.)
 - **Реагування на інциденти**: патерни одного та кількох агентів
@@ -8685,7 +8685,7 @@ cp -r /tmp/agent-skills/react-best-practices .claude/skills/
 - [Gen + Vercel: Agent Trust Hub partnership](https://www.prnewswire.com/news-releases/gen-and-vercel-partner-to-bring-independent-safety-verification-to-the-ai-skills-ecosystem-302691006.html)
 - [GitHub: vercel-labs/agent-skills](https://github.com/vercel-labs/agent-skills)
 - [Platform Claude Docs: Skill Best Practices](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/best-practices)
-- Див. також: [AI Ecosystem Guide](./ecosystem/ai-ecosystem.md) для додаткових інструментів
+- Див. також: [AI Ecosystem Guide](./ecosystem/ai-ecosystem.uk.md) для додаткових інструментів
 
 ---
 
@@ -9440,7 +9440,7 @@ If any checkpoint fails, stop and explain why.
 
 Шаблон, готовий до форку, у `examples/commands/recipe-template.md` цього репозиторію.
 
-> Патерн з [Packmind command files](https://github.com/packmind/packmind) (Apache 2.0). Див. [Credits](./core/credits.md).
+> Патерн з [Packmind command files](https://github.com/packmind/packmind) (Apache 2.0). Див. [Credits](./core/credits.uk.md).
 
 ## 6.4 Приклади команд
 
@@ -10399,9 +10399,9 @@ exit 0
 
 Безпекові хуки є критичними для захисту вашої системи.
 
-> **Розширені патерни**: Для комплексної безпеки, включаючи виявлення Unicode-ін'єкцій, перевірку цілісності MCP конфігурації та CVE-специфічні пом'якшення, див. [Security Hardening Guide](./security/security-hardening.md).
+> **Розширені патерни**: Для комплексної безпеки, включаючи виявлення Unicode-ін'єкцій, перевірку цілісності MCP конфігурації та CVE-специфічні пом'якшення, див. [Security Hardening Guide](./security/security-hardening.uk.md).
 
-> **Claude Code Security (дослідницький прев'ю)**: Anthropic пропонує спеціалізований сканер вразливостей кодової бази, який відстежує потоки даних між файлами, внутрішньо оскаржує знахідки перед їх показом (адверсаріальна валідація) та генерує пропозиції патчів. Окремо від агента безпекового аудиту вище — доступ лише за списком очікування. Див. [Security Hardening Guide → Claude Code як Безпековий Сканер](./security/security-hardening.md#claude-code-as-security-scanner-research-preview).
+> **Claude Code Security (дослідницький прев'ю)**: Anthropic пропонує спеціалізований сканер вразливостей кодової бази, який відстежує потоки даних між файлами, внутрішньо оскаржує знахідки перед їх показом (адверсаріальна валідація) та генерує пропозиції патчів. Окремо від агента безпекового аудиту вище — доступ лише за списком очікування. Див. [Security Hardening Guide → Claude Code як Безпековий Сканер](./security/security-hardening.uk.md#claude-code-as-security-scanner-research-preview).
 >
 > **Валідовано в масштабі**: У партнерстві з Mozilla в березні 2026, Claude Opus 4.6 просканував ~6,000 C++ файлів у JS-рушії Firefox за два тижні, виявивши 22 підтверджені вразливості (14 високої серйозності) — приблизно одна п'ята всіх високосерйозних Firefox CVE, виправлених у 2025. Демонструє практичну глибину моделі для продуктивної безпекової роботи, далеко за поверхневим лінтінгом.
 
@@ -10665,7 +10665,7 @@ echo '{"tool_name":"Read","tool_input":{"file_path":"$HOME/.env"}}' | \
 # Має вийти з кодом 1 і показати "Variable expansion detected"
 ```
 
-> **Перехресне посилання**: Для повного посилення безпеки, включаючи CVE-специфічні пом'якшення та цілісність MCP конфігурації, див. [Security Hardening Guide](./security/security-hardening.md).
+> **Перехресне посилання**: Для повного посилення безпеки, включаючи CVE-специфічні пом'якшення та цілісність MCP конфігурації, див. [Security Hardening Guide](./security/security-hardening.uk.md).
 
 ## 7.5 Приклади хуків
 
@@ -11262,7 +11262,7 @@ exit 0
 
 > **Повна реалізація**: [`examples/hooks/bash/identity-reinjection.sh`](../examples/hooks/bash/identity-reinjection.sh)
 >
-> **Походження**: Патерн взято з [hook-driven dev workflows](https://nick-tune.me/blog/2026-02-28-hook-driven-dev-workflows-with-claude-code/) Ніка Тьюна (2026-02-28). Ширша стаття охоплює робочі процеси скінченних автоматів з командами агентів — див. [Agent Teams Workflow](./workflows/agent-teams.md) для контексту.
+> **Походження**: Патерн взято з [hook-driven dev workflows](https://nick-tune.me/blog/2026-02-28-hook-driven-dev-workflows-with-claude-code/) Ніка Тьюна (2026-02-28). Ширша стаття охоплює робочі процеси скінченних автоматів з командами агентів — див. [Agent Teams Workflow](./workflows/agent-teams.uk.md) для контексту.
 
 ---
 
@@ -11520,7 +11520,7 @@ MCP Apps побудовано на **Model Context Protocol** (відкрити�
 - **SDK**: `@modelcontextprotocol/ext-apps` (npm)
 - **"Створи один раз, розгортай всюди"**: Працює в Claude, VS Code, ChatGPT, Goose
 
-→ **Детальніше**: див. [guide/architecture.md:656](./core/architecture.md#mcp-extensions-apps-sep-1865) для технічної архітектури, моделі безпеки та деталей SDK.
+→ **Детальніше**: див. [guide/architecture.md:656](./core/architecture.uk.md#mcp-extensions-apps-sep-1865) для технічної архітектури, моделі безпеки та деталей SDK.
 
 #### Ресурси
 
@@ -12882,9 +12882,9 @@ skills:
 
 ## 9.3 Інтеграція CI/CD
 
-> **📖 Повний посібник з робочих процесів**: Див. [GitHub Actions Workflows](./workflows/github-actions.md) для 5 продакшн-готових патернів з використанням офіційного `anthropics/claude-code-action` (рев'ю PR, тріаж, безпека, планове обслуговування).
+> **📖 Повний посібник з робочих процесів**: Див. [GitHub Actions Workflows](./workflows/github-actions.uk.md) для 5 продакшн-готових патернів з використанням офіційного `anthropics/claude-code-action` (рев'ю PR, тріаж, безпека, планове обслуговування).
 
-> **Рев'ю коду (Teams/Enterprise)**: Для автоматизованого рев'ю PR без ручного запиту див. [Code Review](./workflows/code-review.md) — багатоагентна функція рев'ю від Anthropic, яка публікує інлайнові коментарі на GitHub на кожному PR.
+> **Рев'ю коду (Teams/Enterprise)**: Для автоматизованого рев'ю PR без ручного запиту див. [Code Review](./workflows/code-review.uk.md) — багатоагентна функція рев'ю від Anthropic, яка публікує інлайнові коментарі на GitHub на кожному PR.
 
 ### Headless Mode
 
@@ -15117,7 +15117,7 @@ Co-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>"
 - git-ai checkpoint відстеження
 - Патерни відповідності для команд та підприємств
 
-Див.: [AI Traceability Guide](./ops/ai-traceability.md)
+Див.: [AI Traceability Guide](./ops/ai-traceability.uk.md)
 
 **Налаштуйте стиль комітів у CLAUDE.md:**
 
@@ -16165,7 +16165,7 @@ ccd  # Використовує ANTHROPIC_API_KEY
 ---
 ## 9.14 Методології розробки
 
-> **Повна довідка**: [methodologies.md](./core/methodologies.md) | **Практичні робочі процеси**: [workflows/](./workflows/)
+> **Повна довідка**: [methodologies.md](./core/methodologies.uk.md) | **Практичні робочі процеси**: [workflows/](./workflows/)
 
 15 структурованих методологій розробки з'явилися для AI-асистованої розробки (2025-2026). Цей розділ надає швидку навігацію; детальні робочі процеси знаходяться в окремих файлах.
 
@@ -16200,7 +16200,7 @@ ccd  # Використовує ANTHROPIC_API_KEY
 | Реалізація | TDD, Eval-Driven, Multi-Agent | ⭐⭐⭐ Основні робочі процеси |
 | Оптимізація | Iterative Loops, Prompt Engineering | ⭐⭐⭐ Основа |
 
-→ Повні описи з прикладами: [methodologies.md](./core/methodologies.md)
+→ Повні описи з прикладами: [methodologies.md](./core/methodologies.uk.md)
 
 ### SDD інструменти (зовнішні)
 
@@ -16944,7 +16944,7 @@ router.get('/profile', requireAuth, profileController)
 - Залежності явні → Жодних сюрпризів під час реалізації
 - Приклади включені → Claude One розуміє очікувану структуру
 
-**Template**: Див. [guide/workflows/dual-instance-planning.md](workflows/dual-instance-planning.md) для повного шаблону плану.
+**Template**: Див. [guide/workflows/dual-instance-planning.md](workflows/dual-instance-planning.uk.md) для повного шаблону плану.
 
 #### Поради для Успіху
 
@@ -17004,7 +17004,7 @@ Ask about edge cases, success criteria, and constraints."
 
 #### Див. також
 
-- **Workflow guide**: [dual-instance-planning.md](workflows/dual-instance-planning.md) — Повний workflow з шаблонами
+- **Workflow guide**: [dual-instance-planning.md](workflows/dual-instance-planning.uk.md) — Повний workflow з шаблонами
 - **Plan Mode**: Section 9.1 "The Trinity" — Основа для планування
 - **Multi-Instance (Boris)**: Section 9.17 — Альтернатива горизонтального масштабування
 - **Cost optimization**: Section 8.10 — Стратегії управління бюджетом
@@ -17426,7 +17426,7 @@ Epic → Features → Tasks (major=PR, minor=commit)
 | **multiclaude** | Self-hosted spawner | Команди, що потребують on-prem/airgap |
 | **Entire CLI** | Governance + handoffs | Послідовні workflows з комплаєнсом |
 
-> **Entire CLI** (лют 2026): Альтернатива паралельній оркестрації, фокусується на **послідовних agent handoffs** з шаром governance (approval gates, audit trails). Корисно для compliance-critical workflows (SOC2, HIPAA) або мульті-агент handoffs (Claude → Gemini). Див. [AI Ecosystem Guide](./ecosystem/ai-ecosystem.md#entire-cli-governance-first-orchestration) для деталей.
+> **Entire CLI** (лют 2026): Альтернатива паралельній оркестрації, фокусується на **послідовних agent handoffs** з шаром governance (approval gates, audit trails). Корисно для compliance-critical workflows (SOC2, HIPAA) або мульті-агент handoffs (Claude → Gemini). Див. [AI Ecosystem Guide](./ecosystem/ai-ecosystem.uk.md#entire-cli-governance-first-orchestration) для деталей.
 
 **Success criteria**: Стійкий 3-5% приріст продуктивності протягом 3 місяців.
 
@@ -17454,7 +17454,7 @@ Epic → Features → Tasks (major=PR, minor=commit)
 ./examples/scripts/session-stats.sh --project backend --range 30d
 ```
 
-**Див. також**: [Session Observability Guide](./ops/observability.md)
+**Див. також**: [Session Observability Guide](./ops/observability.uk.md)
 
 #### Proxy-level session tracking з `X-Claude-Code-Session-Id` (v2.1.86+)
 
@@ -17574,7 +17574,7 @@ access_log:
 **Пов'язані посібники**:
 - [Git worktrees command](./examples/commands/git-worktree.md)
 - [Database branch setup workflow](./examples/workflows/database-branch-setup.md)
-- [Session observability](./ops/observability.md)
+- [Session observability](./ops/observability.uk.md)
 - [Cost optimization](#913-cost-optimization-strategies)
 
 **Обговорення в спільноті**:
@@ -19293,7 +19293,7 @@ python examples/scripts/bridge.py
 
 **Коли використовувати**: Приєднання до нової команди, огляд незнайомої кодової бази, підготовка до онбордингу.
 
-> **💡 MCP інтеграція доступна**: Тепер ви можете запитувати NotebookLM нотатки безпосередньо з Claude Code через MCP сервер NotebookLM. Див. [ai-ecosystem.md § 4.1](./ecosystem/ai-ecosystem.md#41-notebooklm-mcp-integration) для інструкції з встановлення та використання.
+> **💡 MCP інтеграція доступна**: Тепер ви можете запитувати NotebookLM нотатки безпосередньо з Claude Code через MCP сервер NotebookLM. Див. [ai-ecosystem.md § 4.1](./ecosystem/ai-ecosystem.uk.md#41-notebooklm-mcp-integration) для інструкції з встановлення та використання.
 
 ### Пайплайн Презентацій
 
@@ -19375,7 +19375,7 @@ claude
 
 ---
 
-> **📖 Поглиблене читання**: Для детальних паттернів інтеграції, готових до використання промптів та порівняння інструментів див. повний [посібник AI Екосистеми](./ecosystem/ai-ecosystem.md).
+> **📖 Поглиблене читання**: Для детальних паттернів інтеграції, готових до використання промптів та порівняння інструментів див. повний [посібник AI Екосистеми](./ecosystem/ai-ecosystem.uk.md).
 
 ### Для не-розробників: Claude Cowork
 
@@ -19392,7 +19392,7 @@ claude
 **Паттерн колаборації**: Розробники використовують Claude Code для специфікацій → PM використовують Cowork для підсумків для стейкхолдерів. Спільний контекст через `~/Shared/CLAUDE.md`.
 
 > **Доступність**: Підписники Pro ($20/міс) або Max ($100-200/міс), лише macOS (Січ 2026).
-> Див. [AI Ecosystem Section 9](./ecosystem/ai-ecosystem.md#9-claude-cowork-research-preview) для деталей.
+> Див. [AI Ecosystem Section 9](./ecosystem/ai-ecosystem.uk.md#9-claude-cowork-research-preview) для деталей.
 
 ## Подальше читання
 
@@ -19966,7 +19966,7 @@ Claude Code (за столом): "Переглянь PR аутентифікац
 **Див. також**:
 - [AI Ecosystem Guide](ai-ecosystem.md) — Комплементарні інструменти (Granola, Wispr Flow, ChatPRD, v0)
 - [Cowork Guide](https://github.com/FlorianBruniaux/claude-cowork-guide) — Claude Desktop для нетехнічних PM
-- [Design-to-Code Workflow](workflows/design-to-code.md#for-product-managers) — PM перспектива на Figma MCP
+- [Design-to-Code Workflow](workflows/design-to-code.uk.md#for-product-managers) — PM перспектива на Figma MCP
 
 ---
 

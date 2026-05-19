@@ -83,7 +83,7 @@ flowchart LR
 
 </details>
 
-> **Джерело**: [Керування контекстом](../ultimate-guide.md#context-management) — Рядок ~1335
+> **Джерело**: [Керування контекстом](../ultimate-guide.uk.md#context-management) — Рядок ~1335
 
 ---
 
@@ -154,7 +154,7 @@ Auto-Memory = зберігається між сесіями, обмежена �
 
 </details>
 
-> **Джерело**: [Система пам'яті](../ultimate-guide.md#memory-system) — Рядок ~3160 & ~3986 | Auto-Memory: v2.1.59+ (v3.30.0)
+> **Джерело**: [Система пам'яті](../ultimate-guide.uk.md#memory-system) — Рядок ~3160 & ~3986 | Auto-Memory: v2.1.59+ (v3.30.0)
 
 ---
 
@@ -200,7 +200,7 @@ sequenceDiagram
 
 </details>
 
-> **Джерело**: [Керування сесіями](../ultimate-guide.md#session-management) — Рядок ~9477
+> **Джерело**: [Керування сесіями](../ultimate-guide.uk.md#session-management) — Рядок ~9477
 
 ---
 
@@ -277,7 +277,7 @@ flowchart TD
 
 </details>
 
-> **Джерело**: [Кращі практики контексту](../ultimate-guide.md#context-best-practices) — Рядок ~1525
+> **Джерело**: [Кращі практики контексту](../ultimate-guide.uk.md#context-best-practices) — Рядок ~1525
 
 ---
 **Локалізація**: [Serhii (MacPlus Software)](https://macplus-software.com)

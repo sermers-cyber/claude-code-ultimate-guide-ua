@@ -15,7 +15,7 @@ tags: [workflow, agents, architecture]
 **Час читання**: ~30 хв
 **Передумови**: Модель Opus 4.6, розуміння [Sub-Agents](#split-role-sub-agents), знайомство з Task Tool
 
-**🚀 Бажаєте почати швидко?** Дивіться **[Швидкий старт для команд агентів](./agent-teams-quick-start.md)** (8-10 хв, готові шаблони для копіювання-вставки у ваші проекти)
+**🚀 Бажаєте почати швидко?** Дивіться **[Швидкий старт для команд агентів](./agent-teams-quick-start.uk.md)** (8-10 хв, готові шаблони для копіювання-вставки у ваші проекти)
 
 ---
 
@@ -1485,11 +1485,11 @@ State explicitly: "I need [X] because [Y]" — not "I might need more context"
 
 ### Пов'язана документація
 
-- [Claude Code Releases](../core/claude-code-releases.md) — Примітки до релізів v2.1.32, v2.1.33.
+- [Claude Code Releases](../core/claude-code-releases.uk.md) — Примітки до релізів v2.1.32, v2.1.33.
 - [Sub-Agents](#split-role-sub-agents) — Делегування завдань одному агенту.
 - [Multi-Instance Workflows](#917-scaling-patterns-multi-instance-workflows) — Ручна паралельна координація.
 - [Dual-Instance Pattern](#alternative-pattern-dual-instance-planning-vertical-separation) — Розподіл «план-виконання».
-- [AI Ecosystem: Beads Framework](../ecosystem/ai-ecosystem.md#beads-framework) — Альтернативна оркестрація (Gas Town).
+- [AI Ecosystem: Beads Framework](../ecosystem/ai-ecosystem.uk.md#beads-framework) — Альтернативна оркестрація (Gas Town).
 
 ---
 

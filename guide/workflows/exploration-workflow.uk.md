@@ -317,10 +317,10 @@ User: Let's go with SSE. Now implement it.
 
 ## Дивіться також
 
-- [plan-driven.md](./plan-driven.md) — для дослідження кодової бази (режим `/plan`)
-- [iterative-refinement.md](./iterative-refinement.md) — доопрацювання після вибору підходу
+- [plan-driven.md](./plan-driven.uk.md) — для дослідження кодової бази (режим `/plan`)
+- [iterative-refinement.md](./iterative-refinement.uk.md) — доопрацювання після вибору підходу
 - [../examples/semantic-anchors/anchor-catalog.md](../../examples/semantic-anchors/anchor-catalog.md) — точний словник для промптів
-- [spec-first.md](./spec-first.md) — визначення вимог перед дослідженням
+- [spec-first.md](./spec-first.uk.md) — визначення вимог перед дослідженням
 
 ---
 **Локалізація**: [Serhii (MacPlus Software)](https://macplus-software.com)

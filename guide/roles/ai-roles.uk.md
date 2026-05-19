@@ -683,11 +683,11 @@ $120K-$180K базова ставка (США), для senior/lead ролей �
 
 ## Дивіться також
 
-- [Learning to Code with AI](./learning-with-ai.md) — Розвиток навичок для розробників, які використовують ШІ
-- [AI Ecosystem: Tools & Integrations](../ecosystem/ai-ecosystem.md) — Які інструменти використовує кожна роль
-- [Methodologies](../core/methodologies.md) — Воркфлоу TDD, SDD, BDD, актуальні для ШІ-інженерів
-- [Architecture](../core/architecture.md) — Як працює Claude Code внутрішньо (корисно для інженерів ШІ-агентів)
-- [Security Hardening](../security/security-hardening.md) — Критично важливе читання для інженерів з безпеки ШІ та платформних інженерів
+- [Learning to Code with AI](./learning-with-ai.uk.md) — Розвиток навичок для розробників, які використовують ШІ
+- [AI Ecosystem: Tools & Integrations](../ecosystem/ai-ecosystem.uk.md) — Які інструменти використовує кожна роль
+- [Methodologies](../core/methodologies.uk.md) — Воркфлоу TDD, SDD, BDD, актуальні для ШІ-інженерів
+- [Architecture](../core/architecture.uk.md) — Як працює Claude Code внутрішньо (корисно для інженерів ШІ-агентів)
+- [Security Hardening](../security/security-hardening.uk.md) — Критично важливе читання для інженерів з безпеки ШІ та платформних інженерів
 
 ---
 **Локалізація**: [Serhii (MacPlus Software)](https://macplus-software.com)

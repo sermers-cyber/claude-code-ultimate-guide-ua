@@ -669,7 +669,7 @@ rg "TODO" --type ts
 - [Serena MCP Guide](#serena-semantic-code-analysis)
 - [grepai Documentation](#grepai-recommended-semantic-search)
 - [ast-grep Patterns Skill](../../examples/skills/ast-grep-patterns.md)
-- [Architecture: Grep vs RAG History](../core/architecture.md#search-strategy-evolution)
+- [Architecture: Grep vs RAG History](../core/architecture.uk.md#search-strategy-evolution)
 
 ---
 

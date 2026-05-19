@@ -742,7 +742,7 @@ complete-plan auth-jwt    # Архівувати виконаний план
 ## Дивіться також
 
 - [Основний посібник](#figma-mcp-integration) — Огляд та порівняння.
-- [Plan Mode](plan-driven.md) — Основа для робочих процесів планування.
+- [Plan Mode](plan-driven.uk.md) — Основа для робочих процесів планування.
 - [Multi-Instance (Борис)](#917-scaling-patterns-multi-instance-workflows) — Альтернатива з горизонтальним масштабуванням.
 - [Оптимізація витрат](#cost-optimization-tips) — Управління бюджетом.
 

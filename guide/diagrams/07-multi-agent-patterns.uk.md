@@ -84,7 +84,7 @@ W1    W2     W3              Агент B (реаліз.)     Code Test Docs
 
 </details>
 
-> **Джерело**: [Команди агентів](../workflows/agent-teams.md) — Рядок ~59
+> **Джерело**: [Команди агентів](../workflows/agent-teams.uk.md) — Рядок ~59
 
 ---
 
@@ -148,7 +148,7 @@ flowchart LR
 
 </details>
 
-> **Джерело**: [Git Worktrees](../ultimate-guide.md#git-worktrees) — Рядок ~10634
+> **Джерело**: [Git Worktrees](../ultimate-guide.uk.md#git-worktrees) — Рядок ~10634
 
 ---
 
@@ -198,7 +198,7 @@ Executor → Користувач: результати
 
 </details>
 
-> **Джерело**: [Планування з двома клієнтами (Dual-Instance Planning)](../workflows/dual-instance-planning.md)
+> **Джерело**: [Планування з двома клієнтами (Dual-Instance Planning)](../workflows/dual-instance-planning.uk.md)
 
 ---
 
@@ -266,7 +266,7 @@ I1  I2  I3... (паралельно)
 
 </details>
 
-> **Джерело**: [Горизонтальне масштабування](../ultimate-guide.md#horizontal-scaling) — Рядок ~9617
+> **Джерело**: [Горизонтальне масштабування](../ultimate-guide.uk.md#horizontal-scaling) — Рядок ~9617
 
 ---
 
@@ -340,7 +340,7 @@ flowchart TD
 
 </details>
 
-> **Джерело**: [Патерни роботи з кількома клієнтами (Multi-Instance)](../ultimate-guide.md#multi-instance-patterns) — Рядок ~11176
+> **Джерело**: [Патерни роботи з кількома клієнтами (Multi-Instance)](../ultimate-guide.uk.md#multi-instance-patterns) — Рядок ~11176
 
 ---
 **Локалізація**: [Serhii (MacPlus Software)](https://macplus-software.com)

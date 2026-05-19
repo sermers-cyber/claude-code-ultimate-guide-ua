@@ -995,7 +995,7 @@ echo "Report saved: $REPORT_FILE"
 - [Хук логування сесій](../examples/hooks/bash/session-logger.sh)
 - [Скрипт аналізу статистики](../examples/scripts/session-stats.sh)
 - [Корпоративне управління ШІ](../security/enterprise-governance.uk.md) - Аудит, комплаєнс, політики безпеки.
-- [Сторонні інструменти](../ecosystem/third-party-tools.md) - Дашборди та клієнти від спільноти (ccusage, ccburn, claude-code-viewer).
+- [Сторонні інструменти](../ecosystem/third-party-tools.uk.md) - Дашборди та клієнти від спільноти (ccusage, ccburn, claude-code-viewer).
 - [Конфіденційність даних](../security/data-privacy.uk.md) - Які дані залишають вашу машину.
 
 ---

@@ -80,7 +80,7 @@ tags: [reference, security, debugging]
 
 #### Інструмент для аудиту
 
-Запустіть команду `/check-cache-bugs` (інструкція з встановлення знаходиться в директорії [examples/commands](https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/examples/commands/check-cache-bugs.md)), щоб перевірити ваше середовище на наявність усіх трьох багів приблизно за 20 секунд.
+Запустіть команду `/check-cache-bugs` (інструкція з встановлення знаходиться в директорії [examples/commands](../../examples/commands/check-cache-bugs.md)), щоб перевірити ваше середовище на наявність усіх трьох багів приблизно за 20 секунд.
 
 > **Найкраща практика**: запускайте цю команду на самому початку нової сесії або як разовий виклик через `claude -p "$(cat .claude/commands/check-cache-bugs.md)"`, щоб уникнути забруднення контексту поточної сесії рядками `cch=` (що може спровокувати Баг 1).
 

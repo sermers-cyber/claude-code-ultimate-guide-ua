@@ -200,7 +200,7 @@ tags: [mcp, cli, tokens, architecture, decision]
 
 ---
 
-*Назад до [Екосистема серверів MCP](./mcp-servers-ecosystem.uk.md) \| [Сторонні інструменти](./third-party-tools.uk.md) \| [Головний посібник](../ultimate-guide.md)*
+*Назад до [Екосистема серверів MCP](./mcp-servers-ecosystem.uk.md) \| [Сторонні інструменти](./third-party-tools.uk.md) \| [Головний посібник](../ultimate-guide.uk.md)*
 
 ---
 **Локалізація**: [Serhii (MacPlus Software)](https://macplus-software.com)

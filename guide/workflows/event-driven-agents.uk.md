@@ -287,9 +287,9 @@ fi
 
 ## Дивіться також
 
-- [agent-teams.md](./agent-teams.md) — мультиагентна паралельна координація.
-- [iterative-refinement.md](./iterative-refinement.md) — базовий цикл «промпт-спостереження-повторний промпт».
-- [plan-driven.md](./plan-driven.md) — планування перед виконанням.
+- [agent-teams.md](./agent-teams.uk.md) — мультиагентна паралельна координація.
+- [iterative-refinement.md](./iterative-refinement.uk.md) — базовий цикл «промпт-спостереження-повторний промпт».
+- [plan-driven.md](./plan-driven.uk.md) — планування перед виконанням.
 - [../../examples/agents/](../../examples/agents/) — готові до використання шаблони агентів.
 
 ---

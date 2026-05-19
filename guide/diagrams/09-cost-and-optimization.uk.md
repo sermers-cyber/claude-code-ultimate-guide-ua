@@ -88,7 +88,7 @@ flowchart TD
 
 </details>
 
-> **Джерело**: [Вибір моделі](../ultimate-guide.md#model-selection) — Рядок ~2634
+> **Джерело**: [Вибір моделі](../ultimate-guide.uk.md#model-selection) — Рядок ~2634
 
 ---
 
@@ -169,7 +169,7 @@ flowchart TD
 
 > **Слайдер зусиль (Effort slider)** — `/effort xlow/low/default/high/xhigh` (v2.1.111) дозволяє налаштовувати глибину міркувань (thinking depth) для кожного завдання. Менше зусиль = менше токенів, витрачених на міркування. Поєднуйте з вибором моделі для точного контролю витрат.
 
-> **Джерело**: [Оптимізація витрат](../ultimate-guide.md#cost-optimization) — Рядок ~8878
+> **Джерело**: [Оптимізація витрат](../ultimate-guide.uk.md#cost-optimization) — Рядок ~8878
 
 ---
 
@@ -255,7 +255,7 @@ FREE         PRO ($20)        MAX ($100-200)   TEAM/Enterprise
 
 </details>
 
-> **Джерело**: [Рівні підписки](../ultimate-guide.md#subscription-tiers) — Рядок ~1933
+> **Джерело**: [Рівні підписки](../ultimate-guide.uk.md#subscription-tiers) — Рядок ~1933
 
 ---
 
@@ -343,7 +343,7 @@ CLAUDE.md (уникнення повторів)       → -15-25% на сесі�
 
 > **Відстеження використання (Track usage)** — Використовуйте `/usage` для моніторингу споживання токенів та витрат (замінює `/cost`, починаючи з версії v2.1.118; `/cost` залишається валідним аліасом).
 
-> **Джерело**: [Оптимізація токенів](../ultimate-guide.md#token-optimization) — Рядок ~13355
+> **Джерело**: [Оптимізація токенів](../ultimate-guide.uk.md#token-optimization) — Рядок ~13355
 
 ---
 **Локалізація**: [Serhii (MacPlus Software)](https://macplus-software.com)

@@ -83,7 +83,7 @@ flowchart TD
 
 </details>
 
-> **Джерело**: [Підходи до впровадження](../roles/adoption-approaches.md)
+> **Джерело**: [Підходи до впровадження](../roles/adoption-approaches.uk.md)
 
 ---
 
@@ -139,7 +139,7 @@ L: Занотуй патерн на майбутнє
 
 </details>
 
-> **Джерело**: [Навчання з AI](../roles/learning-with-ai.md) — Рядок ~127
+> **Джерело**: [Навчання з AI](../roles/learning-with-ai.uk.md) — Рядок ~127
 
 ---
 
@@ -219,11 +219,11 @@ flowchart TD
 
 </details>
 
-> **Джерело**: [Довіра та перевірка](../ultimate-guide.md#trust-verification) — Рядок ~1039
+> **Джерело**: [Довіра та перевірка](../ultimate-guide.uk.md#trust-verification) — Рядок ~1039
 
 ---
 
-*Назад до [diagrams/README.md](./README.md) | Далі: [Оптимізація витрат](./09-cost-and-optimization.md)*
+*Назад до [diagrams/README.md](./README.uk.md) | Далі: [Оптимізація витрат](./09-cost-and-optimization.uk.md)*
 
 ---
 **Локалізація**: [Serhii (MacPlus Software)](https://macplus-software.com)

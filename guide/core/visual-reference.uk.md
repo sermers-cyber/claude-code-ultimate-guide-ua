@@ -229,7 +229,7 @@ tags: [reference, architecture, cheatsheet, ukrainian]
 └─────────────────────────────────────────────────────────────┘
 ```
 
-→ Джерело: [architecture.md:84](./architecture.md)
+→ Джерело: [architecture.md:84](./architecture.uk.md)
 
 ---
 
@@ -297,7 +297,7 @@ tags: [reference, architecture, cheatsheet, ukrainian]
 └─────────────────────────────────────────────────────────────┘
 ```
 
-→ Джерело: [data-privacy.md:24](../security/data-privacy.md)
+→ Джерело: [data-privacy.md:24](../security/data-privacy.uk.md)
 
 ---
 
@@ -320,7 +320,7 @@ tags: [reference, architecture, cheatsheet, ukrainian]
 ЗАХИСТ: Фіксація версій + перевірка хешу + моніторинг
 ```
 
-→ Джерело: [security-hardening.md:33](../security/security-hardening.md)
+→ Джерело: [security-hardening.md:33](../security/security-hardening.uk.md)
 
 ---
 
@@ -355,7 +355,7 @@ tags: [reference, architecture, cheatsheet, ukrainian]
 └──────────────────────────────────────────────────────────┘
 ```
 
-→ Джерело: [sandbox-isolation.md:87](../security/sandbox-isolation.md)
+→ Джерело: [sandbox-isolation.md:87](../security/sandbox-isolation.uk.md)
 
 ---
 
@@ -474,7 +474,7 @@ tags: [reference, architecture, cheatsheet, ukrainian]
 │   └─ НІ → Turnkey, налаштовуйте в процесі
 ```
 
-→ Джерело: [adoption-approaches.md:51](../roles/adoption-approaches.md)
+→ Джерело: [adoption-approaches.md:51](../roles/adoption-approaches.uk.md)
 
 ---
 
@@ -494,7 +494,7 @@ tags: [reference, architecture, cheatsheet, ukrainian]
 └─ "Теорія методологій" ────────────→ methodologies.md
 ```
 
-→ Джерело: [methodologies.md:24](./methodologies.md)
+→ Джерело: [methodologies.md:24](./methodologies.uk.md)
 
 ---
 
@@ -522,7 +522,7 @@ tags: [reference, architecture, cheatsheet, ukrainian]
 └─────────────────────────────────────────────────────────┘
 ```
 
-→ Джерело: [ai-ecosystem.md:155](../ecosystem/ai-ecosystem.md)
+→ Джерело: [ai-ecosystem.md:155](../ecosystem/ai-ecosystem.uk.md)
 
 ---
 
@@ -675,7 +675,7 @@ tags: [reference, architecture, cheatsheet, ukrainian]
   APPLY не вдався  → назад до VERIFY (ви запам'ятали, не зрозуміли)
 ```
 
-> Джерело: [learning-with-ai.md:208](../roles/learning-with-ai.md)
+> Джерело: [learning-with-ai.md:208](../roles/learning-with-ai.uk.md)
 
 ---
 
@@ -716,7 +716,7 @@ tags: [reference, architecture, cheatsheet, ukrainian]
   └─────────────────────────────────────────────────────────────┘
 ```
 
-> Джерело: [security-hardening.md:24/205/345](../security/security-hardening.md)
+> Джерело: [security-hardening.md:24/205/345](../security/security-hardening.uk.md)
 
 ---
 
@@ -755,11 +755,11 @@ tags: [reference, architecture, cheatsheet, ukrainian]
   └─────────────────────────────────────────────────────────┘
 ```
 
-> Джерело: [security-hardening.md:347](../security/security-hardening.md)
+> Джерело: [security-hardening.md:347](../security/security-hardening.uk.md)
 
 ---
 
-*Назад до [README посібника](./README.uk.md) | [Шпаргалка](./cheatsheet.md) | [Головний README](../README.md)*
+*Назад до [README посібника](./README.uk.md) | [Шпаргалка](./cheatsheet.md) | [Головний README](../README.uk.md)*
 
 ---
 

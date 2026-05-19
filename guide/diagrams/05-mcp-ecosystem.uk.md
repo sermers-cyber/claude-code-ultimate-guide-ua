@@ -93,7 +93,7 @@ Claude Code
 
 </details>
 
-> **Джерело**: [Екосистема MCP](../ecosystem/mcp-servers-ecosystem.md) — Повний довідник
+> **Джерело**: [Екосистема MCP](../ecosystem/mcp-servers-ecosystem.uk.md) — Повний довідник
 
 ---
 
@@ -162,7 +162,7 @@ Claude Code           MCP-протокол          MCP-сервер
 
 </details>
 
-> **Джерело**: [Архітектура: MCP](../core/architecture.md#mcp-architecture) — Рядок ~795
+> **Джерело**: [Архітектура: MCP](../core/architecture.uk.md#mcp-architecture) — Рядок ~795
 
 ---
 
@@ -209,7 +209,7 @@ sequenceDiagram
 
 </details>
 
-> **Джерело**: [Безпека: Загрози MCP](../security/security-hardening.md#mcp-threats) — Рядок ~33
+> **Джерело**: [Безпека: Загрози MCP](../security/security-hardening.uk.md#mcp-threats) — Рядок ~33
 
 ---
 
@@ -266,7 +266,7 @@ flowchart TD
 
 </details>
 
-> **Джерело**: [Конфігурація MCP](../ultimate-guide.md#mcp-configuration) — Рядок ~6149
+> **Джерело**: [Конфігурація MCP](../ultimate-guide.uk.md#mcp-configuration) — Рядок ~6149
 
 ---
 **Локалізація**: [Serhii (MacPlus Software)](https://macplus-software.com)

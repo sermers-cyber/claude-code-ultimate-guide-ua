@@ -93,4 +93,4 @@ tags: [guide, agents, workflows, ukrainian]
 
 ---
 
-*Назад до [Гайду по Екосистемі](./ai-ecosystem.md) | [Повного Посібника](./ultimate-guide.md) | [Головного README](../README.md)*
+*Назад до [Гайду по Екосистемі](./ai-ecosystem.md) | [Повного Посібника](./ultimate-guide.uk.md) | [Головного README](../README.uk.md)*

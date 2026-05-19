@@ -85,7 +85,7 @@ SESSION inline / /add / flags  → Одноразові обмеження, ти
 
 </details>
 
-> **Джерело**: [Інженерія контексту — Ієрархія конфігурації](../core/context-engineering.md#3-configuration-hierarchy)
+> **Джерело**: [Інженерія контексту — Ієрархія конфігурації](../core/context-engineering.uk.md#3-configuration-hierarchy)
 
 ---
 
@@ -144,7 +144,7 @@ flowchart LR
 
 </details>
 
-> **Джерело**: [Бюджет контексту](../core/context-engineering.md#2-the-context-budget) — Дані щодо дотримання правил: виробничі дані HumanLayer (покращення на 15-25% при структурованому контексті)
+> **Джерело**: [Бюджет контексту](../core/context-engineering.uk.md#2-the-context-budget) — Дані щодо дотримання правил: виробничі дані HumanLayer (покращення на 15-25% при структурованому контексті)
 
 ---
 
@@ -211,7 +211,7 @@ flowchart TD
 
 </details>
 
-> **Джерело**: [Модульна архітектура](../core/context-engineering.md#4-modular-architecture) — Патерн розподілу за шляхами (path-scoping)
+> **Джерело**: [Модульна архітектура](../core/context-engineering.uk.md#4-modular-architecture) — Патерн розподілу за шляхами (path-scoping)
 
 ---
 
@@ -282,7 +282,7 @@ flowchart TD
 
 </details>
 
-> **Джерело**: [Розміщення правил](../core/context-engineering.md#3-configuration-hierarchy) — Дерево рішень з розділу §3
+> **Джерело**: [Розміщення правил](../core/context-engineering.uk.md#3-configuration-hierarchy) — Дерево рішень з розділу §3
 
 ---
 **Локалізація**: [Serhii (MacPlus Software)](https://macplus-software.com)

@@ -83,7 +83,7 @@ flowchart TD
 
 </details>
 
-> **Джерело**: [TDD з Claude](../workflows/tdd-with-claude.md)
+> **Джерело**: [TDD з Claude](../workflows/tdd-with-claude.uk.md)
 
 ---
 
@@ -154,7 +154,7 @@ flowchart LR
 
 </details>
 
-> **Джерело**: [Розробка спочатку специфікація (Spec-First)](../workflows/spec-first.md)
+> **Джерело**: [Розробка спочатку специфікація (Spec-First)](../workflows/spec-first.uk.md)
 
 ---
 
@@ -234,7 +234,7 @@ Claude виконує крок за кроком
 
 </details>
 
-> **Джерело**: [Робочий процес на основі плану](../workflows/plan-driven.md)
+> **Джерело**: [Робочий процес на основі плану](../workflows/plan-driven.uk.md)
 
 ---
 
@@ -313,7 +313,7 @@ flowchart TD
 
 </details>
 
-> **Джерело**: [Ітераційне вдосконалення](../workflows/iterative-refinement.md) — Рядок ~347
+> **Джерело**: [Ітераційне вдосконалення](../workflows/iterative-refinement.uk.md) — Рядок ~347
 
 ---
 
@@ -395,7 +395,7 @@ flowchart TD
 
 </details>
 
-> **Джерело**: [Anthropic AI Fluency Index](https://www.anthropic.com/research/AI-fluency-index) (Swanson et al., 2026-02-23) — [Розділ керівництва: Загальні помилки](../ultimate-guide.md#common-pitfalls--best-practices)
+> **Джерело**: [Anthropic AI Fluency Index](https://www.anthropic.com/research/AI-fluency-index) (Swanson et al., 2026-02-23) — [Розділ керівництва: Загальні помилки](../ultimate-guide.uk.md#common-pitfalls--best-practices)
 
 ---
 **Локалізація**: [Serhii (MacPlus Software)](https://macplus-software.com)

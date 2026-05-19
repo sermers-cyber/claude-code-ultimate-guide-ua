@@ -635,7 +635,7 @@ fi
 - [exploration-workflow.uk.md](./exploration-workflow.uk.md) — Досліджуйте альтернативи перед ітераціями
 - [tdd-with-claude.uk.md](./tdd-with-claude.uk.md) — TDD як ітераційне вдосконалення через тести
 - [plan-driven.uk.md](./plan-driven.uk.md) — Плануйте перед початком ітерацій
-- [../core/methodologies.md](../core/methodologies.md) — Методологія ітераційних циклів (Iterative Loops)
+- [../core/methodologies.md](../core/methodologies.uk.md) — Методологія ітераційних циклів (Iterative Loops)
 
 ---
 **Локалізація**: [Serhii (MacPlus Software)](https://macplus-software.com)

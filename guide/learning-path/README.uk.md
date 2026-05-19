@@ -10,13 +10,13 @@
 
 | Модуль | Час | Фокус | Складність |
 |--------|-----|-------|------------|
-| **[01-Installation & Setup](01-installation.md)** | 15 хв | Запуск Claude Code | ⭐ Beginner |
-| **[02-Core Loop](02-core-loop.md)** | 45 хв | Як насправді працює Claude Code | ⭐ Beginner |
-| **[03-Memory & Config](03-memory.md)** | 1 година | CLAUDE.md та settings | ⭐⭐ Intermediate |
-| **[04-Agents & Specialization](04-agents.md)** | 1.5 години | Створення спеціалізованих agents | ⭐⭐ Intermediate |
-| **[05-Skills & Automation](05-skills.md)** | 1.5 години | Reusable capabilities | ⭐⭐ Intermediate |
-| **[06-Hooks & Events](06-hooks.md)** | 1 година | Тригери для автоматизації | ⭐⭐ Intermediate |
-| **[07-Advanced Patterns](07-advanced.md)** | 2-3 години | Multi-agent orchestration | ⭐⭐⭐ Advanced |
+| **[01-Installation & Setup](01-installation.uk.md)** | 15 хв | Запуск Claude Code | ⭐ Beginner |
+| **[02-Core Loop](02-core-loop.uk.md)** | 45 хв | Як насправді працює Claude Code | ⭐ Beginner |
+| **[03-Memory & Config](03-memory.uk.md)** | 1 година | CLAUDE.md та settings | ⭐⭐ Intermediate |
+| **[04-Agents & Specialization](04-agents.uk.md)** | 1.5 години | Створення спеціалізованих agents | ⭐⭐ Intermediate |
+| **[05-Skills & Automation](05-skills.uk.md)** | 1.5 години | Reusable capabilities | ⭐⭐ Intermediate |
+| **[06-Hooks & Events](06-hooks.uk.md)** | 1 година | Тригери для автоматизації | ⭐⭐ Intermediate |
+| **[07-Advanced Patterns](07-advanced.uk.md)** | 2-3 години | Multi-agent orchestration | ⭐⭐⭐ Advanced |
 
 **Разом: 8-11 годин базового навчання** + додаткові глибокі занурення.
 
@@ -95,7 +95,7 @@
 - **Вправа:** Виконайте workflow "Перші 5 хвилин"
 
 **Складність:** ⭐ (Beginner)
-**Читати:** [01-installation.md](01-installation.md)
+**Читати:** [01-installation.md](01-installation.uk.md)
 **Потім:** Part 1: Quick Start у головному посібнику
 
 ---
@@ -109,7 +109,7 @@
 - **Вправа:** Використайте `/plan` для планування реального task, спостерігайте за процесом
 
 **Складність:** ⭐ (Beginner)
-**Читати:** [02-core-loop.md](02-core-loop.md)
+**Читати:** [02-core-loop.md](02-core-loop.uk.md)
 **Потім:** Part 2: Core Concepts у головному посібнику
 
 ---
@@ -123,7 +123,7 @@
 - **Вправа:** Створіть свій перший CLAUDE.md, налаштуйте settings
 
 **Складність:** ⭐⭐ (Intermediate)
-**Читати:** [03-memory.md](03-memory.md)
+**Читати:** [03-memory.md](03-memory.uk.md)
 **Потім:** Part 3: Memory & Settings у головному посібнику
 
 ---
@@ -137,7 +137,7 @@
 - **Вправа:** Створіть 2 agents (загальний + спеціалізований), протестуйте їх
 
 **Складність:** ⭐⭐ (Intermediate)
-**Читати:** [04-agents.md](04-agents.md)
+**Читати:** [04-agents.md](04-agents.uk.md)
 **Потім:** Part 4: Agents у головному посібнику
 
 ---
@@ -151,7 +151,7 @@
 - **Вправа:** Створіть skill, який вирішує повторювану проблему
 
 **Складність:** ⭐⭐ (Intermediate)
-**Читати:** [05-skills.md](05-skills.md)
+**Читати:** [05-skills.md](05-skills.uk.md)
 **Потім:** Part 5: Skills у головному посібнику
 
 ---
@@ -165,7 +165,7 @@
 - **Вправа:** Додайте 2 hooks (один pre, один post) до вашої конфігурації
 
 **Складність:** ⭐⭐ (Intermediate)
-**Читати:** [06-hooks.md](06-hooks.md)
+**Читати:** [06-hooks.md](06-hooks.uk.md)
 **Потім:** Part 7: Hooks у головному посібнику
 
 ---
@@ -179,7 +179,7 @@
 - **Вправа:** Спроектуйте workflow з 3 agents для реалістичного сценарію
 
 **Складність:** ⭐⭐⭐ (Advanced)
-**Читати:** [07-advanced.md](07-advanced.md)
+**Читати:** [07-advanced.md](07-advanced.uk.md)
 **Потім:** Part 9: Advanced Patterns у головному посібнику
 
 ---
@@ -254,9 +254,9 @@
 
 ## Готові? Почніть звідси
 
-**Вперше тут:** → [Модуль 01: Installation](01-installation.md)
+**Вперше тут:** → [Модуль 01: Installation](01-installation.uk.md)
 **Вже використовуєте Claude Code:** → Оцініть свій рівень, переходьте до потрібного модуля
-**Впровадження в команді:** → [Модуль 03: Memory & Config](03-memory.md)
+**Впровадження в команді:** → [Модуль 03: Memory & Config](03-memory.uk.md)
 
 ---
 

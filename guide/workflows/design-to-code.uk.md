@@ -835,7 +835,7 @@ Provide rough timeline for dev implementation.
 
 - [Розділ Figma MCP](#figma-mcp-integration) — основний розділ посібника Figma MCP.
 - [examples/claude-md/product-designer.md](../../examples/claude-md/product-designer.md) — шаблон `CLAUDE.md` для продуктового дизайнера.
-- [../cheatsheet.md](../cheatsheet.md) — швидка довідка.
+- [../cheatsheet.md](../cheatsheet.uk.md) — швидка довідка.
 
 ---
 **Локалізація**: [Serhii (MacPlus Software)](https://macplus-software.com)

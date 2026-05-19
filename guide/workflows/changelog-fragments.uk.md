@@ -196,7 +196,7 @@ pnpm changelog:assemble --version 1.8.0 [--dry-run]
 ## Пов'язане
 
 - Приклад hook: [examples/hooks/bash/smart-suggest.sh](../../examples/hooks/bash/smart-suggest.sh)
-- Документація по hooks: [UserPromptSubmit Hooks](../ultimate-guide.md) (пошук за словом "UserPromptSubmit")
+- Документація по hooks: [UserPromptSubmit Hooks](../ultimate-guide.uk.md) (пошук за словом "UserPromptSubmit")
 - Скрипти валідатора та збирача фрагментів: доступні в репозиторії Méthode Aristote
 
 ---

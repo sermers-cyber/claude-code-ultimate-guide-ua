@@ -43,7 +43,7 @@ tags: [skills, architecture, multi-agent, patterns, design, ukrainian]
 
 **Примітка щодо реалізації**: Блок джерела істини має бути рядком, а не посиланням на файл. Якщо ви вкажете агентам "прочитати `docs.json`", кожен агент прочитає його незалежно. Скомпілюйте його один раз в оркестраторі та вставте текстом.
 
-> Спостерігається у [скілі doc-audit від Packmind](https://github.com/packmind/packmind) (.claude/skills/doc-audit/SKILL.md, Фаза 1). Див. [Credits](./credits.md).
+> Спостерігається у [скілі doc-audit від Packmind](https://github.com/packmind/packmind) (.claude/skills/doc-audit/SKILL.md, Фаза 1). Див. [Credits](./credits.uk.md).
 
 ---
 
@@ -88,7 +88,7 @@ description: Конвенції тестування для юніт- та ін�
 
 **Коли додавати `paths:` у frontmatter**: Будь-яке правило, яке має чітку область застосування (тести, міграції, фронтенд-компоненти, маршрути API). Правила, які є справді глобальними, використовують `alwaysApply: true` і пропускають крок зіставлення.
 
-> Спостерігається у [скілі qa-review від Packmind](https://github.com/packmind/packmind) (.claude/skills/qa-review/SKILL.md, Фаза 5). Див. [Credits](./credits.md).
+> Спостерігається у [скілі qa-review від Packmind](https://github.com/packmind/packmind) (.claude/skills/qa-review/SKILL.md, Фаза 5). Див. [Credits](./credits.uk.md).
 
 ---
 
@@ -110,7 +110,7 @@ description: Конвенції тестування для юніт- та ін�
 
 **Практична цінність**: Скіли, орієнтовані лише на виявлення, безпечно запускати в main, у CI та проти продуктових конфігурацій. Користувач може викликати такий скіл, не побоюючись ненавмисних змін, що робить їх використання частішим.
 
-> Повторюваний патерн у скілах qa-review, playbook-audit та doc-audit у [репозиторії Packmind](https://github.com/packmind/packmind). Див. [Credits](./credits.md).
+> Повторюваний патерн у скілах qa-review, playbook-audit та doc-audit у [репозиторії Packmind](https://github.com/packmind/packmind). Див. [Credits](./credits.uk.md).
 
 ---
 
@@ -143,7 +143,7 @@ SKILL.md (скорочено):
 
 **Коли використовувати**: Коли типи вводу вимагають суттєво різної логіки парсингу (а не просто різних назв полів). Якщо два типи вводу відрізняються менш ніж на 5 кроків, обробляйте їх інлайново. Патерн стає вигідним, коли кожен обробник перевищує 100 рядків.
 
-> Спостерігається у [скілі create-em-spec від Packmind](https://github.com/packmind/packmind) (.claude/skills/create-em-spec/inputs/). Див. [Credits](./credits.md).
+> Спостерігається у [скілі create-em-spec від Packmind](https://github.com/packmind/packmind) (.claude/skills/create-em-spec/inputs/). Див. [Credits](./credits.uk.md).
 
 ---
 
@@ -182,7 +182,7 @@ SKILL.md визначає версію під час виконання:
 
 **Коли використовувати**: Коли CLI-інструмент, який ви обгортаєте, має критичні зміни між версіями, і вам потрібно підтримувати кілька версій одночасно. Якщо вам потрібно підтримувати лише останню версію, просто оновіть скіл на місці.
 
-> Спостерігається у [скілі update-playbook від Packmind](https://github.com/packmind/packmind) (.claude/skills/packmind-update-playbook/). Див. [Credits](./credits.md).
+> Спостерігається у [скілі update-playbook від Packmind](https://github.com/packmind/packmind) (.claude/skills/packmind-update-playbook/). Див. [Credits](./credits.uk.md).
 
 ---
 
@@ -208,7 +208,7 @@ SKILL.md визначає версію під час виконання:
 
 **Підтримка**: При оновленні канонічного стандарту оновлюйте також і резюме. Розподіл на два рівні створює ризик дублювання. Мінімізуйте його, залишаючи в резюме лише пункти правил (без розлогого тексту), щоб воно змінювалося рідко.
 
-> Спостерігається у [конфігурації правил Packmind](https://github.com/packmind/packmind) (.claude/rules/packmind/). Див. [Credits](./credits.md).
+> Спостерігається у [конфігурації правил Packmind](https://github.com/packmind/packmind) (.claude/rules/packmind/). Див. [Credits](./credits.uk.md).
 
 ---
 
@@ -262,7 +262,7 @@ SKILL.md визначає версію під час виконання:
 
 **Коли використовувати**: Завдання впровадження на кілька сесій, де важлива безперервність. Не варто витрачати час на це для односесійного завдання, яке поміщається в один коміт. Порогове значення: якщо робота триває більше одного дня або більше однієї сесії Claude — фіксуйте план.
 
-> Спостерігається у конвенції [.claude/plans/ від Packmind](https://github.com/packmind/packmind). Див. [Credits](./credits.md).
+> Спостерігається у конвенції [.claude/plans/ від Packmind](https://github.com/packmind/packmind). Див. [Credits](./credits.uk.md).
 
 ---
 
@@ -295,7 +295,7 @@ const response = await provider.invoke(fullPrompt);
 
 **Коли використовувати**: Будь-який скіл, що викликає провайдера ШІ та де промпт збирається динамічно (не просто статичний рядок). Цінність пропорційна складності промпту: якщо ваш промпт вставляє "джерело істини", інструкції оцінювача та вміст файлів, один запис перед викликом — це дешева страховка.
 
-> Спостерігається в [PackmindHub/context-evaluator](https://github.com/PackmindHub/context-evaluator) (`src/shared/evaluation/runtime-prompt-logger.ts`). Див. [Credits](./credits.md).
+> Спостерігається в [PackmindHub/context-evaluator](https://github.com/PackmindHub/context-evaluator) (`src/shared/evaluation/runtime-prompt-logger.ts`). Див. [Credits](./credits.uk.md).
 
 ---
 
@@ -334,7 +334,7 @@ function canUseUnifiedMode(context: MultiFileContext, maxTokens = DEFAULT_MAX_UN
 
 **Оцінка токенів**: Вам не потрібна точна кількість. Грубої оцінки (`символи / 4` для більшості англійських текстів) достатньо для прийняття рішення. Вартість помилки на 10% в оцінці набагато нижча за вартість надмірної точності.
 
-> Спостерігається в [PackmindHub/context-evaluator](https://github.com/PackmindHub/context-evaluator) (`src/shared/evaluation/runner.ts`). Див. [Credits](./credits.md).
+> Спостерігається в [PackmindHub/context-evaluator](https://github.com/PackmindHub/context-evaluator) (`src/shared/evaluation/runner.ts`). Див. [Credits](./credits.uk.md).
 
 ---
 
@@ -342,7 +342,7 @@ function canUseUnifiedMode(context: MultiFileContext, maxTokens = DEFAULT_MAX_UN
 
 - [Методології розробки](./methodologies.uk.md): TDD, SDD, BDD, багатоагентна координація
 - [§9.20 Команди агентів](../ultimate-guide.uk.md#920-agent-teams-multi-agent-coordination): Команди агентів, включаючи патерн "Скептичний рецензент"
-- [Credits](./credits.md): Повна атрибуція зовнішніх джерел
+- [Credits](./credits.uk.md): Повна атрибуція зовнішніх джерел
 - `examples/skills/mcp-integration-reference/`: Шаблон патерна довідкового файлу MCP
 
 ---

@@ -8,7 +8,7 @@ tags: [security, enterprise, governance, compliance, mcp]
 
 Патерни на рівні організації для команд, які розгортають Claude Code у масштабах підприємства — рівні використання, процеси схвалення MCP та конфігурації захисних обмежень (guardrails).
 
-> **Цільова аудиторія**: Технічні лідери, інженерні менеджери, офіцери з безпеки. Для безпеки окремих розробників див. [Безпека та Production](./08-security-and-production.md).
+> **Цільова аудиторія**: Технічні лідери, інженерні менеджери, офіцери з безпеки. Для безпеки окремих розробників див. [Безпека та Production](./08-security-and-production.uk.md).
 
 ---
 
@@ -73,7 +73,7 @@ flowchart TD
 
 </details>
 
-> **Джерело**: [Корпоративне управління](../security/enterprise-governance.md) — §1 Розділення управління, §4 Рівні захисних обмежень
+> **Джерело**: [Корпоративне управління](../security/enterprise-governance.uk.md) — §1 Розділення управління, §4 Рівні захисних обмежень
 
 ---
 
@@ -138,7 +138,7 @@ LOW                             MED/HIGH
 
 </details>
 
-> **Джерело**: [Процес управління MCP](../security/enterprise-governance.md#3-mcp-governance-workflow) — §3.1 Процес схвалення
+> **Джерело**: [Процес управління MCP](../security/enterprise-governance.uk.md#3-mcp-governance-workflow) — §3.1 Процес схвалення
 
 ---
 
@@ -205,7 +205,7 @@ RESTRICTED   → НІКОЛИ не передавати в контекст AI (
 
 </details>
 
-> **Джерело**: [Статут використання AI (AI Usage Charter)](../security/enterprise-governance.md#2-ai-usage-charter) — §2.1 Класифікація даних
+> **Джерело**: [Статут використання AI (AI Usage Charter)](../security/enterprise-governance.uk.md#2-ai-usage-charter) — §2.1 Класифікація даних
 
 ---
 **Локалізація**: [Serhii (MacPlus Software)](https://macplus-software.com)

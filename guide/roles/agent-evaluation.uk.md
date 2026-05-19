@@ -429,8 +429,8 @@ jq -s 'group_by(.safety) | map({safety: .[0].safety, count: length})' \
 
 - **[Agents](#agents)**: Створення кастомних агентів
 - **[Hooks](#hooks)**: Автоматизація за допомогою хуків подій
-- **[Observability](../ops/observability.md)**: Стратегії логування та моніторингу
-- **[AI Ecosystem](../ecosystem/ai-ecosystem.md#82-domain-specific-agent-frameworks)**: Зовнішні фреймворки, такі як nao
+- **[Observability](../ops/observability.uk.md)**: Стратегії логування та моніторингу
+- **[AI Ecosystem](../ecosystem/ai-ecosystem.uk.md#82-domain-specific-agent-frameworks)**: Зовнішні фреймворки, такі як nao
 
 ---
 

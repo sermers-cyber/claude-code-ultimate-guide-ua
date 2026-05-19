@@ -76,7 +76,7 @@ flowchart TD
 
 </details>
 
-> **Джерело**: [Як працює Claude Code](../ultimate-guide.md#how-claude-code-works) — Рядок ~2360
+> **Джерело**: [Як працює Claude Code](../ultimate-guide.uk.md#how-claude-code-works) — Рядок ~2360
 
 ---
 
@@ -138,7 +138,7 @@ flowchart LR
 
 </details>
 
-> **Джерело**: [Початок роботи](../ultimate-guide.md#getting-started) — Рядок ~277
+> **Джерело**: [Початок роботи](../ultimate-guide.uk.md#getting-started) — Рядок ~277
 
 ---
 
@@ -202,7 +202,7 @@ flowchart TD
 
 </details>
 
-> **Джерело**: [Швидке рішення про старт](../ultimate-guide.md#quick-start) — Див. також `machine-readable/reference.yaml` (розділ decide)
+> **Джерело**: [Швидке рішення про старт](../ultimate-guide.uk.md#quick-start) — Див. також `machine-readable/reference.yaml` (розділ decide)
 
 ---
 
@@ -311,7 +311,7 @@ Plan Mode (Лише читання)     dontAsk Mode
 
 </details>
 
-> **Джерело**: [Система дозволів](../ultimate-guide.md#permission-system) — Рядок ~760
+> **Джерело**: [Система дозволів](../ultimate-guide.uk.md#permission-system) — Рядок ~760
 
 ---
 **Локалізація**: [Serhii (MacPlus Software)](https://macplus-software.com)

@@ -56,7 +56,7 @@ flowchart TD
 
 </details>
 
-> **Джерело**: [Система конфігурації](../ultimate-guide.md#configuration) — Рядок ~3760
+> **Джерело**: [Система конфігурації](../ultimate-guide.uk.md#configuration) — Рядок ~3760
 
 ---
 
@@ -128,7 +128,7 @@ flowchart LR
 
 </details>
 
-> **Джерело**: [Система розширюваності](../ultimate-guide.md#extensibility) — Рядок ~4495, ~5025, ~3900
+> **Джерело**: [Система розширюваності](../ultimate-guide.uk.md#extensibility) — Рядок ~4495, ~5025, ~3900
 
 ---
 
@@ -178,7 +178,7 @@ sequenceDiagram
 
 </details>
 
-> **Джерело**: [Sub-Agents](../ultimate-guide.md#sub-agents) — Рядок ~3900
+> **Джерело**: [Sub-Agents](../ultimate-guide.uk.md#sub-agents) — Рядок ~3900
 
 ---
 
@@ -271,7 +271,7 @@ PostToolUse
 
 </details>
 
-> **Джерело**: [Система Hooks](../ultimate-guide.md#hooks) — Рядок ~5350 | UserPromptSubmit + HTTP hooks: v2.1.63+ | InstructionsLoaded: v2.1.69+
+> **Джерело**: [Система Hooks](../ultimate-guide.uk.md#hooks) — Рядок ~5350 | UserPromptSubmit + HTTP hooks: v2.1.63+ | InstructionsLoaded: v2.1.69+
 
 ---
 **Локалізація**: [Serhii (MacPlus Software)](https://macplus-software.com)

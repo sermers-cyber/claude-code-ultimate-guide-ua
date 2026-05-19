@@ -387,8 +387,8 @@ jobs:
 ## See Also
 
 - [Section 9.3 CI/CD Integration](#93-cicd-integration) — headless-режим, Unix-пайпінг, `--output-format json`
-- [Production Safety](../security/production-safety.md) — обмеження для автоматизованих агентів
-- [Security Hardening](../security/security-hardening.md) — безпека MCP та вебхуків
+- [Production Safety](../security/production-safety.uk.md) — обмеження для автоматизованих агентів
+- [Security Hardening](../security/security-hardening.uk.md) — безпека MCP та вебхуків
 - [Official action docs](https://github.com/anthropics/claude-code-action) — інструкція з вирішення проблем, міграція, хмарні провайдери
 - [Community workflow blueprint](https://github.com/alirezarezvani/claude-code-github-workflow) — 8 воркфлоу + 4 автономні агенти для просунутих команд
 

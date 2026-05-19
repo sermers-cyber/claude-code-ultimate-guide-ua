@@ -554,7 +554,7 @@ flowchart TD
     C --> C2["✅ Захист від вразливостей ядра"]
     C --> C3["✅ Повноцінний демон Docker всередині"]
     C --> C4["❌ Більше споживання ресурсів"]
-    C --> C5["Документація: [sandbox-isolation.md](./sandbox-isolation.md)"]
+    C --> C5["Документація: [sandbox-isolation.md](./sandbox-isolation.uk.md)"]
 
     D --> D1["Ізоляція на рівні процесів<br/>Seatbelt / bubblewrap"]
     D --> D2["⚠️ Спільне ядро з хост-системою"]
@@ -565,7 +565,7 @@ flowchart TD
     E --> E1["Fly.io Sprites"]
     E --> E2["E2B"]
     E --> E3["Vercel Sandboxes"]
-    E --> E4["Документація: [sandbox-isolation.md](./sandbox-isolation.md)"]
+    E --> E4["Документація: [sandbox-isolation.md](./sandbox-isolation.uk.md)"]
 ```
 
 ### Порівняльна таблиця

@@ -1712,7 +1712,7 @@ entire handoff --to="gemini" --task="ui-polish" --require-approval
 
 **Статус:** Реліз v1.0+ (macOS/Linux, Windows через WSL).
 
-> **Повна документація**: [AI Traceability Guide](../ops/ai-traceability.md#51-entire-cli), [Third-Party Tools](./third-party-tools.md).
+> **Повна документація**: [AI Traceability Guide](../ops/ai-traceability.uk.md#51-entire-cli), [Third-Party Tools](./third-party-tools.uk.md).
 
 #### Попередження щодо безпеки та витрат
 
@@ -3319,7 +3319,7 @@ Managed Agents API повністю підтримується у 8 офіцій
 
 ---
 
-*Повернутися до [Головного посібника](#ШІ-екосистема-Максимізація-потенціалу-Claude-Code-за-допомогою-допоміжних-інструментів) | [Головний README](../README.md)*
+*Повернутися до [Головного посібника](#ШІ-екосистема-Максимізація-потенціалу-Claude-Code-за-допомогою-допоміжних-інструментів) | [Головний README](../README.uk.md)*
 
 ---
 **Локалізація**: [Serhii (MacPlus Software)](https://macplus-software.com)

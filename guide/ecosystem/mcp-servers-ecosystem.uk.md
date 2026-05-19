@@ -10,7 +10,7 @@ tags: [mcp, reference, integration]
 
 Цей посібник охоплює перевірені сервери MCP від спільноти, окрім офіційних серверів від Anthropic. Усі перелічені сервери було оцінено на предмет готовності до використання у виробничому середовищі (production readiness), активності обслуговування та безпеки.
 
-> **Не впевнені, що використовувати: MCP-сервер чи CLI-інструмент?** Дивіться [Посібник із вибору: MCP проти CLI](./mcp-vs-cli.md) для детального розбору компромісів, матриці рішень та рекомендацій для конкретних ситуацій.
+> **Не впевнені, що використовувати: MCP-сервер чи CLI-інструмент?** Дивіться [Посібник із вибору: MCP проти CLI](./mcp-vs-cli.uk.md) для детального розбору компромісів, матриці рішень та рекомендацій для конкретних ситуацій.
 
 ## Table of Contents
 
@@ -98,7 +98,7 @@ Claude тепер підтримує інтерактивні інструмен
 
 - **Приклади**: Чернетки у Slack, діаграми у Figma, таймлайни в Asana
 - **Анонс**: [Smol.ai Newsletter](https://news.smol.ai/issues/26-01-26-mcp-apps)
-- **Глибоке занурення**: Дивіться [guide/architecture.md:656](../core/architecture.md#mcp-extensions-apps-sep-1865)
+- **Глибоке занурення**: Дивіться [guide/architecture.md:656](../core/architecture.uk.md#mcp-extensions-apps-sep-1865)
 
 ### Інтеграція з IDE
 
@@ -1193,7 +1193,7 @@ proxy:
 - **GitHub**: https://github.com/PackmindHub/packmind
 - **Приклади сценаріїв використання**: https://github.com/PackmindHub/demo-use-case-skills
 
-> **Перехресне посилання**: Повна оцінка інструменту наведена у [third-party-tools.md — Розповсюдження інженерних стандартів](./third-party-tools.md#engineering-standards-distribution).
+> **Перехресне посилання**: Повна оцінка інструменту наведена у [third-party-tools.md — Розповсюдження інженерних стандартів](./third-party-tools.uk.md#engineering-standards-distribution).
 
 ---
 
@@ -1396,7 +1396,7 @@ npm install mcp-linear
 - `references/sentry-mcp.md` із повною документацією параметрів, підводними каменями, прикладами запитів та списком виключення шуму
 - Інструкції з адаптації під будь-який інший сервер MCP
 
-> Створено на основі довідкового файлу Datadog MCP з [офіційного репозиторію Packmind](https://github.com/packmind/packmind) (Apache 2.0, Cédric Teyton). Повний опис авторства дивіться у [Credits](../core/credits.md).
+> Створено на основі довідкового файлу Datadog MCP з [офіційного репозиторію Packmind](https://github.com/packmind/packmind) (Apache 2.0, Cédric Teyton). Повний опис авторства дивіться у [Credits](../core/credits.uk.md).
 
 ---
 

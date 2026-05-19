@@ -235,7 +235,7 @@ Model: Sonnet | Ctx: 89.5k | Cost: $2.11 | Ctx(u): 56.0%
 | **Суб-агенти** | Ізольований контекст, максимальна глибина вкладеності = 1 |
 | **Філософія** | "Less scaffolding, more model" (менше каркаса, більше моделі) — довіра до міркувань Claude |
 
-**Глибоке занурення**: [Архітектура та внутрішній устрій](./core/architecture.md)
+**Глибоке занурення**: [Архітектура та внутрішній устрій](./core/architecture.uk.md)
 
 ---
 
@@ -276,7 +276,7 @@ Model: Sonnet | Ctx: 89.5k | Cost: $2.11 | Ctx(u): 56.0%
 | Розробка фіч, дебаг, рефакторинг | Sonnet | medium–high |
 | Проектування архітектури, аудит безпеки | Opus | high–max |
 
-> Детальна таблиця вибору моделі з оцінкою вартості: [Розділ 2.5 Інструкції з вибору моделі та міркувань](ultimate-guide.md#25-model-selection--thinking-guide)
+> Детальна таблиця вибору моделі з оцінкою вартості: [Розділ 2.5 Інструкції з вибору моделі та міркувань](ultimate-guide.uk.md#25-model-selection--thinking-guide)
 
 ### Динамічне перемикання моделей (Mid-Session)
 
@@ -507,7 +507,7 @@ tmux new-session -s dev
 
 **Авто-ввімкнення:** `/config` ➔ увімкнути "Remote Control: auto-enable"
 
-**Детальний док**: [§9.22 Дистанційне керування](ultimate-guide.md#922-remote-control-mobile-access) | [Примітки з безпеки](security-hardening.md#remote-control-security)
+**Детальний док**: [§9.22 Дистанційне керування](ultimate-guide.uk.md#922-remote-control-mobile-access) | [Примітки з безпеки](security-hardening.md#remote-control-security)
 
 ---
 
@@ -645,7 +645,7 @@ where.exe claude; claude doctor; claude mcp list
 
 Швидкість: `rg` (~20мс) ➔ Serena (~100мс) ➔ `ast-grep` (~200мс) ➔ `grepai` (~500мс)
 
-> Детальні сценарії пошуку: [workflows/search-tools-mastery.md](./workflows/search-tools-mastery.md)
+> Детальні сценарії пошуку: [workflows/search-tools-mastery.md](./workflows/search-tools-mastery.uk.md)
 
 ---
 
@@ -668,4 +668,4 @@ where.exe claude; claude doctor; claude mcp list
 **Локалізація**: [Serhii (MacPlus Software)](https://macplus-software.com)  
 *Остання синхронізація: Травень 2026*
 
-*Назад до [Головного посібника](./ultimate-guide.md) | [Екосистеми ШІ](./ai-ecosystem.md) | [README](../README.md)*
+*Назад до [Головного посібника](./ultimate-guide.uk.md) | [Екосистеми ШІ](./ai-ecosystem.md) | [README](../README.uk.md)*

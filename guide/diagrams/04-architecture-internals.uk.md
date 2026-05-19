@@ -77,7 +77,7 @@ flowchart TD
 
 </details>
 
-> **Джерело**: [Архітектура: Головний цикл](../core/architecture.md#master-loop) — Рядок ~72
+> **Джерело**: [Архітектура: Головний цикл](../core/architecture.uk.md#master-loop) — Рядок ~72
 >
 > *Підтверджено джерелом (2026-03-31): Внутрішній цикл є асинхронним генератором `queryLoop()`. Інструменти виконуються через `StreamingToolExecutor` (до 10 паралельно). Цикл завершується з однієї з 10 кінцевих причин (`completed`, `max_turns`, `aborted_tools` тощо).*
 
@@ -182,9 +182,9 @@ CONTROL:  EnterPlanMode/ExitPlanMode, EnterWorktree/ExitWorktree, AskUserQuestio
 
 </details>
 
-> **Джерело**: [Архітектура: Інструменти](../core/architecture.md#tools) — Рядок ~213
+> **Джерело**: [Архітектура: Інструменти](../core/architecture.uk.md#tools) — Рядок ~213
 >
-> *Спрощено — доступні додаткові інструменти. Див. [Архітектура: Арсенал інструментів](../core/architecture.md#tools) для повного списку.*
+> *Спрощено — доступні додаткові інструменти. Див. [Архітектура: Арсенал інструментів](../core/architecture.uk.md#tools) для повного списку.*
 
 ---
 
@@ -237,7 +237,7 @@ sequenceDiagram
 
 </details>
 
-> **Джерело**: [Архітектура: Системний промпт](../core/architecture.md#system-prompt) — Рядок ~354
+> **Джерело**: [Архітектура: Системний промпт](../core/architecture.uk.md#system-prompt) — Рядок ~354
 >
 > *Підтверджено джерелом (2026-03-31): Двозонна архітектура за допомогою маркера `SYSTEM_PROMPT_DYNAMIC_BOUNDARY`. Статична зона має `cacheScope: 'global'` (спільна для всіх користувачів). Інструкції MCP явно не кешуються — коментар у коді: "servers connect/disconnect between turns".*
 
@@ -292,7 +292,7 @@ Sub-Agent (ІЗОЛЬОВАНИЙ)
 
 </details>
 
-> **Джерело**: [Архітектура: Sub-Agents](../core/architecture.md#sub-agents) — Рядок ~444
+> **Джерело**: [Архітектура: Sub-Agents](../core/architecture.uk.md#sub-agents) — Рядок ~444
 
 ---
 **Локалізація**: [Serhii (MacPlus Software)](https://macplus-software.com)

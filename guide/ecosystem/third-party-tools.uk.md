@@ -648,7 +648,7 @@ jobs:
           path: .codesight/
 ```
 
-> **Посилання**: Для ручного написання CLAUDE.md та налаштування областей видимості див. [ultimate-guide.md Розділ 3](../ultimate-guide.md). Для стратегій керування вікном контексту див. [context-engineering-tools.uk.md](./context-engineering-tools.uk.md). Для налаштування серверів MCP див. [mcp-servers-ecosystem.uk.md](./mcp-servers-ecosystem.uk.md).
+> **Посилання**: Для ручного написання CLAUDE.md та налаштування областей видимості див. [ultimate-guide.md Розділ 3](../ultimate-guide.uk.md). Для стратегій керування вікном контексту див. [context-engineering-tools.uk.md](./context-engineering-tools.uk.md). Для налаштування серверів MCP див. [mcp-servers-ecosystem.uk.md](./mcp-servers-ecosystem.uk.md).
 
 ---
 

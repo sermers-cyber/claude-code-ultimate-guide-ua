@@ -90,7 +90,7 @@ tags: [guide, workflows]
 
 Термін, введений [Андрієм Карпати](https://x.com/karpathy/status/1886192184808149383) (лютий 2025 року, слово року 2025 за версією Collins): написання коду шляхом «повного підкорення вайбу» без розуміння згенерованого коду.
 
-> **Пов'язано**: Для командних та open-source контекстів див. [AI Traceability](../ops/ai-traceability.md) щодо політик розкриття інформації (LLVM, Ghostty, Fedora) та інструментів атрибуції.
+> **Пов'язано**: Для командних та open-source контекстів див. [AI Traceability](../ops/ai-traceability.uk.md) щодо політик розкриття інформації (LLVM, Ghostty, Fedora) та інструментів атрибуції.
 
 **Симптоми:**
 - Вибір «Accept All» без ретельного читання різниці в коді (diffs)
@@ -847,7 +847,7 @@ echo "2026-01-24,zod-refine,$PROJECT" >> ~/.claude/review-queue.csv
 - Чи створили ви власного кастомного агента або складний хук за останній місяць? → Рівень 5-6
 - Чи є вашим основним продуктом проектування промптів та архітектури систем, а не написання рядків коду? → Рівень 6
 
-Якщо ваші відповіді відповідають Рівню 3 або нижче: 30-денний план розвитку нижче — ваш ідеальний наступний крок. Якщо ви вже на Рівнях 4-6: сміливо переходьте до розділів [Context Engineering](../core/context-engineering.md), [Agent Patterns](../../examples/agents/) або [MCP Ecosystem](../ecosystem/mcp-servers-ecosystem.md).
+Якщо ваші відповіді відповідають Рівню 3 або нижче: 30-денний план розвитку нижче — ваш ідеальний наступний крок. Якщо ви вже на Рівнях 4-6: сміливо переходьте до розділів [Context Engineering](../core/context-engineering.uk.md), [Agent Patterns](../../examples/agents/) або [MCP Ecosystem](../ecosystem/mcp-servers-ecosystem.uk.md).
 
 > Джерело: Nicolas Martignole, ["Découvrir les niveaux de maturité de l'adoption des coding agents"](https://www.touilleur-express.fr/2026/03/17/decouvrir-les-niveaux-de-maturite-de-ladoption-des-coding-agents), Le Touilleur Express, березень 2026 року. Адаптовано та розширено.
 
@@ -1164,7 +1164,7 @@ echo "2026-01-24,zod-refine,$PROJECT" >> ~/.claude/review-queue.csv
 - **ThoughtWorks Technology Radar** — Модель оцінки рівня зрілості використання інструментів ШІ в процесах розробки програмного забезпечення.
 - **Martin Fowler on AI Pair Programming** — Статті та патерни ефективної, безпечної та взаємовигідної співпраці людини та ШІ-помічників розробки.
 - **OCTO Technology: Le développement à l'ère des agents IA** — [blog.octo.com](https://blog.octo.com/le-developpement-logiciel-a-l-ere-des-agents-ia) — Погляд на розробку програмного забезпечення в епоху ШІ-агентів: парне кодування як мінімальна життєздатна одиниця розробки (вирішення bus factor), зсув пляшкового горла швидкості з суто написання коду на якісну роботу з вимогами, швидка адаптація та онбординг джуніорів через парну роботу та deliberate practice. Корисний матеріал для техлідів.
-- **Matteo Collina: The Human in the Loop** — [adventures.nodeland.dev](https://adventures.nodeland.dev/archive/the-human-in-the-loop/) — Думки голови технічного комітету Node.js (Node.js TSC Chair) щодо зсуву основного пляшкового горла швидкості розробки з безпосереднього написання рядків коду на етап його критичного рев'ю. Відповідь на гучну статтю Арнальді «Смерть класичної розробки програмного забезпечення». Ключова теза: ШІ фантастично масштабує продуктивність, проте фінальне судження, архітектурний вибір та повна відповідальність за продукт завжди залишаються виключно за людиною. Цитата: *«Людина в циклі розробки — це не обмеження чи перешкода. Людина і є сенсом всього процесу»*. Див. [детальний аналіз](../ecosystem/ai-ecosystem.md#matteo-collina-nodejs-tsc-chair).
+- **Matteo Collina: The Human in the Loop** — [adventures.nodeland.dev](https://adventures.nodeland.dev/archive/the-human-in-the-loop/) — Думки голови технічного комітету Node.js (Node.js TSC Chair) щодо зсуву основного пляшкового горла швидкості розробки з безпосереднього написання рядків коду на етап його критичного рев'ю. Відповідь на гучну статтю Арнальді «Смерть класичної розробки програмного забезпечення». Ключова теза: ШІ фантастично масштабує продуктивність, проте фінальне судження, архітектурний вибір та повна відповідальність за продукт завжди залишаються виключно за людиною. Цитата: *«Людина в циклі розробки — це не обмеження чи перешкода. Людина і є сенсом всього процесу»*. Див. [детальний аналіз](../ecosystem/ai-ecosystem.uk.md#matteo-collina-nodejs-tsc-chair).
 
 ### Освітні концепції
 
@@ -1174,7 +1174,7 @@ echo "2026-01-24,zod-refine,$PROJECT" >> ~/.claude/review-queue.csv
 
 ### Методологічні референси
 
-Див. посібник [methodologies.md](../core/methodologies.md) щодо наступних тем:
+Див. посібник [methodologies.md](../core/methodologies.uk.md) щодо наступних тем:
 - Написання коду за методологією TDD з активною підтримкою ШІ.
 - Проектування за методологією Spec-Driven Development.
 - Організація процесу Eval-Driven Development для автоматичної перевірки відповідей моделей.
@@ -1193,8 +1193,8 @@ echo "2026-01-24,zod-refine,$PROJECT" >> ~/.claude/review-queue.csv
 
 ### В межах цього посібника
 
-- [AI Roles & Career Paths](./ai-roles.md) — Детальна карта нових професій у сфері ШІ (від промпт-инженера до Harness-інженера) з матрицею кар'єрних рішень та орієнтирами зарплат.
-- [Methodologies: TDD with Claude](../core/methodologies.md#tier-5-implementation) — Практика «пиши тести спочатку, а потім реалізуй код».
+- [AI Roles & Career Paths](./ai-roles.uk.md) — Детальна карта нових професій у сфері ШІ (від промпт-инженера до Harness-інженера) з матрицею кар'єрних рішень та орієнтирами зарплат.
+- [Methodologies: TDD with Claude](../core/methodologies.uk.md#tier-5-implementation) — Практика «пиши тести спочатку, а потім реалізуй код».
 - [Workflows: Spec-First](./workflows/spec-first.md) — Повне розуміння вимог до початку написання коду.
 - [Workflows: Plan-Driven](./workflows/plan-driven.md) — Ефективне використання режиму `/plan` для вирішення складних комплексних завдань.
 - [Ultimate Guide: Mental Models](#26-mental-model) — Системні ментальні моделі для взаємодії з Claude.

@@ -88,7 +88,7 @@ Threat (Загроза)
 
 </details>
 
-> **Джерело**: [Посилення безпеки (Security Hardening)](../security/security-hardening.md) — Повний довідник
+> **Джерело**: [Посилення безпеки (Security Hardening)](../security/security-hardening.uk.md) — Повний довідник
 
 ---
 
@@ -163,7 +163,7 @@ Production-сервер? → ТАК → ЗАВЖДИ у пісочницю (Dock
 
 </details>
 
-> **Джерело**: [Вбудована пісочниця (Sandbox Native)](../security/sandbox-native.md) — Рядок ~512
+> **Джерело**: [Вбудована пісочниця (Sandbox Native)](../security/sandbox-native.uk.md) — Рядок ~512
 
 ---
 
@@ -229,7 +229,7 @@ GOOD: Claude пише → Перевірка людиною (критичні с
 
 </details>
 
-> **Джерело**: [Безпека на виробництві (Production Safety)](../security/production-safety.md) — Рядок ~639
+> **Джерело**: [Безпека на виробництві (Production Safety)](../security/production-safety.uk.md) — Рядок ~639
 
 ---
 
@@ -300,7 +300,7 @@ PR створено → GitHub Actions → налаштування ANTHROPIC_AP
 
 </details>
 
-> **Джерело**: [Інтеграція CI/CD](../ultimate-guide.md#cicd-integration) — Рядок ~6835
+> **Джерело**: [Інтеграція CI/CD](../ultimate-guide.uk.md#cicd-integration) — Рядок ~6835
 
 ---
 **Локалізація**: [Serhii (MacPlus Software)](https://macplus-software.com)
