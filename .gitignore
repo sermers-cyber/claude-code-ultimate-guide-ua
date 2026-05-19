@@ -4,6 +4,13 @@
 *.swp
 *.swo
 *~
+.env*
+*.pem
+*.p12
+*.pfx
+*.key
+secrets/
+credentials/
 
 # Claude Code (ignore personal config, but keep shared commands, agents, and hooks)
 .claude/
@@ -62,3 +69,12 @@ mcp-server/node_modules/
 .worktrees/
 .fastembed_cache/
 graphify-out/
+ 
+ # Project management and temporary hashes
+ localization_plan.md
+ recap-hashes.json
+ guide/uk_parts/
+ IDEAS.md
+ LOCALIZATION_LOG.uk.md
+ TRANSLATIONS.md
+ audit-prompt.md

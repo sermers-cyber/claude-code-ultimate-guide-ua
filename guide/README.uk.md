@@ -29,16 +29,16 @@ tags: [guide, reference, ukrainian]
 
 | Файл | Опис | Час |
 |------|-------------|------|
-| [**ultimate-guide.uk.md**](./ultimate-guide.uk.md) | **Повний довідник**, що охоплює всі функції Claude Code | ~3 години |
+| [ultimate-guide.uk.md](./ultimate-guide.uk.md) | Повний довідник, що охоплює всі функції Claude Code | ~3 години |
 | [cheatsheet.uk.md](./cheatsheet.uk.md) | Односторінкова шпаргалка для друку | 5 хв |
 | [core/architecture.uk.md](./core/architecture.uk.md) | Як Claude Code працює всередині (цикл, інструменти, контекст) | 25 хв |
 | [core/methodologies.uk.md](./core/methodologies.uk.md) | Довідник з 15 методологій розробки (TDD, SDD, BDD тощо) | 20 хв |
 | [core/visual-reference.uk.md](./core/visual-reference.uk.md) | Візуальна шпаргалка — ASCII діаграми ключових концепцій | 5 хв |
 | [core/claude-code-releases.uk.md](./core/claude-code-releases.uk.md) | Офіційна історія релізів (стисло) | 10 хв |
-| [core/known-issues.uk.md](./core/known-issues.uk.md) | **Трекер критичних помилок**: безпека, споживання токенів, звіти спільноти | 15 хв |
-| [core/context-engineering.uk.md](./core/context-engineering.uk.md) | **Інженерія контексту**: бюджет токенів, модульна архітектура, ACE пайплайн | 25 хв |
-| [core/glossary.uk.md](./core/glossary.uk.md) | **Глосарій**: алфавітний довідник термінів Claude Code та концепцій AI-інженерії | 10 хв |
-| [diagrams/](./diagrams/) | **Серія візуальних діаграм**: 41 інтерактивна діаграма Mermaid | 15 хв |
+| [core/known-issues.uk.md](./core/known-issues.uk.md) | **Трекер критичних помилок**: безпека, споживання токенів, перевірені звіти спільноти | 15 хв |
+| [core/context-engineering.uk.md](./core/context-engineering.uk.md) | **Інженерія контексту**: бюджет токенів, модульна архітектура, складання команд, ACE-пайплайн, вимірювання якості | 25 хв |
+| [core/glossary.uk.md](./core/glossary.uk.md) | **Глосарій**: алфавітний довідник термінів Claude Code, патернів спільноти та концепцій AI-інженерії | 10 хв |
+| [diagrams/](./diagrams/) | **Серія візуальних діаграм**: 41 інтерактивна діаграма Mermaid для вибору моделей, життєвого циклу агентів, безпеки та мультиагентних патернів | 15 хв |
 
 ---
 
@@ -47,11 +47,11 @@ tags: [guide, reference, ukrainian]
 | Файл | Опис | Час |
 |------|-------------|------|
 | [security/security-hardening.uk.md](./security/security-hardening.uk.md) | Загрози безпеці, перевірка MCP, захист від ін'єкцій | 25 хв |
-| [security/sandbox-isolation.uk.md](./security/sandbox-isolation.uk.md) | Docker-пісочниці, хмарні альтернативи, безпечна автономія | 10 хв |
+| [security/sandbox-isolation.uk.md](./security/sandbox-isolation.uk.md) | Docker-пісочниці, хмарні альтернативи, безпечні автономні робочі процеси | 10 хв |
 | [security/sandbox-native.uk.md](./security/sandbox-native.uk.md) | Нативна пісочниця Claude Code: конфігурація та модель безпеки | 10 хв |
 | [security/production-safety.uk.md](./security/production-safety.uk.md) | Безпека в продакшені: гардрайли, ворота рев'ю, стратегії відкату | 15 хв |
 | [security/data-privacy.uk.md](./security/data-privacy.uk.md) | Гайд зі зберігання даних та приватності | 10 хв |
-| [security/enterprise-governance.uk.md](./security/enterprise-governance.uk.md) | **Управління на рівні організації**: статути використання, воркфлоу схвалення MCP | 25 хв |
+| [security/enterprise-governance.uk.md](./security/enterprise-governance.uk.md) | **Управління на рівні організації**: статути використання, воркфлоу схвалення MCP, рівні обмежень (Starter/Standard/Strict/Regulated), комплаєнс | 25 хв |
 
 ---
 
@@ -59,10 +59,10 @@ tags: [guide, reference, ukrainian]
 
 | Файл | Опис | Час |
 |------|-------------|------|
-| [ecosystem/ai-ecosystem.uk.md](./ecosystem/ai-ecosystem.uk.md) | Супутні AI-інструменти (Perplexity, Gemini, Kimi, NotebookLM) | 30 хв |
-| [ecosystem/mcp-servers-ecosystem.uk.md](./ecosystem/mcp-servers-ecosystem.uk.md) | **Спільнота MCP серверів**: 8 валідованих серверів для продакшену | 25 хв |
-| [ecosystem/third-party-tools.uk.md](./ecosystem/third-party-tools.uk.md) | **Інструменти спільноти**: GUI, TUI, менеджери конфігурацій, трекери токенів | 15 хв |
-| [ecosystem/context-engineering-tools.uk.md](./ecosystem/context-engineering-tools.uk.md) | **Оптимізація контексту та токенів**: стиснення виводу та промптів | 20 хв |
+| [ecosystem/ai-ecosystem.uk.md](./ecosystem/ai-ecosystem.uk.md) | Супутні AI-інструменти (Perplexity, Gemini, Kimi, NotebookLM, озвучення тексту/TTS) | 30 хв |
+| [ecosystem/mcp-servers-ecosystem.uk.md](./ecosystem/mcp-servers-ecosystem.uk.md) | **Спільнота MCP-серверів**: 8 перевірених серверів (Playwright, Semgrep, Kubernetes тощо) з готовими конфігураціями для продакшену | 25 хв |
+| [ecosystem/third-party-tools.uk.md](./ecosystem/third-party-tools.uk.md) | **Інструменти спільноти**: GUI, TUI, менеджери конфігурацій, трекери токенів, альтернативні інтерфейси | 15 хв |
+| [ecosystem/context-engineering-tools.uk.md](./ecosystem/context-engineering-tools.uk.md) | **Оптимізація контексту та токенів**: стиснення виводу (RTK, Headroom), стиснення промптів (LLMLingua), AI-шлюзи (Edgee, Portkey), RAG, LLMOps | 20 хв |
 | [ecosystem/remarkable-ai.uk.md](./ecosystem/remarkable-ai.uk.md) | Патерни використання Remarkable AI та техніки досвідчених користувачів | 10 хв |
 
 ---
@@ -74,7 +74,7 @@ tags: [guide, reference, ukrainian]
 | [roles/ai-roles.uk.md](./roles/ai-roles.uk.md) | Мапінг AI-ролей: коли використовувати Claude Code vs Desktop vs API | 10 хв |
 | [roles/adoption-approaches.uk.md](./roles/adoption-approaches.uk.md) | Стратегії впровадження для команд | 15 хв |
 | [roles/learning-with-ai.uk.md](./roles/learning-with-ai.uk.md) | Гайд для джуніорів: як використовувати ШІ, не втрачаючи навичок | 15 хв |
-| [roles/agent-evaluation.uk.md](./roles/agent-evaluation.uk.md) | **Метрики якості агентів**: вимірювання ефективності кастомних агентів | 20 хв |
+| [roles/agent-evaluation.uk.md](./roles/agent-evaluation.uk.md) | **Метрики якості агентів**: вимірювання ефективності кастомних агентів за допомогою хуків, тестів та зворотного зв'язку | 20 хв |
 
 ---
 
@@ -85,7 +85,7 @@ tags: [guide, reference, ukrainian]
 | [ops/devops-sre.uk.md](./ops/devops-sre.uk.md) | Фреймворк FIRE для діагностики інфраструктури та реагування на інциденти | 30 хв |
 | [ops/observability.uk.md](./ops/observability.uk.md) | Моніторинг сесій та відстеження витрат | 15 хв |
 | [ops/ai-traceability.uk.md](./ops/ai-traceability.uk.md) | Атрибуція ШІ, політики розкриття, git-ai, комплаєнс | 20 хв |
-| [ops/team-metrics.uk.md](./ops/team-metrics.uk.md) | **Метрики для команд з ШІ-підтримкою**: DORA, SPACE, DX Core 4 | 20 хв |
+| [ops/team-metrics.uk.md](./ops/team-metrics.uk.md) | **Метрики для команд з ШІ-підтримкою**: DORA, SPACE, DX Core 4, специфічні для ШІ сигнали, за розміром команди (5–25 осіб) | 20 хв |
 
 ---
 
@@ -101,18 +101,18 @@ tags: [guide, reference, ukrainian]
 | [workflows/iterative-refinement.uk.md](./workflows/iterative-refinement.uk.md) | Цикли ітеративного вдосконалення |
 | [workflows/tts-setup.uk.md](./workflows/tts-setup.uk.md) | Додавання озвучення тексту в Claude Code (18 хв) |
 | [workflows/task-management.uk.md](./workflows/task-management.uk.md) | Відстеження завдань у декількох сесіях, міграція TodoWrite |
-| [workflows/agent-teams.uk.md](./workflows/agent-teams.uk.md) | Оркестрація команд з декількох агентів для складних завдань |
-| [workflows/agent-teams-quick-start.uk.md](./workflows/agent-teams-quick-start.uk.md) | Швидкий старт для патернів команд агентів |
-| [workflows/dual-instance-planning.uk.md](./workflows/dual-instance-planning.uk.md) | Планування на двох екземплярах: Opus планує, Sonnet виконує |
+| [workflows/agent-teams.uk.md](./workflows/agent-teams.uk.md) | Оркестрація мультиагентних команд (Agent Teams) для складних завдань |
+| [workflows/agent-teams-quick-start.uk.md](./workflows/agent-teams-quick-start.uk.md) | Швидкий старт для патернів команд агентів (Agent Teams) |
+| [workflows/dual-instance-planning.uk.md](./workflows/dual-instance-planning.uk.md) | Планування на двох екземплярах (Dual-Instance Planning): Opus планує, Sonnet виконує |
 | [workflows/event-driven-agents.uk.md](./workflows/event-driven-agents.uk.md) | Патерни координації агентів на основі подій |
-| [workflows/plan-pipeline.uk.md](./workflows/plan-pipeline.uk.md) | Повний пайплайн плану: запуск, валідація, виконання |
+| [workflows/plan-pipeline.uk.md](./workflows/plan-pipeline.uk.md) | Наскрізний пайплайн плану (Plan Pipeline): запуск, валідація, виконання |
 | [workflows/design-to-code.uk.md](./workflows/design-to-code.uk.md) | Перетворення Figma/вайрфреймів на робочий код |
 | [workflows/exploration-workflow.uk.md](./workflows/exploration-workflow.uk.md) | Систематичне дослідження незнайомих кодобаз |
 | [workflows/pdf-generation.uk.md](./workflows/pdf-generation.uk.md) | Генерація професійних PDF за допомогою Quarto/Typst |
 | [workflows/search-tools-mastery.uk.md](./workflows/search-tools-mastery.uk.md) | Опанування комбінованих воркфлоу rg, grepai, Serena, ast-grep |
 | [workflows/skeleton-projects.uk.md](./workflows/skeleton-projects.uk.md) | Використання перевірених репозиторіїв як каркаса для нових проектів |
 | [workflows/talk-pipeline.uk.md](./workflows/talk-pipeline.uk.md) | 6-стадійний пайплайн підготовки доповіді: від сирого матеріалу до слайдів |
-| [workflows/team-ai-instructions.uk.md](./workflows/team-ai-instructions.uk.md) | Масштабування CLAUDE.md для команд з багатьма розробниками |
+| [workflows/team-ai-instructions.uk.md](./workflows/team-ai-instructions.uk.md) | Масштабування CLAUDE.md для команд з декількома розробниками |
 
 ---
 
@@ -123,7 +123,7 @@ tags: [guide, reference, ukrainian]
 | Ресурс | Опис |
 |----------|-------------|
 | **[Cowork Hub](https://github.com/FlorianBruniaux/claude-cowork-guide/blob/main/README.md)** | Повна документація Cowork |
-| [Початок роботи](https://github.com/FlorianBruniaux/claude-cowork-guide/blob/main/guide/01-getting-started.md) | Налаштування та перший воркфлоу |
+| [Початок роботи](https://github.com/FlorianBruniaux/claude-cowork-guide/blob/main/guide/01-getting-started.md) | Налаштування та первый воркфлоу |
 | [Можливості](https://github.com/FlorianBruniaux/claude-cowork-guide/blob/main/guide/02-capabilities.md) | Що Cowork може і чого не може |
 | [Гайд з безпеки](https://github.com/FlorianBruniaux/claude-cowork-guide/blob/main/guide/03-security.md) | Практики безпечного використання |
 | [Бібліотека промптів](https://github.com/FlorianBruniaux/claude-cowork-guide/tree/main/prompts) | 50+ готових до використання промптів |
@@ -134,17 +134,15 @@ tags: [guide, reference, ukrainian]
 ## Рекомендований порядок читання
 
 1. **Нові користувачі**: Почніть з розділу Quick Start у `ultimate-guide.uk.md`
-2. **Щоденний довідник**: Роздрукуйте `cheatsheet.md`
-3. **Тімліди**: Прочитайте `roles/adoption-approaches.md` для стратегій впровадження
-4. **Фокус на безпеці**: `security/security-hardening.md`, потім `security/sandbox-isolation.md`
-5. **Глибока архітектура**: `core/architecture.md`, потім `diagrams/`
+2. **Щоденний довідник**: Роздрукуйте `cheatsheet.uk.md`
+3. **Тімліди**: Прочитайте `roles/adoption-approaches.uk.md` для стратегій впровадження
+4. **Фокус на безпеці**: `security/security-hardening.uk.md`, потім `security/sandbox-isolation.uk.md`
+5. **Глибока архітектура**: `core/architecture.uk.md`, потім `diagrams/`
+
+---
+**Локалізація**: [Serhii (MacPlus Software)](https://macplus-software.com)
+*Остання синхронізація: Травень 2026*
 
 ---
 
----
-
-**Локалізація**: [Serhii (MacPlus Software)](https://macplus-software.com) | **Остання синхронізація**: Травень 2026
-
----
-
-*Назад до [головного README](../README.md)*
+*Назад до [головного README](../README.uk.md)*
