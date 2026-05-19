@@ -1,113 +1,578 @@
----
-title: "Модуль 07: Просунуті патерни"
-description: "Оркестрація мульти-агентних систем, складні воркфлоу автоматизації та стратегії обробки помилок у Claude Code"
-tags: [orchestration, multi-agent, workflow, production, advanced]
----
+# Module 07: Advanced Patterns
 
-# Модуль 07: Просунуті патерни
-
-**Час**: 2-3 години | **Складність**: ⭐⭐⭐ Профі
+**Час**: 2-3 години | **Складність**: ⭐⭐⭐ Advanced
 
 ## Мета
 
-Навчитися оркеструвати мульти-агентні воркфлоу. Будувати складну автоматизацію, яка координує роботу декількох спеціалізованих агентів.
+Оркеструвати multi-agent workflows. Будувати складні процеси автоматизації, які координують роботу кількох спеціалізованих agents.
 
 ---
 
-## Що ви навчитеся
+## Що ви дізнаєтеся
 
-- Патерни архітектури мульти-агентних систем.
-- Стратегії оркестрації (послідовна, паралельна, умовна).
-- Обробка помилок та відновлення (Rollback/Retry).
-- Автоматизація рівня продакшену.
-- Командні воркфлоу та шлюзи схвалення.
-
----
-
-## Мульти-агентні системи
-
-**Мульти-агентна система** — це ситуація, коли декілька спеціалізованих агентів працюють разом над однією метою.
-
-### Приклад: Воркфлоу релізу коду
-Замість одного Claude, який робить усе, ми маємо команду:
-1. **Version Agent**: Оновлює файли версій.
-2. **Changelog Agent**: Створює опис змін.
-3. **Test Agent**: Запускає повний набір тестів.
-4. **Security Agent**: Проводить аудит безпеки.
-5. **Release Agent**: Створює теги та пушить у продакшен.
+- Шаблони архітектури систем з кількома agents (multi-agent systems)
+- Стратегії оркестрації (orchestration strategies)
+- Обробка помилок (error handling) та відновлення
+- Процеси автоматизації рівня production
+- Командні workflows
+- Практичні сценарії використання
 
 ---
 
-## Патерни оркестрації
+## Multi-Agent Systems
 
-### 1. Послідовний (Pipeline)
-Вихідні дані Агента А стають вхідними для Агента Б.
-*Приклад: Аналіз вимог → Проектування схеми → Генерація коду.*
+**Multi-agent system** — це архітектура, у якій кілька спеціалізованих agents спільно працюють над досягненням однієї мети.
 
-### 2. Паралельний (Fork-Join)
-Декілька агентів працюють одночасно, а результати об'єднуються.
-*Приклад: Одночасна перевірка коду на безпеку, продуктивність та стиль.*
+### Приклад: Workflow випуску коду (Code Release Workflow)
 
-### 3. Умовний (Conditional)
-Маршрутизація до різних агентів на основі аналізу ситуації.
-*Приклад: Якщо баг у безпеці — викликаємо Security Agent, якщо в логіці — Logic Agent.*
+Замість того, щоб один Claude відповідав за все:
 
----
+```
+Ви: "Release version 3.5.0"
+    ↓
+    ├─→ [Version Agent] Оновлює файл VERSION
+    │
+    ├─→ [Changelog Agent] Створює нотатки до релізу (release notes)
+    │
+    ├─→ [Test Agent] Запускає повний набір тестів
+    │
+    ├─→ [Security Agent] Проводить security audit
+    │
+    ├─→ [Docs Agent] Оновлює документацію
+    │
+    └─→ [Release Agent] Створює теги, білдить, публікує
 
-## Побудова воркфлоу релізу
+Результат: Повний, протестований, задокументований реліз
+```
 
-Для автоматизації релізу ми створюємо 4 агенти у папці `.claude/agents/` та одну команду в `.claude/commands/release.md`.
-
-**Процес**:
-1. Валідація готовності.
-2. Оновлення версії (`version-manager`).
-3. Генерація чейнджлогу (`changelog-generator`).
-4. Перевірка тестів (`test-validator`).
-5. Публікація (`release-publisher`).
-
----
-
-## Обробка помилок
-
-### Поступова деградація
-Якщо один агент (наприклад, Docs Agent) не впорався, але критичні (Test Agent) пройшли — ми можемо продовжити з попередженням.
-
-### Відкат (Rollback)
-Якщо тест-валідатор виявив помилку після оновлення версії, скрипт має автоматично скасувати зміни (`git reset --hard`) та видалити створений тег.
+Кожен з agents виконує своє спеціалізоване завдання максимально швидко та якісно.
 
 ---
 
-## Патерни продакшену
+## Шаблони оркестрації (Orchestration Patterns)
 
-### Шлюзи схвалення (Approval Gates)
-Скрипт зупиняється і вимагає ручного підтвердження:
-`read -p "Введіть 'ПІДТВЕРДЖУЮ' для деплою в продакшен: " approval`
+### Шаблон 1: Послідовний (Sequential / Pipeline)
 
-### Поетапне розгортання
-Автоматичне розгортання спочатку в Dev, потім у Staging, і лише після успішних тестів — у Prod.
+Agents запускаються один за одним. Результат роботи (output) agent N стає вхідними даними (input) для agent N+1.
+
+```
+Вхід (Input)
+  ↓
+[Agent 1: Parse Requirements] → Output: структуровані вимоги
+  ↓
+[Agent 2: Design Schema] → Output: database schema
+  ↓
+[Agent 3: Generate Code] → Output: каркас коду
+  ↓
+[Agent 4: Write Tests] → Output: набір тестів
+  ↓
+Кінцевий результат
+```
+
+**Коли використовувати**: Для workflows, де кожен наступний крок критично залежить від результатів попереднього.
+
+**Приклад**:
+```bash
+/agent requirements-parser
+Parse the feature request into specifications
+
+# Пізніше, коли специфікації готові:
+/agent database-designer
+Design the schema based on these specs
+
+# Після затвердження схеми:
+/agent code-generator
+Generate models based on the schema
+```
+
+### Шаблон 2: Паралельний (Parallel / Fork-Join)
+
+Кілька agents працюють одночасно, після чого результати їхньої роботи об'єднуються.
+
+```
+         Вхід (Input)
+            ↓
+    ┌───────┼───────┐
+    ↓       ↓       ↓
+ [Unit    [Int.   [Sec.
+  Tests]  Tests]  Audit]
+    ↓       ↓       ↓
+    └───────┼───────┘
+            ↓
+   Об'єднання результатів
+            ↓
+      Фінальний звіт
+```
+
+**Коли використовувати**: Для незалежних перевірок або паралельних завдань.
+
+**Приклад**:
+```
+Запит: "Review my code changes"
+
+Паралельні завдання:
+- Code quality agent перевіряє код
+- Security agent проводить сканування
+- Test coverage agent перевіряє покриття
+- Performance agent аналізує швидкодію
+
+(Усі запускаються одночасно)
+
+Результати об'єднуються в один спільний звіт
+```
+
+### Шаблон 3: Умовний (Conditional / If-Then)
+
+Запит перенаправляється до різних agents на основі певних умов.
+
+```
+Вхід (Input): "Fix the bug"
+  ↓
+[Analyzer: Is it security?]
+  ├─ YES → [Security Agent]
+  ├─ PERFORMANCE → [Performance Agent]
+  └─ LOGIC → [Logic Agent]
+  ↓
+Результат
+```
+
+**Приклад**:
+```bash
+/agent bug-classifier
+Categorize this bug: security, performance, or logic
+
+# Залежно від відповіді:
+# Якщо security:
+/agent security-patcher
+Fix the security vulnerability
+
+# Якщо performance:
+/agent perf-optimizer
+Optimize this code
+```
 
 ---
 
-## Вправа: Створіть свій перший мульти-агентний воркфлоу
+## Побудова випускного процесу (Release Workflow)
 
-1. **Сценарій**: Випуск нової версії ML-моделі.
-2. **Створіть агентів**: один для оновлення метаданих моделі, другий для запуску валідаційних тестів на точність.
-3. **Створіть команду `/model-release`**: яка координує їхню роботу.
-4. **Протестуйте**: запустіть команду та спостерігайте, як агенти передають задачу один одному.
+### Сценарій
+
+Ви хочете автоматизувати свій процес релізу. Наразі ви вручну:
+1. Оновлюєте файл VERSION
+2. Оновлюєте CHANGELOG
+3. Запускаєте тести
+4. Запускаєте сканування безпеки (security scan)
+5. Створюєте git tag
+6. Робите push до origin
+7. Робите deploy на staging
+
+### Рішення: Multi-Agent Workflow
+
+**Крок 1: Створіть конфігурації для agents** (кожен спеціалізується на своєму завданні)
+
+`.claude/agents/version-manager.md`:
+```markdown
+---
+name: version-manager
+description: Manages version files and tags
+capabilities:
+  - read_files
+  - write_files
+  - NO: push
+---
+
+# Version Manager
+
+## Purpose
+Update VERSION files and create git tags
+
+## Tasks
+- Bump version (patch, minor, major)
+- Update VERSION file
+- Update version in package.json, pyproject.toml, etc
+- Create annotated git tags
+```
+
+`.claude/agents/changelog-generator.md`:
+```markdown
+---
+name: changelog-generator
+description: Generates release notes
+---
+
+# Changelog Generator
+
+## Purpose
+Create readable release notes from commits
+
+## Output Format
+- Version header
+- Breaking changes (if any)
+- New features
+- Bug fixes
+- Deprecations
+```
+
+`.claude/agents/test-validator.md`:
+```markdown
+---
+name: test-validator
+description: Runs full test suite
+---
+
+# Test Validator
+
+## Purpose
+Execute all tests and verify coverage
+
+## Minimum Requirements
+- All tests pass
+- Coverage >80%
+- No flaky tests
+```
+
+`.claude/agents/release-publisher.md`:
+```markdown
+---
+name: release-publisher
+description: Publishes and deploys
+---
+
+# Release Publisher
+
+## Purpose
+Tag and push to origin
+
+## Steps
+1. Create git tag
+2. Push to origin
+3. Trigger CI/CD pipeline
+4. Monitor deployment
+```
+
+**Крок 2: Створіть команду для запуску workflow**
+
+`.claude/commands/release-workflow.md`:
+```markdown
+# /release-workflow
+
+Orchestrate a complete release process.
+
+Usage:
+```
+/release-workflow patch|minor|major
+```
+
+## Process
+
+1. Validate release readiness
+2. Update version (version-manager agent)
+3. Generate changelog (changelog-generator agent)
+4. Run tests (test-validator agent)
+5. Security scan (security-auditor agent)
+6. Publish and deploy (release-publisher agent)
+
+## Requirements
+- All tests passing
+- No outstanding security issues
+- Changelog updated
+```
+
+**Крок 3: Запустіть workflow**
+
+```bash
+/release-workflow patch
+```
+
+Далі Claude послідовно:
+1. Викликає version-manager → оновлює VERSION
+2. Викликає changelog-generator → генерує release notes
+3. Викликає test-validator → запускає та перевіряє тести
+4. Викликає security-auditor → сканує на вразливості
+5. Викликає release-publisher → створює tag та робить push
+6. Ви переглядаєте та схвалюєте кожен крок
 
 ---
 
-## Висновок: Ви стали Power User! 🚀
+## Обробка помилок в системах з кількома agents (Error Handling)
 
-Ви пройшли всі 7 модулів і тепер знаєте:
-- ✅ Як встановлювати та налаштовувати систему.
-- ✅ Як працює ієрархія пам'яті та CLAUDE.md.
-- ✅ Як створювати агентів, скіли та хуки.
-- ✅ Як будувати складну оркестрацію.
+### Шаблон: Граціозний спад (Graceful Degradation)
 
-### Що далі?
-- Зануртеся в **Безпеку** (`guide/security/`).
-- Вивчіть **DevOps** патерни (`guide/ops/`).
-- Пройдіть повну **Самооцінку** (`/self-assessment comprehensive`).
+Якщо один з agents завершується з помилкою, інші продовжують роботу:
 
-**Локалізація**: [Serhii (MacPlus Software)](https://macplus-software.com) | **Остання синхронізація**: Травень 2026
+```
+[Test Agent] ❌ FAILED: 3 test failures
+  ↓
+[Security Agent] ✅ PASSED: No vulnerabilities
+  ↓
+[Docs Agent] ✅ PASSED: Docs updated
+  ↓
+[Aggregate Results]
+  ⚠️  Release blocked (tests failed)
+  ✅ Security passed
+  ✅ Docs ready
+  [Instructions to fix tests first]
+```
+
+### Шаблон: Повторна спроба при помилці (Retry on Failure)
+
+Для тимчасових збоїв (проблеми з мережею, таймаути):
+
+```bash
+#!/bin/bash
+# Використовується в hook або skill
+
+max_retries=3
+retry=0
+
+while [ $retry -lt $max_retries ]; do
+  if /agent test-validator run-tests; then
+    echo "✅ Tests passed"
+    exit 0
+  fi
+  
+  retry=$((retry + 1))
+  if [ $retry -lt $max_retries ]; do
+    echo "⚠️  Retry $retry/$max_retries"
+    sleep 5
+  fi
+done
+
+echo "❌ Tests failed after $max_retries attempts"
+exit 1
+```
+
+### Шаблон: Відкат змін при помилці (Rollback on Error)
+
+Якщо щось пішло не так, повернути систему до початкового стану:
+
+```bash
+#!/bin/bash
+# Скрипт для відкату змін (rollback)
+
+ORIGINAL_VERSION=$(git rev-parse HEAD:VERSION)
+ORIGINAL_TAG=$(git describe --tags --abbrev=0)
+
+cleanup_and_exit() {
+  echo "Rolling back..."
+  git reset --hard HEAD~1
+  git tag -d "$NEW_TAG"
+  echo "VERSION restored to: $ORIGINAL_VERSION"
+  exit 1
+}
+
+# Виконуємо кроки релізу
+if ! /agent version-manager bump-version patch; then
+  cleanup_and_exit
+fi
+
+if ! /agent test-validator validate-all; then
+  cleanup_and_exit
+fi
+
+# Якщо дійшли сюди, реліз успішний
+exit 0
+```
+
+---
+
+## Паттерни для Production (Production Patterns)
+
+### Шаблон 1: Поетапне розгортання (Staged Rollout)
+
+Послідовне розгортання по різних оточеннях (environments):
+
+```
+/release major
+  ↓
+[Dev] Deploy and test
+  ✅ Verified
+  ↓
+[Staging] Deploy and test
+  ✅ Verified
+  ↓
+[Prod] Deploy with monitoring
+  ✅ Monitoring green
+  ↓
+Release Complete
+```
+
+### Шаблон 2: Шлюзи схвалення (Approval Gates)
+
+Блокування подальшого прогресу до ручного підтвердження:
+
+```bash
+# В .claude/hooks/pre-prod-deploy.sh
+
+echo "🚨 PRODUCTION DEPLOY"
+echo "Changes: $CHANGES"
+echo "Tests: PASSING"
+echo "Security: PASSING"
+echo ""
+read -p "Type 'I approve' to deploy to production: " approval
+
+if [ "$approval" != "I approve" ]; then
+  echo "❌ Deploy cancelled"
+  exit 1
+fi
+
+exit 0
+```
+
+### Шаблон 3: Моніторинг та відкат (Monitoring & Rollback)
+
+Перевірка працездатності після завершення deployment:
+
+```bash
+#!/bin/bash
+# Post-deploy hook
+
+sleep 10  # Дати час сервісам запуститися
+
+# Перевірка здоров'я системи (health checks)
+if ! curl -f https://api.example.com/health; then
+  echo "❌ Health check failed"
+  echo "Rolling back..."
+  git revert -n HEAD
+  git commit -m "Rollback: deployment health check failed"
+  exit 1
+fi
+
+echo "✅ Deployment successful and healthy"
+exit 0
+```
+
+---
+
+## Вправа: Побудова вашого першого Multi-Agent Workflow
+
+### Сценарій
+
+У вас є проєкт з аналізу даних (data science). Checklist для випуску моделі:
+1. Оновити версію моделі
+2. Запустити тести валідації (validation tests)
+3. Згенерувати звіт про продуктивність (performance report)
+4. Оновити документацію
+5. Створити git tag для релізу
+
+### Крок 1: Створіть конфігурації для Agents
+
+Створіть у директорії `.claude/agents/` такі файли:
+- `model-versioner.md` — Оновлює VERSION, метадані моделі
+- `validator.md` — Запускає тести валідації
+- `report-generator.md` — Створює метрики продуктивності
+- `doc-updater.md` — Оновлює README, API-документацію
+- `release-tagger.md` — Створює git tag
+
+### Крок 2: Створіть команду оркестрації
+
+`.claude/commands/ml-release.md`:
+```markdown
+# /ml-release
+
+Release a new model version.
+
+Usage:
+```
+/ml-release [major|minor|patch]
+```
+
+## Workflow
+1. Version agent bumps version
+2. Validator runs test suite
+3. Report agent generates metrics
+4. Doc agent updates documentation
+5. Tagger creates release tag
+```
+
+### Крок 3: Протестуйте його роботу
+
+```bash
+/ml-release patch
+```
+
+Спостерігайте за тим, як agents скоординовано проводять повний цикл релізу.
+
+---
+
+## Найкращі практики для складних систем
+
+### РЕКОМЕНДУЄТЬСЯ
+
+✅ Проектувати agents за принципом **композиції** (composability — коли вивід одного легко передається на вхід наступному)
+
+✅ **Детально логувати все** (це значно полегшує налагодження збоїв)
+
+✅ Тестувати готові workflows спочатку на **невеликих точкових змінах**
+
+✅ **Документувати весь процес оркестрації** (щоб інші члени команди розуміли логіку роботи)
+
+✅ Будувати **approval gates** для будь-яких ризикованих операцій
+
+✅ **Моніторити стан системи** після завершення автоматичних дій
+
+### НЕ РЕКОМЕНДУЄТЬСЯ
+
+❌ Об'єднувати в ланцюжок занадто багато agents (якщо >7, налагодження стає вкрай складним)
+
+❌ Робити agents **взаємозалежними** (намагайтеся дотримуватися слабкого зв'язку / loose coupling)
+
+❌ Ігнорувати **error handling** (збої обов'язково траплятимуться)
+
+❌ Запускати автоматичні релізи в production **без попереднього тестування** workflow
+
+❌ Припускати, що agents **завжди прийматимуть однакові рішення** (будуйте логіку вирішення конфліктів)
+
+---
+
+## Валідація: Ви готові, якщо...
+
+✓ Ви можете детально пояснити шаблони оркестрації кількох agents
+
+✓ Ви самостійно створили щонайменше 2-3 взаємодіючих agents
+
+✓ Ви розумієте стратегії обробки помилок (error handling)
+
+✓ Ви вмієте проектувати процеси автоматизації з використанням approval gates
+
+✓ Ви готові самостійно побудувати автоматизацію випуску релізів для власного проєкту
+
+---
+
+## Вітаємо! Що далі?
+
+Ви повністю пройшли 7-модульний шлях навчання! Тепер ви володієте знаннями про:
+
+- ✅ Встановлення та налаштування (Installation and setup)
+- ✅ Цикл взаємодії та context (Core loop and context)
+- ✅ Пам'ять та конфігурування (Memory and configuration)
+- ✅ Спеціалізацію agents (Agent specialization)
+- ✅ Навички та бази знань (Skills and knowledge)
+- ✅ Hooks та автоматизацію (Hooks and automation)
+- ✅ Складну оркестрацію кількох agents (Advanced orchestration)
+
+### Наступні кроки
+
+**Варіант A: Глибоке занурення у конкретний напрямок**
+- Детальніше про безпеку: `guide/security/`
+- Детальніше про DevOps та інфраструктуру: `guide/ops/`
+- Детальніше про архітектуру: `guide/core/architecture.md`
+
+**Варіант B: Створення власної автоматизації**
+- Створіть індивідуальний multi-agent workflow для вашого поточного проєкту
+- Виконайте одну з практичних вправ цього навчального шляху
+- Створіть набір плагінів та поділіться ним із командою
+
+**Варіант C: Вивчення готових прикладів**
+- Перегляньте готові конфігурації agents у `examples/agents/`
+- Дослідіть набори плагінів у `examples/plugins/`
+- Вивчіть шаблони проектування skills у `guide/core/skill-design-patterns.md`
+
+**Варіант D: Самооцінка та аудит знань**
+- Запустіть `/self-assessment comprehensive`, щоб виявити можливі прогалини в знаннях
+- Отримайте персоналізовані рекомендації
+- Створіть план навчання для підтягування слабких зон
+
+---
+**Локалізація**: [Serhii (MacPlus Software)](https://macplus-software.com)
+*Остання синхронізація: Травень 2026*

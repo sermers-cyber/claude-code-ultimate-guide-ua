@@ -1,31 +1,31 @@
 ---
-title: "Claude Code — Діаграми основ"
-description: "Основні концепції: 4-рівнева модель, пайплайн воркфлоу, дерево рішень, 5 режимів дозволів"
-tags: [foundations, architecture, getting-started, ukrainian]
+title: "Claude Code — Візуальні діаграми основ"
+description: "Основні концепції: 4-рівнева модель, конвеєр робочого процесу, дерево рішень, 5 режимів дозволів"
+tags: [foundations, architecture, getting-started]
 ---
 
 # Основи
 
-Основні концепції, що пояснюють, чим є Claude Code та як він фундаментально працює.
+Основні концепції, які пояснюють, що таке Claude Code та як він принципово функціонує.
 
 ---
 
-### "Від чатбота до системи контексту" — 4-рівнева модель
+### "Чат-бот проти системи контексту" — 4-рівнева модель
 
-Claude Code — це не чатбот, а система контексту, яка перетворює ваше повідомлення на насичений багатошаровий промпт перед викликом API. Ця діаграма показує 4-рівневе доповнення, яке відбувається невидимо для кожного запиту.
+Claude Code — це не просто чат-бот, це система контексту, яка перетворює ваше повідомлення на багаторівневий промпт перед викликом API. Ця діаграма демонструє 4-рівневе доповнення, яке відбувається непомітно для кожного запиту.
 
 ```mermaid
 flowchart TD
-    A([Повідомлення користувача]) --> B[[Рівень 1: Системний промпт]]
-    B --> C[[Рівень 2: Ін'єкція контексту]]
-    C --> D[[Рівень 3: Визначення інструментів]]
-    D --> E[[Рівень 4: Історія діалогу]]
+    A([Повідомлення користувача]) --> B[[Рівень 1: System Prompt]]
+    B --> C[[Рівень 2: Context Injection]]
+    C --> D[[Рівень 3: Tool Definitions]]
+    D --> E[[Рівень 4: Conversation History]]
     E --> F{{Claude API}}
     F --> G([Відповідь Claude])
 
     B1[Файли CLAUDE.md<br/>global + project + subdir] --> B
     C1[Робоча директорія<br/>Git status<br/>Файли проекту] --> C
-    D1[Інструменти Glob, Grep,<br/>Read, Bash, Task, MCP] --> D
+    D1[Інструменти Glob, Grep, Read,<br/>Bash, Task, MCP] --> D
     E1[Попередні повідомлення<br/>+ результати інструментів] --> E
 
     style A fill:#F5E6D3,color:#333
@@ -40,17 +40,17 @@ flowchart TD
     style D1 fill:#B8B8B8,color:#333
     style E1 fill:#B8B8B8,color:#333
 
-    click A href "../ultimate-guide.uk.md#12-перший-воркфлоу" "Перший воркфлоу"
-    click B href "../core/architecture.uk.md#1-головний-цикл" "Рівень 1: Системний промпт"
-    click B1 href "../ultimate-guide.uk.md#31-файли-пам'яті-claudemd" "Файли пам'яті (CLAUDE.md)"
-    click C href "../ultimate-guide.uk.md#22-управління-контекстом" "Рівень 2: Ін'єкція контексту"
-    click C1 href "../ultimate-guide.uk.md#22-управління-контекстом" "Управління контекстом"
-    click D href "../core/architecture.uk.md#2-арсенал-інструментів" "Рівень 3: Визначення інструментів"
-    click D1 href "../core/architecture.uk.md#2-арсенал-інструментів" "Арсенал інструментів"
-    click E href "../ultimate-guide.uk.md#22-управління-контекстом" "Рівень 4: Історія діалогу"
-    click E1 href "../ultimate-guide.uk.md#22-управління-контекстом" "Управління контекстом"
-    click F href "../core/architecture.uk.md#1-головний-цикл" "Claude API — Головний цикл"
-    click G href "../core/architecture.uk.md#1-головний-цикл" "Відповідь Claude"
+    click A href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#12-first-workflow" "Перший робочий процес"
+    click B href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/core/architecture.md#1-the-master-loop" "Рівень 1: System Prompt"
+    click B1 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#31-memory-files-claudemd" "Файли пам'яті (CLAUDE.md)"
+    click C href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#22-context-management" "Рівень 2: Context Injection"
+    click C1 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#22-context-management" "Керування контекстом"
+    click D href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/core/architecture.md#2-the-tool-arsenal" "Рівень 3: Tool Definitions"
+    click D1 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/core/architecture.md#2-the-tool-arsenal" "Арсенал інструментів"
+    click E href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#22-context-management" "Рівень 4: Conversation History"
+    click E1 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#22-context-management" "Керування контекстом"
+    click F href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/core/architecture.md#1-the-master-loop" "Claude API — Головний цикл (Master Loop)"
+    click G href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/core/architecture.md#1-the-master-loop" "Відповідь Claude"
 ```
 
 <details>
@@ -61,10 +61,10 @@ flowchart TD
      │
      ▼
 ┌─────────────────────────────────┐
-│ Рівень 1: Системний промпт      │ ← Файли CLAUDE.md
-│ Рівень 2: Ін'єкція контексту    │ ← Робоча папка, git status
-│ Рівень 3: Визначення інструментів│ ← Усі доступні інструменти
-│ Рівень 4: Історія діалогу       │ ← Попередні повідомлення
+│ Рівень 1: System Prompt          │ ← Файли CLAUDE.md
+│ Рівень 2: Context Injection      │ ← Робоча директорія, git status
+│ Рівень 3: Tool Definitions       │ ← Усі доступні інструменти
+│ Рівень 4: Conversation History   │ ← Попередні повідомлення
 └─────────────────┬───────────────┘
                   │
                   ▼
@@ -76,13 +76,13 @@ flowchart TD
 
 </details>
 
-> **Джерело**: [Як працює Claude Code](../ultimate-guide.uk.md#how-claude-code-works)
+> **Джерело**: [Як працює Claude Code](../ultimate-guide.md#how-claude-code-works) — Рядок ~2360
 
 ---
 
-### 9-кроковий пайплайн воркфлоу
+### 9-кроковий конвеєр робочого процесу
 
-Кожен запит до Claude Code проходить через цей пайплайн — від аналізу вашого наміру до відображення фінальної відповіді. Розуміння цього циклу допомагає писати кращі інструкції та швидше діагностувати проблеми.
+Кожен запит до Claude Code проходить через цей конвеєр — від аналізу вашого наміру до відображення фінальної відповіді. Розуміння цього циклу допомагає створювати кращі інструкції та швидше діагностувати проблеми.
 
 ```mermaid
 flowchart LR
@@ -90,12 +90,12 @@ flowchart LR
     B --> C(Завантаження контексту)
     C --> D(Планування дій)
     D --> E(Виконання інструментів)
-    E --> F{Потрібні ще<br/>інструменти?}
-    F -->|Так| G(Збір результатів)
+    E --> F{Потрібні<br/>ще інструменти?}
+    F -->|Yes| G(Збір результатів)
     G --> E
-    F -->|Ні| H(Оновлення контексту)
+    F -->|No| H(Оновлення контексту)
     H --> I(Генерація відповіді)
-    I --> J([Показ користувачеві])
+    I --> J([Відображення користувачу])
 
     style A fill:#F5E6D3,color:#333
     style B fill:#6DB3F2,color:#fff
@@ -108,59 +108,61 @@ flowchart LR
     style I fill:#6DB3F2,color:#fff
     style J fill:#7BC47F,color:#333
 
-    click A href "../ultimate-guide.uk.md#12-перший-воркфлоу" "Перший воркфлоу"
-    click B href "../core/architecture.uk.md#1-головний-цикл" "Аналіз наміру — Головний цикл"
-    click C href "../ultimate-guide.uk.md#22-управління-контекстом" "Завантаження контексту"
-    click D href "../ultimate-guide.uk.md#23-режим-планування-plan" "Планування дій — Режим /plan"
-    click E href "../core/architecture.uk.md#2-арсенал-інструментів" "Виконання інструментів"
-    click F href "../core/architecture.uk.md#1-головний-цикл" "Ще інструменти? — Головний цикл"
-    click G href "../core/architecture.uk.md#1-головний-цикл" "Збір результатів"
-    click H href "../ultimate-guide.uk.md#22-управління-контекстом" "Оновлення контексту"
-    click I href "../core/architecture.uk.md#1-головний-цикл" "Генерація відповіді"
-    click J href "../ultimate-guide.uk.md#12-перший-воркфлоу" "Показ користувачеві"
+    click A href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#12-first-workflow" "Перший робочий процес"
+    click B href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/core/architecture.md#1-the-master-loop" "Аналіз наміру — Головний цикл (Master Loop)"
+    click C href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#22-context-management" "Завантаження контексту"
+    click D href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#23-plan-mode" "Планування дій — Режим планування (Plan Mode)"
+    click E href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/core/architecture.md#2-the-tool-arsenal" "Виконання інструментів"
+    click F href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/core/architecture.md#1-the-master-loop" "Ще інструменти? — Головний цикл (Master Loop)"
+    click G href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/core/architecture.md#1-the-master-loop" "Збір результатів"
+    click H href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#22-context-management" "Оновлення контексту"
+    click I href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/core/architecture.md#1-the-master-loop" "Генерація відповіді"
+    click J href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#12-first-workflow" "Відображення користувачу"
 ```
 
 <details>
 <summary>ASCII версія</summary>
 
 ```
-Повідомлення → Аналіз наміру → Завантаження контексту → Планування дій
-                                                          │
-                         ┌────────────────────────────────┘
-                         ▼
-                  Виконання інструментів ◄────────────────┐
-                         │                                │
-                  Ще інструменти?  ──── Так ─── Збір результатів
-                         │ Ні
-                         ▼
-                  Оновлення контексту → Генерація відповіді → Показ
+Повідомлення користувача → Аналіз наміру → Завантаження контексту → Планування дій
+                                                   │
+                          ┌────────────────────────┘
+                          ▼
+                    Виклик інструментів ◄─────────────────┐
+                          │                          │
+                    Ще інструменти?  ─── Yes ─── Збір результатів
+                          │ No
+                          ▼
+               Оновлення контексту → Генерація відповіді → Відображення
 ```
 
 </details>
 
+> **Джерело**: [Початок роботи](../ultimate-guide.md#getting-started) — Рядок ~277
+
 ---
 
-### Швидке дерево рішень — "Чи варто мені використовувати Claude Code?"
+### Швидке дерево рішень — "Чи варто використовувати Claude Code?"
 
-Не кожне завдання потребує Claude Code. Це дерево рішень допоможе вам обрати правильний інструмент — Claude Code CLI, Claude.ai або підхід через буфер обміну.
+Не для кожного завдання потрібен Claude Code. Це дерево рішень допоможе вам направити завдання до правильного інструменту — Claude Code CLI, Claude.ai чи методів на основі буфера обміну.
 
 ```mermaid
 flowchart TD
-    A([Початок: У мене є завдання]) --> B{Стосується<br/>кодобази?}
-    B -->|Ні| C{Чисте написання<br/>або аналіз?}
-    B -->|Так| D{Повторюване або<br/>>30 хв вручну?}
+    A([Початок: Маю завдання]) --> B{Справа стосується<br/>кодової бази?}
+    B -->|No| C{Тільки текст<br/>або аналіз?}
+    B -->|Yes| D{Рутинна або<br/>>30 хв вручну?}
 
-    C -->|Так| E([Використовуйте Claude.ai<br/>або API])
-    C -->|Ні| F([Буфер обміну +<br/>Claude.ai])
+    C -->|Yes| E([Використовуйте Claude.ai<br/>або API])
+    C -->|No| F([Буфер обміну +<br/>Claude.ai])
 
-    D -->|Ні| G{Один файл,<br/>проста зміна?}
-    D -->|Так| H([Claude Code<br/>✓ Найкращий вибір])
+    D -->|No| G{Один файл,<br/>проста зміна?}
+    D -->|Yes| H([Claude Code<br/>✓ Найкращий вибір])
 
-    G -->|Так| I{Потрібен доступ<br/>до файлів?}
-    G -->|Ні| H
+    G -->|Yes| I{Потрібен доступ<br/>до файлу?}
+    G -->|No| H
 
-    I -->|Ні| F
-    I -->|Так| H
+    I -->|No| F
+    I -->|Yes| H
 
     style A fill:#F5E6D3,color:#333
     style B fill:#E87E2F,color:#fff
@@ -172,71 +174,73 @@ flowchart TD
     style F fill:#6DB3F2,color:#fff
     style H fill:#7BC47F,color:#333
 
-    click A href "../ultimate-guide.uk.md#12-перший-воркфлоу" "Коли використовувати Claude Code"
-    click B href "../ultimate-guide.uk.md#12-перший-воркфлоу" "Стосується кодобази?"
-    click C href "../ultimate-guide.uk.md#12-перший-воркфлоу" "Написання або аналіз?"
-    click D href "../ultimate-guide.uk.md#12-перший-воркфлоу" "Повторюване або довге завдання?"
-    click E href "../ultimate-guide.uk.md#12-перший-воркфлоу" "Використовуйте Claude.ai"
-    click F href "../ultimate-guide.uk.md#12-перший-воркфлоу" "Буфер обміну + Claude.ai"
-    click G href "../ultimate-guide.uk.md#12-перший-воркфлоу" "Один файл, проста зміна?"
-    click H href "../ultimate-guide.uk.md#11-встановлення" "Claude Code — Найкращий вибір"
-    click I href "../ultimate-guide.uk.md#12-перший-воркфлоу" "Потрібен доступ до файлів?"
+    click A href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#12-first-workflow" "Коли використовувати Claude Code"
+    click B href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#12-first-workflow" "Справа стосується кодової бази?"
+    click C href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#12-first-workflow" "Тільки текст або аналіз?"
+    click D href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#12-first-workflow" "Рутинна або тривала ручна задача?"
+    click E href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#12-first-workflow" "Використовувати Claude.ai"
+    click F href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#12-first-workflow" "Буфер обміну + Claude.ai"
+    click G href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#12-first-workflow" "Один файл, проста зміна?"
+    click H href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/11-installation" "Claude Code — найкращий вибір"
+    click I href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#12-first-workflow" "Потрібен доступ до файлу?"
 ```
 
 <details>
 <summary>ASCII версія</summary>
 
 ```
-Завдання стосується кодобази?
-├── Ні → Написання/аналіз? → Так → Claude.ai
-│                          → Ні  → Буфер обміну + Claude.ai
-└── Так → Повторюване або >30 хв?
-          ├── Так → ✓ Claude Code
-          └── Ні  → Один файл, проста зміна?
-                    ├── Так → Потрібен доступ? → Ні → Буфер обміну
-                    │                          → Так → Claude Code
-                    └── Ні  → ✓ Claude Code
+Завдання стосується кодової бази?
+├── No → Тільки текст/аналіз? → Yes → Claude.ai
+│                           → No  → Буфер обміну + Claude.ai
+└── Yes → Рутинна або >30хв?
+          ├── Yes → ✓ Claude Code
+          └── No  → Один файл, простий?
+                    ├── Yes → Потрібен доступ до файлу? → No → Буфер обміну
+                    │                                   → Yes → Claude Code
+                    └── No  → ✓ Claude Code
 ```
 
 </details>
+
+> **Джерело**: [Швидке рішення про старт](../ultimate-guide.md#quick-start) — Див. також `machine-readable/reference.yaml` (розділ decide)
 
 ---
 
 ### Порівняння режимів дозволів
 
-Claude Code має 5 режимів дозволів, які контролюють, що він може робити автоматично, а що потребує вашого схвалення. Вибір неправильного режиму — це помилка безпеки №1.
+Claude Code має 5 режимів дозволів, які контролюють, що він може робити автоматично, а що потребує вашого схвалення. Вибір неправильного режиму — помилка безпеки №1.
 
 ```mermaid
 flowchart TD
-    subgraph DEFAULT["🔒 Режим DEFAULT (Рекомендовано)"]
-        D1(Читання файлів) --> D2([Авто-схвалено])
-        D3(Запис у файли) --> D4([Запит дозволу])
-        D5(Shell команди) --> D6([Запит дозволу])
-        D7(Ризиковані операції) --> D8([Запит дозволу])
+    subgraph DEFAULT["🔒 Default Mode (Рекомендовано)"]
+        D1(Читання файлів) --> D2([Автоматично схвалено])
+        D3(Запис файлів) --> D4([Потрібен запит])
+        D5(Команди оболонки) --> D6([Потрібен запит])
+        D7(Ризиковані операції) --> D8([Потрібен запит])
     end
 
-    subgraph ACCEPT["✏️ Режим acceptEdits"]
-        A1(Читання файлів) --> A2([Auto-approved])
-        A3(Запис у файли) --> A4([Auto-approved])
-        A5(Shell команди) --> A6([Запит дозволу])
-        A7(Ризиковані операції) --> A8([Запит дозволу])
+    subgraph ACCEPT["✏️ acceptEdits Mode"]
+        A1(Читання файлів) --> A2([Автоматично схвалено])
+        A3(Запис файлів) --> A4([Автоматично схвалено])
+        A5(Команди оболонки) --> A6([Потрібен запит])
+        A7(Ризиковані операції) --> A8([Потрібен запит])
     end
 
-    subgraph BYPASS["⚠️ Режим bypassPermissions"]
-        B1(УСІ операції) --> B2([Авто-схвалено])
-        B3["Тільки для:<br/>CI/CD, пісочниць"] --> B2
+    subgraph BYPASS["⚠️ bypassPermissions Mode"]
+        B1(УСІ операції) --> B2([Автоматично схвалено])
+        B3["Використовувати тільки в:<br/>CI/CD, ізольованих (sandboxed)<br/>середовищах"] --> B2
     end
 
-    subgraph PLAN["🔍 Режим Plan (Тільки читання)"]
-        PL1(Читання файлів) --> PL2([Авто-схвалено])
-        PL3(Запис у файли) --> PL4([Заблоковано])
-        PL5(Shell команди) --> PL6([Заблоковано])
-        PL7["Вихід через /execute<br/>або Shift+Tab"] --> PL2
+    subgraph PLAN["🔍 Plan Mode (Лише для читання)"]
+        PL1(Читання файлів) --> PL2([Автоматично схвалено])
+        PL3(Запис файлів) --> PL4([Заблоковано])
+        PL5(Команди оболонки) --> PL6([Заблоковано])
+        PL7["Вихід за допомогою /execute<br/>або Shift+Tab"] --> PL2
     end
 
-    subgraph DONTASK["🚫 Режим dontAsk"]
-        DA1(УСІ операції) --> DA2([Авто-відмова])
-        DA3["Крім попередньо схвалених<br/>через /permissions add"] --> DA2
+    subgraph DONTASK["🚫 dontAsk Mode"]
+        DA1(УСІ операції) --> DA2([Автоматично відхилено])
+        DA3["Якщо заздалегідь не схвалено<br/>через /permissions add"] --> DA2
     end
 
     style D2 fill:#7BC47F,color:#333
@@ -255,14 +259,35 @@ flowchart TD
     style DA2 fill:#E85D5D,color:#fff
     style DA3 fill:#F5E6D3,color:#333
 
-    click D1 href "../ultimate-guide.uk.md#14-режими-дозволів" "Режими дозволів"
-    click D2 href "../ultimate-guide.uk.md#14-режими-дозволів" "Авто-схвалено"
-    click D3 href "../ultimate-guide.uk.md#14-режими-дозволів" "Запис у файли"
-    click D4 href "../ultimate-guide.uk.md#14-режими-дозволів" "Запит дозволу"
-    click A1 href "../ultimate-guide.uk.md#14-режими-дозволів" "Режим acceptEdits"
-    click B1 href "../ultimate-guide.uk.md#14-режими-дозволів" "Режим bypassPermissions"
-    click PL1 href "../ultimate-guide.uk.md#14-режими-дозволів" "Режим Plan"
-    click DA1 href "../ultimate-guide.uk.md#14-режими-дозволів" "Режим dontAsk"
+    click D1 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#14-permission-modes" "Default Mode — Режими дозволів"
+    click D2 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#14-permission-modes" "Автоматично схвалено"
+    click D3 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#14-permission-modes" "Запис файлів"
+    click D4 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#14-permission-modes" "Потрібен запит"
+    click D5 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#14-permission-modes" "Команди оболонки"
+    click D6 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#14-permission-modes" "Потрібен запит"
+    click D7 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#14-permission-modes" "Ризиковані операції"
+    click D8 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#14-permission-modes" "Потрібен запит"
+    click A1 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#14-permission-modes" "acceptEdits Mode"
+    click A2 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#14-permission-modes" "Автоматично схвалено"
+    click A3 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#14-permission-modes" "Запис файлів — авто"
+    click A4 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#14-permission-modes" "Автоматично схвалено"
+    click A5 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#14-permission-modes" "Команди оболонки"
+    click A6 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#14-permission-modes" "Потрібен запит"
+    click A7 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#14-permission-modes" "Ризиковані операції"
+    click A8 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#14-permission-modes" "Потрібен запит"
+    click B1 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#14-permission-modes" "bypassPermissions Mode"
+    click B2 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#14-permission-modes" "Автоматично схвалено (все)"
+    click B3 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#14-permission-modes" "Тільки CI/CD, sandboxed"
+    click PL1 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#14-permission-modes" "Plan Mode — Читання файлів"
+    click PL2 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#14-permission-modes" "Автоматично схвалено"
+    click PL3 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#14-permission-modes" "Plan Mode — Запис файлів заблоковано"
+    click PL4 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#14-permission-modes" "Заблоковано"
+    click PL5 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#14-permission-modes" "Plan Mode — Команди оболонки заблоковано"
+    click PL6 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#14-permission-modes" "Заблоковано"
+    click PL7 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#14-permission-modes" "Вихід з Plan Mode"
+    click DA1 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#14-permission-modes" "dontAsk Mode — Усі операції"
+    click DA2 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#14-permission-modes" "Автоматично відхилено"
+    click DA3 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#14-permission-modes" "Попереднє схвалення через /permissions add"
 ```
 
 <details>
@@ -270,23 +295,24 @@ flowchart TD
 
 ```
 DEFAULT (Рекомендовано)       acceptEdits               bypassPermissions
-─────────────────────        ───────────               ─────────────────
-Читання файлів → АВТО ✓      Читання файлів → АВТО ✓   УСІ операції → АВТО ⚠️
-Запис у файли  → ЗАПИТ       Запис у файли  → АВТО ✓
-Shell команди  → ЗАПИТ       Shell команди  → ЗАПИТ    Використовувати:
-Ризиковані оп. → ЗАПИТ       Ризиковані оп. → ЗАПИТ    тільки в пісочницях
+───────────────────────       ───────────               ─────────────────
+Читання файлів → AUTO ✓       Читання файлів → AUTO ✓   УСІ операції → AUTO ⚠️
+Запис файлів   → PROMPT       Запис файлів   → AUTO ✓
+Команди обол.  → PROMPT       Команди обол.  → PROMPT   Використовувати: лише CI/CD,
+Ризик. операц. → PROMPT       Ризик. операц. → PROMPT   sandboxed env
 
-Режим Plan (Тільки читання)   Режим dontAsk
-─────────────────────        ────────────
-Читання файлів → АВТО ✓      УСІ операції → АВТО ВІДМОВА ✗
-Запис у файли  → ЗАБЛОК. ✗   Крім попередньо схвалених
-Shell команди  → ЗАБЛОК. ✗   через /permissions add
+Plan Mode (Лише читання)     dontAsk Mode
+────────────────────────     ────────────
+Читання файлів → AUTO ✓       УСІ операції → AUTO DENIED ✗
+Запис файлів   → BLOCKED ✗    Якщо не схвалено заздалегідь через
+Команди обол.  → BLOCKED ✗    /permissions add
 Вихід: /execute або Shift+Tab
 ```
 
 </details>
 
----
+> **Джерело**: [Система дозволів](../ultimate-guide.md#permission-system) — Рядок ~760
 
+---
 **Локалізація**: [Serhii (MacPlus Software)](https://macplus-software.com)
 *Остання синхронізація: Травень 2026*

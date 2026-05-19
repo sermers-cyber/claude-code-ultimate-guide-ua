@@ -1,43 +1,43 @@
 ---
-title: "Claude Code — Діаграми контексту та сесій"
-description: "Зони контексту, ієрархія пам'яті, управління сесіями та патерни свіжого контексту"
-tags: [context, sessions, memory, optimization, ukrainian]
+title: "Claude Code — Візуальні діаграми контексту та сесій"
+description: "Зони контексту, ієрархія пам'яті, керування сесіями та шаблони свіжого контексту"
+tags: [context, sessions, memory, optimization]
 ---
 
-# Контекст та сесії
+# Контекст і сесії
 
 Як Claude Code керує контекстом, пам'яттю та сесіями під час вашої роботи.
 
 ---
 
-### Зони управління контекстом
+### Зони керування контекстом
 
-Ваше вікно контексту має 4 окремі зони, кожна з яких потребує різних стратегій. Розуміння того, в якій зоні ви перебуваєте, запобігає роздуванню контексту та підтримує якість відповідей протягом довгих сесій.
+Ваше вікно контексту має 4 окремі зони, кожна з яких вимагає різних стратегій. Розуміння того, в якій зоні ви перебуваєте, запобігає роздуванню контексту та зберігає якість відповідей протягом тривалих сесій.
 
 ```mermaid
 flowchart LR
     subgraph GREEN["🟢 0–50% — Комфортно"]
-        G1(Повні можливості<br/>доступні)
+        G1(Доступні всі<br/>можливості)
         G2(Усі інструменти активні)
-        G3(Насичені відповіді)
+        G3(Детальні відповіді)
     end
 
-    subgraph BLUE["🔵 50–75% — Норма"]
+    subgraph BLUE["🔵 50–75% — Нормально"]
         B1(Моніторинг використання)
         B2(Розгляньте /compact<br/>для старих гілок)
         B3(Нормальна робота)
     end
 
     subgraph ORANGE["🟠 75–85% — Обережно"]
-        O1(Пропонуйте /compact<br/>проактивно)
-        O2(Зменште багатослівність)
-        O3(Відкладіть некритичні<br/>операції)
+        O1(Проактивна пропозиція<br/>/compact)
+        O2(Зменшення деталізації)
+        O3(Відкладення некритичних<br/>операцій)
     end
 
     subgraph RED["🔴 85–100% — Критично"]
-        R1(Авто-компакт<br/>спрацьовує на 80%)
-        R2(Тільки основні операції)
-        R3(Нова сесія для<br/>нових завдань)
+        R1(Авто-compact<br/>спрацьовує на 80%)
+        R2(Тільки критичні операції)
+        R3(Запуск нової сесії<br/>для нових завдань)
     end
 
     GREEN --> BLUE --> ORANGE --> RED
@@ -55,10 +55,18 @@ flowchart LR
     style R2 fill:#E85D5D,color:#fff
     style R3 fill:#E85D5D,color:#fff
 
-    click G1 href "../ultimate-guide.uk.md#22-управління-контекстом" "0-50%: Повні можливості"
-    click B2 href "../ultimate-guide.uk.md#22-управління-контекстом" "50-75%: Розгляньте /compact"
-    click O1 href "../ultimate-guide.uk.md#22-управління-контекстом" "75-85%: Пропонуйте /compact"
-    click R1 href "../ultimate-guide.uk.md#22-управління-контекстом" "85-100%: Авто-компакт"
+    click G1 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#22-context-management" "0-50%: Доступні всі можливості"
+    click G2 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#22-context-management" "0-50%: Усі інструменти активні"
+    click G3 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#22-context-management" "0-50%: Детальні відповіді"
+    click B1 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#22-context-management" "50-75%: Моніторинг використання"
+    click B2 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#22-context-management" "50-75%: Розгляньте /compact"
+    click B3 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#22-context-management" "50-75%: Нормальна робота"
+    click O1 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#22-context-management" "75-85%: Пропозиція /compact"
+    click O2 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#22-context-management" "75-85%: Зменшення деталізації"
+    click O3 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#22-context-management" "75-85%: Відкладення некритичних"
+    click R1 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#22-context-management" "85-100%: Авто-compact"
+    click R2 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#22-context-management" "85-100%: Тільки критичні операції"
+    click R3 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#22-context-management" "85-100%: Запуск нової сесії"
 ```
 
 <details>
@@ -66,35 +74,37 @@ flowchart LR
 
 ```
 0%──────50%──────75%──85%──100%
-│ Зелена  │ Блакитна│ Оранж │ Черв │
-│ Повний  │ Норма   │Запит  │Авто  │
-│ доступ  │Монітор. │compact│cmp   │
-│         │         │Зменш. │Тільки│
-│         │         │слів   │основі│
+│ Зелений │ Синій  │Помаранч.│Червоний│
+│ Повний  │ Норма  │Пропоз.  │Авто    │
+│ доступ  │Монітор │/compact │cmp     │
+│         │        │Зменш.   │Крит.   │
+│         │        │детал.   │тільки  │
 ```
 
 </details>
+
+> **Джерело**: [Керування контекстом](../ultimate-guide.md#context-management) — Рядок ~1335
 
 ---
 
 ### Ієрархія пам'яті — 6 типів
 
-Claude Code має 6 окремих типів пам'яті з різним охопленням та тривалістю зберігання.
+Claude Code має 6 окремих типів пам'яті з різними областями дії та персистентністю. Розуміння того, який тип пам'яті використовувати для кожної частини інформації, є ключем до ефективних сесій.
 
 ```mermaid
 flowchart TD
-    A["🌍 Глобальний CLAUDE.md<br/>~/.claude/CLAUDE.md"] --> B["📁 Проектний CLAUDE.md<br/>/project-root/CLAUDE.md"]
-    B --> C["📂 CLAUDE.md у підпапці<br/>/src/CLAUDE.md, /tests/CLAUDE.md"]
-    C --> AM["🧠 Нативна авто-пам'ять<br/>~/.claude/projects/*/memory/MEMORY.md"]
-    AM --> D["💬 Контекст діалогу<br/>Повідомлення + інструменти цієї сесії"]
-    D --> E["⚡ Ефемерний стан<br/>Стан MCP серверів, кеш"]
+    A["🌍 Global CLAUDE.md<br/>~/.claude/CLAUDE.md"] --> B["📁 Project CLAUDE.md<br/>/project-root/CLAUDE.md"]
+    B --> C["📂 Subdirectory CLAUDE.md<br/>/src/CLAUDE.md, /tests/CLAUDE.md"]
+    C --> AM["🧠 Auto-Memory Native<br/>~/.claude/projects/*/memory/MEMORY.md<br/>v2.1.59+"]
+    AM --> D["💬 In-Conversation Context<br/>Повідомлення + результати інструментів цієї сесії"]
+    D --> E["⚡ Ephemeral State<br/>Стан MCP-сервера, кеш інструментів"]
 
-    A1["Охоплення: УСІ проекти<br/>Зберігання: Завжди<br/>Використання: Глобальні налаштування"] --> A
-    B1["Охоплення: Цей проект<br/>Зберігання: Завжди<br/>Використання: Правила проекту"] --> B
-    C1["Охоплення: Ця папка<br/>Зберігання: Завжди<br/>Використання: Правила модуля"] --> C
-    AM1["Охоплення: Для кожного проекту<br/>Зберігання: Між сесіями<br/>Використання: Авто-пам'ять, /memory"] --> AM
-    D1["Охоплення: Ця сесія<br/>Зберігання: Тільки сесія<br/>Використання: Контекст завдання"] --> D
-    E1["Охоплення: Ця сесія<br/>Зберігання: Тільки сесія<br/>Використання: Результати обчислень"] --> E
+    A1["Область: УСІ проекти<br/>Зберігається: Завжди<br/>Використання: Глобальні налаштування, API keys"] --> A
+    B1["Область: Цей проект<br/>Зберігається: Завжди<br/>Використання: Конвенції проекту"] --> B
+    C1["Область: Ця директорія<br/>Зберігається: Завжди<br/>Використання: Правила конкретного модуля"] --> C
+    AM1["Область: Для кожного проекту<br/>Зберігається: Між сесіями<br/>Використання: Автозбережена пам'ять, /memory"] --> AM
+    D1["Область: Ця сесія<br/>Зберігається: Тільки під час сесії<br/>Використання: Контекст завдання"] --> D
+    E1["Область: Ця сесія<br/>Зберігається: Тільки під час сесії<br/>Використання: Обчислені результати"] --> E
 
     style A fill:#E87E2F,color:#fff
     style B fill:#6DB3F2,color:#fff
@@ -102,10 +112,25 @@ flowchart TD
     style AM fill:#7BC47F,color:#333
     style D fill:#F5E6D3,color:#333
     style E fill:#B8B8B8,color:#333
+    style A1 fill:#B8B8B8,color:#333
+    style B1 fill:#B8B8B8,color:#333
+    style C1 fill:#B8B8B8,color:#333
+    style AM1 fill:#B8B8B8,color:#333
+    style D1 fill:#B8B8B8,color:#333
+    style E1 fill:#B8B8B8,color:#333
 
-    click A href "../ultimate-guide.uk.md#31-файли-пам'яті-claudemd" "Глобальний CLAUDE.md"
-    click B href "../ultimate-guide.uk.md#31-файли-пам'яті-claudemd" "Проектний CLAUDE.md"
-    click AM href "../ultimate-guide.uk.md#31-файли-пам'яті-claudemd" "Нативна авто-пам'ять"
+    click A href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#31-memory-files-claudemd" "Global CLAUDE.md"
+    click B href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#31-memory-files-claudemd" "Project CLAUDE.md"
+    click C href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#31-memory-files-claudemd" "Subdirectory CLAUDE.md"
+    click AM href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#31-memory-files-claudemd" "Auto-Memory Native"
+    click D href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#22-context-management" "In-Conversation Context"
+    click E href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/core/architecture.md#3-context-management-internals" "Ephemeral State"
+    click A1 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#31-memory-files-claudemd" "Глобальна область — зберігається завжди"
+    click B1 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#31-memory-files-claudemd" "Область проекту — зберігається завжди"
+    click C1 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#31-memory-files-claudemd" "Область директорії — зберігається завжди"
+    click AM1 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#31-memory-files-claudemd" "Автопам'ять між сесіями"
+    click D1 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#22-context-management" "Тільки в межах сесії"
+    click E1 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/core/architecture.md#3-context-management-internals" "Тільки в межах сесії"
 ```
 
 <details>
@@ -114,22 +139,28 @@ flowchart TD
 ```
 ПОСТІЙНО ──────────────────────────────── ТІЛЬКИ СЕСІЯ
 
-~/.claude/CLAUDE.md              Контекст діалогу
-      │                                 │
+~/.claude/CLAUDE.md              Контекст бесіди
+      │                                  │
 /project/CLAUDE.md               Ефемерний стан MCP
       │
 /subdir/CLAUDE.md
       │
-Авто-пам'ять (MEMORY.md)  ← між сесіями, для проекту
+Auto-Memory (MEMORY.md)  ← між сесіями, для конкретного проекту
+
+Вище = ширша область, зберігається завжди
+Нижче = вужча область, витримує перезапуски
+Auto-Memory = зберігається між сесіями, обмежена проектом
 ```
 
 </details>
 
+> **Джерело**: [Система пам'яті](../ultimate-guide.md#memory-system) — Рядок ~3160 & ~3986 | Auto-Memory: v2.1.59+ (v3.30.0)
+
 ---
 
-### Безперервність сесій — збереження та відновлення стану
+### Безперервність сесії — Збереження та відновлення стану
 
-Сесії не відновлюють автоматично контекст діалогу. Ця діаграма показує, як зберегти стан у `CLAUDE.md` та відновити його в новій сесії.
+Сесії не переносять контекст автоматично між різними терміналами. Ця діаграма демонструє, як зберегти стан та відновити його в новій сесії чи терміналі, що дозволяє реалізувати асинхронні робочі процеси.
 
 ```mermaid
 sequenceDiagram
@@ -138,35 +169,53 @@ sequenceDiagram
     participant CM as CLAUDE.md
     participant NI as Нова сесія
 
-    U->>CC: Робота над функцією X
-    CC->>CC: Виконання завдань, інструментів
-    U->>CC: Збережи прогрес у CLAUDE.md
-    CC->>CM: Запис: статус, рішення, наступні кроки
+    U->>CC: Робота над фічею X
+    CC->>CC: Виконує завдання, інструменти
+    U->>CC: Зберегти прогрес у CLAUDE.md
+    CC->>CM: Запис: статус завдання, рішення, наступні кроки
     Note over CM: Зберігається після завершення сесії
 
-    U->>NI: Відкриття нового терміналу
+    U->>NI: Відкрити новий термінал
     U->>NI: claude (нова сесія)
-    NI->>CM: Авто-завантаження CLAUDE.md
-    CM->>NI: Ін'єкція: збережений контекст
+    NI->>CM: Автоматично завантажує CLAUDE.md
+    CM->>NI: Впроваджує: збережений контекст
     NI->>U: Готово — контекст відновлено ✓
 
-    Note over CC,NI: Історія діалогу НЕ відновлюється<br/>Зберігається тільки зміст CLAUDE.md
+    Note over CC,NI: Історія розмов НЕ відновлюється<br/>Зберігається лише вміст CLAUDE.md
 ```
+
+<details>
+<summary>ASCII версія</summary>
+
+```
+Сесія 1                      CLAUDE.md         Сесія 2
+───────                      ─────────         ───────
+Робота над завданням            │               Відкрити термінал
+     │                          │                    │
+Зберегти прогрес ─────────────► Запис             Завантажити CLAUDE.md
+                              статусу,         ◄── Автоматично впроваджено
+                              рішень,
+                              наступних кроків
+```
+
+</details>
+
+> **Джерело**: [Керування сесіями](../ultimate-guide.md#session-management) — Рядок ~9477
 
 ---
 
-### Анти-патерн "Свіжий контекст" vs Найкраща практика
+### Антипатерн проти найкращої практики свіжого контексту
 
-Довгі сесії накопичують "шум", що погіршує якість відповідей. Ми рекомендуємо підхід "фокусованих сесій".
+Тривалі сесії накопичують шум, що погіршує якість відповідей. Ця діаграма показує патерн деградації та рекомендований підхід "фокусованих сесій", який зберігає високу продуктивність.
 
 ```mermaid
 flowchart TD
-    subgraph BAD["❌ Анти-патерн: Монолітна сесія"]
-        B1([Старт великої сесії]) --> B2(Додавання завдання A)
-        B2 --> B3(Додавання завдання B)
-        B3 --> B4(Додавання завдання C)
+    subgraph BAD["❌ Антипатерн: Монолітна сесія"]
+        B1([Старт великої сесії]) --> B2(Додати завдання A)
+        B2 --> B3(Додати завдання B)
+        B3 --> B4(Додати завдання C)
         B4 --> B5{Контекст роздутий<br/>>75%}
-        B5 --> B6(Якість відповідей<br/>деградує)
+        B5 --> B6(Якість відповідей<br/>погіршується)
         B6 --> B7(Примусовий перезапуск<br/>втрачає весь контекст)
         style B1 fill:#E85D5D,color:#fff
         style B5 fill:#E85D5D,color:#fff
@@ -175,14 +224,14 @@ flowchart TD
     end
 
     subgraph GOOD["✅ Найкраща практика: Фокусовані сесії"]
-        G1([Старт фокусованої сесії]) --> G2(Виконання завдання A)
-        G2 --> G3{Природна<br/>точка зупинки?}
-        G3 -->|Так| G4(Збереження в CLAUDE.md)
-        G4 --> G5([Нова сесія для завд. B])
-        G3 -->|Ні| G6{Контекст >75%?}
-        G6 -->|Так| G7(/compact)
+        G1([Старт фокусованої сесії]) --> G2(Завершити завдання A)
+        G2 --> G3{Природна<br/>контрольна точка?}
+        G3 -->|Yes| G4(Зберегти у CLAUDE.md)
+        G4 --> G5([Нова сесія для завдання B])
+        G3 -->|No| G6{Контекст >75%?}
+        G6 -->|Yes| G7(/compact)
         G7 --> G2
-        G6 -->|Ні| G2
+        G6 -->|No| G2
         style G1 fill:#7BC47F,color:#333
         style G4 fill:#7BC47F,color:#333
         style G5 fill:#7BC47F,color:#333
@@ -191,8 +240,20 @@ flowchart TD
         style G7 fill:#6DB3F2,color:#fff
     end
 
-    click B1 href "../ultimate-guide.uk.md#22-управління-контекстом" "Анти-патерн: Монолітна сесія"
-    click G1 href "../ultimate-guide.uk.md#22-управління-контекстом" "Найкраща практика: Фокусовані сесії"
+    click B1 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#22-context-management" "Антипатерн: Монолітна сесія"
+    click B2 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#22-context-management" "Додати завдання A"
+    click B3 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#22-context-management" "Додати завдання B"
+    click B4 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#22-context-management" "Додати завдання C"
+    click B5 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#22-context-management" "Контекст роздутий >75%"
+    click B6 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#22-context-management" "Якість відповідей погіршується"
+    click B7 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#22-context-management" "Примусовий перезапуск — втрата контексту"
+    click G1 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#22-context-management" "Найкраща практика: Фокусовані сесії"
+    click G2 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#22-context-management" "Завершити завдання A"
+    click G3 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#22-context-management" "Природна контрольна точка?"
+    click G4 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#31-memory-files-claudemd" "Зберегти у CLAUDE.md"
+    click G5 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#22-context-management" "Нова сесія для завдання B"
+    click G6 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#22-context-management" "Контекст >75%?"
+    click G7 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#22-context-management" "/compact"
 ```
 
 <details>
@@ -200,23 +261,24 @@ flowchart TD
 
 ```
 ПОГАНО: Одна гігантська сесія
-Завд. A → Завд. B → Завд. C → Роздуття → Деградація → Рестарт → Втрачено!
+Завдання A → Завдання B → Завдання C → Роздуття контексту → Падіння якості → Перезапуск → Втрачено!
 
 ДОБРЕ: Фокусовані сесії
-Завд. A ──► Зупинка? ──Так──► Запис CLAUDE.md ──► Нова сесія для B
-             │
-             Ні
-             │
-          Контекст >75%? ──Так──► /compact ──► Продовжити
-             │
-             Ні
-             │
-          Продовжити завдання
+Завдання A ──► Контр. точка? ──Yes──► Зберегти CLAUDE.md ──► Нова сесія для B
+           │
+           No
+           │
+         Контекст >75%? ──Yes──► /compact ──► Продовжити
+           │
+           No
+           │
+         Продовжити завдання
 ```
 
 </details>
 
----
+> **Джерело**: [Кращі практики контексту](../ultimate-guide.md#context-best-practices) — Рядок ~1525
 
+---
 **Локалізація**: [Serhii (MacPlus Software)](https://macplus-software.com)
 *Остання синхронізація: Травень 2026*
