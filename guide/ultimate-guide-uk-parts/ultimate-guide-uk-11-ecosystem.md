@@ -931,7 +931,7 @@ Claude Code (за столом): "Переглянь PR аутентифікац
 
 **Некодуючі PM** (стратегія, дослідження, управління стейкхолдерами):
 - ⚠️ Витрати на Claude Code CLI не виправдані
-- ✅ Краще підходить: Claude Desktop (див. [Cowork Guide](https://github.com/FlorianBruniaux/claude-cowork-guide))
+- ✅ Краще підходить: Claude Desktop (див. [Cowork Guide](https://github.com/gerasimsergey/claude-cowork-guide-ua))
 - Випадок: Синтез досліджень, комунікація зі стейкхолдерами, планування дорожньої карти
 
 **Приклад стеку інструментів** (через [Stilyan Mitrev, Head of Product StableLab](https://www.linkedin.com/pulse/how-i-currently-ai-product-manager-stilyan-mitrev-ycvvf/)):
@@ -940,11 +940,11 @@ Claude Code (за столом): "Переглянь PR аутентифікац
 - UI прототипування: v0 → перевірка здійсненності Claude Code
 - Паттерн воркфлоу: Базовий контекстний проєкт + спеціалізовані проєкти за доменом
 
-**Реальність**: PM воркфлоу з Claude Code — це **нова область** з обмеженою валідацією спільнотою. Наразі ми маємо 1 звіт практика (зазначений практик спробував Claude Code, але не прийняв його довгостроково). Якщо ви PM, який успішно використовує Claude Code, [поділіться своїм воркфлоу](https://github.com/FlorianBruniaux/claude-code-ultimate-guide/discussions), щоб допомогти спільноті.
+**Реальність**: PM воркфлоу з Claude Code — це **нова область** з обмеженою валідацією спільнотою. Наразі ми маємо 1 звіт практика (зазначений практик спробував Claude Code, але не прийняв його довгостроково). Якщо ви PM, який успішно використовує Claude Code, [поділіться своїм воркфлоу](https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/discussions), щоб допомогти спільноті.
 
 **Див. також**:
 - [AI Ecosystem Guide](ai-ecosystem.md) — Комплементарні інструменти (Granola, Wispr Flow, ChatPRD, v0)
-- [Cowork Guide](https://github.com/FlorianBruniaux/claude-cowork-guide) — Claude Desktop для нетехнічних PM
+- [Cowork Guide](https://github.com/gerasimsergey/claude-cowork-guide-ua) — Claude Desktop для нетехнічних PM
 - [Design-to-Code Workflow](workflows/design-to-code.md#for-product-managers) — PM перспектива на Figma MCP
 
 ---
@@ -1159,7 +1159,7 @@ cd /path/to/target/project && claude --continue
 
 ### Внесок у цей розділ
 
-Знайшли новий міф, який циркулює онлайн? [Відкрийте issue](https://github.com/FlorianBruniaux/claude-code-ultimate-guide/issues) з:
+Знайшли новий міф, який циркулює онлайн? [Відкрийте issue](https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/issues) з:
 - Міфом/хибним уявленням
 - Де ви це бачили (платформа, приблизне охоплення)
 - Чому це вводить в оману (з джерелами)

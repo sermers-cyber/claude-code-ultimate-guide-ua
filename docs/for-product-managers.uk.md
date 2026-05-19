@@ -38,9 +38,9 @@
 
 ### Що насправді потрібно для старту
 
-1. Встановити Claude Code (5 хв) → [Розділ 1.1 Посібника](../guide/ultimate-guide.md#11-installation).
-2. Вивчити одну формулу промпту → [Розділ 2.8 — Структуровані промпти](../guide/ultimate-guide.md#28-structured-prompting-with-xml-tags).
-3. Зрозуміти, як давати контекст → [Розділ 3.1 — CLAUDE.md](../guide/ultimate-guide.md#31-memory-files-claudemd).
+1. Встановити Claude Code (5 хв) → [Розділ 1.1 Посібника](../guide/ultimate-guide.uk.md#11-installation).
+2. Вивчити одну формулу промпту → [Розділ 2.8 — Структуровані промпти](../guide/ultimate-guide.uk.md#28-structured-prompting-with-xml-tags).
+3. Зрозуміти, як давати контекст → [Розділ 3.1 — CLAUDE.md](../guide/ultimate-guide.uk.md#31-memory-files-claudemd).
 
 Цього достатньо для першого тижня.
 
@@ -51,15 +51,15 @@
 Цей посібник орієнтований на розробників. Більшість розділів 4-9 (Агенти, Скіли, Хуки, MCP, Просунуті патерни) будуть вам нецікаві, якщо ви не плануєте глибокого занурення.
 
 Для загальної продуктивності з Claude (написання текстів, дослідження, аналіз, підготовка до зустрічей):
-→ **[Claude Cowork Guide](https://github.com/FlorianBruniaux/claude-cowork-guide)** — створений спеціально для не-розробників.
+→ **[Claude Cowork Guide](https://github.com/gerasimsergey/claude-cowork-guide-ua)** — створений спеціально для не-розробників.
 
 ---
 
 ## Швидкі посилання
 
-- [Claude Cowork Guide](https://github.com/FlorianBruniaux/claude-cowork-guide) — використання Claude не для розробки.
-- [Швидкий старт](../guide/ultimate-guide.md#1-quick-start-day-1).
-- [Cheatsheet (Шпаргалка)](../guide/cheatsheet.md) — для щоденного використання.
+- [Claude Cowork Guide](https://github.com/gerasimsergey/claude-cowork-guide-ua) — використання Claude не для розробки.
+- [Швидкий старт](../guide/ultimate-guide.uk.md#1-quick-start-day-1).
+- [Cheatsheet (Шпаргалка)](../guide/cheatsheet.uk.md) — для щоденного використання.
 
 ---
 **Локалізація**: [Serhii (MacPlus Software)](https://macplus-software.com)

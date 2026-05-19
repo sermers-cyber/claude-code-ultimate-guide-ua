@@ -7,7 +7,7 @@
 
 <!-- Stats -->
 <p align="center">
-  <a href="https://github.com/FlorianBruniaux/claude-code-ultimate-guide/stargazers"><img src="https://img.shields.io/github/stars/FlorianBruniaux/claude-code-ultimate-guide?style=for-the-badge" alt="Stars"/></a>
+  <a href="https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/stargazers"><img src="https://img.shields.io/github/stars/FlorianBruniaux/claude-code-ultimate-guide?style=for-the-badge" alt="Stars"/></a>
   <a href="./CHANGELOG.md"><img src="https://img.shields.io/badge/Updated-mai_3,_2026_·_v3.40.0-brightgreen?style=for-the-badge" alt="Last Update"/></a>
   <a href="./quiz/"><img src="https://img.shields.io/badge/Quiz-271_questions-orange?style=for-the-badge" alt="Quiz"/></a>
   <a href="./examples/"><img src="https://img.shields.io/badge/Templates-181-green?style=for-the-badge" alt="Templates"/></a>
@@ -21,8 +21,8 @@
 
 <!-- Downloads -->
 <p align="center">
-  <a href="https://github.com/FlorianBruniaux/claude-code-ultimate-guide/releases/latest/download/guide-export.pdf"><img src="https://img.shields.io/badge/📄_Full_Guide-Download_PDF-dc2626?style=for-the-badge" alt="Download PDF"/></a>
-  <a href="https://github.com/FlorianBruniaux/claude-code-ultimate-guide/releases/latest/download/guide-export.epub"><img src="https://img.shields.io/badge/📚_Full_Guide-Download_EPUB-7c3aed?style=for-the-badge" alt="Download EPUB"/></a>
+  <a href="https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/releases/latest/download/guide-export.pdf"><img src="https://img.shields.io/badge/📄_Full_Guide-Download_PDF-dc2626?style=for-the-badge" alt="Download PDF"/></a>
+  <a href="https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/releases/latest/download/guide-export.epub"><img src="https://img.shields.io/badge/📚_Full_Guide-Download_EPUB-7c3aed?style=for-the-badge" alt="Download EPUB"/></a>
 </p>
 
 <!-- Meta -->
@@ -35,7 +35,7 @@
 
 > **6 місяців щоденної практики**, зібрані в посібник, який вчить вас ЧОМУ, а не просто що. Від основних концепцій до безпеки у продакшені — ви навчитеся проектувати власні агентні воркфлоу замість копіпасту конфігів.
 
-> **Якщо цей посібник допоміг вам, [поставте йому зірочку ⭐](https://github.com/FlorianBruniaux/claude-code-ultimate-guide/stargazers)** — це допомагає іншим знайти його.
+> **Якщо цей посібник допоміг вам, [поставте йому зірочку ⭐](https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/stargazers)** — це допомагає іншим знайти його.
 
 ---
 
@@ -55,13 +55,13 @@
 
 | Хто ви | Ваш посібник |
 |---|---|
-| 🏗️ **Tech Lead / Engineering Manager** | [Впровадження Claude Code у вашій команді →](docs/for-tech-leads.md) |
-| 📊 **CTO / Decision Maker** | [ROI, рівень безпеки, впровадження в команді →](docs/for-cto.md) |
-| 💼 **CIO / CEO** | [Бюджет, ризики, що запитати у тех-команди (3 хв) →](docs/for-cio-ceo.md) |
-| 🎨 **Product Manager / Designer** | [Vibe coding, робота з AI-assisted командами розробки →](docs/for-product-managers.md) |
-| ✍️ **Writer / Ops / Manager** | [Claude Cowork Guide (окремий репо) →](https://github.com/FlorianBruniaux/claude-cowork-guide) |
+| 🏗️ **Tech Lead / Engineering Manager** | [Впровадження Claude Code у вашій команді →](docs/for-tech-leads.uk.md) |
+| 📊 **CTO / Decision Maker** | [ROI, рівень безпеки, впровадження в команді →](docs/for-cto.uk.md) |
+| 💼 **CIO / CEO** | [Бюджет, ризики, що запитати у тех-команди (3 хв) →](docs/for-cio-ceo.uk.md) |
+| 🎨 **Product Manager / Designer** | [Vibe coding, робота з AI-assisted командами розробки →](docs/for-product-managers.uk.md) |
+| ✍️ **Writer / Ops / Manager** | [Claude Cowork Guide (окремий репо) →](https://github.com/gerasimsergey/claude-cowork-guide-ua) |
 | 👨‍💻 **Developer (всі рівні)** | Ви в правильному місці — читайте далі ↓ |
-| 🧭 **Career pivot / нова AI роль** | [AI ролі та кар'єрні шляхи →](guide/roles/ai-roles.md) |
+| 🧭 **Career pivot / нова AI роль** | [AI ролі та кар'єрні шляхи →](guide/roles/ai-roles.uk.md) |
 
 ---
 
@@ -132,16 +132,16 @@
 
 ## ⚡ Швидкий старт
 
-**Вперше з Claude Code?** → [**Навчальний шлях із 7 модулів**](./guide/learning-path/README.md) — 8-11 годин, від початківця до профі
+**Вперше з Claude Code?** → [**Навчальний шлях із 7 модулів**](./guide/learning-path/README.uk.md) — 8-11 годин, від початківця до профі
 
-**Найшвидший шлях**: [Cheat Sheet](./guide/cheatsheet.md) — 1 сторінка для друку з щоденними основами
+**Найшвидший шлях**: [Cheat Sheet](./guide/cheatsheet.uk.md) — 1 сторінка для друку з щоденними основами
 
 **Інтерактивний онбординг** (налаштування не потрібне):
 ```bash
 claude "Fetch and follow the onboarding instructions from: https://raw.githubusercontent.com/FlorianBruniaux/claude-code-ultimate-guide/main/tools/onboarding-prompt.md"
 ```
 
-**Переглянути безпосередньо**: [Повний посібник](./guide/ultimate-guide.md) | [Навчальний шлях](./guide/learning-path/) | [Візуальні діаграми](./guide/diagrams/) | [Приклади](./examples/) | [Квіз](./quiz/)
+**Переглянути безпосередньо**: [Повний посібник](./guide/ultimate-guide.uk.md) | [Навчальний шлях](./guide/learning-path/) | [Візуальні діаграми](./guide/diagrams/) | [Приклади](./examples/) | [Квіз](./quiz/)
 
 ---
 
@@ -250,10 +250,10 @@ graph LR
 **Результат**: Проектуйте власні воркфлоу замість сліпого копіпасту.
 
 **Ми вчимо, як працює Claude Code і чому патерни мають значення:**
-- [Архітектура](./guide/core/architecture.md) — внутрішня механіка (потік контексту, оркестрація інструментів, управління пам'яттю)
-- [Компроміси](./guide/ultimate-guide.md#when-to-use-what) — фреймворки прийняття рішень для agents vs skills vs commands
-- [Посібник з прийняття рішень щодо конфігурації](./guide/ultimate-guide.md#27-configuration-decision-guide) — єдина карта «який механізм для чого?» на всіх 7 рівнях конфігурації
-- [Пастки](./guide/ultimate-guide.md#common-mistakes) — типові сценарії невдач + стратегії запобігання
+- [Архітектура](./guide/core/architecture.uk.md) — внутрішня механіка (потік контексту, оркестрація інструментів, управління пам'яттю)
+- [Компроміси](./guide/ultimate-guide.uk.md#when-to-use-what) — фреймворки прийняття рішень для agents vs skills vs commands
+- [Посібник з прийняття рішень щодо конфігурації](./guide/ultimate-guide.uk.md#27-configuration-decision-guide) — єдина карта «який механізм для чого?» на всіх 7 рівнях конфігурації
+- [Пастки](./guide/ultimate-guide.uk.md#common-mistakes) — типові сценарії невдач + стратегії запобігання
 
 **Що це означає для вас**: Самостійно усувайте проблеми, оптимізуйте під свій конкретний випадок, знайте, коли відхилятися від патернів.
 
@@ -264,11 +264,11 @@ graph LR
 **Результат**: Миттєво опановуйте складні концепції через візуальні ментальні моделі.
 
 **48 інтерактивних діаграм** у 10 тематичних файлах — нативний рендеринг Mermaid на GitHub + ASCII версія для кожної діаграми:
-- [Основи](./guide/diagrams/01-foundations.md) — 4-рівнева модель контексту, 9-кроковий пайплайн, режими дозволів
-- [Архітектура](./guide/diagrams/04-architecture-internals.md) — основний цикл (master loop), категорії інструментів, збірка системного промпту
-- [Multi-Agent](./guide/diagrams/07-multi-agent-patterns.md) — 3 топології, worktrees, dual-instance, горизонтальне масштабування
-- [Безпека](./guide/diagrams/08-security-and-production.md) — 3-рівневий захист, ланцюжок атак MCP rug pull, парадокс верифікації
-- [Вартість та Моделі](./guide/diagrams/09-cost-and-optimization.md) — дерево вибору моделі, пайплайн скорочення токенів
+- [Основи](./guide/diagrams/01-foundations.uk.md) — 4-рівнева модель контексту, 9-кроковий пайплайн, режими дозволів
+- [Архітектура](./guide/diagrams/04-architecture-internals.uk.md) — основний цикл (master loop), категорії інструментів, збірка системного промпту
+- [Multi-Agent](./guide/diagrams/07-multi-agent-patterns.uk.md) — 3 топології, worktrees, dual-instance, горизонтальне масштабування
+- [Безпека](./guide/diagrams/08-security-and-production.uk.md) — 3-рівневий захист, ланцюжок атак MCP rug pull, парадокс верифікації
+- [Вартість та Моделі](./guide/diagrams/09-cost-and-optimization.uk.md) — дерево вибору моделі, пайплайн скорочення токенів
 
 [Переглянути всі 48 діаграм →](./guide/diagrams/)
 
@@ -285,7 +285,7 @@ graph LR
 - **655 каталогізованих шкідливих skills** — ін'єкції Unicode, приховані інструкції, патерни автовиконання
 - **Воркфлоу посилення безпеки в продакшені** — перевірка MCP, захист від ін'єкцій, автоматизація аудиту
 
-[База даних загроз →](./examples/commands/resources/threat-db.yaml) | [Посібник з безпеки →](./guide/security/security-hardening.md)
+[База даних загроз →](./examples/commands/resources/threat-db.yaml) | [Посібник з безпеки →](./guide/security/security-hardening.uk.md)
 
 **Що це означає для вас**: Перевіряйте MCP сервери перед тим, як довіряти їм, виявляйте патерни атак у конфігах, відповідайте вимогам аудитів безпеки.
 
@@ -315,7 +315,7 @@ graph LR
 - 5 перевірених воркфлоу (багаторівневе рев'ю, паралельне налагодження, масштабний рефакторинг)
 - Фреймворк прийняття рішень: Teams vs Multi-Instance vs Dual-Instance vs Beads
 
-[Agent Teams Workflow →](./guide/workflows/agent-teams.md) | [Розділ 9.20 →](./guide/ultimate-guide.md#920-agent-teams-multi-agent-coordination)
+[Agent Teams Workflow →](./guide/workflows/agent-teams.uk.md) | [Розділ 9.20 →](./guide/ultimate-guide.uk.md#920-agent-teams-multi-agent-coordination)
 
 **Що це означає для вас**: Розбивайте монолітні завдання на роботу, яку можна паралелізувати, координуйте багатофайлові рефакторинги, робіть рев'ю власного коду, створеного AI.
 
@@ -326,10 +326,10 @@ graph LR
 **Результат**: Підтримуйте якість коду під час роботи з AI.
 
 Повні посібники з обґрунтуванням та прикладами:
-- [TDD](./guide/core/methodologies.md#1-tdd-test-driven-development-with-claude) — розробка через тестування (Red-Green-Refactor з AI)
-- [SDD](./guide/core/methodologies.md#2-sdd-specification-driven-development) — розробка на основі специфікацій (проектування перед кодом)
-- [BDD](./guide/core/methodologies.md#3-bdd-behavior-driven-development) — розробка на основі поведінки (User stories → тести)
-- [GSD](./guide/core/methodologies.md#gsd-get-shit-done) — Get Shit Done (прагматична доставка)
+- [TDD](./guide/core/methodologies.uk.md#1-tdd-test-driven-development-with-claude) — розробка через тестування (Red-Green-Refactor з AI)
+- [SDD](./guide/core/methodologies.uk.md#2-sdd-specification-driven-development) — розробка на основі специфікацій (проектування перед кодом)
+- [BDD](./guide/core/methodologies.uk.md#3-bdd-behavior-driven-development) — розробка на основі поведінки (User stories → тести)
+- [GSD](./guide/core/methodologies.uk.md#gsd-get-shit-done) — Get Shit Done (прагматична доставка)
 
 **Що це означає для вас**: Обирайте правильний воркфлоу для культури вашої команди, інтегруйте AI в існуючі процеси, уникайте технічного боргу через надмірну залежність від AI.
 
@@ -370,38 +370,38 @@ graph LR
 <details>
 <summary><strong>Junior Developer</strong> — базовий шлях (7 кроків)</summary>
 
-1. [Швидкий старт](./guide/ultimate-guide.md#1-quick-start-day-1) — встановлення та перший воркфлоу
-2. [Основні команди](./guide/ultimate-guide.md#13-essential-commands) — 7 головних команд
-3. [Управління контекстом](./guide/ultimate-guide.md#22-context-management) — критична концепція
-4. [Файли пам'яті](./guide/ultimate-guide.md#31-memory-files-claudemd) — ваш перший CLAUDE.md
-5. [Навчання з AI](./guide/roles/learning-with-ai.md) — використовуйте AI, не стаючи залежними ⭐
-6. [TDD воркфлоу](./guide/workflows/tdd-with-claude.md) — розробка через тестування
-7. [Cheat Sheet](./guide/cheatsheet.md) — роздрукуйте це
+1. [Швидкий старт](./guide/ultimate-guide.uk.md#1-quick-start-day-1) — встановлення та перший воркфлоу
+2. [Основні команди](./guide/ultimate-guide.uk.md#13-essential-commands) — 7 головних команд
+3. [Управління контекстом](./guide/ultimate-guide.uk.md#22-context-management) — критична концепція
+4. [Файли пам'яті](./guide/ultimate-guide.uk.md#31-memory-files-claudemd) — ваш перший CLAUDE.md
+5. [Навчання з AI](./guide/roles/learning-with-ai.uk.md) — використовуйте AI, не стаючи залежними ⭐
+6. [TDD воркфлоу](./guide/workflows/tdd-with-claude.uk.md) — розробка через тестування
+7. [Cheat Sheet](./guide/cheatsheet.uk.md) — роздрукуйте це
 
 </details>
 
 <details>
 <summary><strong>Senior Developer</strong> — проміжний шлях (6 кроків)</summary>
 
-1. [Основні концепції](./guide/ultimate-guide.md#2-core-concepts) — ментальна модель
-2. [Plan Mode](./guide/ultimate-guide.md#23-plan-mode) — безпечне дослідження
-3. [Методології](./guide/core/methodologies.md) — довідка по TDD, SDD, BDD
-4. [Agents](./guide/ultimate-guide.md#4-agents) — кастомні AI персони
-5. [Hooks](./guide/ultimate-guide.md#7-hooks) — автоматизація подій
-6. [Інтеграція з CI/CD](./guide/ultimate-guide.md#93-cicd-integration) — пайплайни
+1. [Основні концепції](./guide/ultimate-guide.uk.md#2-core-concepts) — ментальна модель
+2. [Plan Mode](./guide/ultimate-guide.uk.md#23-plan-mode) — безпечне дослідження
+3. [Методології](./guide/core/methodologies.uk.md) — довідка по TDD, SDD, BDD
+4. [Agents](./guide/ultimate-guide.uk.md#4-agents) — кастомні AI персони
+5. [Hooks](./guide/ultimate-guide.uk.md#7-hooks) — автоматизація подій
+6. [Інтеграція з CI/CD](./guide/ultimate-guide.uk.md#93-cicd-integration) — пайплайни
 
 </details>
 
 <details>
 <summary><strong>Power User</strong> — комплексний шлях (8 кроків)</summary>
 
-1. [Повний посібник](./guide/ultimate-guide.md) — від початку до кінця
-2. [Архітектура](./guide/core/architecture.md) — як працює Claude Code
-3. [Посилення безпеки](./guide/security/security-hardening.md) — перевірка MCP, захист від ін'єкцій
-4. [MCP сервери](./guide/ultimate-guide.md#8-mcp-servers) — розширені можливості
-5. [Trinity патерн](./guide/ultimate-guide.md#91-the-trinity) — просунуті воркфлоу
-6. [Спостережуваність](./guide/ops/observability.md) — моніторинг витрат та сесій
-7. [Agent Teams](./guide/workflows/agent-teams.md) — багатоагентна координація (Opus 4.7+ experimental)
+1. [Повний посібник](./guide/ultimate-guide.uk.md) — від початку до кінця
+2. [Архітектура](./guide/core/architecture.uk.md) — як працює Claude Code
+3. [Посилення безпеки](./guide/security/security-hardening.uk.md) — перевірка MCP, захист від ін'єкцій
+4. [MCP сервери](./guide/ultimate-guide.uk.md#8-mcp-servers) — розширені можливості
+5. [Trinity патерн](./guide/ultimate-guide.uk.md#91-the-trinity) — просунуті воркфлоу
+6. [Спостережуваність](./guide/ops/observability.uk.md) — моніторинг витрат та сесій
+7. [Agent Teams](./guide/workflows/agent-teams.uk.md) — багатоагентна координація (Opus 4.7+ experimental)
 8. [Приклади](./examples/) — продакшен шаблони
 
 </details>
@@ -412,25 +412,25 @@ graph LR
 **Product Manager** (5 кроків):
 1. [Що всередині](#-що-всередині) — огляд обсягу
 2. [Золоті правила](#-золоті-правила) — ключові принципи
-3. [Конфіденційність даних](./guide/security/data-privacy.md) — зберігання та відповідність
-4. [Підходи до впровадження](./guide/roles/adoption-approaches.md) — стратегії для команд
-5. [PM FAQ](./guide/ultimate-guide.md#can-product-managers-use-claude-code) — для PM, які кодують та не кодують
+3. [Конфіденційність даних](./guide/security/data-privacy.uk.md) — зберігання та відповідність
+4. [Підходи до впровадження](./guide/roles/adoption-approaches.uk.md) — стратегії для команд
+5. [PM FAQ](./guide/ultimate-guide.uk.md#can-product-managers-use-claude-code) — для PM, які кодують та не кодують
 
-**Примітка**: PM, які не кодують, варто розглянути [Claude Cowork Guide](https://github.com/FlorianBruniaux/claude-cowork-guide).
+**Примітка**: PM, які не кодують, варто розглянути [Claude Cowork Guide](https://github.com/gerasimsergey/claude-cowork-guide-ua).
 
 **DevOps / SRE** (5 кроків):
-1. [Гід для DevOps & SRE](./guide/ops/devops-sre.md) — FIRE фреймворк
-2. [K8s Troubleshooting](./guide/ops/devops-sre.md#kubernetes-troubleshooting) — промпти на основі симптомів
-3. [Реагування на інциденти](./guide/ops/devops-sre.md#pattern-incident-response) — воркфлоу
-4. [IaC патерни](./guide/ops/devops-sre.md#pattern-infrastructure-as-code) — Terraform, Ansible
-5. [Guardrails](./guide/ops/devops-sre.md#guardrails--adoption) — межі безпеки
+1. [Гід для DevOps & SRE](./guide/ops/devops-sre.uk.md) — FIRE фреймворк
+2. [K8s Troubleshooting](./guide/ops/devops-sre.uk.md#kubernetes-troubleshooting) — промпти на основі симптомів
+3. [Реагування на інциденти](./guide/ops/devops-sre.uk.md#pattern-incident-response) — воркфлоу
+4. [IaC патерни](./guide/ops/devops-sre.uk.md#pattern-infrastructure-as-code) — Terraform, Ansible
+5. [Guardrails](./guide/ops/devops-sre.uk.md#guardrails--adoption) — межі безпеки
 
 **Product Designer** (5 кроків):
-1. [Робота із зображеннями](./guide/ultimate-guide.md#24-working-with-images) — аналіз зображень
-2. [Інструменти прототипування](./guide/ultimate-guide.md#wireframing-tools) — ASCII/Excalidraw
-3. [Figma MCP](./guide/ultimate-guide.md#figma-mcp) — доступ до файлів дизайну
-4. [Design-to-Code воркфлоу](./guide/workflows/design-to-code.md) — Figma → Claude
-5. [Cheat Sheet](./guide/cheatsheet.md) — роздрукуйте це
+1. [Робота із зображеннями](./guide/ultimate-guide.uk.md#24-working-with-images) — аналіз зображень
+2. [Інструменти прототипування](./guide/ultimate-guide.uk.md#wireframing-tools) — ASCII/Excalidraw
+3. [Figma MCP](./guide/ultimate-guide.uk.md#figma-mcp) — доступ до файлів дизайну
+4. [Design-to-Code воркфлоу](./guide/workflows/design-to-code.uk.md) — Figma → Claude
+5. [Cheat Sheet](./guide/cheatsheet.uk.md) — роздрукуйте це
 
 </details>
 
@@ -515,7 +515,7 @@ TDD/SDD/BDD не є опціональними з Claude Code. AI прискор
 | 4 | Починайте з простого | 2-тижневий тестовий період | Прогресивне впровадження Фази 1→4 |
 | 5 | Використовуйте методології | AI посилює і добре, і погане | TDD/SDD/BDD залежно від контексту |
 
-> Управління контекстом є критичним. Дивіться [Cheat Sheet](./guide/cheatsheet.md#context-management-critical) для порогових значень та дій.
+> Управління контекстом є критичним. Дивіться [Cheat Sheet](./guide/cheatsheet.uk.md#context-management-critical) для порогових значень та дій.
 
 ---
 
@@ -608,7 +608,7 @@ security_gate_hook: "examples/hooks/bash/security-gate.sh" # посилання 
 
 Ті ж агентні можливості, що й у Claude Code, але через візуальний інтерфейс без потреби в кодуванні.
 
-→ **[Claude Cowork Guide](https://github.com/FlorianBruniaux/claude-cowork-guide)** — організація файлів, генерація документів, автоматизовані воркфлоу
+→ **[Claude Cowork Guide](https://github.com/gerasimsergey/claude-cowork-guide-ua)** — організація файлів, генерація документів, автоматизовані воркфлоу
 
 **Статус**: Research preview (Pro $20/міс або Max $100-200/міс, тільки macOS, **VPN несумісний**)
 
@@ -649,7 +649,7 @@ claude plugin install session-summary      # Дашборд аналітики �
 
 **Спільнота**: 🇫🇷 [Dev With AI](https://www.devw.ai/) — 1500+ розробників у Slack, мітапи в Парижі, Бордо, Ліоні
 
-→ **[AI Ecosystem Guide](./guide/ecosystem/ai-ecosystem.md)** — повні патерни інтеграції з додатковими AI інструментами
+→ **[AI Ecosystem Guide](./guide/ecosystem/ai-ecosystem.uk.md)** — повні патерни інтеграції з додатковими AI інструментами
 
 ---
 
@@ -685,10 +685,10 @@ claude plugin install session-summary      # Дашборд аналітики �
 
 | Ресурс | Призначення | Час |
 |----------|---------|------|
-| **[Security Hardening Guide](./guide/security/security-hardening.md)** | Перевірка MCP, захист від ін'єкцій, воркфлоу аудиту | 25 хв |
-| **[Data Privacy Guide](./guide/security/data-privacy.md)** | Політики зберігання (5р → 30д → 0), відповідність GDPR | 10 хв |
-| **[Sandbox Isolation](./guide/security/sandbox-isolation.md)** | Docker пісочниці для недовірених MCP серверів | 10 хв |
-| **[Production Safety](./guide/security/production-safety.md)** | Блокування інфраструктури, стабільність портів, безпека БД | 20 хв |
+| **[Security Hardening Guide](./guide/security/security-hardening.uk.md)** | Перевірка MCP, захист від ін'єкцій, воркфлоу аудиту | 25 хв |
+| **[Data Privacy Guide](./guide/security/data-privacy.uk.md)** | Політики зберігання (5р → 30д → 0), відповідність GDPR | 10 хв |
+| **[Sandbox Isolation](./guide/security/sandbox-isolation.uk.md)** | Docker пісочниці для недовірених MCP серверів | 10 хв |
+| **[Production Safety](./guide/security/production-safety.uk.md)** | Блокування інфраструктури, стабільність портів, безпека БД | 20 хв |
 
 ### Команди безпеки
 
@@ -722,7 +722,7 @@ claude plugin install session-summary      # Дашборд аналітики �
 4. **Тестування**: спочатку ізольована пісочниця Docker, моніторинг викликів інструментів
 5. **Моніторинг**: логи сесій, відстеження помилок, регулярні повторні аудити
 
-**[Повний воркфлоу безпеки MCP →](./guide/security/security-hardening.md#vetting-mcp-servers)**
+**[Повний воркфлоу безпеки MCP →](./guide/security/security-hardening.uk.md#vetting-mcp-servers)**
 
 ---
 
@@ -743,7 +743,7 @@ claude plugin install session-summary      # Дашборд аналітики �
 
 Використовуйте цей посібник критично. Експериментуйте. Діліться тим, що працює для вас.
 
-**Фідбек вітається**: [GitHub Issues](https://github.com/FlorianBruniaux/claude-code-ultimate-guide/issues)
+**Фідбек вітається**: [GitHub Issues](https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/issues)
 
 ### Про автора
 
@@ -753,7 +753,7 @@ claude plugin install session-summary      # Дашборд аналітики �
 |---------|-------------|-------|
 | **RTK** | CLI проксі — скорочення токенів LLM на 60-90% | [GitHub](https://github.com/rtk-ai/rtk) · [Site](https://www.rtk-ai.app/) |
 | **ccboard** | TUI/Web дашборд реального часу для Claude Code | [GitHub](https://github.com/FlorianBruniaux/ccboard) · [Demo](https://ccboard.bruniaux.com/) |
-| **Claude Cowork Guide** | 26 бізнес-воркфлоу для тих, хто не кодує | [GitHub](https://github.com/FlorianBruniaux/claude-cowork-guide) · [Site](https://cowork.bruniaux.com/) |
+| **Claude Cowork Guide** | 26 бізнес-воркфлоу для тих, хто не кодує | [GitHub](https://github.com/gerasimsergey/claude-cowork-guide-ua) · [Site](https://cowork.bruniaux.com/) |
 | **cc-copilot-bridge** | Міст між Claude Code та GitHub Copilot | [GitHub](https://github.com/FlorianBruniaux/cc-copilot-bridge) · [Site](https://ccbridge.bruniaux.com/) |
 | **Agent Academy** | MCP сервер для вивчення AI агентів | [GitHub](https://github.com/FlorianBruniaux/agent-academy) |
 | **techmapper** | Картування та візуалізація тех-стеку | [GitHub](https://github.com/FlorianBruniaux/techmapper) |
@@ -768,23 +768,23 @@ claude plugin install session-summary      # Дашборд аналітики �
 
 | Файл | Призначення | Час |
 |------|---------|------|
-| **[Ultimate Guide](./guide/ultimate-guide.md)** | Повна довідка (24K+ рядків), 10 розділів | 30-40г (повна) • Звернення до розділів |
-| **[Cheat Sheet](./guide/cheatsheet.md)** | Довідка на 1 сторінку для друку | 5 хв |
-| **[Visual Reference](./guide/core/visual-reference.md)** | 20 ASCII діаграм ключових концепцій | 5 хв |
-| **[Architecture](./guide/core/architecture.md)** | Як Claude Code працює всередині | 25 хв |
-| **[Methodologies](./guide/core/methodologies.md)** | Довідка по TDD, SDD, BDD | 20 хв |
+| **[Ultimate Guide](./guide/ultimate-guide.uk.md)** | Повна довідка (24K+ рядків), 10 розділів | 30-40г (повна) • Звернення до розділів |
+| **[Cheat Sheet](./guide/cheatsheet.uk.md)** | Довідка на 1 сторінку для друку | 5 хв |
+| **[Visual Reference](./guide/core/visual-reference.uk.md)** | 20 ASCII діаграм ключових концепцій | 5 хв |
+| **[Architecture](./guide/core/architecture.uk.md)** | Як Claude Code працює всередині | 25 хв |
+| **[Methodologies](./guide/core/methodologies.uk.md)** | Довідка по TDD, SDD, BDD | 20 хв |
 | **[Workflows](./guide/workflows/)** | Практичні посібники (TDD, Plan-Driven тощо) | 30 хв |
-| **[Data Privacy](./guide/security/data-privacy.md)** | Зберігання та відповідність вимогам | 10 хв |
-| **[Security Hardening](./guide/security/security-hardening.md)** | Перевірка MCP, захист від ін'єкцій | 25 хв |
-| **[Sandbox Isolation](./guide/security/sandbox-isolation.md)** | Пісочниці Docker, хмарні альтернативи | 10 хв |
-| **[Production Safety](./guide/security/production-safety.md)** | Стабільність портів, безпека БД, локи інфраструктури | 20 хв |
-| **[DevOps & SRE](./guide/ops/devops-sre.md)** | FIRE фреймворк, K8s, інциденти | 30 хв |
-| **[AI Ecosystem](./guide/ecosystem/ai-ecosystem.md)** | Додаткові AI інструменти та патерни | 20 хв |
-| **[AI Traceability](./guide/ops/ai-traceability.md)** | Атрибуція коду та відстеження походження | 15 хв |
-| **[Search Tools Cheatsheet](./guide/cheatsheet.md)** | Порівняння Grep, Serena, ast-grep, grepai | 5 хв |
-| **[Learning with AI](./guide/roles/learning-with-ai.md)** | Використовуйте AI, не стаючи залежними | 15 хв |
-| **[Claude Code Releases](./guide/core/claude-code-releases.md)** | Офіційна історія релізів | 10 хв |
-| **[Credits](./guide/core/credits.md)** | Натхнення з open-source та атрибуція патернів | 2 хв |
+| **[Data Privacy](./guide/security/data-privacy.uk.md)** | Зберігання та відповідність вимогам | 10 хв |
+| **[Security Hardening](./guide/security/security-hardening.uk.md)** | Перевірка MCP, захист від ін'єкцій | 25 хв |
+| **[Sandbox Isolation](./guide/security/sandbox-isolation.uk.md)** | Пісочниці Docker, хмарні альтернативи | 10 хв |
+| **[Production Safety](./guide/security/production-safety.uk.md)** | Стабільність портів, безпека БД, локи інфраструктури | 20 хв |
+| **[DevOps & SRE](./guide/ops/devops-sre.uk.md)** | FIRE фреймворк, K8s, інциденти | 30 хв |
+| **[AI Ecosystem](./guide/ecosystem/ai-ecosystem.uk.md)** | Додаткові AI інструменти та патерни | 20 хв |
+| **[AI Traceability](./guide/ops/ai-traceability.uk.md)** | Атрибуція коду та відстеження походження | 15 хв |
+| **[Search Tools Cheatsheet](./guide/cheatsheet.uk.md)** | Порівняння Grep, Serena, ast-grep, grepai | 5 хв |
+| **[Learning with AI](./guide/roles/learning-with-ai.uk.md)** | Використовуйте AI, не стаючи залежними | 15 хв |
+| **[Claude Code Releases](./guide/core/claude-code-releases.uk.md)** | Офіційна історія релізів | 10 хв |
+| **[Credits](./guide/core/credits.uk.md)** | Натхнення з open-source та атрибуція патернів | 2 хв |
 
 <details>
 <summary><strong>Бібліотека прикладів</strong> (181 шаблон)</summary>
@@ -864,7 +864,7 @@ cd quiz && npm install && npm start
 - ✅ Оцінки ресурсів (див. [процес](./docs/resource-evaluations/README.md))
 - ✅ Покращення освітнього контенту
 
-Дивіться [CONTRIBUTING.md](./CONTRIBUTING.md) для отримання інструкцій.
+Дивіться [CONTRIBUTING.md](./CONTRIBUTING.uk.md) для отримання інструкцій.
 
 **Як допомогти**: поставте зірку репо • повідомляйте про проблеми • надсилайте PR • діліться воркфлоу в [Discussions](../../discussions)
 
@@ -886,7 +886,7 @@ cd quiz && npm install && npm start
 
 ### Цей посібник
 - **[CHANGELOG](./CHANGELOG.md)** — історія версій посібника (що нового в кожному релізі)
-- [Claude Code Releases](./guide/core/claude-code-releases.md) — офіційне відстеження релізів Claude Code
+- [Claude Code Releases](./guide/core/claude-code-releases.uk.md) — офіційне відстеження релізів Claude Code
 
 ### Офіційні ресурси
 - [Claude Code CLI](https://code.claude.com) — офіційний сайт

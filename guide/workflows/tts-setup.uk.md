@@ -340,7 +340,7 @@ pipx uninstall piper-tts
 
 ---
 
-*Посібник з робочого процесу підтримується спільнотою [Claude Code Ultimate Guide](https://github.com/FlorianBruniaux/claude-code-ultimate-guide)*
+*Посібник з робочого процесу підтримується спільнотою [Claude Code Ultimate Guide](https://github.com/gerasimsergey/claude-code-ultimate-guide-ua)*
 *Остання версія: 2026-01-22 | Agent Vibes v3.0.0*
 
 ---

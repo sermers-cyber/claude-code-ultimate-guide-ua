@@ -840,7 +840,7 @@ Claude: [Continues with full context of Day 1 work]
 - **Proactive context management**: Monitor with `/status` and use research-backed thresholds:
   - **< 70%**: Optimal — full reasoning capacity
   - **75%**: Good time to `/compact` manually — before quality degrades
-  - **85%**: Auto-compact territory — Claude Code will compress automatically once remaining context drops below its fixed buffer (~6-7% of window). Manual handoff recommended before this point ([research-backed](../core/architecture.md#auto-compaction))
+  - **85%**: Auto-compact territory — Claude Code will compress automatically once remaining context drops below its fixed buffer (~6-7% of window). Manual handoff recommended before this point ([research-backed](../core/architecture.uk.md#auto-compaction))
   - **95%**: Force handoff — severe quality degradation, reset immediately
 - **Session naming**: Use `/rename` to give sessions descriptive names — critical when running multiple sessions in parallel (see [Auto-Rename Pattern](#session-auto-rename) below)
 
@@ -2413,7 +2413,7 @@ Two active bugs silently break caching on v2.1.69+. Apply these workarounds imme
 - **--resume/--continue** causes a full cache rebuild (0% hit ratio) on every resume because session JSONL strips deferred tool records before write. Workaround: avoid `--resume` until fixed.
 - **Per-session billing header** injects a unique hash as the first system prompt block, causing a cold miss on every session start and subagent call. Workaround: `"CLAUDE_CODE_ATTRIBUTION_HEADER": "false"` in `~/.claude/settings.json`.
 
-See [Known Issues → Prompt Cache Bugs](../core/known-issues.md) and run `/check-cache-bugs` for a full audit.
+See [Known Issues → Prompt Cache Bugs](../core/known-issues.uk.md) and run `/check-cache-bugs` for a full audit.
 
 > Docs: [prompt caching](https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching)
 
@@ -4585,7 +4585,7 @@ Claude Code operates within a **200K token context window** (1M beta available v
 | Tool results | Variable |
 | Reserved for response | 40-45K tokens |
 
-When context fills up (~75% in VS Code, ~95% in CLI), older content is automatically summarized. However, **research shows this degrades quality** (50-70% performance drop on complex tasks). Use `/compact` proactively at logical breakpoints, or trigger **session handoffs at 85%** to preserve intent over compressed history. See [Session Handoffs](line 2140) and [Auto-Compaction Research](../core/architecture.md#auto-compaction).
+When context fills up (~75% in VS Code, ~95% in CLI), older content is automatically summarized. However, **research shows this degrades quality** (50-70% performance drop on complex tasks). Use `/compact` proactively at logical breakpoints, or trigger **session handoffs at 85%** to preserve intent over compressed history. See [Session Handoffs](line 2140) and [Auto-Compaction Research](../core/architecture.uk.md#auto-compaction).
 
 ### Sub-Agent Isolation
 
@@ -11349,7 +11349,7 @@ exit 0
 
 > **Full implementation**: [`examples/hooks/bash/identity-reinjection.sh`](../../examples/hooks/bash/identity-reinjection.sh)
 >
-> **Origin**: Pattern sourced from Nick Tune's [hook-driven dev workflows](https://nick-tune.me/blog/2026-02-28-hook-driven-dev-workflows-with-claude-code/) (2026-02-28). The broader article covers state machine workflows with agent teams — see [Agent Teams Workflow](../workflows/agent-teams.md) for context.
+> **Origin**: Pattern sourced from Nick Tune's [hook-driven dev workflows](https://nick-tune.me/blog/2026-02-28-hook-driven-dev-workflows-with-claude-code/) (2026-02-28). The broader article covers state machine workflows with agent teams — see [Agent Teams Workflow](../workflows/agent-teams.uk.md) for context.
 
 ---
 
@@ -12341,7 +12341,7 @@ rg "validateSession" --type ts -A 5
 
 **Result**: Complete understanding + safe refactoring in 5 commands
 
-> **📖 Complete Guide**: See [Search Tools Mastery](../workflows/search-tools-mastery.md) for detailed workflows, real-world scenarios, and advanced combinations.
+> **📖 Complete Guide**: See [Search Tools Mastery](../workflows/search-tools-mastery.uk.md) for detailed workflows, real-world scenarios, and advanced combinations.
 
 ---
 
@@ -25484,7 +25484,7 @@ Common misconceptions we've seen:
 
 **Non-coding PMs** (strategy, research, stakeholder management):
 - ⚠️ Claude Code CLI overhead not justified
-- ✅ Better fit: Claude Desktop (see [Cowork Guide](https://github.com/FlorianBruniaux/claude-cowork-guide))
+- ✅ Better fit: Claude Desktop (see [Cowork Guide](https://github.com/gerasimsergey/claude-cowork-guide-ua))
 - Use case: Research synthesis, stakeholder communication, roadmap planning
 
 **Tool Stack Example** (via [Stilyan Mitrev, Head of Product StableLab](https://www.linkedin.com/pulse/how-i-currently-ai-product-manager-stilyan-mitrev-ycvvf/)):
@@ -25493,11 +25493,11 @@ Common misconceptions we've seen:
 - UI prototyping: v0 → Claude Code feasibility check
 - Workflow pattern: Base context project + specialized projects per domain
 
-**Reality check**: PM workflows with Claude Code are an **emerging area** with limited community validation. We currently have 1 practitioner report (the source practitioner noted they tried Claude Code but didn't adopt it long-term). If you're a PM using Claude Code successfully, [contribute your workflow](https://github.com/FlorianBruniaux/claude-code-ultimate-guide/discussions) to help the community.
+**Reality check**: PM workflows with Claude Code are an **emerging area** with limited community validation. We currently have 1 practitioner report (the source practitioner noted they tried Claude Code but didn't adopt it long-term). If you're a PM using Claude Code successfully, [contribute your workflow](https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/discussions) to help the community.
 
 **See also**:
 - [AI Ecosystem Guide](ai-ecosystem.md) — Complementary tools (Granola, Wispr Flow, ChatPRD, v0)
-- [Cowork Guide](https://github.com/FlorianBruniaux/claude-cowork-guide) — Claude Desktop for non-technical PMs
+- [Cowork Guide](https://github.com/gerasimsergey/claude-cowork-guide-ua) — Claude Desktop for non-technical PMs
 - [Design-to-Code Workflow](workflows/design-to-code.md#for-product-managers) — PM perspective on Figma MCP
 
 ---
@@ -25712,7 +25712,7 @@ You → Coordinate next steps
 
 ### Contributing to This Section
 
-Found a new myth circulating online? [Open an issue](https://github.com/FlorianBruniaux/claude-code-ultimate-guide/issues) with:
+Found a new myth circulating online? [Open an issue](https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/issues) with:
 - The myth/misconception
 - Where you saw it (platform, approximate reach)
 - Why it's misleading (with sources)

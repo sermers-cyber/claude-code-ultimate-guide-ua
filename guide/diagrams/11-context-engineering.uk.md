@@ -55,18 +55,18 @@ flowchart TD
     style S3 fill:#B8B8B8,color:#333
     style OVR fill:#7BC47F,color:#333
 
-    click G1 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/core/context-engineering.md#3-configuration-hierarchy" "Identity & tone"
-    click G2 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/core/context-engineering.md#3-configuration-hierarchy" "Universal tools"
-    click G3 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/core/context-engineering.md#3-configuration-hierarchy" "Cross-project conventions"
-    click G4 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/core/context-engineering.md#3-configuration-hierarchy" "Target: under 200 lines"
-    click P1 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/core/context-engineering.md#3-configuration-hierarchy" "Stack & architecture"
-    click P2 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/core/context-engineering.md#3-configuration-hierarchy" "Team conventions"
-    click P3 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/core/context-engineering.md#3-configuration-hierarchy" "Path-scoped imports"
-    click P4 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/core/context-engineering.md#4-modular-architecture" "Target: under 150 lines"
-    click S1 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/core/context-engineering.md#3-configuration-hierarchy" "One-off constraints"
-    click S2 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/core/context-engineering.md#3-configuration-hierarchy" "Temporary overrides"
-    click S3 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/core/context-engineering.md#3-configuration-hierarchy" "Ephemeral"
-    click OVR href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/core/context-engineering.md#3-configuration-hierarchy" "Override semantics"
+    click G1 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/core/context-engineering.md#3-configuration-hierarchy" "Identity & tone"
+    click G2 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/core/context-engineering.md#3-configuration-hierarchy" "Universal tools"
+    click G3 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/core/context-engineering.md#3-configuration-hierarchy" "Cross-project conventions"
+    click G4 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/core/context-engineering.md#3-configuration-hierarchy" "Target: under 200 lines"
+    click P1 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/core/context-engineering.md#3-configuration-hierarchy" "Stack & architecture"
+    click P2 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/core/context-engineering.md#3-configuration-hierarchy" "Team conventions"
+    click P3 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/core/context-engineering.md#3-configuration-hierarchy" "Path-scoped imports"
+    click P4 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/core/context-engineering.md#4-modular-architecture" "Target: under 150 lines"
+    click S1 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/core/context-engineering.md#3-configuration-hierarchy" "One-off constraints"
+    click S2 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/core/context-engineering.md#3-configuration-hierarchy" "Temporary overrides"
+    click S3 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/core/context-engineering.md#3-configuration-hierarchy" "Ephemeral"
+    click OVR href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/core/context-engineering.md#3-configuration-hierarchy" "Override semantics"
 ```
 
 <details>
@@ -117,13 +117,13 @@ flowchart LR
     style FIX fill:#7BC47F,color:#333
     style SIGNALS fill:#E85D5D,color:#fff
 
-    click Z1 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/core/context-engineering.md#2-the-context-budget" "1-100 lines: ~95%"
-    click Z2 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/core/context-engineering.md#2-the-context-budget" "100-200 lines: ~88%"
-    click Z3 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/core/context-engineering.md#2-the-context-budget" "200-400 lines: ~75%"
-    click Z4 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/core/context-engineering.md#2-the-context-budget" "400-600 lines: ~60%"
-    click Z5 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/core/context-engineering.md#2-the-context-budget" "600+ lines: ~45%"
-    click FIX href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/core/context-engineering.md#2-the-context-budget" "Path-scoping fix"
-    click SIGNALS href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/core/context-engineering.md#2-the-context-budget" "Signs of overload"
+    click Z1 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/core/context-engineering.md#2-the-context-budget" "1-100 lines: ~95%"
+    click Z2 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/core/context-engineering.md#2-the-context-budget" "100-200 lines: ~88%"
+    click Z3 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/core/context-engineering.md#2-the-context-budget" "200-400 lines: ~75%"
+    click Z4 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/core/context-engineering.md#2-the-context-budget" "400-600 lines: ~60%"
+    click Z5 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/core/context-engineering.md#2-the-context-budget" "600+ lines: ~45%"
+    click FIX href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/core/context-engineering.md#2-the-context-budget" "Path-scoping fix"
+    click SIGNALS href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/core/context-engineering.md#2-the-context-budget" "Signs of overload"
 ```
 
 <details>
@@ -183,13 +183,13 @@ flowchart TD
         style G5 fill:#7BC47F,color:#333
     end
 
-    click B1 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/core/context-engineering.md#4-modular-architecture" "Anti-pattern: monolith"
-    click B4 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/core/context-engineering.md#2-the-context-budget" "Adherence degradation"
-    click G1 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/core/context-engineering.md#4-modular-architecture" "Root CLAUDE.md"
-    click G2 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/core/context-engineering.md#4-modular-architecture" "API module"
-    click G3 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/core/context-engineering.md#4-modular-architecture" "Components module"
-    click G4 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/core/context-engineering.md#4-modular-architecture" "DB module"
-    click G5 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/core/context-engineering.md#4-modular-architecture" "Result: coverage with less bloat"
+    click B1 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/core/context-engineering.md#4-modular-architecture" "Anti-pattern: monolith"
+    click B4 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/core/context-engineering.md#2-the-context-budget" "Adherence degradation"
+    click G1 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/core/context-engineering.md#4-modular-architecture" "Root CLAUDE.md"
+    click G2 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/core/context-engineering.md#4-modular-architecture" "API module"
+    click G3 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/core/context-engineering.md#4-modular-architecture" "Components module"
+    click G4 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/core/context-engineering.md#4-modular-architecture" "DB module"
+    click G5 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/core/context-engineering.md#4-modular-architecture" "Result: coverage with less bloat"
 ```
 
 <details>
@@ -248,17 +248,17 @@ flowchart TD
     style J fill:#F5E6D3,color:#333
     style RULE fill:#7BC47F,color:#333
 
-    click A href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/core/context-engineering.md#3-configuration-hierarchy" "New rule to place"
-    click B href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/core/context-engineering.md#3-configuration-hierarchy" "Relevant to every project?"
-    click C href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#31-memory-files-claudemd" "Global CLAUDE.md"
-    click D href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/core/context-engineering.md#4-modular-architecture" "Specific to certain files?"
-    click E href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/core/context-engineering.md#4-modular-architecture" "Path-scoped module"
-    click F href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/core/context-engineering.md#4-modular-architecture" "Procedural workflow?"
-    click G href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#51-understanding-skills" "Skill file"
-    click H href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/core/context-engineering.md#3-configuration-hierarchy" "Whole project?"
-    click I href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#31-memory-files-claudemd" "Project CLAUDE.md root"
-    click J href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/core/context-engineering.md#3-configuration-hierarchy" "Session inline"
-    click RULE href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/core/context-engineering.md#3-configuration-hierarchy" "Rule of thumb"
+    click A href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/core/context-engineering.md#3-configuration-hierarchy" "New rule to place"
+    click B href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/core/context-engineering.md#3-configuration-hierarchy" "Relevant to every project?"
+    click C href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#31-memory-files-claudemd" "Global CLAUDE.md"
+    click D href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/core/context-engineering.md#4-modular-architecture" "Specific to certain files?"
+    click E href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/core/context-engineering.md#4-modular-architecture" "Path-scoped module"
+    click F href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/core/context-engineering.md#4-modular-architecture" "Procedural workflow?"
+    click G href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#51-understanding-skills" "Skill file"
+    click H href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/core/context-engineering.md#3-configuration-hierarchy" "Whole project?"
+    click I href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#31-memory-files-claudemd" "Project CLAUDE.md root"
+    click J href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/core/context-engineering.md#3-configuration-hierarchy" "Session inline"
+    click RULE href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/core/context-engineering.md#3-configuration-hierarchy" "Rule of thumb"
 ```
 
 <details>

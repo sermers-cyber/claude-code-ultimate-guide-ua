@@ -63,21 +63,21 @@ flowchart TD
     style L1 fill:#B8B8B8,color:#333
     style L2 fill:#B8B8B8,color:#333
 
-    click CC href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#81-what-is-mcp" "Claude Code — MCP Client"
-    click O1 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#82-available-servers" "context7 — документація бібліотек"
-    click O2 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#82-available-servers" "sequential-thinking"
-    click O3 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#82-available-servers" "playwright — автоматизація браузера"
-    click O4 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#82-available-servers" "git-mcp — локальні операції git"
-    click O5 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#82-available-servers" "github-mcp — платформа GitHub"
-    click D1 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#82-available-servers" "semgrep — сканування безпеки"
-    click D2 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#82-available-servers" "github — керування PR"
-    click D3 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#82-available-servers" "grepai — семантичний пошук"
-    click D4 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#82-available-servers" "filesystem-enhanced"
-    click OP1 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#82-available-servers" "kubernetes"
-    click OP2 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#82-available-servers" "docker"
-    click OP3 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#82-available-servers" "aws"
-    click L1 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#83-configuration" "Специфічні для проекту MCP-сервери"
-    click L2 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#83-configuration" "Внутрішні API як MCP"
+    click CC href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#81-what-is-mcp" "Claude Code — MCP Client"
+    click O1 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#82-available-servers" "context7 — документація бібліотек"
+    click O2 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#82-available-servers" "sequential-thinking"
+    click O3 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#82-available-servers" "playwright — автоматизація браузера"
+    click O4 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#82-available-servers" "git-mcp — локальні операції git"
+    click O5 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#82-available-servers" "github-mcp — платформа GitHub"
+    click D1 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#82-available-servers" "semgrep — сканування безпеки"
+    click D2 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#82-available-servers" "github — керування PR"
+    click D3 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#82-available-servers" "grepai — семантичний пошук"
+    click D4 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#82-available-servers" "filesystem-enhanced"
+    click OP1 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#82-available-servers" "kubernetes"
+    click OP2 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#82-available-servers" "docker"
+    click OP3 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#82-available-servers" "aws"
+    click L1 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#83-configuration" "Специфічні для проекту MCP-сервери"
+    click L2 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#83-configuration" "Внутрішні API як MCP"
 ```
 
 <details>
@@ -136,16 +136,16 @@ flowchart LR
     style S3 fill:#E87E2F,color:#fff
     style EXT fill:#B8B8B8,color:#333
 
-    click CC1 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#81-what-is-mcp" "Аналіз виклику інструменту"
-    click CC2 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#81-what-is-mcp" "Пошук відповідного MCP-сервера"
-    click CC3 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#81-what-is-mcp" "Використання результату інструменту"
-    click P1 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#81-what-is-mcp" "JSON-RPC Request"
-    click P2 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#81-what-is-mcp" "Transport: stdio or SSE"
-    click P3 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#81-what-is-mcp" "JSON-RPC Response"
-    click S1 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#82-available-servers" "Receive tool call"
-    click S2 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#82-available-servers" "Execute action"
-    click S3 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#82-available-servers" "Return structured result"
-    click EXT href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#82-available-servers" "External Service"
+    click CC1 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#81-what-is-mcp" "Аналіз виклику інструменту"
+    click CC2 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#81-what-is-mcp" "Пошук відповідного MCP-сервера"
+    click CC3 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#81-what-is-mcp" "Використання результату інструменту"
+    click P1 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#81-what-is-mcp" "JSON-RPC Request"
+    click P2 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#81-what-is-mcp" "Transport: stdio or SSE"
+    click P3 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#81-what-is-mcp" "JSON-RPC Response"
+    click S1 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#82-available-servers" "Receive tool call"
+    click S2 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#82-available-servers" "Execute action"
+    click S3 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#82-available-servers" "Return structured result"
+    click EXT href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#82-available-servers" "External Service"
 ```
 
 <details>
@@ -241,14 +241,14 @@ flowchart TD
     style D1 fill:#B8B8B8,color:#333
     style NOTE2 fill:#F5E6D3,color:#333
 
-    click A href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#83-configuration" "CLI --mcp-config flag"
-    click B href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#83-configuration" "Project .claude/mcp.json"
-    click C href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#83-configuration" "Project Root .mcp.json"
-    click D href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#83-configuration" "User scope ~/.claude.json"
-    click E href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#81-what-is-mcp" "Без MCP-серверів"
-    click A1 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#83-configuration" "CI/CD overrides"
-    click B1 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#83-configuration" "Team-shared servers"
-    click D1 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#83-configuration" "Personal tools"
+    click A href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#83-configuration" "CLI --mcp-config flag"
+    click B href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#83-configuration" "Project .claude/mcp.json"
+    click C href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#83-configuration" "Project Root .mcp.json"
+    click D href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#83-configuration" "User scope ~/.claude.json"
+    click E href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#81-what-is-mcp" "Без MCP-серверів"
+    click A1 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#83-configuration" "CI/CD overrides"
+    click B1 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#83-configuration" "Team-shared servers"
+    click D1 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#83-configuration" "Personal tools"
 ```
 
 <details>

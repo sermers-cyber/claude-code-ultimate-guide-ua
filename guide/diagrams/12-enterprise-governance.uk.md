@@ -44,17 +44,17 @@ flowchart TD
     style TIER4 fill:#E85D5D,color:#fff
     style NOTE fill:#F5E6D3,color:#333
 
-    click A href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/security/enterprise-governance.md#1-local-vs-shared-the-governance-split" "What are you governing?"
-    click B href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/security/enterprise-governance.md#1-local-vs-shared-the-governance-split" "Usage context?"
-    click P href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/security/enterprise-governance.md#4-guardrail-tiers" "Personal dev workflow"
-    click T href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/security/enterprise-governance.md#4-guardrail-tiers" "Team codebase"
-    click PR href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/security/enterprise-governance.md#4-guardrail-tiers" "Production system"
-    click REG href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/security/enterprise-governance.md#4-guardrail-tiers" "Regulated environment"
-    click TIER1 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/security/enterprise-governance.md#4-guardrail-tiers" "Tier 1: Starter"
-    click TIER2 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/security/enterprise-governance.md#4-guardrail-tiers" "Tier 2: Standard"
-    click TIER3 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/security/enterprise-governance.md#4-guardrail-tiers" "Tier 3: Strict"
-    click TIER4 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/security/enterprise-governance.md#4-guardrail-tiers" "Tier 4: Regulated"
-    click NOTE href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/security/enterprise-governance.md#12-what-you-can-and-cant-control" "What you can/cannot control"
+    click A href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/security/enterprise-governance.md#1-local-vs-shared-the-governance-split" "What are you governing?"
+    click B href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/security/enterprise-governance.md#1-local-vs-shared-the-governance-split" "Usage context?"
+    click P href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/security/enterprise-governance.md#4-guardrail-tiers" "Personal dev workflow"
+    click T href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/security/enterprise-governance.md#4-guardrail-tiers" "Team codebase"
+    click PR href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/security/enterprise-governance.md#4-guardrail-tiers" "Production system"
+    click REG href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/security/enterprise-governance.md#4-guardrail-tiers" "Regulated environment"
+    click TIER1 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/security/enterprise-governance.md#4-guardrail-tiers" "Tier 1: Starter"
+    click TIER2 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/security/enterprise-governance.md#4-guardrail-tiers" "Tier 2: Standard"
+    click TIER3 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/security/enterprise-governance.md#4-guardrail-tiers" "Tier 3: Strict"
+    click TIER4 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/security/enterprise-governance.md#4-guardrail-tiers" "Tier 4: Regulated"
+    click NOTE href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/security/enterprise-governance.md#12-what-you-can-and-cant-control" "What you can/cannot control"
 ```
 
 <details>
@@ -179,14 +179,14 @@ flowchart LR
     style RE2 fill:#E85D5D,color:#fff
     style RE1 fill:#E85D5D,color:#fff
 
-    click PU1 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/security/enterprise-governance.md#2-ai-usage-charter" "PUBLIC data"
-    click IN1 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/security/enterprise-governance.md#2-ai-usage-charter" "INTERNAL data"
-    click CO1 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/security/enterprise-governance.md#2-ai-usage-charter" "CONFIDENTIAL data"
-    click RE1 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/security/enterprise-governance.md#2-ai-usage-charter" "RESTRICTED data"
-    click PU2 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/security/enterprise-governance.md#2-ai-usage-charter" "PUBLIC: allowed"
-    click IN2 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/security/enterprise-governance.md#2-ai-usage-charter" "INTERNAL: standard config"
-    click CO2 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/security/enterprise-governance.md#2-ai-usage-charter" "CONFIDENTIAL: Enterprise only"
-    click RE2 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/security/enterprise-governance.md#2-ai-usage-charter" "RESTRICTED: never in AI context"
+    click PU1 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/security/enterprise-governance.md#2-ai-usage-charter" "PUBLIC data"
+    click IN1 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/security/enterprise-governance.md#2-ai-usage-charter" "INTERNAL data"
+    click CO1 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/security/enterprise-governance.md#2-ai-usage-charter" "CONFIDENTIAL data"
+    click RE1 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/security/enterprise-governance.md#2-ai-usage-charter" "RESTRICTED data"
+    click PU2 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/security/enterprise-governance.md#2-ai-usage-charter" "PUBLIC: allowed"
+    click IN2 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/security/enterprise-governance.md#2-ai-usage-charter" "INTERNAL: standard config"
+    click CO2 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/security/enterprise-governance.md#2-ai-usage-charter" "CONFIDENTIAL: Enterprise only"
+    click RE2 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/security/enterprise-governance.md#2-ai-usage-charter" "RESTRICTED: never in AI context"
 ```
 
 <details>

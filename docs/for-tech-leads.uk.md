@@ -18,8 +18,8 @@
 |---|---|
 | **Стандартизація конфігурації** | WP05 — Впровадження в команді |
 | **Безпека та комплаєнс** | WP03 — Безпека · WP06 — Приватність та GDPR |
-| **Інтеграція з CI/CD** | [Розділ 9.3 Посібника](../guide/ultimate-guide.md#93-cicd-integration) |
-| **Онбординг нових розробників** | [Розділ 3.5 — Масштабування командної конфігурації](../guide/ultimate-guide.md#35-team-configuration-at-scale) |
+| **Інтеграція з CI/CD** | [Розділ 9.3 Посібника](../guide/ultimate-guide.uk.md#93-cicd-integration) |
+| **Онбординг нових розробників** | [Розділ 3.5 — Масштабування командної конфігурації](../guide/ultimate-guide.uk.md#35-team-configuration-at-scale) |
 | **Мульти-агентні воркфлоу** | WP08 — Команди агентів |
 
 ---
@@ -42,7 +42,7 @@ if [[ "$TOOL_INPUT_PATH" =~ \.env$|secrets/ ]]; then
   exit 2
 fi
 ```
-Дивіться [Розділ 7.4 — Хуки безпеки](../guide/ultimate-guide.md#74-security-hooks) для повного набору.
+Дивіться [Розділ 7.4 — Хуки безпеки](../guide/ultimate-guide.uk.md#74-security-hooks) для повного набору.
 
 ---
 
@@ -71,9 +71,9 @@ fi
 
 ## Швидкі посилання
 
-- [Повний посібник](../guide/ultimate-guide.md) — почніть з розділу 3.5 для налаштування команди.
+- [Повний посібник](../guide/ultimate-guide.uk.md) — почніть з розділу 3.5 для налаштування команди.
 - [Шаблони](../examples/) — готові до використання хуки, агенти та приклади CLAUDE.md.
-- [Зміцнення безпеки](../guide/security/security-hardening.md) — база загроз + посібник з пом'якшення ризиків.
+- [Зміцнення безпеки](../guide/security/security-hardening.uk.md) — база загроз + посібник з пом'якшення ризиків.
 
 ---
 **Локалізація**: [Serhii (MacPlus Software)](https://macplus-software.com)

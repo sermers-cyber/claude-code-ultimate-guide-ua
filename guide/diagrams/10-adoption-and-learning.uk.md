@@ -46,24 +46,24 @@ flowchart TD
     style D4 fill:#7BC47F,color:#333
     style E5 fill:#7BC47F,color:#333
 
-    click A href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/roles/adoption-approaches.md" "Start: New to Claude Code"
-    click B href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/roles/adoption-approaches.md" "Your background?"
-    click C href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#12-first-workflow" "Developer Path"
-    click C1 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#12-first-workflow" "Quick Start: first session"
-    click C2 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#12-first-workflow" "Workflows: TDD, spec-first, plan-driven"
-    click C3 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/41-what-are-agents" "Advanced: agents, hooks, MCP"
-    click C4 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/roles/adoption-approaches.md" "Productive developer"
-    click D href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/roles/adoption-approaches.md" "Non-Tech Path"
-    click D1 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/roles/adoption-approaches.md" "What is Claude Code?"
-    click D2 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/roles/adoption-approaches.md" "Basic usage"
-    click D3 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/roles/adoption-approaches.md" "Limited scope"
-    click D4 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/roles/adoption-approaches.md" "Safe basic user"
-    click E href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/roles/adoption-approaches.md" "Team Lead Path"
-    click E1 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/roles/adoption-approaches.md" "ROI assessment"
-    click E2 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#31-memory-files-claudemd" "CLAUDE.md strategy"
-    click E3 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/roles/adoption-approaches.md" "Pilot with 2-3 devs"
-    click E4 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/roles/adoption-approaches.md" "Gradual rollout"
-    click E5 href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/roles/adoption-approaches.md" "Team adoption"
+    click A href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/roles/adoption-approaches.md" "Start: New to Claude Code"
+    click B href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/roles/adoption-approaches.md" "Your background?"
+    click C href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#12-first-workflow" "Developer Path"
+    click C1 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#12-first-workflow" "Quick Start: first session"
+    click C2 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#12-first-workflow" "Workflows: TDD, spec-first, plan-driven"
+    click C3 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/41-what-are-agents" "Advanced: agents, hooks, MCP"
+    click C4 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/roles/adoption-approaches.md" "Productive developer"
+    click D href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/roles/adoption-approaches.md" "Non-Tech Path"
+    click D1 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/roles/adoption-approaches.md" "What is Claude Code?"
+    click D2 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/roles/adoption-approaches.md" "Basic usage"
+    click D3 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/roles/adoption-approaches.md" "Limited scope"
+    click D4 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/roles/adoption-approaches.md" "Safe basic user"
+    click E href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/roles/adoption-approaches.md" "Team Lead Path"
+    click E1 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/roles/adoption-approaches.md" "ROI assessment"
+    click E2 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#31-memory-files-claudemd" "CLAUDE.md strategy"
+    click E3 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/roles/adoption-approaches.md" "Pilot with 2-3 devs"
+    click E4 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/roles/adoption-approaches.md" "Gradual rollout"
+    click E5 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/roles/adoption-approaches.md" "Team adoption"
 ```
 
 <details>
@@ -114,13 +114,13 @@ flowchart LR
     style DONE fill:#7BC47F,color:#333
     style TRAP fill:#E85D5D,color:#fff
 
-    click U href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/roles/learning-with-ai.md" "Use It"
-    click V href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/roles/learning-with-ai.md" "Verify"
-    click A href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/roles/learning-with-ai.md" "Adapt"
-    click L href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/roles/learning-with-ai.md" "Learn"
-    click NEXT href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/roles/learning-with-ai.md" "More tasks using this pattern?"
-    click DONE href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/roles/learning-with-ai.md" "Pattern internalized"
-    click TRAP href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/roles/learning-with-ai.md" "Copy-Paste Trap"
+    click U href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/roles/learning-with-ai.md" "Use It"
+    click V href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/roles/learning-with-ai.md" "Verify"
+    click A href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/roles/learning-with-ai.md" "Adapt"
+    click L href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/roles/learning-with-ai.md" "Learn"
+    click NEXT href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/roles/learning-with-ai.md" "More tasks using this pattern?"
+    click DONE href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/roles/learning-with-ai.md" "Pattern internalized"
+    click TRAP href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/roles/learning-with-ai.md" "Copy-Paste Trap"
 ```
 
 <details>
@@ -183,20 +183,20 @@ flowchart TD
     style N fill:#6DB3F2,color:#fff
     style J fill:#F5E6D3,color:#333
 
-    click A href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#17-trust-calibration-when-and-how-much-to-verify" "Claude produces output"
-    click B href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#17-trust-calibration-when-and-how-much-to-verify" "Can I test this output?"
-    click C href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#17-trust-calibration-when-and-how-much-to-verify" "Do the tests pass?"
-    click D href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#17-trust-calibration-when-and-how-much-to-verify" "Trust with test coverage"
-    click E href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#17-trust-calibration-when-and-how-much-to-verify" "Fix before using"
-    click F href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#17-trust-calibration-when-and-how-much-to-verify" "Do I understand what it did?"
-    click G href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#17-trust-calibration-when-and-how-much-to-verify" "Ask Claude to explain"
-    click H href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#17-trust-calibration-when-and-how-much-to-verify" "Is this reversible?"
-    click I href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#17-trust-calibration-when-and-how-much-to-verify" "Trust with git safety net"
-    click J href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#17-trust-calibration-when-and-how-much-to-verify" "Extra review required"
-    click K href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#17-trust-calibration-when-and-how-much-to-verify" "Is it security-critical?"
-    click L href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#17-trust-calibration-when-and-how-much-to-verify" "Human expert review"
-    click M href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#17-trust-calibration-when-and-how-much-to-verify" "Familiar domain?"
-    click N href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#17-trust-calibration-when-and-how-much-to-verify" "Pair with domain expert"
+    click A href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#17-trust-calibration-when-and-how-much-to-verify" "Claude produces output"
+    click B href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#17-trust-calibration-when-and-how-much-to-verify" "Can I test this output?"
+    click C href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#17-trust-calibration-when-and-how-much-to-verify" "Do the tests pass?"
+    click D href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#17-trust-calibration-when-and-how-much-to-verify" "Trust with test coverage"
+    click E href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#17-trust-calibration-when-and-how-much-to-verify" "Fix before using"
+    click F href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#17-trust-calibration-when-and-how-much-to-verify" "Do I understand what it did?"
+    click G href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#17-trust-calibration-when-and-how-much-to-verify" "Ask Claude to explain"
+    click H href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#17-trust-calibration-when-and-how-much-to-verify" "Is this reversible?"
+    click I href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#17-trust-calibration-when-and-how-much-to-verify" "Trust with git safety net"
+    click J href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#17-trust-calibration-when-and-how-much-to-verify" "Extra review required"
+    click K href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#17-trust-calibration-when-and-how-much-to-verify" "Is it security-critical?"
+    click L href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#17-trust-calibration-when-and-how-much-to-verify" "Human expert review"
+    click M href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#17-trust-calibration-when-and-how-much-to-verify" "Familiar domain?"
+    click N href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#17-trust-calibration-when-and-how-much-to-verify" "Pair with domain expert"
 ```
 
 <details>

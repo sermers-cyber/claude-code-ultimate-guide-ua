@@ -784,7 +784,7 @@ print(response.usage.input_tokens)                  # Токени без кеш
 - **--resume/--continue** спричиняє повну перебудову кешу (0% hit ratio) при кожному відновленні, оскільки сесійний JSONL видаляє відкладені записи інструментів перед записом. Обхідний шлях: уникайте `--resume` до виправлення.
 - **Per-session billing header** вставляє унікальний хеш як перший блок system prompt, спричиняючи холодний промах при кожному старті сесії та виклику субагента. Обхідний шлях: `"CLAUDE_CODE_ATTRIBUTION_HEADER": "false"` у `~/.claude/settings.json`.
 
-Див. [Known Issues → Prompt Cache Bugs](../core/known-issues.md) та запустіть `/check-cache-bugs` для повного аудиту.
+Див. [Known Issues → Prompt Cache Bugs](../core/known-issues.uk.md) та запустіть `/check-cache-bugs` для повного аудиту.
 
 > Документація: [prompt caching](https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching)
 
@@ -2949,7 +2949,7 @@ Claude Code працює в межах **вікна контексту 200K то
 | Результати інструментів | Змінний |
 | Зарезервовано для відповіді | 40-45K токенів |
 
-Коли контекст заповнюється (~75% у VS Code, ~95% у CLI), старіший вміст автоматично узагальнюється. Однак **дослідження показують, що це погіршує якість** (падіння продуктивності на 50-70% на складних завданнях). Використовуйте `/compact` проактивно на логічних контрольних точках, або запускайте **session handoffs на 85%**, щоб зберегти намір у стислій історії. Див. [Session Handoffs](line 2140) та [Auto-Compaction Research](../core/architecture.md#auto-compaction).
+Коли контекст заповнюється (~75% у VS Code, ~95% у CLI), старіший вміст автоматично узагальнюється. Однак **дослідження показують, що це погіршує якість** (падіння продуктивності на 50-70% на складних завданнях). Використовуйте `/compact` проактивно на логічних контрольних точках, або запускайте **session handoffs на 85%**, щоб зберегти намір у стислій історії. Див. [Session Handoffs](line 2140) та [Auto-Compaction Research](../core/architecture.uk.md#auto-compaction).
 
 ### Sub-Agent Isolation
 

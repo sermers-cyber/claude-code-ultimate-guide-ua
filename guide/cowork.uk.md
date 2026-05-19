@@ -8,7 +8,7 @@ tags: [guide, agents, workflows, ukrainian]
 
 > **📦 Повна документація перенесена в окремий репозиторій**
 > Цей файл є коротким оглядом. Повну документацію дивіться тут:
-> **https://github.com/FlorianBruniaux/claude-cowork-guide**
+> **https://github.com/gerasimsergey/claude-cowork-guide-ua**
 
 ---
 
@@ -43,7 +43,7 @@ tags: [guide, agents, workflows, ukrainian]
 | **Зрілість** | Продакшн | Продакшн | Дослідницьке прев'ю |
 | **Ідеальний профіль** | Письменник · Консультант · Студент | Розробник · Інженер · Тімлід | Ops · Асистент · Менеджер |
 
-→ [Повне порівняння Cowork та Code](https://github.com/FlorianBruniaux/claude-cowork-guide/blob/main/reference/comparison.md)
+→ [Повне порівняння Cowork та Code](https://github.com/gerasimsergey/claude-cowork-guide-ua/blob/main/reference/comparison.md)
 
 ### Гід для прийняття рішень
 
@@ -60,7 +60,7 @@ tags: [guide, agents, workflows, ukrainian]
 - **Синтез звітів** — Декілька документів → єдиний підсумковий звіт.
 - **Підготовка до зустрічей** — Дослідження → брифінг-документи.
 
-→ [Детальні робочі процеси](https://github.com/FlorianBruniaux/claude-cowork-guide/tree/main/workflows)
+→ [Детальні робочі процеси](https://github.com/gerasimsergey/claude-cowork-guide-ua/tree/main/workflows)
 
 ---
 
@@ -73,7 +73,7 @@ tags: [guide, agents, workflows, ukrainian]
 3. **Жодних паролів** — Тримайте конфіденційні дані (ключі, паролі) за межами робочого простору.
 4. **Бекап перш за все** — Робіть копії перед деструктивними операціями.
 
-→ [Повний гайд із безпеки](https://github.com/FlorianBruniaux/claude-cowork-guide/blob/main/guide/03-security.md)
+→ [Повний гайд із безпеки](https://github.com/gerasimsergey/claude-cowork-guide-ua/blob/main/guide/03-security.md)
 
 ---
 
@@ -81,11 +81,11 @@ tags: [guide, agents, workflows, ukrainian]
 
 | Ресурс | Опис |
 |----------|-------------|
-| **[Повна документація](https://github.com/FlorianBruniaux/claude-cowork-guide/blob/main/README.md)** | Центр документації Cowork |
-| **[З чого почати](https://github.com/FlorianBruniaux/claude-cowork-guide/blob/main/guide/01-getting-started.md)** | Налаштування та перший воркфлоу |
-| **[Можливості](https://github.com/FlorianBruniaux/claude-cowork-guide/blob/main/guide/02-capabilities.md)** | Що Cowork може і чого не може |
-| **[Бібліотека промптів](https://github.com/FlorianBruniaux/claude-cowork-guide/tree/main/prompts)** | 50+ готових промптів |
-| **[Шпаргалка](https://github.com/FlorianBruniaux/claude-cowork-guide/blob/main/reference/cheatsheet.md)** | Швидкий довідник |
+| **[Повна документація](https://github.com/gerasimsergey/claude-cowork-guide-ua/blob/main/README.md)** | Центр документації Cowork |
+| **[З чого почати](https://github.com/gerasimsergey/claude-cowork-guide-ua/blob/main/guide/01-getting-started.md)** | Налаштування та перший воркфлоу |
+| **[Можливості](https://github.com/gerasimsergey/claude-cowork-guide-ua/blob/main/guide/02-capabilities.md)** | Що Cowork може і чого не може |
+| **[Бібліотека промптів](https://github.com/gerasimsergey/claude-cowork-guide-ua/tree/main/prompts)** | 50+ готових промптів |
+| **[Шпаргалка](https://github.com/gerasimsergey/claude-cowork-guide-ua/blob/main/reference/cheatsheet.md)** | Швидкий довідник |
 
 ---
 

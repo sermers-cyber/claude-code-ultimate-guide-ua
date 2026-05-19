@@ -1639,7 +1639,7 @@ exit 0
 
 > **Повна реалізація**: [`examples/hooks/bash/identity-reinjection.sh`](../../examples/hooks/bash/identity-reinjection.sh)
 >
-> **Походження**: Патерн взято з [hook-driven dev workflows](https://nick-tune.me/blog/2026-02-28-hook-driven-dev-workflows-with-claude-code/) Ніка Тьюна (2026-02-28). Ширша стаття охоплює робочі процеси скінченних автоматів з командами агентів — див. [Agent Teams Workflow](../workflows/agent-teams.md) для контексту.
+> **Походження**: Патерн взято з [hook-driven dev workflows](https://nick-tune.me/blog/2026-02-28-hook-driven-dev-workflows-with-claude-code/) Ніка Тьюна (2026-02-28). Ширша стаття охоплює робочі процеси скінченних автоматів з командами агентів — див. [Agent Teams Workflow](../workflows/agent-teams.uk.md) для контексту.
 
 ---
 

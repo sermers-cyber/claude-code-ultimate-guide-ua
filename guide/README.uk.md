@@ -122,12 +122,12 @@ tags: [guide, reference, ukrainian]
 
 | Ресурс | Опис |
 |----------|-------------|
-| **[Cowork Hub](https://github.com/FlorianBruniaux/claude-cowork-guide/blob/main/README.md)** | Повна документація Cowork |
-| [Початок роботи](https://github.com/FlorianBruniaux/claude-cowork-guide/blob/main/guide/01-getting-started.md) | Налаштування та первый воркфлоу |
-| [Можливості](https://github.com/FlorianBruniaux/claude-cowork-guide/blob/main/guide/02-capabilities.md) | Що Cowork може і чого не може |
-| [Гайд з безпеки](https://github.com/FlorianBruniaux/claude-cowork-guide/blob/main/guide/03-security.md) | Практики безпечного використання |
-| [Бібліотека промптів](https://github.com/FlorianBruniaux/claude-cowork-guide/tree/main/prompts) | 50+ готових до використання промптів |
-| [Шпаргалка](https://github.com/FlorianBruniaux/claude-cowork-guide/blob/main/reference/cheatsheet.md) | Односторінковий швидкий довідник |
+| **[Cowork Hub](https://github.com/gerasimsergey/claude-cowork-guide-ua/blob/main/README.md)** | Повна документація Cowork |
+| [Початок роботи](https://github.com/gerasimsergey/claude-cowork-guide-ua/blob/main/guide/01-getting-started.md) | Налаштування та первый воркфлоу |
+| [Можливості](https://github.com/gerasimsergey/claude-cowork-guide-ua/blob/main/guide/02-capabilities.md) | Що Cowork може і чого не може |
+| [Гайд з безпеки](https://github.com/gerasimsergey/claude-cowork-guide-ua/blob/main/guide/03-security.md) | Практики безпечного використання |
+| [Бібліотека промптів](https://github.com/gerasimsergey/claude-cowork-guide-ua/tree/main/prompts) | 50+ готових до використання промптів |
+| [Шпаргалка](https://github.com/gerasimsergey/claude-cowork-guide-ua/blob/main/reference/cheatsheet.md) | Односторінковий швидкий довідник |
 
 ---
 

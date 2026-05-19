@@ -495,7 +495,7 @@ gh search issues --repo anthropics/claude-code "bug" "critical" --sort created -
 - **Високий вплив**: Сфера безпеки, приватності, вартості використання або ключового функціоналу
 - **Дієвість (Actionable)**: Наявність тимчасових рішень (workarounds) або офіційної відповіді
 
-Щоб запропонувати оновлення: Відкрийте іш'ю в репозиторії [claude-code-ultimate-guide](https://github.com/FlorianBruniaux/claude-code-ultimate-guide/issues) з такою інформацією:
+Щоб запропонувати оновлення: Відкрийте іш'ю в репозиторії [claude-code-ultimate-guide](https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/issues) з такою інформацією:
 - Посилання на іш'ю в репозиторії Claude Code
 - Докази впливу (кілька звітів, офіційна відповідь)
 - Пропозиція тимчасового рішення (workaround), якщо воно відоме
