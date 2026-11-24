@@ -1,0 +1,219 @@
+---
+title: "Знімок ринку LLM для агентів програмування (вересень 2026)"
+description: "Датований, перевірений за джерелами знімок цін на токени API, квот підписок і варіантів розміщення даних у Anthropic, OpenAI, Google, DeepSeek, Mistral, xAI, Moonshot, Z.AI та хостингів інференсу, з вартістю одного еталонного навантаження агента та твердженнями, які не пройшли верифікацію"
+tags: [ops, cost, finops, pricing, providers, guide]
+---
+
+# Знімок ринку LLM для агентів програмування (вересень 2026)
+
+> **Час читання**: ≈20 хвилин
+>
+> **Частина**: розділу [AI FinOps](./ai-finops.uk.md).
+>
+> **Мета**: Відповісти на два запитання датованими фактами: чи дорожчають витрати на LLM, чи дешевшають, і скільки сьогодні коштує робота агента в кожного провайдера. Ця сторінка — знімок, а не живий прайс-лист.
+
+---
+
+## Дата знімка даних
+
+Кожну ціну й квоту на цій сторінці прочитано в офіційній документації вендора **2026-09-30**, якщо рядок не вказує інакше. Вендори змінюють ціни без попередження й перейменовують моделі між релізами. Перед будь-яким рішенням про купівлю повторно перевіряйте за наведеним джерелом.
+
+**Доповнення від 2026-10-06:** ціни Mistral Large 4, докази з бенчмарків та умови регіонального інференсу нижче було перевірено окремо в день запуску його публічного превʼю. Інші провайдери зберігають свої вересневі дати знімка. [Оцінка джерела](https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/docs/resource-evaluations/mistral-large-4.md) фіксує уточнену кількість параметрів, відмінні ліміти контексту й очікувану доступність ваг.
+
+**Як перевіряли числа.** Вихідною точкою було згенероване ШІ резюме ринку. Кожне твердження потім перечитали в первинному джерелі: на сторінках цін вендорів, у довідкових центрах, документації API та журналах змін. Інструмент читання повертає стислий виклад кожної сторінки, тож точна цифра все ще може містити помилку транскрипції. `openai.com` і `help.openai.com` відмовили в автоматичному читанні під час верифікації; цифри OpenAI взято з `developers.openai.com` і сторінки цін OpenAI `learn.chatgpt.com`. Де було доступне лише вторинне джерело, рядок про це каже.
+
+---
+
+## 1. Тренд: квоти скорочуються, ціни на токени падають
+
+Три різні види змін подають як «зростання цін». Тримайте їх окремо:
+
+- **Ціна API**: змінюється ціна за мільйон токенів.
+- **Квота**: підписка включає менше (або більше) використання за ту саму ціну.
+- **Умови**: вікна, зважування моделей, виведені з обігу моделі чи те, які клієнти можуть користуватися планом.
+
+| Дата | Провайдер | Зміна | Тип | Джерело |
+|---|---|---|---|---|
+| 2025-05-08 | Google | Неявне кешування в Gemini 2.5: знижка 75% на кешований вхід | API, вниз | [Google Developers Blog](https://developers.googleblog.com/en/gemini-2-5-models-now-support-implicit-caching/) |
+| 2025-06-17 | Google | Gemini 2.5 Flash GA: вхід $0.15 → $0.30, вихід $3.50 → $2.50 за 1M токенів | API, змішано | [Google Developers Blog](https://developers.googleblog.com/en/gemini-2-5-thinking-model-updates/) |
+| 2025-07-07 | Google | Gemini Batch API за 50% стандартного тарифу | API, вниз | [Google Developers Blog](https://developers.googleblog.com/en/scale-your-ai-workloads-batch-mode-gemini-api/) |
+| 2025-08-21 | DeepSeek | Нові ціни V3.1; позапіковні знижки закінчуються 2025-09-05 о 16:00 UTC | API, позапіковну знижку скасовано | [DeepSeek news](https://api-docs.deepseek.com/news/news250821) |
+| 2025-12-09 | Mistral | Devstral 2 запущено безкоштовно в API, із анонсованими $0.40 / $2.00 на пізніше | API | [Mistral](https://mistral.ai/news/devstral-2-vibe-cli) |
+| 2026-01-27 | Mistral | Devstral 2 стає платним ($0.40 / $2.00); безкоштовний доступ обмежено планом Experiment | API, вгору | [Mistral](https://mistral.ai/news/mistral-vibe-2-0) |
+| 2026-05-15 | xAI | Кілька моделей Grok виведено з обігу; трафік міркувань перенаправлено на `grok-4.3` за $1.25 / $2.50 | Умови | [xAI docs](https://docs.x.ai/developers/migration/may-15-retirement) |
+| 2026-06-01 | Cursor | Teams Standard $40 за місце на місяць ($32 за річного), Premium $120 ($96 за річного); продовження з 2026-07-01 | Ціна підписки | [Cursor](https://cursor.com/blog/teams-pricing-june-2026) |
+| 2026-06 | Anthropic | Стаття довідки, оновлена в середині червня, призупиняє окремий щомісячний кредит, оголошений для Agent SDK, `claude -p` і сторонніх застосунків. Прочитано 2026-09-30: це використання все ще списується з лімітів підписки | Умови | [Claude Help Center](https://support.claude.com/en/articles/15036540-use-the-claude-agent-sdk-with-your-claude-plan) |
+| 2026-07-30 | Z.AI | GLM Coding Plan переходить на кредити, зважені за моделлю та часом доби | Квота | [Z.AI notice](https://docs.z.ai/devpack/notice/usage-revision) |
+| 2026-08-13 | DeepSeek | V4-Pro GA з піковою та позапіковою цінами, позапікова вдвічі нижча за пікову, чинна з 2026-08-16 | API, вниз у позапік | [DeepSeek updates](https://api-docs.deepseek.com/updates) |
+| 2026-09-01 | Fireworks | Нещодавно запущені моделі лише для США коштують 1.5x від базової serverless-ціни | API, регіональна надбавка | [Fireworks docs](https://docs.fireworks.ai/serverless/us-only-serverless) |
+| 2026-09-22 | Anthropic | Claude Opus 5.5: читання кешу $0.20 за 1M токенів, на 60% менше, ніж у попередника ($0.50) | API, вниз | [Anthropic](https://www.anthropic.com/claude-opus-5-5) |
+| 2026-09-30 (прочитано) | Anthropic | Claude Fable 5.1 указано за $10 / $50 з читанням кешу $0.25, тобто 0.025x від ціни входу. Anthropic рекомендує Opus 5.5 для більшості навантажень і Fable 5.1 для вимогливих міркувань та довгих агентних завдань | API | [Anthropic models overview](https://platform.claude.com/docs/en/models/overview), [Anthropic pricing](https://platform.claude.com/docs/en/about-claude/pricing) |
+| 2026-09-30 (прочитано) | OpenAI | GPT-6 Sol і GPT-6.1 Sol указано за $2 / $10, одна п'ята від $10 / $50 у GPT-6 Astra. Дату запуску та попередню ціну на сторінках OpenAI прочитати не вдалося | API | [OpenAI model page](https://developers.openai.com/api/docs/models/gpt-6-sol) |
+| 2026-09-29 | OpenAI | Новий план Pro за $500, єдиний план Pro з Astra Ultrafast. Pro $200: включене використання в ChatGPT Work і Codex падає з 20x до 10x від ліміту Plus з 2026-10-30, повідомлення чату GPT-6 Pro зі 200 до 100 на тиждень, ціна незмінна | Квота, вниз | Рівні: [OpenAI pricing](https://learn.chatgpt.com/docs/pricing). Зміна Pro $200: [The Next Web, 2026-09-29](https://thenextweb.com/news/openai-devday-pro-200-usage-cut-pro-500-plan) (вторинне; сторінки довідки OpenAI були нечитабельні) |
+
+Документація цін Anthropic також стверджує, що запланованого на 2026-09-01 підвищення ціни Claude Sonnet 5 до $3 / $15 не буде. Sonnet 5 лишається за $2 / $10.
+
+**Тлумачення тренду.** Більшість задокументованих змін API знижують рахунок: дешевше читання кешу (неявне кешування Gemini 2.5, Opus 5.5), знижки на пакетну обробку та в позапік і скасоване підвищення (Sonnet 5). Підвищення точкові: вхід Gemini 2.5 Flash, закінчення позапікових знижок DeepSeek у 2025 році, період запуску Devstral 2 і регіональні надбавки. З боку підписок датовані зміни — перехід Z.AI на зважені кредити в липні 2026 року та зменшення вдвічі ліміту Pro $200 в OpenAI за тієї ж ціни. У наведених тут змінах скорочення стосуються квот підписок і умов; прейскурантні ціни за токен зросли лише у вказаних вище точкових випадках.
+
+---
+
+## 2. Ціни API
+
+USD за 1 мільйон токенів, стандартний рівень, прочитано 2026-09-30, якщо не вказано інакше. «n/a» означає, що ціну кешованого входу не знайдено, а не що кешування безкоштовне.
+
+| Провайдер і модель | Вхід | Кешований вхід | Вихід | Модифікатори | Джерело |
+|---|---:|---:|---:|---|---|
+| Anthropic Claude Fable 5.1 | $10.00 | $0.25 | $50.00 | Batch -50%; читання кешу 0.025x входу; 5-хвилинний запис у кеш $12.50 | [Anthropic pricing](https://platform.claude.com/docs/en/about-claude/pricing) |
+| Anthropic Claude Opus 5.5 | $4.00 | $0.20 | $20.00 | Batch -50%; інференс лише в США 1.1x; швидкий режим $8 / $40 | [Anthropic pricing](https://platform.claude.com/docs/en/about-claude/pricing) |
+| Anthropic Claude Sonnet 5.5 | $2.00 | $0.20 | $10.00 | Batch -50%; 5-хвилинний запис у кеш $2.50 | [Anthropic pricing](https://platform.claude.com/docs/en/about-claude/pricing) |
+| OpenAI GPT-6 Astra | $10.00 | $1.00 | $50.00 | Batch і Flex -50%; Fast 2x; запис у кеш $12.50 | [OpenAI model page](https://developers.openai.com/api/docs/models/gpt-6-astra) |
+| OpenAI GPT-6 Sol і GPT-6.1 Sol | $2.00 | $0.20 | $10.00 | Запис у кеш 1.25x входу; понад 272K вхідних токенів вхід і кеш 2x, вихід 1.5x | [OpenAI model page](https://developers.openai.com/api/docs/models/gpt-6-sol), [OpenAI pricing](https://developers.openai.com/api/docs/pricing) |
+| OpenAI GPT-6 Luna | $0.10 | $0.01 | $0.50 | Ті самі модифікатори, що й у Sol | [OpenAI model page](https://developers.openai.com/api/docs/models/gpt-6-luna) |
+| Google Gemini 3.1 Flash-Lite | $0.25 | n/a | $1.50 | Batch $0.125 / $0.75; на запуску превʼю | [Gemini API pricing](https://ai.google.dev/gemini-api/docs/pricing) |
+| DeepSeek `deepseek-v4-pro`, пік | $1.32 | $0.044 | $3.96 | Позапік за півціни: $0.66 / $0.022 / $1.98 | [DeepSeek pricing](https://api-docs.deepseek.com/quick_start/pricing/) |
+| DeepSeek `deepseek-flash`, пік | $0.30 | $0.006 | $1.20 | Позапік за півціни: $0.15 / $0.003 / $0.60 | [DeepSeek pricing](https://api-docs.deepseek.com/quick_start/pricing/) |
+| Mistral Devstral 2 | $0.40 | n/a | $2.00 | Devstral Small 2: $0.10 / $0.30 | [Mistral](https://mistral.ai/news/mistral-vibe-2-0) |
+| Mistral Large 4, публічне превʼю | $0.68 | $0.07 | $2.09 | Прочитано 2026-10-06; розпродаж 50%. Початкові тарифи: $1.36 / $0.14 / $4.18; дати завершення розпродажу не знайдено | [Mistral inference pricing](https://docs.mistral.ai/inference/pricing) |
+| xAI Grok 4.7 | $2.00 | n/a | $6.00 | Регіональна кінцева точка США +10% | [xAI docs](https://docs.x.ai/developers/grok-4-7) |
+| Moonshot Kimi K3 | $3.00 | $0.30 | $15.00 | Запис у кеш $3.00 (TTL 5 хвилин) або $6.00 (TTL 1 година) | [Kimi platform pricing](https://platform.kimi.ai/docs/pricing/chat) |
+| Z.AI GLM-5.3 | $1.40 | $0.26 | $4.40 | | [Z.AI pricing](https://docs.z.ai/guides/overview/pricing) |
+| Together Qwen3.6-Plus | $0.50 | n/a | $3.00 | Qwen3.7-Plus указано за $0.32 / $1.28 | [Together pricing](https://www.together.ai/pricing) |
+| Fireworks DeepSeek V4.1 Flash | $0.30 | $0.006 | $1.20 | Batch -50%; Priority +25%; нещодавно запущені моделі лише для США 1.5x | [Fireworks pricing](https://docs.fireworks.ai/serverless/pricing) |
+| Groq GPT-OSS 120B | $0.15 | $0.075 | $0.60 | | [Groq model page](https://console.groq.com/docs/model/openai/gpt-oss-120b) |
+| OVHcloud AI Endpoints GPT-OSS 120B | €0.08 | n/a | €0.40 | EUR, як опубліковано | [OVHcloud catalog](https://www.ovhcloud.com/en/public-cloud/ai-endpoints/catalog/gpt-oss-120b/) |
+| OpenRouter (шлюз) | Прейскурантна ціна провайдера | За кінцевою точкою | Прейскурантна ціна провайдера | Без націнки на інференс; комісія за поповнення кредитів 5.5% (Standard) або 8% (Business); bring-your-own-key безкоштовно до $25,000 прейскурантного інференсу на місяць ($200,000 на Enterprise), далі 5% | [OpenRouter pricing](https://openrouter.ai/pricing) |
+
+**Ціни за токен не порівнюються між токенізаторами.** Anthropic документує, що Claude 4.7 і новіші моделі створюють приблизно на 30% більше токенів для того самого тексту, ніж раніші моделі Claude. Токенізатори також відрізняються між вендорами, тож той самий промпт може дати різну кількість токенів у кожного, і нижча ціна за токен усе одно може призвести до більшого рахунку.
+
+---
+
+## 3. Квоти підписок
+
+Жоден з наведених нижче вендорів не публікує ліміт підписки як бюджет токенів, окрім випадків, де рядок це зазначає. Множник («5x Pro») порівнює один план з іншим, а модель, зусилля (effort) і розмір контексту зважують споживання.
+
+| Пропозиція | Ціна | Опублікований ліміт | Умови | Джерело |
+|---|---|---|---|---|
+| Claude Pro | $20 на місяць, $17 за річного | Щонайменше 5x від плану Free за 5-годинну сесію | 5-годинні сесії плюс тижневі ліміти; Claude і Claude Code ділять ті самі ліміти; кредити використання за тарифами API після ліміту | [Claude pricing](https://claude.com/pricing), [Claude Code with Pro or Max](https://support.claude.com/en/articles/11145838-use-claude-code-with-your-pro-or-max-plan) |
+| Claude Max (раніше Max 5x) | $100 на місяць | 5x використання Pro кожні 5 годин і кожного тижня | Fable до половини тижневого ліміту; $100 на місяць у кредитах API Claude Platform; можливі тижневі та місячні обмеження | [Max plan](https://support.claude.com/en/articles/11049741-what-is-the-max-plan) |
+| Claude Ultra (раніше Max 20x) | $200 на місяць, лише помісячне виставлення рахунків | 10x використання Pro щотижня; без 5-годинного ліміту після верифікації облікового запису | Перейменовано з Max 20x з тією самою ціною й тижневим лімітом (перевірено 2026-10-31); тимчасовий 5-годинний ліміт діє, доки Anthropic не верифікує обліковий запис; окремий тижневий ліміт Fable; $200 на місяць у кредитах API | [Ultra plan](https://support.claude.com/en/articles/17728952-what-is-the-ultra-plan), [Claude pricing](https://claude.com/pricing) |
+| Claude Team Standard / Premium | $25 / $125 за місце на місяць, $20 / $100 за річного; мінімум 2 учасники | 1.25x / 6.25x від ліміту Pro за сесію | Індивідуальні ліміти на місце | [Team plan](https://support.claude.com/en/articles/9266767-what-is-the-team-plan) |
+| Claude Enterprise, за використанням | $20 за місце на місяць, виставлення рахунку щороку | Використання тарифікується за тарифами API | Див. [стратегію підписок](./subscription-strategy.uk.md#1-the-20-enterprise-seat-does-not-include-usage) | [Claude pricing](https://claude.com/pricing) |
+| ChatGPT Go / Plus | $8 / $20 на місяць | Plus — базова одиниця для множників Pro | Plus має 5-годинний ліміт у Work і Codex | [OpenAI pricing](https://learn.chatgpt.com/docs/pricing) |
+| ChatGPT Business | $20 за користувача за річного, $25 помісячно | Не публікується в токенах | Standard Business має 5-годинний ліміт | [OpenAI pricing](https://learn.chatgpt.com/docs/pricing) |
+| ChatGPT Pro $100 / $200 / $500 | $100 / $200 / $500 на місяць | Pro $200: 10x Plus з 2026-10-30 (до того 20x). Множники Pro $100 і Pro $500 на сторінці OpenAI прочитати не вдалося | Плани Pro не мають 5-годинного ліміту; серед планів Pro Astra Ultrafast є лише на Pro $500 | [OpenAI pricing](https://learn.chatgpt.com/docs/pricing), [The Next Web](https://thenextweb.com/news/openai-devday-pro-200-usage-cut-pro-500-plan) |
+| Cursor Pro / Pro+ / Ultra | $20 / $60 / $200 на місяць | Не публікується в токенах | | [Cursor pricing](https://cursor.com/docs/account/pricing) |
+| GitHub Copilot Pro / Pro+ / Max | $10 / $39 / $100 на місяць | 1,500 / 7,000 / 20,000 кредитів ШІ на місяць; 1 кредит = $0.01 | Кожен ліміт ділиться на базові й гнучкі (flex) кредити (1,000 + 500 на Pro) | [GitHub Copilot plans](https://docs.github.com/en/copilot/get-started/plans) |
+| Mistral Le Chat Pro / Team | $14.99 на місяць / $24.99 за користувача (мінімум $50) | Pro включає $15 на місяць кредитів API | Використання Vibe підпадає під ліміти справедливого використання, числа не публікуються | [Mistral pricing](https://mistral.ai/pricing/) |
+| Z.AI GLM Coding Plan | Від $18 на місяць | Lite / Pro / Max: 10,000 / 60,000 / 140,000 кредитів на тиждень; 2,000 / 12,000 / 28,000 за 5 годин | Пік з понеділка по п'ятницю 14:00–18:00 SGT (UTC+8); GLM-5.3 коштує 3x кредитів у пік проти 1x у позапік; приклади токенів припускають 95% влучань у кеш | [Z.AI Coding Plan](https://docs.z.ai/devpack/overview) |
+| Alibaba Model Studio Coding Plan | ¥200 на місяць | 6,000 запитів за 5 годин, 45,000 на тиждень, 90,000 на місяць | Квота рахується на виклик моделі, а не на промпт | [Alibaba Cloud](https://help.aliyun.com/en/model-studio/coding-plan) |
+| OpenCode Go | $10 на місяць | Див. [розділ OpenCode Go](../ecosystem/agentic-tools.uk.md#opencode-go-the-subscription-tier-and-why-it-does-not-scale-to-a-team) посібника | Одне місце; також указано рівень Go Plus за $40 | [OpenCode Go](https://opencode.ai/go) |
+| Cerebras Code Pro / Max | $50 / $200 на місяць | До 24M / 120M токенів на день, єдиний тут ліміт, опублікований у токенах | Обидва рівні показано як розпродані 2026-09-30; чи враховуються кешовані токени в добову цифру, не зазначено | [Cerebras Code](https://www.cerebras.ai/code) |
+
+**Сторонні клієнти на підписці Claude.** Сторінка Anthropic з правових питань і відповідності стверджує, що сторонні розробники не можуть маршрутизувати запити через облікові дані планів Free, Pro чи Max від імені своїх користувачів, а підписник може входити в Claude Code зі своїм планом ([Claude Code legal and compliance](https://code.claude.com/docs/en/legal-and-compliance)). Преса датує конкретні заходи примусового виконання січнем і квітнем 2026 року; сторінки Anthropic з цими датами не знайдено.
+
+---
+
+## 4. Можливості: спершу читайте умови бенчмарків
+
+Оцінка бенчмарку вимірює разом модель, harness, налаштування effort і кількість спроб. Дві оцінки порівнянні лише тоді, коли збігаються всі чотири параметри, а версія бенчмарку та сама.
+
+| Модель | Бенчмарк | Оцінка | Заявлені умови | Хто вимірював | Дата |
+|---|---|---:|---|---|---|
+| Claude Opus 5.5 | Terminal-Bench 4.0 | 66.4% (±2.6) | effort xhigh, harness Claude Code | Anthropic | 2026-09-22 |
+| Claude Sonnet 5.5 | Terminal-Bench 4.0 | 70.6% | Effort і harness не вказано в прочитаному тексті | Anthropic | 2026-09-28 |
+| Gemini 3.5 Flash | Terminal-Bench 2.1 | 76.2% | Інша версія бенчмарку: не порівнянна з рядками вище | Google | 2026-05-19 |
+| Mistral Large 4 | Terminal-Bench 4 | 28.3% | Запускова стаття не вказує відповідного harness, effort і кількості спроб | Mistral | 2026-10-06 |
+| Mistral Large 4 | Terminal-Bench 4.0 | 22.73% (±0.88) | Типові налаштування Vals: високе міркування, temperature 1, top-p 0.95, ліміт виходу 256,000; налаштування можуть різнитися за бенчмарком; відповідний harness і спроби не встановлено | Vals AI | 2026-10-06 (прочитано) |
+
+Джерела: [Claude Opus 5.5](https://www.anthropic.com/claude-opus-5-5), [Claude Sonnet 5.5](https://www.anthropic.com/claude-sonnet-5-5), [Gemini 3.5](https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-5/), [оголошення Mistral Large 4](https://mistral.ai/news/mistral-large-4/), [результати моделі у Vals](https://www.vals.ai/models/mistralai_mistral-large-4).
+
+Перші три рядки подані вендорами. Не читайте перші два як «Sonnet перевершує Opus», доки не опубліковано обидва набори умов. Дві оцінки Mistral походять із різних повідомлених оцінювань; не усереднюйте їх і не ранжуйте відносно Claude без відповідних умов. Незалежного запуску бенчмарку з одним harness для всіх провайдерів у цій таблиці не встановлено. Для рішення про купівлю проганяйте власні завдання через той самий harness на кожному кандидаті, як описано в [оцінюванні агентів](../roles/agent-evaluation.uk.md).
+
+Інші незалежні результати дня запуску дають ширшу картину: Artificial Analysis наводить Intelligence Index **38**, тоді як Vals наводить Vals Index **48.05 ±1.11** і **78.40% ±3.55** у VibeCodeBench v1.1. Це різні шкали та набори завдань, а не взаємозамінні оцінки програмування. Див. [Artificial Analysis](https://artificialanalysis.ai/models/mistral-large-4), [Vals](https://www.vals.ai/models/mistralai_mistral-large-4) та [оцінку](https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/docs/resource-evaluations/mistral-large-4.md#benchmark-evidence).
+
+---
+
+## 5. Вартість одного еталонного навантаження
+
+Навантаження — це гіпотеза, обрана для порівнянності провайдерів, а не виміряне середнє: один день роботи агента з **20M вхідних токенів, 80% з яких надано з кешу (16M кешованих, 4M некешованих), і 0.4M вихідних токенів**.
+
+Вартість = 4 × ціна входу + 16 × ціна кешованого + 0.4 × ціна виходу. Коли ціну кешованого не знайдено, усі 20M вхідних токенів тарифікуються за повною ставкою, що робить такий рядок верхньою межею. Записи в кеш виключено, бо вони залежать від того, як будуються промпти.
+
+| Модель | Вартість за день |
+|---|---:|
+| OpenAI GPT-6 Astra | $76.00 |
+| Anthropic Claude Fable 5.1 | $64.00 |
+| xAI Grok 4.7 (ціну кешованого не знайдено, верхня межа) | $42.40 |
+| Anthropic Claude Opus 5.5 | $27.20 |
+| Moonshot Kimi K3 | $22.80 |
+| OpenAI GPT-6 Sol і GPT-6.1 Sol | $15.20 |
+| Anthropic Claude Sonnet 5.5 | $15.20 |
+| Z.AI GLM-5.3 | $11.52 |
+| Mistral Devstral 2 (ціну кешованого не знайдено, верхня межа) | $8.80 |
+| DeepSeek `deepseek-v4-pro`, пік / позапік | $7.57 / $3.78 |
+| Mistral Large 4 (тарифи розпродажу 2026-10-06) | $4.68 |
+| Groq GPT-OSS 120B | $2.04 |
+| DeepSeek `deepseek-flash`, пік / позапік | $1.78 / $0.89 |
+| OVHcloud GPT-OSS 120B (EUR, ціну кешованого не знайдено) | €1.76 |
+| OpenAI GPT-6 Luna | $0.76 |
+
+![Один гіпотетичний день роботи агента, 20M вхідних токенів, з яких 16M надано з кешу, та 0.4M вихідних токенів, за прейскурантними тарифами, прочитаними 2026-09-30, від $76.00 на OpenAI GPT-6 Astra до $0.76 на OpenAI GPT-6 Luna за однакової кількості токенів.](../images/finops-reference-workload.webp)
+
+Діаграма не включає три рядки з верхньою межею (ціну кешованого не знайдено), Claude Fable 5.1 та доповнення Mistral Large 4 від 6 жовтня.
+
+Для Mistral Large 4 розрахунок за тарифами розпродажу: **4 × $0.68 + 16 × $0.07 + 0.4 × $2.09 = $4.676**, округлено до **$4.68**. За початковими тарифами це **$9.352**, округлено до **$9.35**. Обидва припускають указані влучання в кеш і виключають записи в кеш, регіональні надбавки, повторні спроби та вартість рецензування; жоден не є виміряним рахунком агента.
+
+Ця таблиця порівнює рахунки за однакову кількість токенів. Вона не порівнює виконану роботу. Модель, що збоїть, зациклюється на викликах інструментів або потребує трьох спроб, коштує на прийняте завдання дорожче, ніж натякає її рядок, а різниця токенізаторів, зазначена в [§2](#2-api-prices), змінює саму кількість токенів. Вимірюйте вартість на прийняте завдання на власному навантаженні за методом із [AI unit economics](./ai-unit-economics.uk.md#2-building-a-cost-per-accepted-task).
+
+---
+
+## 6. Куди йдуть дані
+
+| Провайдер | Що стверджує документація |
+|---|---|
+| Anthropic API | Географія інференсу: лише `us` і `global`; географія робочого простору: лише `us` ([data residency](https://platform.claude.com/docs/en/manage-claude/data-residency)). Вхідні й вихідні дані комерційних продуктів не використовуються для навчання за замовчуванням ([privacy center](https://privacy.claude.com/en/articles/7996868-is-my-data-used-for-model-training)) |
+| OpenAI API | Європейська кінцева точка `eu.api.openai.com`, що потребує схвалення та поправки Modified Retention, із регіональною надбавкою 10% за обробку, де вона доступна. Системні дані (обліковий запис, метадані, використання) можуть оброблятися поза регіоном. Дані API не використовуються для навчання, якщо ви не погодилися ([your data](https://developers.openai.com/api/docs/guides/your-data)) |
+| Google Gemini API | Вміст платного рівня не використовується для покращення продуктів Google; вміст безкоштовного рівня може використовуватися ([Gemini API pricing](https://ai.google.dev/gemini-api/docs/pricing)). Сторінка резидентності Vertex AI перелічує регіони Франції та Німеччини, але яке зобов'язання й які моделі вони охоплюють, не встановлено ([Vertex data residency](https://docs.cloud.google.com/vertex-ai/generative-ai/docs/learn/data-residency)) |
+| DeepSeek API | Персональні дані збираються, обробляються й зберігаються в Китайській Народній Республіці, з представником за статтею 27 GDPR для ЄС. Варіанту резидентності в ЄС не знайдено ([privacy policy](https://cdn.deepseek.com/policies/en-US/deepseek-privacy-policy.html)) |
+| Mistral API (прочитано 2026-10-06) | Глобальна кінцева точка не має конкретного зобов'язання щодо географії інференсу. Необов'язкові регіональні кінцеві точки EU/US коштують 1.1× стандартного прейскуранта; взаємодію з розпродажем не встановлено. Доступність моделей потрібно перевіряти за регіоном. Регіоналізація охоплює інференс, а не метадані облікового запису, білінгу чи використання; серед інструментів підтримується лише виклик функцій, а stateful Agents, Batch і Files API виключені. Доступність Large 4 на кінцевій точці ЄС не тестувалася ([regional inference](https://docs.mistral.ai/inference/regional-inference)) |
+| OpenRouter | Маршрутизація всередині регіону ЄС на планах Business і Enterprise; маршрутизація з нульовим зберіганням даних на кожному плані ([OpenRouter pricing](https://openrouter.ai/pricing)) |
+| xAI, Fireworks | Регіональні надбавки: xAI +10% на кінцевій точці США, Fireworks 1.5x на нещодавно запущених моделях лише для США |
+
+Використання LLM API за GDPR передбачає угоду про обробку даних, правову підставу та контроль субпроцесорів і міжнародних передач. Вибір регіону ЄС, де провайдер його пропонує, звужує питання передачі, але не замінює решту.
+
+---
+
+## 7. Твердження, що не пройшли верифікацію
+
+Прейскурантні ціни в згенерованому ШІ резюме підтвердилися майже скрізь, де їх можна було перевірити. Його помилки згрупувалися в датах, умовах планів та атрибуції моделей:
+
+| Твердження в резюме | Що говорить первинне джерело |
+|---|---|
+| З 15 червня 2026 року використання Agent SDK і `claude -p` має власний кредит | Анонсовано, потім призупинено. Це використання й досі списується з лімітів підписки |
+| Cerebras Code дає 24M токенів на день за $50 | Цифра реальна, але вихідний допис датується листопадом 2025 року, а обидва платні рівні були розпродані 2026-09-30 |
+| Позапік DeepSeek — це ночі та вихідні за півціни | Пік — з 01:00 до 04:00 і з 06:00 до 10:00 UTC у будні; решта, включно з вихідними, — позапік |
+| Нульове зберігання даних OpenRouter — функція Business і Enterprise | Маршрутизація з нульовим зберіганням даних є на кожному плані; маршрутизація всередині регіону ЄС — функція Business і Enterprise |
+| Gemini 3.5 набирає 76.2% у Terminal-Bench 2.1 | Оцінка належить Gemini 3.5 Flash |
+| Generative APIs Scaleway починаються з €0.15 за вхід, GPU L4 — €0.93 за годину | Не знайдено на сторінках цін Scaleway, які 2026-09-30 показували інші цифри |
+
+![Як перевіряли знімок цін: твердження з резюме, згенерованого ШІ, перечитували на сторінках цін вендорів, у довідкових центрах, документації API та журналах змін; прейскурантні ціни підтвердилися майже скрізь, а помилки згрупувалися в датах, умовах планів та атрибуції моделей.](../images/finops-claims-check.webp)
+
+---
+
+## 8. Правило оновлення
+
+- **Датуйте кожну цифру.** Ціна без дати, коли її прочитано, непридатна до використання.
+- **Повторно верифікуйте за первинним джерелом** перед цитуванням цифри в рішенні про купівлю, бюджеті чи опублікованому порівнянні.
+- **Оновлюйте цю сторінку щокварталу**, а також одразу після події вендора, що змінює плани (конференція розробників, запуск моделі, лист про план).
+- **Не додавайте датовані події до таблиці, якщо первинне або іменоване вторинне джерело не підтверджує дату.** Згенероване ШІ резюме джерелом не вважається.
+
+**Чого цей знімок не зміг встановити**: множники Pro $100 і Pro $500 на сторінці OpenAI; дату запуску GPT-6 Sol і його попередню ціну; ціни моделей Gemini, випущених після 3.1 Flash-Lite; лютневу позапікову знижку DeepSeek 2025 року на сторінці DeepSeek; ціни окремих моделей Azure та AWS Bedrock; правила batch у Groq; ціни спільного інференсу Cerebras; ціни Scaleway на токени та GPU; регіони та моделі, охоплені резидентністю Vertex AI; знижки за обсяг, які зазвичай погоджуються приватно.
+
+---
+
+## Див. також
+
+- [AI FinOps](./ai-finops.uk.md): точка входу розділу та карта важелів
+- [AI unit economics](./ai-unit-economics.uk.md): вартість на прийняте завдання
+- [Стратегія підписок](./subscription-strategy.uk.md): вибір місць і провайдерів для команди
+- [Локальний чи хмарний інференс](../ecosystem/local-vs-cloud-inference.uk.md): ціни на обладнання та оренду GPU, знімок за серпень 2026 року
