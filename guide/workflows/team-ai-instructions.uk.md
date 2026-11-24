@@ -8,7 +8,7 @@ tags: [workflow, team, claude-md, configuration]
 
 Керуйте інструкціями для AI (CLAUDE.md, .cursorrules) у команді без виникнення фрагментації.
 
-**Шаблон**: Профільне збирання модулів (Profile-Based Module Assembly) — спільні модулі + профілі окремих розробників + автоматичний збирач (assembler).
+**Шаблон**: Профільне збирання модулів (Profile-Based Module Assembly): спільні модулі плюс профілі окремих розробників плюс автоматичний збирач (assembler).
 
 **Коли використовувати**: Команда від 5 розробників, використання кількох інструментів AI (Claude Code + Cursor/Windsurf), змішані операційні системи.
 **Пропустити, якщо**: Один розробник, однорідна команда (однаковий інструмент, однакова ОС), короткий проект (<3 місяців).
@@ -316,7 +316,7 @@ cp output/dave/CLAUDE.md .claude/CLAUDE.md
 | Показник | До | Після |
 |--------|--------|-------|
 | Кількість рядків у CLAUDE.md | ~380 (монолітний) | ~185 (зібраний) |
-| Скорочення обсягу токенів | — | Споживання контексту зменшено на 59% |
+| Скорочення обсягу токенів | N/A | Споживання контексту зменшено на 59% |
 | Вилучено модулів | 0 | 12 |
 | Час онбордингу | "скопіювати чийсь файл" | 5 хв (шаблон + генерація) |
 | Випадки відхилень конфігурацій | Щотижня | 0 (виявляє CI) |
@@ -325,11 +325,13 @@ cp output/dave/CLAUDE.md .claude/CLAUDE.md
 
 ## Пов'язані матеріали
 
-- [Розділ 3.5 Team Configuration at Scale](#35-team-configuration-at-scale) — Огляд концепції та виміряні результати
-- [Розділ 3.4 Precedence Rules](#34-precedence-rules) — Як саме Claude зчитує кілька файлів CLAUDE.md
-- [profile-template.yaml](../../examples/team-config/profile-template.yaml) — Шаблон профілю
-- [claude-skeleton.md](../../examples/team-config/claude-skeleton.md) — Шаблон каркаса
-- [sync-script.ts](../../examples/team-config/sync-script.ts) — Повний скрипт збирача
+- [AI Design Patterns: Facade](../core/ai-design-patterns.uk.md#facade): чому файл CLAUDE.md є контекстом, який читає модель, а не примусовим facade
+- [Memory Systems](../core/memory-systems.uk.md): як Claude Code завантажує й об'єднує CLAUDE.md між сесіями
+- [Розділ 3.5 Team Configuration at Scale](#35-team-configuration-at-scale): огляд концепції та виміряні результати
+- [Розділ 3.4 Precedence Rules](#34-precedence-rules): як саме Claude зчитує кілька файлів CLAUDE.md
+- [profile-template.yaml](../../examples/team-config/profile-template.yaml): шаблон профілю
+- [claude-skeleton.md](../../examples/team-config/claude-skeleton.md): шаблон каркаса
+- [sync-script.ts](../../examples/team-config/sync-script.ts): повний скрипт збирача
 
 ---
 **Локалізація**: [Serhii (MacPlus Software)](https://macplus-software.com)

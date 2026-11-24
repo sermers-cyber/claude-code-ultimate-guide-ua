@@ -1,18 +1,18 @@
 ---
 title: "Iterative Refinement"
-description: "Prompt, observe, and reprompt until satisfied — the core loop of AI-assisted development"
+description: "Prompt, observe, and reprompt until satisfied: the core loop of AI-assisted development"
 tags: [workflow, guide, design-patterns]
 ---
 
-# Iterative Refinement
+# Iterative refinement
 
-> **Confidence**: Tier 2 — Перевірений патерн, який спостерігається у багатьох користувачів Claude Code.
+> **Confidence**: Tier 2 (перевірений патерн, який спостерігається у багатьох користувачів Claude Code).
 
 Написання промпту, спостереження, повторне коригування (reprompt) до отримання задовільного результату. Це основний цикл (core loop) ефективної розробки з використанням штучного інтелекту.
 
 ---
 
-## Table of Contents
+## Table of contents
 
 1. [TL;DR](#tldr)
 2. [The Loop](#the-loop)
@@ -41,9 +41,9 @@ tags: [workflow, guide, design-patterns]
 
 ---
 
-## The Loop
+## The loop
 
-### Step 1: Initial Prompt
+### Step 1: Initial prompt
 
 Почніть із чіткого наміру та обмежень:
 
@@ -55,7 +55,7 @@ Create a React component for a user profile card.
 - Mobile-responsive
 ```
 
-### Step 2: Evaluate Output
+### Step 2: Evaluate output
 
 Claude генерує код. Оцініть його:
 - Чи відповідає він вимогам?
@@ -63,7 +63,7 @@ Claude генерує код. Оцініть його:
 - Що зроблено неправильно?
 - Що можна покращити?
 
-### Step 3: Specific Feedback
+### Step 3: Specific feedback
 
 Надайте точкові виправлення:
 
@@ -85,9 +85,9 @@ Better. One more thing:
 
 ---
 
-## Feedback Patterns
+## Feedback patterns
 
-### Effective Feedback
+### Effective feedback
 
 | Pattern | Example |
 |---------|---------|
@@ -96,7 +96,7 @@ Better. One more thing:
 | **Reason given** | "Remove the console.log because it leaks user data" |
 | **Priority marked** | "Critical: fix the SQL injection. Nice-to-have: add pagination." |
 
-### Ineffective Feedback
+### Ineffective feedback
 
 | Anti-Pattern | Why It Fails | Better Alternative |
 |--------------|--------------|-------------------|
@@ -107,11 +107,23 @@ Better. One more thing:
 
 ---
 
-## Autonomous Loops
+## Autonomous loops
 
 Claude може ітерувати самостійно, якщо задати йому чіткі критерії завершення.
 
-### The Ralph Wiggum Pattern
+### Choose what starts the next iteration
+
+| Потреба | Механізм | Доказ завершення |
+|---|---|---|
+| Уточнити вимогу або оцінити дизайн | Ручний зворотний зв'язок | Людина приймає результат відповідно до сформульованої вимоги |
+| Виконати обмежене, але перевірюване завдання за кілька ходів | `/goal` | Evaluator оцінює умову за доказами в розмові |
+| Періодично перевіряти зовнішній стан | `/loop` | Кожна перевірка фіксує своє спостереження; скасування та завершення терміну дії не збігаються з прийняттям завдання |
+
+Для ілюстративного виправлення бага спочатку визначте перевірку, яка падає через повідомлений дефект. Вкажіть, що та сама перевірка має проходити після виправлення, назвіть дозволені файли й вимагайте відповідні регресійні перевірки. Задайте ліміт ходів і вихід за відсутності прогресу, зберігаючи фінальні докази, якщо спрацює будь-який із них. Ліміт є прикладом політики, а не виміряним оптимумом чи доказом того, що evaluator примусово забезпечує жорсткий лічильник.
+
+[Довідник goal](https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#goal-autonomous-completion-mode-v21139) пояснює обмеження evaluator і відновлення. [Посібник про цикли й графи](../core/loop-graph-engineering.uk.md#поєднуйте-повторюваний-тріаж-з-обмеженою-роботою) описує допуск із повторюваного тригера. Починайте з одного з цих механізмів; повторюваний prompt із вбудованою командою сам по собі не є перевіреною оркестрацією.
+
+### The Ralph Wiggum pattern
 
 Названий на честь патерна циклу самовдосконалення:
 
@@ -125,7 +137,7 @@ After each iteration, run the checks and fix any issues.
 Stop when all criteria are met.
 ```
 
-### Completion Criteria Examples
+### Completion criteria examples
 
 ```
 Iterate until:
@@ -135,7 +147,7 @@ Iterate until:
 - Bundle size < 200KB
 ```
 
-### Iteration Limits
+### Iteration limits
 
 Завжди встановлюйте ліміти, щоб запобігти нескінченним циклам:
 
@@ -149,7 +161,7 @@ Stop early if improvement < 5% between iterations.
 
 ## Integration with Claude Code
 
-### With Task Tool
+### With task tool
 
 Відстежуйте ітерації покращення за допомогою `TaskCreate` та `TaskUpdate`:
 
@@ -161,7 +173,7 @@ TaskCreate: "Optimization: memoize expensive calculations"
 # Mark completed as you progress with TaskUpdate
 ```
 
-### With Hooks
+### With hooks
 
 Налаштуйте автоматичну валідацію після кожної зміни за допомогою Claude Code hooks (налаштовуються через команду `/hooks` або в `settings.json`). Наприклад, hook `PostToolUse` для інструменту `Edit` може автоматично запускати лінтинг та тести. Claude бачитиме помилки та зможе самостійно їх виправляти.
 
@@ -189,11 +201,11 @@ Good progress. Let's checkpoint:
 
 ---
 
-## Script Generation Workflow
+## Script generation workflow
 
-Генерація скриптів та автоматизації дає найвищий рівень повернення інвестицій (ROI) для iterative refinement — за відгуками практиків економія часу становить 70-90%. Скрипти є автономними, їх легко тестувати ізольовано, і вони приносять негайну користь.
+Генерація скриптів та автоматизації дає найвищий рівень повернення інвестицій (ROI) для iterative refinement: за відгуками практиків економія часу становить 70-90%. Скрипти є автономними, їх легко тестувати ізольовано, і вони приносять негайну користь.
 
-### The 3-7 Iteration Pattern
+### The 3-7 iteration pattern
 
 Більшість готових до продакшену скриптів з'являються після 3-7 ітерацій:
 
@@ -204,7 +216,7 @@ Good progress. Let's checkpoint:
 | 4-5 | Зміцнення (hardening) | "Add error handling, logging, input validation" |
 | 6-7 | Фінальний лоск (polish) | "Optimize for [metric]. Add usage docs." |
 
-### Example: Kubernetes Pod Manager (PowerShell)
+### Example: Kubernetes pod manager (PowerShell)
 
 **Iteration 1 — Базовий**
 ```
@@ -235,7 +247,7 @@ Add: dry-run mode, output to JSON for piping, help documentation.
 Ensure: works on Windows, Linux, macOS.
 ```
 
-### Common Pitfalls
+### Common pitfalls
 
 | Pitfall | Example | Mitigation |
 |---------|---------|------------|
@@ -245,7 +257,7 @@ Ensure: works on Windows, Linux, macOS.
 | Зсув контексту (drift) | Забування вимог на 5 ітерації | Промпт перевірки: "Recap current requirements before next change" |
 | Припущення щодо платформи | Використання bash-фіч у sh | Вказуйте: "POSIX-compliant" або "bash 4+" |
 
-### Script Iteration Template
+### Script iteration template
 
 ```
 Current script: [paste or reference]
@@ -262,9 +274,9 @@ Success criteria: [how to verify this iteration works]
 
 ---
 
-## Iteration Strategies
+## Iteration strategies
 
-### Breadth-First
+### Breadth-first
 
 Вирішуйте всі проблеми на одному рівні, перш ніж заглиблюватися:
 
@@ -275,7 +287,7 @@ Third pass: Improve test coverage
 Fourth pass: Optimize performance
 ```
 
-### Depth-First
+### Depth-first
 
 Повністю завершуйте одну область перед переходом до наступної:
 
@@ -285,7 +297,7 @@ Fourth pass: Optimize performance
 3. Then move to settings
 ```
 
-### Priority-Based
+### Priority-based
 
 Працюйте в порядку важливості:
 
@@ -299,9 +311,9 @@ Iterate in this order:
 
 ---
 
-## Anti-Patterns
+## Anti-patterns
 
-### Moving Target
+### Moving target
 
 ```
 # Wrong
@@ -313,7 +325,7 @@ Commit to an approach, iterate within it.
 If approach is wrong, explicitly restart.
 ```
 
-### Perfectionism Loop
+### Perfectionism loop
 
 ```
 # Wrong
@@ -327,7 +339,7 @@ Set clear "good enough" criteria:
 → Ship it, improve later
 ```
 
-### Lost Context
+### Lost context
 
 ```
 # Wrong
@@ -342,9 +354,9 @@ Next: add Redis backend."
 
 ---
 
-## Review Auto-Correction Loop
+## Review auto-correction loop
 
-Спеціалізований ітеративний патерн для рев'ю коду, де Claude перевіряє → виправляє → знову перевіряє до досягнення збіжності.
+Спеціалізований ітеративний патерн, де Claude перевіряє, виправляє та повторно перевіряє в межах фіксованого бюджету. Прийняття вимагає доказів; зупинка циклу не доводить успіху.
 
 ### Pattern
 
@@ -358,13 +370,13 @@ Next: add Redis backend."
 │        ↓                                 │
 │   Re-Review (verify fixes)               │
 │        ↓                                 │
-│   Converge (minimal changes) → Done      │
+│   Verify acceptance → Accepted          │
 │        ↑                                 │
-│   └──── Repeat (max iterations)     │
+│        └──── Budget left? Repeat / Stop  │
 └─────────────────────────────────────────┘
 ```
 
-### Prompt Template
+### Prompt template
 
 ```
 Review this PR with auto-correction:
@@ -373,10 +385,15 @@ Review this PR with auto-correction:
 3. Re-review to verify fixes didn't introduce new issues
 4. Fix all 🟡 Should Fix issues
 5. Re-review one final time
-6. Stop when only 🟢 Can Skip remain
+6. Accept only when all blocking findings are resolved with evidence,
+   required behavior checks pass on the current revision, and the
+   designated reviewer accepts the result under the recorded criteria.
 
 Max iterations: 3
-Stop early if iteration produces <5 lines changed
+Stop as EXHAUSTED when the budget is consumed without acceptance.
+Stop as NO_PROGRESS after two passes resolve no blocking finding and
+produce no new verification evidence. A small diff is not acceptance.
+Keep FAILED, TIMEOUT, ABORTED and UNKNOWN distinct from acceptance.
 ```
 
 ### Safeguards
@@ -384,12 +401,14 @@ Stop early if iteration produces <5 lines changed
 | Safeguard | Purpose | Implementation |
 |-----------|---------|----------------|
 | **Max iterations** | Запобігання нескінченним циклам | Жорсткий ліміт: 3 ітерації |
-| **Quality gates** | Гарантія валідності виправлень | Запуск `tsc && lint` перед кожною ітерацією |
+| **Quality gates** | Перевірка заданих властивостей | Після кожного виправлення запускайте перевірку типів проєкту, lint і відповідні тести поведінки; фіксуйте ревізію та результати |
 | **Protected files** | Запобігання ризикованим змінам | Пропуск автовиправлення для: package.json, migrations, .env |
-| **Change threshold** | Зупинка при досягненні збіжності | Вихід, якщо ітерація змінює <5 рядків |
-| **Rollback capability** | Відновлення після невдалих змін | Git commit перед кожною ітерацією |
+| **Progress check** | Обмеження непродуктивної роботи | Відстежуйте розв'язані блокувальні знахідки та нові докази перевірки; відсутність прогресу є причиною зупинки, а не прийняттям |
+| **Recovery capability** | Збереження стану, який можна відновити | Зафіксуйте контрольну точку перед виправленнями; відкат коду не відновлює змінені дані чи зовнішні ефекти |
 
-### Example Session
+### Example session
+
+Ілюстративна розмова, а не виміряний результат рев'ю. У реальному запуску кожне твердження про розв'язання потребує пов'язаної перевірки або арбітражу.
 
 **Iteration 1: Initial Review**
 ```
@@ -413,31 +432,32 @@ Re-review: All 🟡 resolved. No new issues.
 Remaining: 1 🟢 Can Skip (optional improvement)
 ```
 
-**Convergence**
+**Acceptance**
 ```
-Claude: Converged. Only optional improvements remain.
-Changes this iteration: 2 lines (below threshold).
-Review complete. ✅
+Claude: Required behavior checks pass on the recorded current revision.
+Blocking findings have verified resolutions; the designated reviewer accepts.
+Only explicitly deferred optional improvements remain.
+Outcome: ACCEPTED within the stated criteria and evidence boundary.
 ```
 
-### Comparison: One-Pass vs Convergence Loop
+### Comparison: One-Pass vs convergence loop
 
 | Aspect | One-Pass Review | Convergence Loop |
 |--------|-----------------|------------------|
-| **Detection** | Знаходить усі проблеми один раз | Знаходить проблеми → виправляє → перевіряє → повторює |
+| **Detection** | Одна можливість знайти проблеми | Знаходить проблеми → виправляє → перевіряє → повторює; обидва підходи можуть пропустити дефекти |
 | **Follow-up awareness** | Перевіряє git log на "Co-Authored-By: Claude" | Кожна ітерація враховує попередню |
 | **False positives** | Може пропонувати виправлення для вже виправленого коду | Re-review виявляє це |
 | **Confidence** | Одноразова валідація | Кілька проходів валідації |
 | **Time cost** | Найшвидше (1 рев'ю) | Повільніше (3+ рев'ю) |
-| **Quality** | Добре для досвідчених розробників | Краще для критично важливого коду |
+| **Quality** | Потребує оцінювання результату | Потребує оцінювання результату; більша кількість проходів сама по собі не доводить покращення |
 
 **Коли використовувати**:
 - **One-pass**: Прості PR, досвідчена команда, обмеження за часом
-- **Convergence loop**: Критичний з точки зору безпеки код, молодші колеги в команді, велика відповідальність на продакшені
+- **Bounded loop**: зміни, що потребують кількох проходів виправлення; чутливі шляхи й надалі підпорядковуються політиці власника та затвердження
 
-### Integration with Multi-Agent Review
+### Integration with multi-agent review
 
-Поєднуйте convergence loop з multi-agent review для максимальної якості:
+Призначайте рецензентам окремі зони відповідальності й оцінюйте їхні знахідки; саме додавання agent не забезпечує незалежності чи якості:
 
 ```
 Each iteration:
@@ -451,34 +471,36 @@ Each iteration:
      ↓
   Verify fixes + check for new issues
      ↓
-  Repeat until convergence
+  Accept with evidence, or repeat within budget and stop with an explicit reason
 ```
 
-### Convergence Criteria
+### Convergence criteria
 
-Припиняйте ітерації, якщо виконується ХОЧА Б ОДНА з умов:
+Фіксуйте прийняття окремо від виконання та причини зупинки:
 
-1. **Не залишилося жодної проблеми** (ідеальний результат)
-2. **Досягнуто ліміту ітерацій** (за замовчуванням 3 ітерації)
-3. **Поріг змін** (ітерація змінила <5 рядків коду)
-4. **Помилка перевірки якості (Quality gate)** (`tsc`/`lint` завершується з помилкою після виправлення)
-5. **Ручна зупинка** (користувач просить зупинити процес)
+1. **Прийнято**: потрібні перевірки проходять на зафіксованій ревізії, блокувальні знахідки мають перевірені рішення, а уповноважений рецензент приймає результат відповідно до чинних критеріїв. Це не доводить повноти самих критеріїв.
+2. **Вичерпано або немає прогресу**: збережіть нерозв'язані знахідки та контрольні точки; не повідомляйте про завершення.
+3. **Збій або тайм-аут**: збережіть невдалий етап і наявні докази; відсутні результати не означають чистого рев'ю.
+4. **Перервано**: збережіть стан після санкціонованої зупинки.
+5. **Невідомо**: не вдається встановити відповідальність, покриття чи результат; застосуйте шлях відновлення або ескалації, передбачений політикою.
 
-### Anti-Patterns in Review Loops
+Якщо рев'ю виявляє неповну вимогу, версіонуйте критерії з указанням причини та санкціонованого рішення, а потім повторно запустіть уражені перевірки. Не послаблюйте критерій мовчки, щоб дійти до зеленого результату. Див. [розподіл судження](../core/loop-graph-engineering.uk.md#5-розподіляйте-судження-явно).
+
+### Anti-Patterns in review loops
 
 | Anti-Pattern | Problem | Solution |
 |--------------|---------|----------|
-| **Infinite loop** | Немає критеріїв збіжності | Встановіть max iterations + поріг змін |
-| **Scope creep** | Кожна ітерація додає нові вимоги | Зафіксуйте межі (scope) перед запуском циклу |
+| **Infinite loop** | Немає обмежених умов зупинки | Задайте бюджети та перевірки прогресу незалежно від прийняття |
+| **Scope creep** | Кожна ітерація мовчки змінює вимоги | Версіонуйте відкриття через призначений орган; визнавайте недійсним уражене прийняття |
 | **Breaking fixes** | Виправлення вносить нові баги | Re-review після кожного виправлення + quality gates |
 | **Protected file changes** | Зміна package.json, migrations | Явний список виключень для захищених файлів |
 | **Context loss** | Забування початкових проблем на 3 ітерації | Ведіть трекер проблем між ітераціями |
 
 ---
 
-## Example Session
+## Example session
 
-### Initial Request
+### Initial request
 ```
 Create a debounce function in TypeScript.
 ```
@@ -512,11 +534,11 @@ Perfect. Commit this as "feat: add debounce utility with full TypeScript support
 
 ---
 
-## Community Patterns & Known Limitations
+## Community patterns & known limitations
 
 Спільнота побудувала кілька власних патернів поверх ітераційного циклу Claude Code. Деякі вирішують реальні проблеми, інші виявляють поточні обмеження, про які варто знати.
 
-### Ralph Loop (Test-Driven Autonomous Iteration)
+### Ralph loop (test-driven autonomous iteration)
 
 Джерело: nathanonn.com, Лютий 2026.
 
@@ -543,7 +565,7 @@ Ralph Loop обмежує автономне ітерування лише од�
 
 Ліміт у 3 спроби запобігає пастці нескінченного циклу, яка часто виникає в простих автономних циклах. Замість того щоб витрачати токени на впертий тест-кейс, асистент рухається далі та залишає цю проблему для подальшого аналізу людиною.
 
-### Auto-Continue Skill
+### Auto-continue skill
 
 Джерело: mcpmarket.com.
 
@@ -562,7 +584,7 @@ Ralph Loop обмежує автономне ітерування лише од�
 
 Це чудово поєднується зі Stop hooks у Claude Code. Навичка може запускати перевірку після завдання і приймати рішення про продовження на основі її результатів.
 
-### Stop Hooks for Automatic Verification
+### Stop hooks for automatic verification
 
 Патерн, який перетворює систему hook'ів Claude Code на автоматичний якісний бар'єр (quality gate) між ітераціями:
 
@@ -587,7 +609,7 @@ Ralph Loop обмежує автономне ітерування лише од�
 
 Hook спрацьовує щоразу, коли Claude позначає завдання як виконане. Якщо перевірка виявляє помилку, Claude бачить цей вивід і може самостійно виправити її перед переходом до наступного кроку.
 
-### Escalation Strategy
+### Escalation strategy
 
 Що робити, коли 3 ітерації поспіль зазнають невдачі на одній і тій самій проблемі. Замість того щоб крутитися у вічному циклі або просто здатися, використовуйте структурований шлях ескалації:
 
@@ -603,7 +625,7 @@ if [ "$ATTEMPT_COUNT" -ge 3 ]; then
     cat errors.log attempts.log > escalation-context.md
 
     # Try with Opus
-    claude --model claude-opus-4-6 \
+    claude --model claude-opus-5-5 \
         "Fix this failing test. Context: $(cat escalation-context.md)"
 
     # If still failing, create issue
@@ -618,11 +640,11 @@ fi
 
 Мета полягає в тому, щоб ніколи мовчки не кидати роботу. Кожна невдача повинна бути або вирішена, або ескальована, або явно зафіксована для подальшого відстеження.
 
-### Known Limitations
+### Known limitations
 
 Відверто про те, що поки не працює, щоб ви не витрачали час на вигадування рішень, яких не існує.
 
-**Немає вбудованої логіки повторних спроб, перевірки та відновлення (retry/verify/resume)** (GitHub issue #28489): У безголовій (headless) автоматизації Claude Code відсутня вбудована підтримка логіки повторних спроб, валідаційних бар'єрів та відновлення сесій. Кожна команда, яка впроваджує автономні цикли, створює власну версію цих рішень. Файли стану, перевірки на основі hook'ів та скрипти ескалації — все це обхідні шляхи, розроблені спільнотою для покриття цієї прогалини у платформі.
+**Відокремлюйте нативне продовження від контролю доставки**: `/goal` підтримує неінтерактивне виконання та відновлює активні цілі під час відновлення сесії. Його evaluator читає розмову, а не запускає незалежну перевірку. Класифікація повторних спроб, довговічні загальні бюджети, повноваження на прийняття та безпечне повторне відтворення зовнішніх ефектів усе ще потребують явного контракту. Звіряйтеся з [поточною документацією goal](https://code.claude.com/docs/en/goal), а не вважайте історичні повідомлення про проблеми загальною відсутністю підтримки повторних спроб, перевірки чи відновлення.
 
 **Ітерації агента можуть бути втрачені** (GitHub issue #28843): У воркфлоу, що тривають кілька днів, ітерації агента та накопичений ними контекст можуть бути втрачені. Якщо ви запускаєте автоматизацію, яка охоплює кілька сесій або днів, зберігайте чіткі файли стану через кожні N ітерацій. Не покладайтеся на пам'ять розмов Claude як на єдине джерело істини.
 
@@ -630,12 +652,12 @@ fi
 
 ---
 
-## See Also
+## See also
 
-- [exploration-workflow.uk.md](./exploration-workflow.uk.md) — Досліджуйте альтернативи перед ітераціями
-- [tdd-with-claude.uk.md](./tdd-with-claude.uk.md) — TDD як ітераційне вдосконалення через тести
-- [plan-driven.uk.md](./plan-driven.uk.md) — Плануйте перед початком ітерацій
-- [../core/methodologies.md](../core/methodologies.uk.md) — Методологія ітераційних циклів (Iterative Loops)
+- [exploration-workflow.md](./exploration-workflow.uk.md): досліджуйте альтернативи перед ітераціями
+- [tdd-with-claude.md](./tdd-with-claude.uk.md): TDD як ітераційне вдосконалення через тести
+- [plan-driven.md](./plan-driven.uk.md): плануйте перед початком ітерацій
+- [../core/methodologies.md](../core/methodologies.uk.md): методологія ітераційних циклів (Iterative Loops)
 
 ---
 **Локалізація**: [Serhii (MacPlus Software)](https://macplus-software.com)

@@ -43,7 +43,7 @@ tags: [skills, architecture, multi-agent, patterns, design, ukrainian]
 
 **Примітка щодо реалізації**: Блок джерела істини має бути рядком, а не посиланням на файл. Якщо ви вкажете агентам "прочитати `docs.json`", кожен агент прочитає його незалежно. Скомпілюйте його один раз в оркестраторі та вставте текстом.
 
-> Спостерігається у [скілі doc-audit від Packmind](https://github.com/packmind/packmind) (.claude/skills/doc-audit/SKILL.md, Фаза 1). Див. [Credits](./credits.uk.md).
+> Спостерігається у [скілі doc-audit від Packmind](https://github.com/PackmindHub/packmind) (.claude/skills/doc-audit/SKILL.md, Фаза 1). Див. [Credits](./credits.uk.md).
 
 ---
 
@@ -88,7 +88,7 @@ description: Конвенції тестування для юніт- та ін�
 
 **Коли додавати `paths:` у frontmatter**: Будь-яке правило, яке має чітку область застосування (тести, міграції, фронтенд-компоненти, маршрути API). Правила, які є справді глобальними, використовують `alwaysApply: true` і пропускають крок зіставлення.
 
-> Спостерігається у [скілі qa-review від Packmind](https://github.com/packmind/packmind) (.claude/skills/qa-review/SKILL.md, Фаза 5). Див. [Credits](./credits.uk.md).
+> Спостерігається у [скілі qa-review від Packmind](https://github.com/PackmindHub/packmind) (.claude/skills/qa-review/SKILL.md, Фаза 5). Див. [Credits](./credits.uk.md).
 
 ---
 
@@ -110,7 +110,7 @@ description: Конвенції тестування для юніт- та ін�
 
 **Практична цінність**: Скіли, орієнтовані лише на виявлення, безпечно запускати в main, у CI та проти продуктових конфігурацій. Користувач може викликати такий скіл, не побоюючись ненавмисних змін, що робить їх використання частішим.
 
-> Повторюваний патерн у скілах qa-review, playbook-audit та doc-audit у [репозиторії Packmind](https://github.com/packmind/packmind). Див. [Credits](./credits.uk.md).
+> Повторюваний патерн у скілах qa-review, playbook-audit та doc-audit у [репозиторії Packmind](https://github.com/PackmindHub/packmind). Див. [Credits](./credits.uk.md).
 
 ---
 
@@ -143,7 +143,7 @@ SKILL.md (скорочено):
 
 **Коли використовувати**: Коли типи вводу вимагають суттєво різної логіки парсингу (а не просто різних назв полів). Якщо два типи вводу відрізняються менш ніж на 5 кроків, обробляйте їх інлайново. Патерн стає вигідним, коли кожен обробник перевищує 100 рядків.
 
-> Спостерігається у [скілі create-em-spec від Packmind](https://github.com/packmind/packmind) (.claude/skills/create-em-spec/inputs/). Див. [Credits](./credits.uk.md).
+> Спостерігається у [скілі create-em-spec від Packmind](https://github.com/PackmindHub/packmind) (.claude/skills/create-em-spec/inputs/). Див. [Credits](./credits.uk.md).
 
 ---
 
@@ -182,7 +182,7 @@ SKILL.md визначає версію під час виконання:
 
 **Коли використовувати**: Коли CLI-інструмент, який ви обгортаєте, має критичні зміни між версіями, і вам потрібно підтримувати кілька версій одночасно. Якщо вам потрібно підтримувати лише останню версію, просто оновіть скіл на місці.
 
-> Спостерігається у [скілі update-playbook від Packmind](https://github.com/packmind/packmind) (.claude/skills/packmind-update-playbook/). Див. [Credits](./credits.uk.md).
+> Спостерігається у [скілі update-playbook від Packmind](https://github.com/PackmindHub/packmind) (.claude/skills/packmind-update-playbook/). Див. [Credits](./credits.uk.md).
 
 ---
 
@@ -208,7 +208,7 @@ SKILL.md визначає версію під час виконання:
 
 **Підтримка**: При оновленні канонічного стандарту оновлюйте також і резюме. Розподіл на два рівні створює ризик дублювання. Мінімізуйте його, залишаючи в резюме лише пункти правил (без розлогого тексту), щоб воно змінювалося рідко.
 
-> Спостерігається у [конфігурації правил Packmind](https://github.com/packmind/packmind) (.claude/rules/packmind/). Див. [Credits](./credits.uk.md).
+> Спостерігається у [конфігурації правил Packmind](https://github.com/PackmindHub/packmind) (.claude/rules/packmind/). Див. [Credits](./credits.uk.md).
 
 ---
 
@@ -262,7 +262,7 @@ SKILL.md визначає версію під час виконання:
 
 **Коли використовувати**: Завдання впровадження на кілька сесій, де важлива безперервність. Не варто витрачати час на це для односесійного завдання, яке поміщається в один коміт. Порогове значення: якщо робота триває більше одного дня або більше однієї сесії Claude — фіксуйте план.
 
-> Спостерігається у конвенції [.claude/plans/ від Packmind](https://github.com/packmind/packmind). Див. [Credits](./credits.uk.md).
+> Спостерігається у конвенції [.claude/plans/ від Packmind](https://github.com/PackmindHub/packmind). Див. [Credits](./credits.uk.md).
 
 ---
 
@@ -338,9 +338,33 @@ function canUseUnifiedMode(context: MultiFileContext, maxTokens = DEFAULT_MAX_UN
 
 ---
 
+## Multi-Directory виявлення скілів для сумісності між CLI
+
+**Проблема**: Над репозиторієм працюють кілька AI-CLI для кодингу (Claude Code, а також Codex, Amp чи інший harness). Кожен CLI очікує скіли або конфігурацію середовища у власній усталеній директорії. Якщо звести все в одну директорію, більшість CLI її не знайде; три майже однакові директорії на перший погляд виглядають як безлад.
+
+**Патерн**: Тримайте по одній директорії скілів на кожну конвенцію CLI поруч у корені репозиторію, і нехай кожна містить скіли саме для свого CLI, а не копії одного вмісту: `.claude/skills/` для Claude Code, `.agents/skills/` для спільної чи загальної конвенції агентів, `.skills/` для спільного набору рівня проєкту, на який можна вказати будь-якому CLI, і `.codex/environments/` для конфігурації середовища Codex. Сприймайте це як збіжність конвенцій у репозиторії з кількома CLI, а не як хаос: кожна директорія є окремим реальним шляхом виявлення, а не зайвою копією.
+
+```
+.claude/skills/      # 3 skills, Claude Code's own convention
+.agents/skills/       # shared/generic agent convention
+.skills/              # 6 skills: cli-release, effect-atom-optimistic-updates,
+                      #   effect-http-testing, effect-use-pattern, graphite,
+                      #   warden-security-review
+.codex/environments/  # Codex-specific environment config
+```
+
+**Пов'язана конвенція, яку варто запозичити окремо**: добірний розділ «References» у README проєкту, що називає кодові бази, на які команда свідомо спрямовує свого агента як на зразки для наслідування (система плагінів, адаптер сховища, загальний стиль коду). Це відрізняється від директорій скілів вище: це список для читання агентом, а не шлях виявлення, але мета та сама: зробити неявне знання «агент уже знає, як тут виглядає добре» явним і версіонованим, а не усним.
+
+**Коли використовувати**: у будь-якому репозиторії, над яким працює більше одного AI-CLI, якщо ці CLI не мають спільної конвенції виявлення скілів. Для репозиторію з одним CLI простіше мати одну директорію, і цей патерн нічого не додає.
+
+> Спостерігається в [UsefulSoftwareCo/executor](https://github.com/UsefulSoftwareCo/executor) (MIT). Повна оцінка, включно з іншими конвенціями agentic-інженерії цього репозиторію: [`docs/resource-evaluations/executor-integration-governance-layer.md`](https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/docs/resource-evaluations/executor-integration-governance-layer.md).
+
+---
+
 ## Дивіться також
 
 - [Методології розробки](./methodologies.uk.md): TDD, SDD, BDD, багатоагентна координація
+- [AI Design Patterns](./ai-design-patterns.uk.md): патерни рівня harness (hooks, subagents, checkpoints), зіставлені з класичними патернами проєктування
 - [§9.20 Команди агентів](../ultimate-guide.uk.md#920-agent-teams-multi-agent-coordination): Команди агентів, включаючи патерн "Скептичний рецензент"
 - [Credits](./credits.uk.md): Повна атрибуція зовнішніх джерел
 - `examples/skills/mcp-integration-reference/`: Шаблон патерна довідкового файлу MCP

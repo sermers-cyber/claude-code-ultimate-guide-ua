@@ -1,17 +1,23 @@
 ---
-title: "Claude Code — Візуальний довідник"
+title: "Claude Code: Візуальний довідник"
 description: "ASCII-діаграми, що об'єднують ключові концепції Claude Code в одному візуальному огляді"
 tags: [reference, architecture, cheatsheet, ukrainian]
 ---
 
-# Claude Code — Візуальний довідник
+# Claude Code: Візуальний довідник
 
 Усі діаграми в одному місці. Швидкий візуальний огляд ключових концепцій Claude Code.
-Для детальної документації → [Повний посібник](./ultimate-guide.uk.md) | [Шпаргалка](./cheatsheet.md)
+Для детальної документації → [Повний посібник](../ultimate-guide.uk.md) | [Шпаргалка](../cheatsheet.uk.md)
 
-> **Доступні інтерактивні Mermaid-діаграми**: 40 інтерактивних діаграм, що охоплюють вибір моделі, життєвий цикл агента, ієрархію пам'яті, багатоагентні патерни, загрози безпеці та інше — див. **[guide/diagrams/](./diagrams/)**. Цей файл містить ASCII-версії ключових концепцій.
+> **Доступні інтерактивні Mermaid-діаграми**: 40 інтерактивних діаграм, що охоплюють вибір моделі, життєвий цикл агента, ієрархію пам'яті, багатоагентні патерни, загрози безпеці та інше, див. **[guide/diagrams/](../diagrams/)**. Цей файл містить ASCII-версії ключових концепцій.
 
 > **20 діаграм**: 8 нових (у цьому файлі) + 12 з існуючих посібників, усі зібрані тут.
+
+---
+
+## Посібник із читання мапи harness
+
+Ці ASCII-діаграми охоплюють вибрані концепції Claude Code. Для таксономії harness скористайтеся трьома рисунками на [мапі Agent Harness](../ecosystem/agent-harness-landscape.uk.md): вузький і широкий обсяг, чотири рівні та воронка вибору. [Agent Harness Engineering](agent-harness.uk.md) пояснює модель, runtime harness, repository harness та оркестратор. [Agent Tools: Beyond Claude Code](../ecosystem/agentic-tools.uk.md) охоплює фреймворки й площини керування. Для тестування, інспекції та обмеження вибраного дизайну використовуйте [Agent Evaluation](../roles/agent-evaluation.uk.md), [Session Observability](../ops/observability.uk.md) і [Security Hardening](../security/security-hardening.uk.md). Визначення наведені в [глосарії](glossary.uk.md).
 
 ---
 
@@ -73,12 +79,12 @@ tags: [reference, architecture, cheatsheet, ukrainian]
 ```
 
 **Дії за зонами:**
-- **Зелена (0-50%)** — Повна швидкість. Читайте файли, досліджуйте вільно.
-- **Жовта (50-70%)** — Будьте вибірковими. Уникайте непотрібного читання файлів.
-- **Помаранчева (70-90%)** — Негайно запустіть `/compact`. Якість контексту падає.
-- **Червона (90%+)** — Запустіть `/clear` і почніть спочатку. Відповіді стають ненадійними.
+- **Зелена (0-50%)**: Повна швидкість. Читайте файли, досліджуйте вільно.
+- **Жовта (50-70%)**: Будьте вибірковими. Уникайте непотрібного читання файлів.
+- **Помаранчева (70-90%)**: Негайно запустіть `/compact`. Якість контексту падає.
+- **Червона (90%+)**: Запустіть `/clear` і почніть спочатку. Відповіді стають ненадійними.
 
-→ Джерело: [ultimate-guide.uk.md:1335](./ultimate-guide.uk.md)
+→ Джерело: [ultimate-guide.uk.md:1335](../ultimate-guide.uk.md)
 
 ---
 
@@ -101,17 +107,17 @@ tags: [reference, architecture, cheatsheet, ukrainian]
 
 | Режим | Коли використовувати... | Рівень ризику |
 |------|-------------|------------|
-| **За замовчуванням** | Звичайна розробка — перевірка кожної зміни | Низький |
+| **За замовчуванням** | Звичайна розробка: перевірка кожної зміни | Низький |
 | **Авто-прийняття** | Довірені завдання (форматування, рефакторинг) | Середній |
-| **Режим плану** | Складні/ризиковані операції — спочатку безпечне дослідження | Відсутній |
+| **Режим плану** | Складні/ризиковані операції: спочатку безпечне дослідження | Відсутній |
 
 **Гарячі клавіші:**
-- `Shift+Tab` — Перехід до наступного режиму
-- `Shift+Tab × 2` — Стрибок до режиму плану із замовчуваного
-- `/plan` — Прямий вхід у режим плану
-- `/execute` — Вихід з режиму плану
+- `Shift+Tab`: Перехід до наступного режиму
+- `Shift+Tab × 2`: Стрибок до режиму плану із замовчуваного
+- `/plan`: Прямий вхід у режим плану
+- Вихід з режиму плану: схваліть план, який показує Claude, або натисніть `Shift+Tab` (команди `/execute` немає)
 
-→ Джерело: [ultimate-guide.uk.md:760](./ultimate-guide.uk.md)
+→ Джерело: [ultimate-guide.uk.md:760](../ultimate-guide.uk.md)
 
 ---
 
@@ -138,11 +144,11 @@ tags: [reference, architecture, cheatsheet, ukrainian]
 **Ключові принципи:**
 - **Крок 2**: Завжди перевіряйте контекст перед початком. Якщо >70%, спочатку `/compact`.
 - **Крок 3**: Використовуйте режим плану для всього ризикованого або складного.
-- **Крок 4**: Будьте конкретними — розмиті промпти дають розмиті результати.
+- **Крок 4**: Будьте конкретними. Розмиті промпти дають розмиті результати.
 - **Крок 5**: Читайте кожен diff. Ніколи не приймайте наосліп.
 - **Крок 9**: Стискайте контекст після кожного завдання, щоб залишатися в зеленій зоні.
 
-→ Джерело: [ultimate-guide.uk.md:277](./ultimate-guide.uk.md)
+→ Джерело: [ultimate-guide.uk.md:277](../ultimate-guide.uk.md)
 
 ---
 
@@ -174,7 +180,7 @@ tags: [reference, architecture, cheatsheet, ukrainian]
 └─ Впровадження в команді ───────→ Читайте adoption-approaches.md
 ```
 
-→ Джерело: [reference.yaml](../machine-readable/reference.yaml) (розділ decide)
+→ Джерело: [reference.yaml](../../machine-readable/reference.yaml) (розділ decide)
 
 ---
 
@@ -229,7 +235,7 @@ tags: [reference, architecture, cheatsheet, ukrainian]
 └─────────────────────────────────────────────────────────────┘
 ```
 
-→ Джерело: [architecture.md:84](./architecture.uk.md)
+→ Джерело: [architecture.md:84](architecture.uk.md)
 
 ---
 
@@ -268,7 +274,7 @@ tags: [reference, architecture, cheatsheet, ukrainian]
 └─────────────────────────────────────────────────────────┘
 ```
 
-→ Джерело: [ultimate-guide.uk.md:6327](./ultimate-guide.uk.md)
+→ Джерело: [ultimate-guide.uk.md:6327](../ultimate-guide.uk.md)
 
 ---
 
@@ -409,7 +415,7 @@ tags: [reference, architecture, cheatsheet, ukrainian]
 └─ ast-grep → Додайте обмеження до патерну
 ```
 
-→ Джерело: [search-tools-mastery.md:75](./workflows/search-tools-mastery.md)
+→ Джерело: [search-tools-mastery.md:75](../workflows/search-tools-mastery.uk.md)
 
 ---
 
@@ -450,7 +456,7 @@ tags: [reference, architecture, cheatsheet, ukrainian]
 └─────────────────────────────────────────────────────────┘
 ```
 
-→ Джерело: [ultimate-guide.uk.md:1182](./ultimate-guide.uk.md)
+→ Джерело: [ultimate-guide.uk.md:1182](../ultimate-guide.uk.md)
 
 ---
 
@@ -494,7 +500,7 @@ tags: [reference, architecture, cheatsheet, ukrainian]
 └─ "Теорія методологій" ────────────→ methodologies.md
 ```
 
-→ Джерело: [methodologies.md:24](./methodologies.uk.md)
+→ Джерело: [methodologies.md:24](methodologies.uk.md)
 
 ---
 
@@ -546,7 +552,7 @@ tags: [reference, architecture, cheatsheet, ukrainian]
 └─────────────────────────────────────────┘
 ```
 
-→ Джерело: [iterative-refinement.md:354](./workflows/iterative-refinement.md)
+→ Джерело: [iterative-refinement.md:354](../workflows/iterative-refinement.uk.md)
 
 ---
 
@@ -586,7 +592,7 @@ tags: [reference, architecture, cheatsheet, ukrainian]
 └─────────────────────────────────────────────────┘
 ```
 
-→ Джерело: [pdf-generation.md:58](./workflows/pdf-generation.md)
+→ Джерело: [pdf-generation.md:58](../workflows/pdf-generation.uk.md)
 
 ---
 
@@ -639,7 +645,7 @@ tags: [reference, architecture, cheatsheet, ukrainian]
   REPEAT   → Одна функція за раз, завжди в такому порядку
 ```
 
-> Джерело: [workflows/tdd-with-claude.md:78](./workflows/tdd-with-claude.md)
+> Джерело: [workflows/tdd-with-claude.md:78](../workflows/tdd-with-claude.uk.md)
 
 ---
 
@@ -759,7 +765,7 @@ tags: [reference, architecture, cheatsheet, ukrainian]
 
 ---
 
-*Назад до [README посібника](./README.uk.md) | [Шпаргалка](./cheatsheet.md) | [Головний README](../README.uk.md)*
+*Назад до [README посібника](../README.uk.md) | [Шпаргалка](../cheatsheet.uk.md) | [Головний README](../README.uk.md)*
 
 ---
 

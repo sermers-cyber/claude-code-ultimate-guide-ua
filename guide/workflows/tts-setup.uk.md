@@ -310,15 +310,16 @@ echo "*.onnx" >> .gitignore
 | Забагато розмов | Виконайте команду `/agent-vibes:verbosity low` |
 | Забагато команд на екрані | Виконайте команду `/agent-vibes:hide` |
 
-**Повний посібник з усунення несправностей**: [Усунення несправностей Agent Vibes](../../examples/integrations/agent-vibes/troubleshooting.uk.md)
+**Повний посібник з усунення несправностей**: [Усунення несправностей Agent Vibes](https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/examples/integrations/agent-vibes/troubleshooting.md)
 
 ---
 
 ## Наступні кроки
 
-- **[Каталог голосів](../../examples/integrations/agent-vibes/voice-catalog.uk.md)** — ознайомтеся з 15 доступними голосами
-- **[Посібник з інтеграції](../../examples/integrations/agent-vibes/README.uk.md)** — вивчіть доступні команди
-- **[Деталі встановлення](../../examples/integrations/agent-vibes/installation.uk.md)** — глибоке занурення в архітектуру
+- **[Довідник інструментів](../core/tools-reference.uk.md)** — повний перелік вбудованих інструментів Claude Code
+- **[Каталог голосів](https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/examples/integrations/agent-vibes/voice-catalog.md)** — ознайомтеся з 15 доступними голосами
+- **[Посібник з інтеграції](https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/examples/integrations/agent-vibes/README.md)** — вивчіть доступні команди
+- **[Деталі встановлення](https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/examples/integrations/agent-vibes/installation.md)** — глибоке занурення в архітектуру
 
 ---
 

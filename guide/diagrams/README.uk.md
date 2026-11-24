@@ -1,12 +1,12 @@
 ---
-title: "Claude Code — Візуальні діаграми"
-description: "48 інтерактивних Mermaid-діаграм, які охоплюють усі основні концепції Claude Code"
+title: "Claude Code: Візуальні діаграми"
+description: "53 інтерактивні Mermaid-діаграми, які охоплюють усі основні концепції Claude Code"
 tags: [reference, architecture, diagrams, mermaid]
 ---
 
-# Claude Code — Візуальні діаграми
+# Claude Code: Візуальні діаграми
 
-48 інтерактивних Mermaid-діаграм, упорядкованих в 10 тематичних файлах. Кожна діаграма містить Mermaid-версію (яка рендериться нативно на GitHub) та ASCII-альтернативу.
+53 Mermaid-діаграми, упорядковані в 12 тематичних файлах. Кожна містить ASCII-альтернативу та посилання на посібник і актуальну документацію продукту. Концептуальні моделі й організаційні політики позначені як такі; вони не гарантують поведінку продукту, продуктивність чи відповідність вимогам.
 
 > Для діаграм лише в ASCII та друкованого візуального довідника → [visual-reference.md](../core/visual-reference.uk.md)
 
@@ -42,69 +42,72 @@ tags: [reference, architecture, diagrams, mermaid]
 
 | Файл | Діаграми | Теми |
 |------|----------|------|
-| [01-foundations.md](./01-foundations.uk.md) | 4 | 4-рівнева модель, конвеєр робочого процесу, дерево рішень, режими дозволів |
-| [02-context-and-sessions.md](./02-context-and-sessions.uk.md) | 4 | Зони контексту, ієрархія пам'яті, телепортація сесії, свіжий контекст |
+| [01-foundations.md](./01-foundations.uk.md) | 4 | концептуальна модель контексту, конвеєр робочого процесу, дерево рішень, режими дозволів |
+| [02-context-and-sessions.md](./02-context-and-sessions.uk.md) | 4 | Зони контексту, ієрархія пам'яті, відновлення сесії, свіжий контекст |
 | [03-configuration-system.md](./03-configuration-system.uk.md) | 4 | Пріоритет конфігурації, навички проти команд та агентів, життєвий цикл агента, hooks |
-| [04-architecture-internals.md](./04-architecture-internals.uk.md) | 4 | Головний цикл (master loop), категорії інструментів, збірка системного промпту, ізоляція sub-agents |
+| [04-architecture-internals.md](./04-architecture-internals.uk.md) | 5 | Головний цикл (master loop), категорії інструментів, збірка системного промпту, ізоляція sub-agents, конвеєри моделей |
 | [05-mcp-ecosystem.md](./05-mcp-ecosystem.uk.md) | 4 | Карта екосистеми MCP, архітектура MCP, атака rug pull, ієрархія конфігурації |
-| [06-development-workflows.md](./06-development-workflows.uk.md) | 5 | Цикл TDD, конвеєр спочатку-специфікація, керований планом робочий процес, ітераційне вдосконалення, шляхи адаптації до AI (AI fluency) |
-| [07-multi-agent-patterns.md](./07-multi-agent-patterns.uk.md) | 5 | Топології агентів, worktrees, дублювання інстансів (dual-instance), горизонтальне масштабування, матриця рішень |
+| [06-development-workflows.md](./06-development-workflows.uk.md) | 6 | Цикл TDD, конвеєр спочатку-специфікація, керований планом робочий процес, ітераційне вдосконалення, шляхи адаптації до AI (AI fluency), де пояснюється зміна, зроблена agent |
+| [07-multi-agent-patterns.md](./07-multi-agent-patterns.uk.md) | 6 | Топології агентів, worktrees, дублювання інстансів (dual-instance), горизонтальне масштабування, матриця рішень, обмін повідомленнями між сесіями |
 | [08-security-and-production.md](./08-security-and-production.uk.md) | 4 | 3-рівневий захист, рішення про sandbox, парадокс верифікації, конвеєр CI/CD |
 | [09-cost-and-optimization.md](./09-cost-and-optimization.uk.md) | 4 | Вибір моделі, оптимізація витрат, рівні підписки, зменшення кількості токенів |
-| [10-adoption-and-learning.md](./10-adoption-and-learning.uk.md) | 3 | Шляхи онбордингу, протокол UVAL, калібрування довіри |
-| [11-context-engineering.md](./11-context-engineering.uk.md) | 4 | 3-рівнева система контексту, деградація дотримання правил, модульна архітектура, розміщення правил |
-| [12-enterprise-governance.md](./12-enterprise-governance.uk.md) | 3 | Рівні ризику управління, робочий процес затвердження MCP, класифікація даних |
-| **Всього** | **48** | |
+| [10-adoption-and-learning.md](./10-adoption-and-learning.uk.md) | 4 | Шляхи онбордингу, протокол UVAL, калібрування довіри, схвалюйте лише те, що можете пояснити |
+| [11-context-engineering.md](./11-context-engineering.uk.md) | 4 | 3-рівнева система контексту, перевірки бюджету контексту, модульна архітектура, розміщення правил |
+| [12-enterprise-governance.md](./12-enterprise-governance.uk.md) | 4 | Рівні ризику управління, робочий процес затвердження MCP, класифікація даних, збереження AI-атрибуції при переписуванні історії |
+| **Всього** | **50** | |
 
 ---
 
 ## Навігація за сценаріями використання
 
-### "Я новачок у Claude Code — з чого почати?"
-1. [Швидке дерево рішень](./01-foundations.uk.md#quick-decision-tree) — Чи варто мені використовувати Claude Code?
-2. [9-кроковий конвеєр робочого процесу](./01-foundations.uk.md#9-step-workflow-pipeline) — Як це працює?
-3. [Режими дозволів](./01-foundations.uk.md#permission-modes-comparison) — Які існують режими безпеки?
-4. [Шляхи онбордингу](./10-adoption-and-learning.uk.md#onboarding-adaptive-learning-paths) — Який шлях мені підходить?
+### "Я новачок у Claude Code, з чого почати?"
+1. [Швидке дерево рішень](./01-foundations.uk.md#швидке-дерево-рішень--чи-варто-використовувати-claude-code): Чи варто мені використовувати Claude Code?
+2. [9-кроковий конвеєр робочого процесу](./01-foundations.uk.md#9-кроковий-конвеєр-робочого-процесу): Як це працює?
+3. [Режими дозволів](./01-foundations.uk.md#порівняння-режимів-дозволів): Які існують режими безпеки?
+4. [Шляхи онбордингу](./10-adoption-and-learning.uk.md#шляхи-адаптації-та-навчання-onboarding-adaptive-paths): Який шлях мені підходить?
 
 ### "Я хочу зрозуміти архітектуру"
-1. [Головний цикл (master loop)](./04-architecture-internals.uk.md#the-master-loop) — Основний механізм виконання
-2. [Збірка системного промпту](./04-architecture-internals.uk.md#system-prompt-assembly) — Як будується контекст
-3. [4-рівнева система контексту](./01-foundations.uk.md#chatbot-to-context-system-4-layer-model) — Модель трансформації
-4. [Категорії інструментів](./04-architecture-internals.uk.md#tool-categories) — Які інструменти доступні
+1. [Головний цикл (master loop)](./04-architecture-internals.uk.md#головний-цикл-the-master-loop): Основний механізм виконання
+2. [Збірка системного промпту](./04-architecture-internals.uk.md#збірка-системного-промпту): Як будується контекст
+3. [4-рівнева система контексту](./01-foundations.uk.md#чат-бот-проти-системи-контексту--4-рівнева-модель): Модель трансформації
+4. [Категорії інструментів](./04-architecture-internals.uk.md#категорії-інструментів-та-вибір): Які інструменти доступні
+5. [Конвеєри моделей](./04-architecture-internals.uk.md#three-model-pipelines-dense-moe-and-vlm): Порівняння архітектур Dense, MoE та VLM
 
 ### "Мене турбує безпека"
-1. [Атака MCP rug pull](./05-mcp-ecosystem.uk.md#mcp-rug-pull-attack-chain) — Основний вектор загроз
-2. [3-рівневий захист](./08-security-and-production.uk.md#security-3-layer-defense) — Як захистити себе
-3. [Дерево рішень щодо sandbox](./08-security-and-production.uk.md#sandbox-decision-tree) — Коли використовувати sandbox
-4. [Парадокс верифікації](./08-security-and-production.uk.md#the-verification-paradox) — Не довіряйте Claude верифікувати самого себе
+1. [Атака MCP rug pull](./05-mcp-ecosystem.uk.md#ланцюжок-атаки-mcp-rug-pull): Як може змінитися опис надійного інструмента
+2. [3-рівневий захист](./08-security-and-production.uk.md#трирівнева-модель-захисту-безпеки): Як захистити себе
+3. [Дерево рішень щодо sandbox](./08-security-and-production.uk.md#дерево-рішень-щодо-використання-пісочниці-sandbox): Коли використовувати sandbox
+4. [Парадокс верифікації](./08-security-and-production.uk.md#парадокс-перевірки-the-verification-paradox): Вимагайте доказів виконання та рев'ю в межах обсягу
 
 ### "Я хочу зменшити свої витрати на токени"
-1. [Схема прийняття рішень щодо вибору моделі](./09-cost-and-optimization.uk.md#model-selection-decision-flow) — Виберіть правильну модель
-2. [Дерево оптимізації витрат](./09-cost-and-optimization.uk.md#cost-optimization-decision-tree) — Систематичне зниження витрат
-3. [Конвеєр зменшення кількості токенів](./09-cost-and-optimization.uk.md#token-reduction-strategies-pipeline) — RTK + гігієна сесій
-4. [Зони керування контекстом](./02-context-and-sessions.uk.md#context-management-zones) — Керуйте розміром контексту
+1. [Схема прийняття рішень щодо вибору моделі](./09-cost-and-optimization.uk.md#схема-рішень-щодо-вибору-моделі): Виберіть правильну модель
+2. [Дерево оптимізації витрат](./09-cost-and-optimization.uk.md#дерево-рішень-щодо-оптимізації-витрат): Систематичне зниження витрат
+3. [Конвеєр зменшення кількості токенів](./09-cost-and-optimization.uk.md#конвеєр-стратегій-зменшення-кількості-токенів): RTK + гігієна сесій
+4. [Зони керування контекстом](./02-context-and-sessions.uk.md#зони-керування-контекстом): Керуйте розміром контексту
 
 ### "Я хочу використовувати кілька агентів"
-1. [Топологія команд агентів](./07-multi-agent-patterns.uk.md#agent-teams-topology-3-patterns) — 3 патерни оркестрації
-2. [Матриця рішень для кількох інстансів](./07-multi-agent-patterns.uk.md#multi-instance-decision-matrix) — Який патерн використовувати?
-3. [Багатоінстансність через git worktree](./07-multi-agent-patterns.uk.md#git-worktree-multi-instance-pattern) — Паралельна ізоляція
-4. [Ізоляція контексту sub-agents](./04-architecture-internals.uk.md#sub-agent-context-isolation) — Як ізолюються агенти
+1. [Топології оркестрації агентів](./07-multi-agent-patterns.uk.md#команди-агентів-agent-teams--3-топології-оркестрації): 3 патерни оркестрації
+2. [Матриця рішень для кількох інстансів](./07-multi-agent-patterns.uk.md#матриця-рішень-для-роботи-з-кількома-клієнтами-multi-instance): Який патерн використовувати?
+3. [Багатоінстансність через git worktree](./07-multi-agent-patterns.uk.md#патерн-роботи-з-кількома-клієнтами-git-worktree): Паралельна ізоляція
+4. [Ізоляція контексту sub-agents](./04-architecture-internals.uk.md#ізоляція-контексту-sub-agents): Як ізолюються агенти
+5. [Обмін повідомленнями між сесіями](./07-multi-agent-patterns.uk.md#cross-session-messaging-discovery--delivery): Як незалежні сесії знаходять одна одну та обмінюються повідомленнями
 
 ### "Я хочу налаштувати MCP-сервери"
-1. [Карта екосистеми MCP](./05-mcp-ecosystem.uk.md#mcp-server-ecosystem-map) — Які сервери існують
-2. [Архітектура MCP](./05-mcp-ecosystem.uk.md#mcp-architecture-client-server) — Як це працює
-3. [Ізоляція конфігурації MCP](./05-mcp-ecosystem.uk.md#mcp-config-hierarchy) — Де живуть конфігурації
+1. [Карта екосистеми MCP](./05-mcp-ecosystem.uk.md#карта-екосистеми-mcp-серверів): Які сервери існують
+2. [Архітектура MCP](./05-mcp-ecosystem.uk.md#архітектура-mcp--клієнт-серверний-протокол): Як це працює
+3. [Ієрархія конфігурації MCP](./05-mcp-ecosystem.uk.md#ієрархія-конфігурації-mcp): Де живуть конфігурації
 
 ### "Я хочу керувати використанням Claude Code у своїй команді"
-1. [Рівні ризику управління](./12-enterprise-governance.uk.md#governance-risk-tiers) — Який рівень контролю підходить для вашого контексту?
-2. [Робочий процес управління MCP](./12-enterprise-governance.uk.md#mcp-governance-workflow) — Конвеєр затвердження для MCP-серверів
-3. [Правила класифікації даних](./12-enterprise-governance.uk.md#data-classification--claude-code-access-rules) — До чого Claude має і не має доступу
+1. [Рівні ризику управління](./12-enterprise-governance.uk.md#рівні-ризику-управління--що-та-коли-контролювати): Який рівень контролю підходить для вашого контексту?
+2. [Робочий процес управління MCP](./12-enterprise-governance.uk.md#робочий-процес-управління-mcp-mcp-governance-workflow): Конвеєр затвердження для MCP-серверів
+3. [Правила класифікації даних](./12-enterprise-governance.uk.md#класифікація-даних-та-правила-доступу-claude-code): Як визначати й перевіряти межі доступу до даних
+4. [AI-атрибуція при переписуванні історії](./12-enterprise-governance.uk.md#ai-attribution-through-history-rewrites): Які переписування зберігають AI-атрибуцію, записану в git notes?
 
 ### "Я хочу покращити дотримання контексту з боку Claude"
-1. [Дерево рішень щодо розміщення правил](./11-context-engineering.uk.md#rule-placement-decision-tree) — Куди помістити це правило?
-2. [3-рівнева система контексту](./11-context-engineering.uk.md#the-3-layer-context-system) — Глобальний / Проект / Сесія
-3. [Бюджет контексту та відповідність](./11-context-engineering.uk.md#context-budget--adherence-degradation) — Чому правила перестають виконуватися
-4. [Модульна архітектура](./11-context-engineering.uk.md#monolithic-vs-modular-architecture) — Обмеження шляхів як рішення
+1. [Дерево рішень щодо розміщення правил](./11-context-engineering.uk.md#дерево-рішень-щодо-розміщення-правил-rule-placement): Куди помістити це правило?
+2. [3-рівнева система контексту](./11-context-engineering.uk.md#трирівнева-система-контексту-the-3-layer-context-system): Глобальний / Проект / Сесія
+3. [Бюджет контексту та перевірки відповідності](./11-context-engineering.uk.md#бюджет-контексту-та-деградація-виконання-правил): Як перевірити контекст і дотримання завдання
+4. [Модульна архітектура](./11-context-engineering.uk.md#монолітна-та-модульна-архітектура-monolithic-vs-modular): Як обмежити правила нативними механізмами
 
 ---
 

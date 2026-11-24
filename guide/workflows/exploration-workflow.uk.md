@@ -6,10 +6,10 @@ tags: [workflow, architecture, design-patterns]
 
 # Дослідження перед реалізацією (Exploration Before Implementation)
 
-> **Рівень впевненості**: Рівень 2 — підтверджено дослідженнями практиків (+20-30% до якості прийняття рішень, +40% до виявлених альтернатив).
+> **Рівень впевненості**: Рівень 2, підтверджено дослідженнями практиків (+20-30% до якості прийняття рішень, +40% до виявлених альтернатив).
 > **Джерело**: [Блог MetalBear Engineering](https://metalbear.com/blog/engineering-ai-use/), arXiv дослідження практиків
 
-Перед написанням коду запитайте у Claude кілька різних підходів із компромісами (trade-offs). Це допомагає уникнути «ефекту якоря» (anchoring bias) — тенденції фіксуватися на першому ж запропонованому рішенні.
+Перед написанням коду запитайте у Claude кілька різних підходів із компромісами (trade-offs). Це допомагає уникнути «ефекту якоря» (anchoring bias): тенденції фіксуватися на першому ж запропонованому рішенні.
 
 ---
 
@@ -317,10 +317,10 @@ User: Let's go with SSE. Now implement it.
 
 ## Дивіться також
 
-- [plan-driven.md](./plan-driven.uk.md) — для дослідження кодової бази (режим `/plan`)
-- [iterative-refinement.md](./iterative-refinement.uk.md) — доопрацювання після вибору підходу
-- [../examples/semantic-anchors/anchor-catalog.md](../../examples/semantic-anchors/anchor-catalog.md) — точний словник для промптів
-- [spec-first.md](./spec-first.uk.md) — визначення вимог перед дослідженням
+- [plan-driven.md](./plan-driven.uk.md): для дослідження кодової бази (режим `/plan`)
+- [iterative-refinement.md](./iterative-refinement.uk.md): доопрацювання після вибору підходу
+- [../examples/semantic-anchors/anchor-catalog.md](https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/examples/semantic-anchors/anchor-catalog.md): точний словник для промптів
+- [spec-first.md](./spec-first.uk.md): визначення вимог перед дослідженням
 
 ---
 **Локалізація**: [Serhii (MacPlus Software)](https://macplus-software.com)

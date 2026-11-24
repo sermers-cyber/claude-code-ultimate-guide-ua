@@ -1,31 +1,31 @@
 ---
 title: "GitHub Actions Workflows with Claude Code"
-description: "Production-ready patterns for automating PR reviews, issue triage, and quality gates with claude-code-action"
+description: "Step-by-step setup for claude-code-action in GitHub Actions: PR code review on mention, automatic review on push, issue triage. Includes permissions config and real YAML examples."
 tags: [workflow, ci-cd, github-actions, automation]
 ---
 
-# GitHub Actions Workflows з Claude Code
+# GitHub Actions workflows з Claude Code
 
-> **Confidence**: Tier 1 — Офіційний Anthropic action (`anthropics/claude-code-action`, 6.2k зірок, v1.0).
+> **Confidence**: Tier 1, офіційний Anthropic action (`anthropics/claude-code-action`, 8.5K зірок станом на 2026-07-27, було 6.2k, v1.0).
 
 Автоматизуйте рев'ю коду, сортування ішью та гейти якості, підключивши Claude безпосередньо до вашого GitHub-пайплайну. Дві моделі тригерів: згадки `@claude` (ініційовані людиною) та заплановані/подієві автоматизації (повністю автономні).
 
 ---
 
-## Table of Contents
+## Table of contents
 
 1. [TL;DR](#tldr)
-2. [Two Models](#two-models)
+2. [Two models](#two-models)
 3. [Setup](#setup)
-4. [Pattern 1: PR Code Review on @claude Mention](#pattern-1-pr-code-review-on-claude-mention)
-5. [Pattern 2: Automatic PR Review on Push](#pattern-2-automatic-pr-review-on-push)
-6. [Pattern 3: Issue Triage and Labeling](#pattern-3-issue-triage-and-labeling)
-7. [Pattern 4: Security-Focused Review](#pattern-4-security-focused-review)
-8. [Pattern 5: Scheduled Repo Maintenance](#pattern-5-scheduled-repo-maintenance)
-9. [Authentication Alternatives](#authentication-alternatives)
-10. [Cost Control](#cost-control)
-11. [Security Checklist](#security-checklist)
-12. [See Also](#see-also)
+4. [Pattern 1: PR code review on @claude mention](#pattern-1-pr-code-review-on-claude-mention)
+5. [Pattern 2: Automatic PR review on push](#pattern-2-automatic-pr-review-on-push)
+6. [Pattern 3: Issue triage and labeling](#pattern-3-issue-triage-and-labeling)
+7. [Pattern 4: Security-Focused review](#pattern-4-security-focused-review)
+8. [Pattern 5: Scheduled repo maintenance](#pattern-5-scheduled-repo-maintenance)
+9. [Authentication alternatives](#authentication-alternatives)
+10. [Cost control](#cost-control)
+11. [Security checklist](#security-checklist)
+12. [See also](#see-also)
 
 ---
 
@@ -56,14 +56,14 @@ jobs:
 
 ---
 
-## Two Models
+## Two models
 
 | Model | Trigger | Use case |
 |-------|---------|----------|
 | **Interactive** | `@claude` mention in PR/issue comment | On-demand reviews, questions, fixes |
 | **Automated** | Push, PR open, schedule, label | Continuous quality gates, triage |
 
-Обидві моделі використовують один і той самий action — різниця полягає у блоці `on:` та у наявності умови `if:`.
+Обидві моделі використовують один і той самий action: різниця полягає у блоці `on:` та у наявності умови `if:`.
 
 ---
 
@@ -79,7 +79,7 @@ jobs:
 
 Це допоможе вам створити GitHub App, додати `ANTHROPIC_API_KEY` до секретів вашого репозиторію та згенерувати базовий воркфлоу `claude.yml`.
 
-### Manual Setup
+### Manual setup
 
 1. Додайте `ANTHROPIC_API_KEY` до секретів вашого GitHub-репозиторію
 2. Створіть `.github/workflows/claude.yml` (див. патерни нижче)
@@ -87,7 +87,7 @@ jobs:
 
 ---
 
-## Pattern 1: PR Code Review on @claude Mention
+## Pattern 1: PR code review on @claude mention
 
 Ініційовано людиною. Розробник залишає коментар `@claude review this PR`, і Claude відповідає безпосередньо в обговоренні.
 
@@ -119,13 +119,13 @@ jobs:
 ```
 
 **Приклади використання:**
-- `@claude review this PR` — повний аналіз diff з пропозиціями
-- `@claude is this change backwards compatible?` — точкове запитання
-- `@claude fix the failing test in src/auth.test.ts` — Claude відкриває наступний PR із виправленням
+- `@claude review this PR` : повний аналіз diff з пропозиціями
+- `@claude is this change backwards compatible?` : точкове запитання
+- `@claude fix the failing test in src/auth.test.ts` : Claude відкриває наступний PR із виправленням
 
 ---
 
-## Pattern 2: Automatic PR Review on Push
+## Pattern 2: Automatic PR review on push
 
 Кожен PR отримує рев'ю в момент відкриття або оновлення. Згадка не потрібна.
 
@@ -174,7 +174,7 @@ jobs:
 
 ---
 
-## Pattern 3: Issue Triage and Labeling
+## Pattern 3: Issue triage and labeling
 
 Claude читає нові ішью, призначає лейбли та додає структурований коментар сортування.
 
@@ -210,7 +210,7 @@ jobs:
 
 ---
 
-## Pattern 4: Security-Focused Review
+## Pattern 4: Security-Focused review
 
 Запускається спеціально для PR, що зачіпають чутливі шляхи (auth, payments, config).
 
@@ -254,9 +254,9 @@ jobs:
 
 ---
 
-## Pattern 5: Scheduled Repo Maintenance
+## Pattern 5: Scheduled repo maintenance
 
-Щотижнева перевірка стану — запускається без жодного тригера від людини.
+Щотижнева перевірка стану: запускається без жодного тригера від людини.
 
 ```yaml
 # .github/workflows/claude-maintenance.yml
@@ -292,7 +292,7 @@ jobs:
 
 ---
 
-## Authentication Alternatives
+## Authentication alternatives
 
 Наведені вище приклади використовують `ANTHROPIC_API_KEY` безпосередньо. Для команд, які використовують хмарних провайдерів:
 
@@ -323,9 +323,9 @@ jobs:
 
 ---
 
-## Cost Control
+## Cost control
 
-Автоматизовані воркфлоу запускаються без участі людини — встановлюйте явні обмеження.
+Автоматизовані воркфлоу запускаються без участі людини: встановлюйте явні обмеження.
 
 ```yaml
 - uses: anthropics/claude-code-action@v1
@@ -364,15 +364,15 @@ jobs:
 
 ---
 
-## Security Checklist
+## Security checklist
 
 Перед розгортанням у репозиторії команди переконайтеся:
 
 - [ ] `ANTHROPIC_API_KEY` збережено як секрет GitHub, а не у воркфлоу YAML
-- [ ] Дозволи воркфлоу є мінімально необхідними — використовуйте `contents: read`, якщо запис не потрібен
+- [ ] Дозволи воркфлоу є мінімально необхідними: використовуйте `contents: read`, якщо запис не потрібен
 - [ ] Для публічних репозиторіїв: додайте `if: github.event.pull_request.head.repo.full_name == github.repository`, щоб запобігти викликам API з PR від форків
-- [ ] Перевіряйте, що саме воркфлоу публікує відкрито — коментарі Claude видно всім учасникам
-- [ ] Використовуйте `pull_request_target` з обережністю — він запускається з правами на запис навіть для форків
+- [ ] Перевіряйте, що саме воркфлоу публікує відкрито: коментарі Claude видно всім учасникам
+- [ ] Використовуйте `pull_request_target` з обережністю: він запускається з правами на запис навіть для форків
 
 **Патерн безпеки форків (для публічних репозиторіїв):**
 ```yaml
@@ -384,13 +384,16 @@ jobs:
 
 ---
 
-## See Also
+## See also
 
-- [Section 9.3 CI/CD Integration](#93-cicd-integration) — headless-режим, Unix-пайпінг, `--output-format json`
-- [Production Safety](../security/production-safety.uk.md) — обмеження для автоматизованих агентів
-- [Security Hardening](../security/security-hardening.uk.md) — безпека MCP та вебхуків
-- [Official action docs](https://github.com/anthropics/claude-code-action) — інструкція з вирішення проблем, міграція, хмарні провайдери
-- [Community workflow blueprint](https://github.com/alirezarezvani/claude-code-github-workflow) — 8 воркфлоу + 4 автономні агенти для просунутих команд
+- [AI Design Patterns: Pipes and Filters](../core/ai-design-patterns.uk.md#pipes-and-filters): `claude -p` як один фільтр у shell- або CI-пайплайні
+- [Monitor, Channels and Safe Delegation to Codex](./monitor-event-delegation.uk.md): безпечний патерн Codex із розділенням на окремі job і чому hosted runner відокремлений від локального Monitor
+
+- [Section 9.3 CI/CD Integration](#93-cicd-integration): headless-режим, Unix-пайпінг, `--output-format json`
+- [Production Safety](../security/production-safety.uk.md): обмеження для автоматизованих агентів
+- [Security Hardening](../security/security-hardening.uk.md): безпека MCP та вебхуків
+- [Official action docs](https://github.com/anthropics/claude-code-action): інструкція з вирішення проблем, міграція, хмарні провайдери
+- [Community workflow blueprint](https://github.com/alirezarezvani/claude-code-github-workflow): 8 воркфлоу + 4 автономні агенти для просунутих команд
 
 ---
 **Локалізація**: [Serhii (MacPlus Software)](https://macplus-software.com)

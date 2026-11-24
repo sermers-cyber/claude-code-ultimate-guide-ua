@@ -1,346 +1,333 @@
 ---
-title: "Claude Code — Візуальні діаграми мультиагентних патернів"
-description: "Топології агентів, worktrees, планування з двома клієнтами, горизонтальне масштабування, матриця рішень"
+title: "Claude Code: Візуальні діаграми мультиагентних патернів"
+description: "Концептуальні топології, ізольовані worktrees, планування, делегування та обмін повідомленнями"
 tags: [multi-agent, patterns, worktrees, orchestration, scaling]
 ---
 
 # Мультиагентні патерни
 
-Патерни для координації кількох клієнтів Claude для паралельної та складної роботи.
+Координуйте незалежну роботу з чіткою відповідальністю за файли та перевірками інтеграції. Нативні можливості, концептуальні патерни та виміряні результати слід розрізняти.
 
 ---
 
-### Команди агентів (Agent Teams) — 3 топології оркестрації
+### Agent teams: концептуальні топології оркестрації
 
-Три перевірені топології для мультиагентної координації. Вибирайте на основі незалежності завдань, вимог до черговості та необхідності спеціалізації.
+Оркестратор, конвеєр і маршрутизація до спеціалістів є концептуальними патернами, а не трьома нативними режимами Agent Teams. Нативні Agent Teams використовують лідера та teammates, що спілкуються між собою; ця функція експериментальна й вимкнена за замовчуванням. Вона додає витрати на координацію та токени. Послідовні завдання й редагування одних і тих самих файлів часто краще підходять для однієї сесії або цілеспрямованих subagent.
 
 ```mermaid
 flowchart TD
-    subgraph ORCH["Патерн 1: Оркестратор + виконавці (Orchestrator + Workers)"]
-        OL[Ведучий оркестратор (Lead Orchestrator)] --> OW1[Виконавець 1<br/>Frontend]
-        OL --> OW2[Виконавець 2<br/>Backend]
-        OL --> OW3[Виконавець 3<br/>Тести]
-        OW1 & OW2 & OW3 --> OR([Агрегація результатів])
-    end
-
-    subgraph PIPE["Патерн 2: Конвеєр (Pipeline)"]
-        PA[Агент A<br/>Вимоги] --> PB[Агент B<br/>Реалізація]
-        PB --> PC[Агент C<br/>Огляд]
-        PC --> PD([Кінцевий результат])
-    end
-
-    subgraph ROUTE["Патерн 3: Спеціалізований роутер (Specialist Router)"]
-        RR{Агент-роутер<br/>аналізує завдання} --> RC[Code Agent]
-        RR --> RT[Test Agent]
-        RR --> RD[Docs Agent]
-        RC & RT & RD --> RO([Спеціалізований результат])
-    end
-
-    style OL fill:#E87E2F,color:#fff
-    style OW1 fill:#6DB3F2,color:#fff
-    style OW2 fill:#6DB3F2,color:#fff
-    style OW3 fill:#6DB3F2,color:#fff
-    style OR fill:#7BC47F,color:#333
-    style PA fill:#F5E6D3,color:#333
-    style PB fill:#F5E6D3,color:#333
-    style PC fill:#F5E6D3,color:#333
-    style PD fill:#7BC47F,color:#333
-    style RR fill:#E87E2F,color:#fff
-    style RC fill:#6DB3F2,color:#fff
-    style RT fill:#6DB3F2,color:#fff
-    style RD fill:#6DB3F2,color:#fff
-    style RO fill:#7BC47F,color:#333
-
-    click OL href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/agent-teams.md" "Ведучий оркестратор"
-    click OW1 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/agent-teams.md" "Worker: Frontend"
-    click OW2 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/agent-teams.md" "Worker: Backend"
-    click OW3 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/agent-teams.md" "Worker: Tests"
-    click OR href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/agent-teams.md" "Results aggregated"
-    click PA href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/agent-teams.md" "Agent A: Requirements"
-    click PB href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/agent-teams.md" "Agent B: Implementation"
-    click PC href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/agent-teams.md" "Agent C: Review"
-    click PD href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/agent-teams.md" "Final output"
-    click RR href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/agent-teams.md" "Router Agent"
-    click RC href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/agent-teams.md" "Code Agent"
-    click RT href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/agent-teams.md" "Test Agent"
-    click RD href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/agent-teams.md" "Docs Agent"
-    click RO href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/agent-teams.md" "Specialized result"
+    CHOOSE["Оберіть патерн координації"] --> ORCH["Оркестратор + виконавці<br/>Нативні teams: лідер + teammates<br/>Експериментально, за вибором"]
+    CHOOSE --> PIPE["Патерн конвеєра<br/>Етапи залежать від попередніх результатів"]
+    CHOOSE --> ROUTE["Патерн маршрутизації до спеціалістів<br/>Вибір виконавця за завданням"]
+    ORCH --> FRONT["Виконавець володіє файлами frontend"]
+    ORCH --> BACK["Виконавець володіє файлами backend"]
+    FRONT --> INTEG["Лідер інтегрує та перевіряє"]
+    BACK --> INTEG
+    PIPE --> REQ["Вимоги"]
+    REQ --> IMPL["Реалізація"]
+    IMPL --> REVIEW["Огляд за критеріями"]
+    ROUTE --> SELECT{"Потрібна експертиза?"}
+    SELECT --> CODE["Виконавець коду"]
+    SELECT --> TEST["Виконавець тестів"]
+    SELECT --> DOC["Виконавець документації"]
+    classDef default fill:#F5E6D3,color:#333,stroke:#E87E2F
+    click CHOOSE href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/workflows/agent-teams.md" "View this pattern in the guide"
+    click ORCH href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/workflows/agent-teams.md" "View this pattern in the guide"
+    click PIPE href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/workflows/agent-teams.md" "View this pattern in the guide"
+    click ROUTE href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/workflows/agent-teams.md" "View this pattern in the guide"
+    click FRONT href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/workflows/agent-teams.md" "View this pattern in the guide"
+    click BACK href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/workflows/agent-teams.md" "View this pattern in the guide"
+    click INTEG href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/workflows/agent-teams.md" "View this pattern in the guide"
+    click REQ href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/workflows/agent-teams.md" "View this pattern in the guide"
+    click IMPL href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/workflows/agent-teams.md" "View this pattern in the guide"
+    click REVIEW href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/workflows/agent-teams.md" "View this pattern in the guide"
+    click SELECT href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/workflows/agent-teams.md" "View this pattern in the guide"
+    click CODE href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/workflows/agent-teams.md" "View this pattern in the guide"
+    click TEST href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/workflows/agent-teams.md" "View this pattern in the guide"
+    click DOC href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/workflows/agent-teams.md" "View this pattern in the guide"
 ```
 
 <details>
 <summary>ASCII версія</summary>
 
 ```
-ОРКЕСТРАТОР + ВИКОНАВЦІ:       КОНВЕЄР (PIPELINE):     РОУТЕР (ROUTER):
+Концептуальні патерни координації
+├─ Оркестратор → виконавці з явним володінням файлами → перевірки інтеграції
+│  Нативні Agent Teams: лідер + teammates, що спілкуються, експериментальний opt-in
+├─ Конвеєр → вимоги → реалізація → огляд
+│  Патерн workflow; часто достатньо однієї сесії або subagent
+└─ Роутер → потрібний спеціаліст (код / тести / документація)
+   Патерн workflow, а не окремий нативний режим team
 
-   Lead Agent                Агент A (вимоги)        Router
-  /    |     \                    │                  /  |  \
-W1    W2     W3              Агент B (реаліз.)     Code Test Docs
-  \   |     /                    │                  \  |  /
-   Агрегація                 Агент C (огляд)         Результат
-                                 │
-                             Кінцевий результат
+Teams витрачають більше токенів і потребують координації.
 ```
 
 </details>
 
-> **Джерело**: [Команди агентів](../workflows/agent-teams.uk.md) — Рядок ~59
+> **Джерело**: [Посібник: Agent teams: концептуальні топології оркестрації](../workflows/agent-teams.uk.md); [Доступність Agent Teams та компроміси](https://code.claude.com/docs/en/agent-teams)
 
 ---
 
-### Патерн роботи з кількома клієнтами Git Worktree
+### Патерн Git worktree з кількома інстансами
 
-Git worktrees забезпечують справжню паралельну розробку: кожен клієнт Claude працює в ізольованій гілці зі своїм власним робочим деревом. Ніяких конфліктів, ніякого змішування контекстів.
-
-```mermaid
-flowchart LR
-    MB[(Main Branch<br/>git repository)] --> WA[git worktree add<br/>feature-A]
-    MB --> WB[git worktree add<br/>feature-B]
-    MB --> WC[git worktree add<br/>bugfix-C]
-
-    WA --> CA[Claude Instance 1<br/>/worktrees/feature-A]
-    WB --> CB[Claude Instance 2<br/>/worktrees/feature-B]
-    WC --> CC[Claude Instance 3<br/>/worktrees/bugfix-C]
-
-    CA --> CA1([Комміти у feature-A])
-    CB --> CB1([Комміти у feature-B])
-    CC --> CC1([Комміти у bugfix-C])
-
-    CA1 & CB1 & CC1 --> MERGE([Merge у main<br/>коли готово])
-
-    style MB fill:#E87E2F,color:#fff
-    style CA fill:#6DB3F2,color:#fff
-    style CB fill:#6DB3F2,color:#fff
-    style CC fill:#6DB3F2,color:#fff
-    style CA1 fill:#7BC47F,color:#333
-    style CB1 fill:#7BC47F,color:#333
-    style CC1 fill:#7BC47F,color:#333
-    style MERGE fill:#7BC47F,color:#333
-    style WA fill:#F5E6D3,color:#333
-    style WB fill:#F5E6D3,color:#333
-    style WC fill:#F5E6D3,color:#333
-
-    click MB href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#912-git-best-practices--workflows" "Main Branch"
-    click WA href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#912-git-best-practices--workflows" "Worktree: feature-A"
-    click WB href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#912-git-best-practices--workflows" "Worktree: feature-B"
-    click WC href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#912-git-best-practices--workflows" "Worktree: bugfix-C"
-    click CA href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#912-git-best-practices--workflows" "Claude Instance 1"
-    click CB href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#912-git-best-practices--workflows" "Claude Instance 2"
-    click CC href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#912-git-best-practices--workflows" "Claude Instance 3"
-    click CA1 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#912-git-best-practices--workflows" "Commits to feature-A"
-    click CB1 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#912-git-best-practices--workflows" "Commits to feature-B"
-    click CC1 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#912-git-best-practices--workflows" "Commits to bugfix-C"
-    click MERGE href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#912-git-best-practices--workflows" "Merge to main"
-```
-
-<details>
-<summary>ASCII версія</summary>
-
-```
-Основний репозиторій
-├── git worktree add feature-A → Claude 1 → комміти у feature-A
-├── git worktree add feature-B → Claude 2 → комміти у feature-B
-└── git worktree add bugfix-C  → Claude 3 → комміти у bugfix-C
-
-Без конфліктів: окремі робочі дерева, окремі гілки
-Усі зливаються (merge) назад у main після завершення
-```
-
-</details>
-
-> **Джерело**: [Git Worktrees](../ultimate-guide.uk.md#git-worktrees) — Рядок ~10634
-
----
-
-### Патерн планування з двома клієнтами (Dual-Instance Planning)
-
-Розділення планування та виконання за допомогою двох клієнтів Claude запобігає дорогим помилкам: планувальник Claude не має інструментів, тому він не може випадково виконати щось під час аналізу.
-
-```mermaid
-sequenceDiagram
-    participant U as Користувач (User)
-    participant PL as Planner Claude<br/>(без інструментів)
-    participant EX as Executor Claude<br/>(з усіма інструментами)
-
-    U->{PL}: "Сплануй рефакторинг модуля auth"
-    Note over PL: Читає документацію, аналізує вимоги<br/>Немає ризику виконання — без інструментів
-
-    PL->>U: Детальний план:<br/>1. Файли для зміни<br/>2. Порядок дій<br/>3. Ризики<br/>4. Стратегія відкату
-
-    U->>U: Уважно переглядає план
-    Note over U: Контрольна точка людини:<br/>схвалити або скоригувати
-
-    U->>EX: "Виконай цей план: [текст плану]"
-    EX->>EX: Реалізує крок за кроком
-    EX->>U: Звіти про хід роботи + результати
-
-    Note over PL,EX: Ключове розуміння: планувальник може бути<br/>ретельнішим без страху випадкового виконання
-```
-
-<details>
-<summary>ASCII версія</summary>
-
-```
-Користувач → Planner (без інструментів): "Сплануй X"
-         │
-    [безпечний аналіз, немає ризику виконання]
-         │
-Planner → Користувач: детальний план
-         │
-Користувач переглядає + схвалює
-         │
-Користувач → Executor (з інструментами): "Виконай: [план]"
-         │
-    [реалізує з повним контекстом]
-         │
-Executor → Користувач: результати
-```
-
-</details>
-
-> **Джерело**: [Планування з двома клієнтами (Dual-Instance Planning)](../workflows/dual-instance-planning.uk.md)
-
----
-
-### Патерн горизонтального масштабування Бориса Черного
-
-Коли завдання можна розпаралелити, запускайте N клієнтів Claude одночасно замість того, щоб виконути їх послідовно. Прискорення пропорційне незалежності завдань.
-
-```mermaid
-flowchart LR
-    BT([Велике завдання:<br/>Рефакторинг 50 файлів]) --> DEC{Декомпозиція<br/>на N підзавдань}
-
-    DEC --> T1["Підзавдання 1<br/>Файли 1-10"]
-    DEC --> T2["Підзавдання 2<br/>Файли 11-20"]
-    DEC --> T3["Підзавдання 3<br/>Файли 21-30"]
-    DEC --> TN["Підзавдання N<br/>..."]
-
-    T1 --> CI1[Клієнт Claude<br/>(Instance 1)]
-    T2 --> CI2[Клієнт Claude<br/>(Instance 2)]
-    T3 --> CI3[Клієнт Claude<br/>(Instance 3)]
-    TN --> CIN[Клієнт Claude<br/>(Instance N)]
-
-    CI1 & CI2 & CI3 & CIN --> AGG(Агрегація<br/>результатів)
-    AGG --> REV([Інтеграційний огляд<br/>~в 10 разів швидше, ніж послідовно])
-
-    style BT fill:#F5E6D3,color:#333
-    style DEC fill:#E87E2F,color:#fff
-    style CI1 fill:#6DB3F2,color:#fff
-    style CI2 fill:#6DB3F2,color:#fff
-    style CI3 fill:#6DB3F2,color:#fff
-    style CIN fill:#6DB3F2,color:#fff
-    style AGG fill:#B8B8B8,color:#333
-    style REV fill:#7BC47F,color:#333
-
-    click BT href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#917-scaling-patterns-multi-instance-workflows" "Large Task"
-    click DEC href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#917-scaling-patterns-multi-instance-workflows" "Decompose into subtasks"
-    click T1 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#917-scaling-patterns-multi-instance-workflows" "Subtask 1"
-    click T2 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#917-scaling-patterns-multi-instance-workflows" "Subtask 2"
-    click T3 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#917-scaling-patterns-multi-instance-workflows" "Subtask 3"
-    click TN href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#917-scaling-patterns-multi-instance-workflows" "Subtask N"
-    click CI1 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#917-scaling-patterns-multi-instance-workflows" "Claude Instance 1"
-    click CI2 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#917-scaling-patterns-multi-instance-workflows" "Claude Instance 2"
-    click CI3 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#917-scaling-patterns-multi-instance-workflows" "Claude Instance 3"
-    click CIN href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#917-scaling-patterns-multi-instance-workflows" "Claude Instance N"
-    click AGG href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#917-scaling-patterns-multi-instance-workflows" "Aggregate results"
-    click REV href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#917-scaling-patterns-multi-instance-workflows" "Integration review"
-```
-
-<details>
-<summary>ASCII версія</summary>
-
-```
-Велике завдання
-     │
-Декомпозиція на N незалежних підзавдань
-     │
-┌────┼────┐
-│    │    │
-I1  I2  I3... (паралельно)
-│    │    │
-└────┼────┘
-     │
-Агрегація → Інтеграційний огляд
-(~в 10 разів швидше, ніж послідовно)
-```
-
-</details>
-
-> **Джерело**: [Горизонтальне масштабування](../ultimate-guide.uk.md#horizontal-scaling) — Рядок ~9617
-
----
-
-### Матриця рішень для роботи з кількома клієнтами (Multi-Instance)
-
-Не кожне завдання потребує запуску кількох клієнтів. Це дерево рішень допоможе вибрати правильний патерн на основі характеристик вашого завдання.
+Worktrees дають одночасним інстансам окремі файли робочої копії та гілки. Частина метаданих репозиторію лишається спільною, а інтеграція змін усе ще може спричиняти конфлікти злиття. Команди нижче виконуються з кореня клонованого репозиторію; кожна команда створює показаний шлях.
 
 ```mermaid
 flowchart TD
-    A([Завдання для виконання]) --> B{Потрібно кілька<br/>клієнтів Claude?}
-    B -->|No| C([Одна сесія<br/>Стандартне використання])
-    B -->|Yes| D{Скільки<br/>клієнтів?}
-    B -->|"Planning separation?"| B2{Потрібне розділення<br/>планування/виконання?}
-
-    D -->|2-3| E{Потрібна ізоляція<br/>гілок?}
-    E -->|Yes| F([Git worktrees<br/>Окремі гілки])
-    E -->|No| G([Кілька терміналів<br/>Один репозиторій])
-
-    D -->|4+| H{Структура завдання?}
-    H -->|Independent tasks| I([Task-інструмент<br/>Паралельні sub-agents])
-    H -->|Sequential pipeline| J([Конвеєр агентів<br/>A → B → C])
-    H -->|Mixed expertise| K([Спеціалізований роутер<br/>Маршрутизація за типом завдання])
-
-    B2 --> L([Два клієнти (Dual-instance)<br/>Planner + Executor])
-
-    style A fill:#F5E6D3,color:#333
-    style B fill:#E87E2F,color:#fff
-    style D fill:#E87E2F,color:#fff
-    style E fill:#E87E2F,color:#fff
-    style H fill:#E87E2F,color:#fff
-    style B2 fill:#E87E2F,color:#fff
-    style C fill:#B8B8B8,color:#333
-    style F fill:#7BC47F,color:#333
-    style G fill:#7BC47F,color:#333
-    style I fill:#7BC47F,color:#333
-    style J fill:#7BC47F,color:#333
-    style K fill:#7BC47F,color:#333
-    style L fill:#6DB3F2,color:#fff
-
-    click A href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#917-scaling-patterns-multi-instance-workflows" "Task to complete"
-    click B href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#917-scaling-patterns-multi-instance-workflows" "Need multiple instances?"
-    click C href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#917-scaling-patterns-multi-instance-workflows" "Single session"
-    click D href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#917-scaling-patterns-multi-instance-workflows" "How many instances?"
-    click E href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#912-git-best-practices--workflows" "Need branch isolation?"
-    click F href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#912-git-best-practices--workflows" "Git worktrees"
-    click G href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#917-scaling-patterns-multi-instance-workflows" "Multiple terminals"
-    click H href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#917-scaling-patterns-multi-instance-workflows" "Task structure?"
-    click I href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/agent-teams.md" "Task tool sub-agents"
-    click J href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/agent-teams.md" "Agent pipeline"
-    click K href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/agent-teams.md" "Specialist router"
-    click B2 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/dual-instance-planning.md" "Need planning separation?"
-    click L href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/dual-instance-planning.md" "Dual-instance: Planner + Executor"
+    REPO["Корінь репозиторію"] --> WA["git worktree add -b feature-A<br/>../worktrees/feature-A"]
+    REPO --> WB["git worktree add -b feature-B<br/>../worktrees/feature-B"]
+    REPO --> WC["git worktree add -b bugfix-C<br/>../worktrees/bugfix-C"]
+    WA --> CA["Claude 1: ../worktrees/feature-A<br/>Коміти у feature-A"]
+    WB --> CB["Claude 2: ../worktrees/feature-B<br/>Коміти у feature-B"]
+    WC --> CC["Claude 3: ../worktrees/bugfix-C<br/>Коміти у bugfix-C"]
+    CA --> INTEGRATE["Інтеграція змін<br/>Розв'язання конфліктів, якщо є"]
+    CB --> INTEGRATE
+    CC --> INTEGRATE
+    INTEGRATE --> CHECK["Запуск інтеграційних перевірок і огляд"]
+    CHECK --> MERGE["Merge, коли критерії виконано"]
+    classDef default fill:#F5E6D3,color:#333,stroke:#E87E2F
+    click REPO href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#912-git-best-practices--workflows" "View this pattern in the guide"
+    click WA href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#912-git-best-practices--workflows" "View this pattern in the guide"
+    click WB href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#912-git-best-practices--workflows" "View this pattern in the guide"
+    click WC href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#912-git-best-practices--workflows" "View this pattern in the guide"
+    click CA href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#912-git-best-practices--workflows" "View this pattern in the guide"
+    click CB href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#912-git-best-practices--workflows" "View this pattern in the guide"
+    click CC href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#912-git-best-practices--workflows" "View this pattern in the guide"
+    click INTEGRATE href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#912-git-best-practices--workflows" "View this pattern in the guide"
+    click CHECK href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#912-git-best-practices--workflows" "View this pattern in the guide"
+    click MERGE href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#912-git-best-practices--workflows" "View this pattern in the guide"
 ```
 
 <details>
 <summary>ASCII версія</summary>
 
 ```
-Потрібно кілька клієнтів Claude?
-├─ Ні → Одна сесія
-├─ Так → Скільки?
-│        ├─ 2-3 → Потрібна ізоляція гілок?
-│        │        ├─ Так → Git worktrees
-│        │        └─ Ні  → Кілька терміналів
-│        └─ 4+  → Структура завдання?
-│                 ├─ Незалежні   → Task-інструмент (паралельні sub-agents)
-│                 ├─ Послідовні  → Конвеєр агентів A→B→C
-│                 └─ Змішані     → Спеціалізований роутер
-└─ Розділення планування? → Два клієнти (Planner + Executor)
+З кореня клонованого репозиторію:
+git worktree add -b feature-A ../worktrees/feature-A
+git worktree add -b feature-B ../worktrees/feature-B
+git worktree add -b bugfix-C ../worktrees/bugfix-C
+
+Кожен шлях → свій інстанс Claude → коміти у власну гілку
+         → інтеграція → розв'язання конфліктів, якщо є
+         → інтеграційні перевірки + огляд → merge
+
+Окремі робочі файли; спільні метадані репозиторію.
+Одночасне редагування ізольоване, конфлікти злиття залишаються можливими.
 ```
 
 </details>
 
-> **Джерело**: [Патерни роботи з кількома клієнтами (Multi-Instance)](../ultimate-guide.uk.md#multi-instance-patterns) — Рядок ~11176
+> **Джерело**: [Посібник: патерн Git worktree з кількома інстансами](../ultimate-guide.uk.md#912-git-найкращі-практики-та-робочі-процеси); [Семантика Git worktree](https://git-scm.com/docs/git-worktree)
+
+---
+
+### Патерн планування з двома інстансами (Dual-Instance)
+
+Використовуйте дві сесії, коли корисна окрема межа планування. Планувальнику без інструментів потрібні релевантні документи, передані в його prompt. Або ж режим Plan дозволяє дослідження з обмеженими діями. Налаштовуйте обмеження явно: сама лише друга сесія не вимикає інструменти. Виконавцю потрібні затверджений план і необхідний контекст, а не автоматичне успадкування розмови планувальника.
+
+```mermaid
+flowchart TD
+    DOCS["Користувач надає вимоги<br/>та релевантні документи"] --> PLANNER["Сесія планувальника<br/>Явно налаштовано без інструментів<br/>або обмежений режим Plan"]
+    PLANNER --> PLAN["План: файли, кроки, перевірки<br/>та обмеження відкату"]
+    PLAN --> REVIEW{"Людина схвалює?"}
+    REVIEW -->|Ні| PLANNER
+    REVIEW -->|Так| TRANSFER["Передача затвердженого плану<br/>та необхідного контексту"]
+    TRANSFER --> EXEC["Сесія виконавця<br/>Налаштовані дозволи на інструменти"]
+    EXEC --> VERIFY["Запуск перевірок і порівняння з планом"]
+    VERIFY --> REPORT["Звіт про результати та межі доказів"]
+    classDef default fill:#F5E6D3,color:#333,stroke:#E87E2F
+    click DOCS href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/workflows/dual-instance-planning.md" "View this pattern in the guide"
+    click PLANNER href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/workflows/dual-instance-planning.md" "View this pattern in the guide"
+    click PLAN href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/workflows/dual-instance-planning.md" "View this pattern in the guide"
+    click REVIEW href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/workflows/dual-instance-planning.md" "View this pattern in the guide"
+    click TRANSFER href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/workflows/dual-instance-planning.md" "View this pattern in the guide"
+    click EXEC href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/workflows/dual-instance-planning.md" "View this pattern in the guide"
+    click VERIFY href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/workflows/dual-instance-planning.md" "View this pattern in the guide"
+    click REPORT href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/workflows/dual-instance-planning.md" "View this pattern in the guide"
+```
+
+<details>
+<summary>ASCII версія</summary>
+
+```
+Надані документи → планувальник
+                     (явна конфігурація без інструментів
+                      або обмежений режим Plan для дослідження)
+                   → план → огляд людиною
+                            ├─ Доопрацювати → планувальник
+                            └─ Схвалити → передати план + необхідний контекст
+                                       → виконавець з налаштованими інструментами
+                                       → перевірки + звіт про результат
+
+Дві сесії самі по собі не забезпечують обмеження інструментів і не передають контекст.
+```
+
+</details>
+
+> **Джерело**: [Посібник: патерн планування з двома інстансами](../workflows/dual-instance-planning.uk.md); [Plan permission mode](https://code.claude.com/docs/en/permissions), [Subagent tool restrictions](https://code.claude.com/docs/en/sub-agents)
+
+---
+
+### Патерн горизонтального масштабування
+
+Розпаралелюйте незалежну роботу з явним володінням файлами, а потім вимірюйте результат після координації та інтеграції. Більше інстансів не гарантує пропорційного прискорення: витрати та залежності можуть переважити користь. Перш ніж стверджувати про продуктивність, виміряйте прискорення та вартість на власному навантаженні.
+
+```mermaid
+flowchart TD
+    TASK["Велике завдання"] --> SPLIT["Визначте незалежні підзавдання<br/>та володіння файлами"]
+    SPLIT --> A["Виконавець A<br/>Власні файли та критерії"]
+    SPLIT --> B["Виконавець B<br/>Власні файли та критерії"]
+    SPLIT --> C["Виконавець C<br/>Власні файли та критерії"]
+    A --> AGG["Агрегація результатів і доказів"]
+    B --> AGG
+    C --> AGG
+    AGG --> REVIEW["Розв'язання залежностей/конфліктів<br/>та інтеграційні перевірки"]
+    REVIEW --> MEASURE["Виміряйте виграш у часі та вартість токенів<br/>для цього навантаження"]
+    classDef default fill:#F5E6D3,color:#333,stroke:#E87E2F
+    click TASK href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#917-scaling-patterns-multi-instance-workflows" "View this pattern in the guide"
+    click SPLIT href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#917-scaling-patterns-multi-instance-workflows" "View this pattern in the guide"
+    click A href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#917-scaling-patterns-multi-instance-workflows" "View this pattern in the guide"
+    click B href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#917-scaling-patterns-multi-instance-workflows" "View this pattern in the guide"
+    click C href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#917-scaling-patterns-multi-instance-workflows" "View this pattern in the guide"
+    click AGG href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#917-scaling-patterns-multi-instance-workflows" "View this pattern in the guide"
+    click REVIEW href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#917-scaling-patterns-multi-instance-workflows" "View this pattern in the guide"
+    click MEASURE href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#917-scaling-patterns-multi-instance-workflows" "View this pattern in the guide"
+```
+
+<details>
+<summary>ASCII версія</summary>
+
+```
+Велике завдання → незалежні підзавдання з явним володінням файлами
+            → паралельні виконавці A / B / C
+            → агрегація доказів
+            → розв'язання залежностей і конфліктів
+            → інтеграційні перевірки
+            → вимірювання виграшу в часі та вартості токенів
+
+Гарантованого множника немає; координація зменшує виграш.
+```
+
+</details>
+
+> **Джерело**: [Посібник: патерн горизонтального масштабування](../ultimate-guide.uk.md#917-scaling-patterns-multi-instance-workflows); [Team size, cost and diminishing returns](https://code.claude.com/docs/en/agent-teams)
+
+---
+
+### Матриця рішень для Multi-Instance
+
+Обирайте за залежностями, потребою в комунікації та ізоляції, а вже потім за кількістю виконавців. Нативний інструмент делегування називається Agent; Task було його колишньою назвою, яка лишається псевдонімом для сумісності в налаштуваннях і визначеннях. Для використання subagent не потрібні чотири інстанси.
+
+```mermaid
+flowchart TD
+    TASK["Завдання для виконання"] --> INDEP{"Незалежна робота, яку варто делегувати?"}
+    INDEP -->|Ні| SINGLE["Одна сесія<br/>Планування та виконання за потреби"]
+    INDEP -->|Так| COMM{"Виконавцям потрібне обговорення<br/>та спільна координація?"}
+    COMM -->|Ні| SUB["Інструмент Agent<br/>Цілеспрямовані subagent повертають результати<br/>Колишня назва: Task"]
+    COMM -->|Так| TEAM["Експериментальні Agent Teams<br/>Лідер + teammates, що спілкуються"]
+    SUB --> EDIT{"Одночасні редагування файлів?"}
+    TEAM --> EDIT
+    EDIT -->|Так| WT["Окреме володіння файлами<br/>Worktrees для ізоляції checkout"]
+    EDIT -->|Ні| READ["Паралельне дослідження або огляд"]
+    WT --> SIZE["Оберіть кількість за незалежністю завдань,<br/>вартістю та координацією"]
+    READ --> SIZE
+    classDef default fill:#F5E6D3,color:#333,stroke:#E87E2F
+    click TASK href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#917-scaling-patterns-multi-instance-workflows" "View this pattern in the guide"
+    click INDEP href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#917-scaling-patterns-multi-instance-workflows" "View this pattern in the guide"
+    click SINGLE href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#917-scaling-patterns-multi-instance-workflows" "View this pattern in the guide"
+    click COMM href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#917-scaling-patterns-multi-instance-workflows" "View this pattern in the guide"
+    click SUB href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#917-scaling-patterns-multi-instance-workflows" "View this pattern in the guide"
+    click TEAM href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#917-scaling-patterns-multi-instance-workflows" "View this pattern in the guide"
+    click EDIT href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#917-scaling-patterns-multi-instance-workflows" "View this pattern in the guide"
+    click WT href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#917-scaling-patterns-multi-instance-workflows" "View this pattern in the guide"
+    click READ href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#917-scaling-patterns-multi-instance-workflows" "View this pattern in the guide"
+    click SIZE href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#917-scaling-patterns-multi-instance-workflows" "View this pattern in the guide"
+```
+
+<details>
+<summary>ASCII версія</summary>
+
+```
+Чи варто делегувати незалежну роботу?
+├─ Ні → одна сесія, етапи за потреби
+└─ Так → потрібне обговорення між виконавцями / спільна координація?
+         ├─ Ні → subagent інструмента Agent повертають результати
+         │       (Task — історичний псевдонім для сумісності)
+         └─ Так → експериментальні Agent Teams
+                    │
+         Одночасні редагування файлів?
+         ├─ Так → володіння файлами + окремі worktrees
+         └─ Ні → паралельне дослідження/огляд
+                    │
+         Кількість за незалежністю, вартістю та координацією, а не за правилом 4+.
+```
+
+</details>
+
+> **Джерело**: [Посібник: матриця рішень для Multi-Instance](../ultimate-guide.uk.md#917-scaling-patterns-multi-instance-workflows); [Agent tool rename and delegation](https://code.claude.com/docs/en/sub-agents), [Teams versus subagents](https://code.claude.com/docs/en/agent-teams)
+
+---
+
+### Обмін повідомленнями між сесіями: виявлення та доставка
+
+Придатні незалежні сесії можуть виявляти одна одну через ListAgents і надсилати текст через SendMessage. Доставка в межах однієї машини використовує локальні сокети або іменовані канали (named pipes); доставка на іншу машину та в хмару використовує інфраструктуру Anthropic. Явне значення hold у crossSessionInbound утримує повідомлення, доки відповідний accept їх не випустить. Діалоги схвалення належать до деяких значень за замовчуванням у режимах дозволів у підтримуваних терміналах, а не до явного налаштування hold. Доступність залежить від версії, провайдера та вимог Remote Control.
+
+```mermaid
+flowchart TD
+    SESSIONS["Придатні сесії<br/>Прив'язують inbox і реєструються локально"] --> LIST["ListAgents / list-agents<br/>Доступні peers і agents"]
+    LIST --> SEND["SendMessage text<br/>Ціль визначено"]
+    SEND --> WHERE{"Розташування цілі?"}
+    WHERE -->|Та сама машина| LOCAL["Unix socket / named pipe<br/>Локальна доставка"]
+    WHERE -->|Інша машина або хмара| REMOTE["Інфраструктура Anthropic<br/>Remote Control або хмарна сесія"]
+    LOCAL --> SETTING{"Явне налаштування inbound?"}
+    REMOTE --> SETTING
+    SETTING -->|accept| DELIVER["Доставлено отримувачу Claude"]
+    SETTING -->|hold| HOLD["Не доставлено<br/>Пізніший відповідний accept випустить"]
+    SETTING -->|refuse| DROP["Відкинуто"]
+    SETTING -->|Не задано| DEFAULT["Значення за замовчуванням режиму дозволів<br/>Доставити або утримати до схвалення,<br/>якщо діалог підтримується"]
+    DEFAULT --> DELIVER
+    DEFAULT --> WAIT["Черга схвалення/утримання за замовчуванням<br/>Залежить від поверхні та терміну дії"]
+    DELIVER --> BOUND["Дозволи отримувача лишаються чинними<br/>Текст від peer не може схвалювати дозволи<br/>чи авторизувати зміни конфігурації"]
+    classDef default fill:#F5E6D3,color:#333,stroke:#E87E2F
+    click SESSIONS href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/workflows/cross-session-messaging.md" "View this pattern in the guide"
+    click LIST href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/workflows/cross-session-messaging.md" "View this pattern in the guide"
+    click SEND href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/workflows/cross-session-messaging.md" "View this pattern in the guide"
+    click WHERE href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/workflows/cross-session-messaging.md" "View this pattern in the guide"
+    click LOCAL href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/workflows/cross-session-messaging.md" "View this pattern in the guide"
+    click REMOTE href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/workflows/cross-session-messaging.md" "View this pattern in the guide"
+    click SETTING href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/workflows/cross-session-messaging.md" "View this pattern in the guide"
+    click DELIVER href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/workflows/cross-session-messaging.md" "View this pattern in the guide"
+    click HOLD href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/workflows/cross-session-messaging.md" "View this pattern in the guide"
+    click DROP href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/workflows/cross-session-messaging.md" "View this pattern in the guide"
+    click DEFAULT href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/workflows/cross-session-messaging.md" "View this pattern in the guide"
+    click WAIT href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/workflows/cross-session-messaging.md" "View this pattern in the guide"
+    click BOUND href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/workflows/cross-session-messaging.md" "View this pattern in the guide"
+```
+
+<details>
+<summary>ASCII версія</summary>
+
+```
+Придатні сесії → реєстр/inbox → ListAgents → SendMessage
+Розташування цілі?
+├─ Та сама машина → Unix socket / named pipe, локальна доставка
+└─ Інша машина/хмара → інфраструктура Anthropic
+                               │
+Явний crossSessionInbound?
+├─ accept → доставлено
+├─ hold   → не доставлено; пізніший відповідний accept випустить
+├─ refuse → відкинуто
+└─ не задано → значення за замовчуванням залежить від режиму
+            ├─ доставити
+            └─ утримати до схвалення, залежно від терміналу/поверхні та терміну дії
+
+Текст від peer не схвалює дозволи й не авторизує зміни конфігурації.
+Доступність визначається вимогами версії/провайдера/Remote Control.
+```
+
+</details>
+
+> **Джерело**: [Посібник: обмін повідомленнями між сесіями](../workflows/cross-session-messaging.uk.md); [Messaging controls and availability](https://code.claude.com/docs/en/cross-session-messaging)
 
 ---
 **Локалізація**: [Serhii (MacPlus Software)](https://macplus-software.com)

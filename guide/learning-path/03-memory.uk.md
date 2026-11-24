@@ -1,4 +1,9 @@
-# Module 03: Memory & Config
+---
+title: "Module 03: Memory & config"
+description: "Learning Path, модуль 03: змусьте Claude Code запам'ятовувати ваші вподобання та правила проєкту й створіть свій перший файл CLAUDE.md. 1 година, середній рівень."
+---
+
+# Module 03: Memory & config
 
 **Час**: 1 година | **Складність**: ⭐⭐ Intermediate
 
@@ -326,7 +331,7 @@ my-project/
 
 ```json
 {
-  "model": "claude-opus-4-7",
+  "model": "claude-opus-5-5",
   "temperature": 0.7,
   "context_threshold": 0.75,
   "auto_compact": true,
@@ -410,6 +415,34 @@ Use with: /agent code-reviewer
 - Командні workflows з використанням agents
 
 Цей модуль навчить вас створювати спеціалізовані AI-персони замість використання одного універсального Claude.
+
+---
+
+**Завершили Module 03?** → Готові до Module 04: Agents & Specialization
+
+---
+
+## Подальші кроки: пам'ять між сесіями та командна пам'ять
+
+Розділи вище охоплюють базові патерни CLAUDE.md. Коли будете готові заглибитися, екосистема пропонує більше:
+
+**Auto Memory та Auto Dream (нативні, v2.1.59+)**
+
+Claude Code може сам записувати MEMORY.md між сесіями (Auto Memory) і консолідувати його у фоновому режимі (Auto Dream). Обидві функції працюють одразу після встановлення, а керувати збереженими записами можна через `/memory`. Див. [Memory Systems: Auto Memory](../core/memory-systems.uk.md#22-auto-memory-v2159) та [Auto Dream](../core/memory-systems.uk.md#23-auto-dream-консолідація-памяті).
+
+**Інструменти між сесіями для окремих розробників**
+
+- **claude-mem** (111K зірок, перевірено 2026-11-03): автоматичне стиснення сесій через hooks, ручні виклики не потрібні. Увімкніть приховування секретів (secret redaction), яке типово вимкнене. Встановлення: `/plugin marketplace add thedotmack/claude-mem`
+- **agentmemory** (30K зірок, перевірено 2026-11-03): гібридний пошук BM25 + векторний + граф, 12 hooks, які за замовчуванням захоплюють дані (впровадження контексту вмикається окремо), самостійно заявлений показник R@5 95,2% на LongMemEval-S
+- **ICM** (бінарний файл на Rust): епізодичне затухання + постійний граф знань, `brew install icm`, 14 IDE-клієнтів
+
+**Спільний доступ для команди**
+
+- Патерн «Трійця»: CLAUDE.md + `.mcp.json` + `/skills`, усе закомічене в репозиторій. Жодної інфраструктури, жодних витрат.
+- **Mem0 Cloud MCP**: спільний пул пам'яті через `npx mcp-add --url https://mcp.mem0.ai/mcp`, безкоштовний тариф
+- **doobidoo**: семантичний пошук у 13+ IDE, локальний SQLite або бекенд Cloudflare D1
+
+Повний огляд усіх інструментів, архітектурних патернів, ризиків і блок-схему вибору див. у [посібнику Memory Systems](../core/memory-systems.uk.md).
 
 ---
 **Локалізація**: [Serhii (MacPlus Software)](https://macplus-software.com)

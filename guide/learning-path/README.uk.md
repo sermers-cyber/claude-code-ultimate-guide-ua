@@ -62,9 +62,9 @@
 ### Крок 3: Навчання та валідація
 
 Кожен модуль містить:
-- 📖 **Читання** (10-30 хв) — Концепції та ментальні моделі
-- 🔨 **Практична робота** (20-45 хв) — Реальні приклади з `examples/`
-- 📝 **Валідація** — `/lesson-quiz [topic]` для перевірки розуміння
+- 📖 **Читання** (10-30 хв): концепції та ментальні моделі
+- 🔨 **Практична робота** (20-45 хв): реальні приклади з `examples/`
+- 📝 **Валідація**: `/lesson-quiz [topic]` для перевірки розуміння
 
 ### Крок 4: Заглиблення
 
@@ -82,6 +82,26 @@
 **Варіант D: Самооцінка**
 → Запустіть `/self-assessment comprehensive`, щоб виявити прогалини, що залишилися
 
+### Крок 5: Зберігайте прогрес у проєкті
+
+[Встановлюваний skill learning-path](https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/examples/skills/learning-path/SKILL.md) перетворює сім модулів на локальну послідовність навчання. Він обирає лише ті модулі, чиї передумови виконано, вимагає непорожню нотатку-підтвердження (evidence) і записує стан у `.claude/learning/claude-code-guide-progress.json` у проєкті того, хто навчається.
+
+Використовуйте цей skill, коли шлях читання охоплює кілька сесій або коли хтось інший має перевірити, що вже пройдено. Графік повторень: 1, 3, 7, 14, 30, 60 і 90 днів. Ці інтервали є політикою проєкту, а не твердженням, що один графік оптимальний для кожного, хто навчається.
+
+[Супровідний проєкт Proofpack](https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/examples/learning-project/README.md) проводить одну задачу (issue) через конфігурацію, реалізацію, тести, захищену перевірку релізу, перегляд доказів, пакування та необов'язкову межу Docker. Використовуйте його, коли потрібна одна наскрізна вправа на всі сім модулів.
+
+[Слайди шляху навчання](https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/docs/distribution/claude-code-learning-path-slides.pptx) дають коротку версію для воркшопу. [Брифи для відеовиробництва](https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/docs/distribution/quick-win-video-series.md) пов'язують окремі вправи зі спостережуваними перевірками.
+
+### Актуальні поверхні продукту
+
+Шлях також веде до окремих сторінок про поверхні продукту, що лежать поза послідовністю з семи модулів:
+
+| Після | Продовжіть із | Навіщо |
+| --- | --- | --- |
+| Модуль 02 | [Computer Use](../core/computer-use.uk.md) | Зрозуміти поточну межу взаємодії з робочим столом |
+| Модуль 05 | [Plugin Distribution](../ecosystem/plugin-distribution.uk.md) | Пакувати й розповсюджувати повторно використовувані можливості |
+| Модуль 07 | [Claude apps gateway](../ops/api-gateway.uk.md#актуальна-first-party-поверхня-claude-apps-gateway) | Відокремити first-party поверхню від суміжних патернів gateway |
+
 ---
 
 ## Деталі модулів
@@ -95,7 +115,7 @@
 - **Вправа:** Виконайте workflow "Перші 5 хвилин"
 
 **Складність:** ⭐ (Beginner)
-**Читати:** [01-installation.md](01-installation.uk.md)
+**Читати:** [Модуль 01: Installation & setup](01-installation.uk.md)
 **Потім:** Part 1: Quick Start у головному посібнику
 
 ---
@@ -109,7 +129,7 @@
 - **Вправа:** Використайте `/plan` для планування реального task, спостерігайте за процесом
 
 **Складність:** ⭐ (Beginner)
-**Читати:** [02-core-loop.md](02-core-loop.uk.md)
+**Читати:** [Модуль 02: Core loop](02-core-loop.uk.md)
 **Потім:** Part 2: Core Concepts у головному посібнику
 
 ---
@@ -123,7 +143,7 @@
 - **Вправа:** Створіть свій перший CLAUDE.md, налаштуйте settings
 
 **Складність:** ⭐⭐ (Intermediate)
-**Читати:** [03-memory.md](03-memory.uk.md)
+**Читати:** [Модуль 03: Memory & config](03-memory.uk.md)
 **Потім:** Part 3: Memory & Settings у головному посібнику
 
 ---
@@ -137,7 +157,7 @@
 - **Вправа:** Створіть 2 agents (загальний + спеціалізований), протестуйте їх
 
 **Складність:** ⭐⭐ (Intermediate)
-**Читати:** [04-agents.md](04-agents.uk.md)
+**Читати:** [Модуль 04: Agents & Specialization](04-agents.uk.md)
 **Потім:** Part 4: Agents у головному посібнику
 
 ---
@@ -151,7 +171,7 @@
 - **Вправа:** Створіть skill, який вирішує повторювану проблему
 
 **Складність:** ⭐⭐ (Intermediate)
-**Читати:** [05-skills.md](05-skills.uk.md)
+**Читати:** [Модуль 05: Skills & Automation](05-skills.uk.md)
 **Потім:** Part 5: Skills у головному посібнику
 
 ---
@@ -162,10 +182,10 @@
 - Події hook та їх відповідність (matching)
 - Pre-validation проти post-execution
 - Написання безпечних hooks
-- **Вправа:** Додайте 2 hooks (один pre, один post) до вашої конфігурації
+- **Вправа:** Додайте й протестуйте один вузький hook валідації `PreToolUse`
 
 **Складність:** ⭐⭐ (Intermediate)
-**Читати:** [06-hooks.md](06-hooks.uk.md)
+**Читати:** [Модуль 06: Hooks and events](06-hooks.uk.md)
 **Потім:** Part 7: Hooks у головному посібнику
 
 ---
@@ -179,7 +199,7 @@
 - **Вправа:** Спроектуйте workflow з 3 agents для реалістичного сценарію
 
 **Складність:** ⭐⭐⭐ (Advanced)
-**Читати:** [07-advanced.md](07-advanced.uk.md)
+**Читати:** [Модуль 07: Advanced Patterns](07-advanced.uk.md)
 **Потім:** Part 9: Advanced Patterns у головному посібнику
 
 ---
@@ -205,6 +225,7 @@
 
 ### Практика
 Спробуйте один із практичних проєктів за результатами `/self-assessment`:
+- [Супровідний проєкт Proofpack](https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/examples/learning-project/README.md): один протестований CLI для перевірки релізів, що охоплює всі сім модулів
 - Проєкт 1: Ваш перший workflow автоматизації
 - Проєкт 2: Командна конфігурація
 - Проєкт 3: Налаштування рівня production

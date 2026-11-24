@@ -7,7 +7,7 @@
 **Питання безпеки, специфічні для цього репозиторію:**
 - Точність документації щодо практик безпеки.
 - Якість коду шаблонів та патерни безпеки.
-- Цілісність бази даних загроз ([`machine-readable/threat-db.yaml`](./machine-readable/threat-db.yaml)).
+- Цілісність бази даних загроз ([`examples/commands/resources/threat-db.yaml`](./examples/commands/resources/threat-db.yaml)).
 
 **Поза сферою дії:**
 - Вразливості безпеки в самому CLI Claude Code → повідомляйте [Anthropic](https://github.com/anthropics/claude-code/security).
@@ -29,10 +29,10 @@
 
 Цей посібник підтримує розгалужену документацію з безпеки:
 
-- **[Security Hardening Guide](./guide/security-hardening.md)** — перевірка MCP, захист від ін'єкцій, воркфлоу аудиту.
-- **[Threat Database](./machine-readable/threat-db.yaml)** — 18 CVE, 341 шкідливий скіл.
-- **[Security Hooks](./examples/hooks/)** — 30 продакшен хуків (bash + PowerShell).
-- **[Security Commands](./examples/commands/)** — `/security-check`, `/security-audit`, `/update-threat-db`.
+- **[Security Hardening Guide](./guide/security/security-hardening.uk.md):** перевірка MCP, захист від ін'єкцій, воркфлоу аудиту.
+- **[Threat Database](./examples/commands/resources/threat-db.yaml):** 18 CVE, 341 шкідливий скіл.
+- **[Security Hooks](./examples/hooks/):** 30 продакшен хуків (bash + PowerShell).
+- **[Security Commands](./examples/skills/):** `/security-check`, `/security-audit`, `/update-threat-db`.
 
 ## Підтримка безпеки
 
@@ -63,7 +63,7 @@
 
 ---
 
-**Автор**: [Florian BRUNIAUX](https://github.com/FlorianBruniaux) | Founding Engineer [@Méthode Aristote](https://methode-aristote.fr)
+**Автор**: [Florian BRUNIAUX](https://github.com/FlorianBruniaux) | Fractional Chief AI Officer
 
 **Ліцензія посібника**: [CC BY-SA 4.0](./LICENSE)
 

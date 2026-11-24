@@ -4,15 +4,15 @@ description: "Use /plan mode for non-trivial tasks to explore and propose implem
 tags: [workflow, guide, architecture]
 ---
 
-# Plan-Driven Development
+# Plan-driven development
 
-> **Confidence**: Tier 1 — Базується на вбудованому режимі `/plan` (Plan Mode) в Claude Code.
+> **Confidence**: Tier 1 (базується на вбудованому режимі `/plan` (Plan Mode) в Claude Code).
 
 Використовуйте режим `/plan` (Plan Mode) для будь-яких нетривіальних завдань. Claude досліджує кодову базу (у режимі "тільки для читання"), а потім пропонує план реалізації на ваше затвердження.
 
 ---
 
-## Table of Contents
+## Table of contents
 
 1. [TL;DR](#tldr)
 2. [The /plan Workflow](#the-plan-workflow)
@@ -37,9 +37,9 @@ tags: [workflow, guide, architecture]
 
 ---
 
-## The /plan Workflow
+## The /plan workflow
 
-### Step 1: Enter Plan Mode
+### Step 1: Enter plan mode
 
 Перемкніться у Plan Mode за допомогою клавіш `Shift+Tab` (натисніть двічі для перемикання по колу: Normal → Auto-Accept → Plan):
 ```
@@ -52,7 +52,7 @@ tags: [workflow, guide, architecture]
 How should I refactor the authentication system to support OAuth?
 ```
 
-### Step 2: Claude Explores
+### Step 2: Claude explores
 
 У Plan Mode Claude:
 - Читає відповідні файли
@@ -60,7 +60,7 @@ How should I refactor the authentication system to support OAuth?
 - Розуміє існуючу архітектуру
 - НЕ МОЖЕ робити жодних змін у коді
 
-### Step 3: Claude Writes Plan
+### Step 3: Claude writes plan
 
 Claude створює файл плану за шляхом `.claude/plans/[name].md`:
 
@@ -91,14 +91,14 @@ Add OAuth support while maintaining existing email/password auth.
 - Token format differences between providers
 ```
 
-### Step 4: You Review
+### Step 4: You review
 
 Перевірте план за такими критеріями:
 - Повнота (чи покриті всі вимоги)
 - Правильність (чи правильний підхід обрано для вашої кодової бази)
 - Обсяг роботи (scope) (чи немає тут надлишкового проєктування — over-engineering)
 
-### Step 5: Approve and Execute
+### Step 5: Approve and execute
 
 ```
 Looks good. Proceed with the plan.
@@ -111,9 +111,9 @@ Modify the plan: also add support for GitHub OAuth, not just Google.
 
 ---
 
-## When to Use
+## When to use
 
-### Use Plan Mode
+### Use plan mode
 
 | Scenario | Why |
 |----------|-----|
@@ -123,7 +123,7 @@ Modify the plan: also add support for GitHub OAuth, not just Google.
 | Незнайома кодова база | Дозволити Claude спочатку її дослідити |
 | Ризиковані операції | Зробити рев'ю перед виконанням |
 
-### Skip Plan Mode
+### Skip plan mode
 
 | Scenario | Why |
 |----------|-----|
@@ -134,11 +134,11 @@ Modify the plan: also add support for GitHub OAuth, not just Google.
 
 ---
 
-## Plan File Structure
+## Plan file structure
 
 Плани зберігаються в каталозі `.claude/plans/` з автоматично згенерованими назвами.
 
-### Typical Plan Sections
+### Typical plan sections
 
 ```markdown
 # Plan: [Title]
@@ -173,7 +173,7 @@ Modify the plan: also add support for GitHub OAuth, not just Google.
 
 ---
 
-## Integration with Other Workflows
+## Integration with other workflows
 
 ### Plan + TDD
 
@@ -186,7 +186,7 @@ Plan the test cases first, then the implementation.
 
 Claude спланує і тести, і реалізацію у правильному для TDD порядку.
 
-### Plan + Spec-First
+### Plan + spec-first
 
 ```
 # Увійдіть у Plan Mode (натисніть Shift+Tab двічі), потім:
@@ -195,7 +195,7 @@ Review the Payment Processing spec in CLAUDE.md.
 Create an implementation plan that satisfies all acceptance criteria.
 ```
 
-### Plan + Task Tool
+### Plan + task tool
 
 Після затвердження плану Claude може розбити його на окремі завдання (tasks):
 
@@ -207,7 +207,7 @@ Approved. Create tasks from this plan and start implementing.
 
 ## Tips
 
-### Be Specific About Scope
+### Be specific about scope
 
 ```
 # Too vague (після входу в Plan Mode через подвійне натискання Shift+Tab)
@@ -218,7 +218,7 @@ Add pagination to the /users endpoint with cursor-based navigation.
 Maintain backwards compatibility with existing clients.
 ```
 
-### Request Plan Modifications
+### Request plan modifications
 
 ```
 The plan looks good but:
@@ -227,7 +227,7 @@ The plan looks good but:
 - Include rollback procedure
 ```
 
-### Use for Architecture Decisions
+### Use for architecture decisions
 
 ```
 # Увійдіть у Plan Mode (натисніть Shift+Tab двічі), потім:
@@ -239,7 +239,7 @@ B) Zustand
 Explore the codebase and recommend which fits better.
 ```
 
-### Save Plans for Documentation
+### Save plans for documentation
 
 Файли планів у `.claude/plans/` слугують документацією для прийнятих архітектурних рішень:
 - Чому було обрано саме ці підходи
@@ -248,14 +248,14 @@ Explore the codebase and recommend which fits better.
 
 ---
 
-## Advanced: Custom Markdown Plans (Boris Tane Pattern)
+## Advanced: Custom markdown plans (Boris Tane pattern)
 
-> **Джерело**: Boris Tane, Engineering Lead у Cloudflare — ["How I use Claude Code"](https://boristane.com/blog/how-i-use-claude-code/) (Лютий 2026). 9 місяців використання у реальних проєктах (production).
-> **Confidence**: Tier 2 — Патерн, перевірений практиками розробки, не є офіційною документацією Anthropic.
+> **Джерело**: Boris Tane, Engineering Lead у Cloudflare, у ["How I use Claude Code"](https://boristane.com/blog/how-i-use-claude-code/) (Лютий 2026). 9 місяців використання у реальних проєктах (production).
+> **Confidence**: Tier 2 (патерн, перевірений практиками розробки, не є офіційною документацією Anthropic).
 
 Коли стандартного Plan Mode недостатньо, застосовується ітеративне спільне планування розробником та агентом перед написанням будь-якого коду.
 
-### Why Custom Plans Over /plan
+### Why custom plans over /plan
 
 | Factor | Plan Mode (native) | Custom .md plan |
 |--------|----------------|-----------------|
@@ -269,7 +269,7 @@ Explore the codebase and recommend which fits better.
 
 ---
 
-### The Three-Phase Workflow
+### The three-phase workflow
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
@@ -287,7 +287,7 @@ Explore the codebase and recommend which fits better.
 
 ---
 
-### Phase 1: Emphatic Research
+### Phase 1: Emphatic research
 
 Без додаткових вказівок Claude може досліджувати поверхово. Використовуйте переконливі, сильні слова, щоб змусити його зануритися глибше:
 
@@ -299,7 +299,7 @@ Cover edge cases, existing patterns, and any non-obvious dependencies.
 Write your findings to research.md — do not implement anything.
 ```
 
-**Чому це працює**: Слова "deeply", "in great detail", "intricacies" перемикають Claude з поверхневого сканування на ретельне дослідження. Результат обов'язково має бути записаний у файл — усні підсумки зникнуть під час стискання контексту (/compact).
+**Чому це працює**: Слова "deeply", "in great detail", "intricacies" перемикають Claude з поверхневого сканування на ретельне дослідження. Результат обов'язково має бути записаний у файл. Усні підсумки зникнуть під час стискання контексту (/compact).
 
 **Файл research.md має містити**:
 - Існуючі патерни та домовленості (conventions)
@@ -307,9 +307,11 @@ Write your findings to research.md — do not implement anything.
 - Неоочевидні залежності
 - Виявлені обмеження та ризики
 
+У старій або спільній кодовій базі додайте те, чого код не може підказати наступній сесії: власників, місця виклику, наявні тести, сигнали з production, відповідну історію та відкриті питання. Підкріплюйте кожне твердження доказом (файл і рядок, ішью, запис про власника, дашборд), щоб наступна сесія могла його перевірити, а не вірити на слово. Addy Osmani називає це comprehension memo і стверджує: якщо дослідження агента не залишає довготривалого артефакту, "the next agent pays for the same archaeology again" ([Brownfield Agentic Engineering](https://addyo.substack.com/p/brownfield-agentic-engineering), вересень 2026).
+
 ---
 
-### Phase 2: The Annotation Cycle
+### Phase 2: The annotation cycle
 
 Ядро патерна Бориса Тане. Ви ітеруєте над `plan.md` до повної готовності, **перед початком будь-кої реалізації**.
 
@@ -329,7 +331,7 @@ Write your findings to research.md — do not implement anything.
 └──────────────────────────────────────────────────────────────┘
 ```
 
-**Запобіжний промпт** — завжди додавайте його, щоб уникнути передчасного написання коду:
+**Запобіжний промпт**. Завжди додавайте його, щоб уникнути передчасного написання коду:
 
 ```
 Based on research.md, write a plan for implementing [feature].
@@ -376,19 +378,19 @@ Use JWT tokens stored in httpOnly cookies.
 <!-- Human annotation: Yes, centralize this — don't leave it to each route -->
 ```
 
-**Критерії виходу** — план готовий, коли:
+**Критерії виходу**. План готовий, коли:
 - Не залишилося відкритих питань
 - Компроміси (trade-offs) задокументовані та узгоджені
 - Шляхи до файлів конкретизовані (а не просто "якийсь файл авторизації")
 - Ключові фрагменти коду (snippets) показують підхід наочно, а не просто описують його словами
 
-> "Файл Markdown діє як спільний змінний стан між вами та агентом." — Boris Tane
+> "Файл Markdown діє як спільний змінний стан між вами та агентом." (Boris Tane)
 
 ---
 
-### Phase 3: Mechanical Implementation
+### Phase 3: Mechanical implementation
 
-Після затвердження плану реалізація стає чисто механічним виконанням — творчих рішень більше не приймається.
+Після затвердження плану реалізація стає чисто механічним виконанням; творчих рішень більше не приймається.
 
 ```
 Implement everything in plan.md.
@@ -399,14 +401,14 @@ Do not stop between tasks to ask for confirmation — keep going until done.
 
 **Зворотний зв'язок під час реалізації**:
 - Пишіть лаконічно: використовуйте короткі фрази або скріншоти замість довгих абзаців
-- Рішення вже прийнято — перенаправляйте всі зміни меж завдань назад до `plan.md`
+- Рішення вже прийнято; перенаправляйте всі зміни меж завдань назад до `plan.md`
 - Якщо виникає щось непередбачуване: зупиніться, оновіть `plan.md`, а потім продовжуйте
 
 **Зміна мислення**: Фаза 3 є суто механічною. Уся розумова робота відбулася у Фазі 2.
 
 ---
 
-### Complementary Techniques
+### Complementary techniques
 
 | Technique | What | When |
 |-----------|------|------|
@@ -417,15 +419,16 @@ Do not stop between tasks to ask for confirmation — keep going until done.
 
 ---
 
-## See Also
+## See also
 
-- [exploration-workflow.uk.md](./exploration-workflow.uk.md) — Досліджуйте альтернативи перед плануванням
-- [../ultimate-guide.md](../ultimate-guide.uk.md) — Розділ 2.3 Plan Mode
-- [tdd-with-claude.uk.md](./tdd-with-claude.uk.md) — Поєднання з TDD
-- [spec-first.uk.md](./spec-first.uk.md) — Поєднання зі Spec-First
-- [iterative-refinement.uk.md](./iterative-refinement.uk.md) — Ітерації після розробки плану
-- [task-management.uk.md](./task-management.uk.md) — Відстеження виконання плану між сесіями через Tasks API
-- [dual-instance-planning.uk.md](./dual-instance-planning.uk.md) — Просунутий рівень: Використання двох інстансів Claude (планувальник + виконавець) для орієнтованих на якість воркфлоу
+- [AI Design Patterns: Plan-then-execute](../core/ai-design-patterns.uk.md#plan-then-execute): план як артефакт для рев'ю та контрольна точка перед виконанням
+- [exploration-workflow.uk.md](./exploration-workflow.uk.md): Досліджуйте альтернативи перед плануванням
+- [../ultimate-guide.md](../ultimate-guide.uk.md): Розділ 2.3 Plan Mode
+- [tdd-with-claude.uk.md](./tdd-with-claude.uk.md): Поєднання з TDD
+- [spec-first.uk.md](./spec-first.uk.md): Поєднання зі Spec-First
+- [iterative-refinement.uk.md](./iterative-refinement.uk.md): Ітерації після розробки плану
+- [task-management.uk.md](./task-management.uk.md): Відстеження виконання плану між сесіями через Tasks API
+- [dual-instance-planning.uk.md](./dual-instance-planning.uk.md): Просунутий рівень: Використання двох інстансів Claude (планувальник + виконавець) для орієнтованих на якість воркфлоу
 
 ---
 **Локалізація**: [Serhii (MacPlus Software)](https://macplus-software.com)

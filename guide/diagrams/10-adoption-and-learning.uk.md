@@ -1,229 +1,238 @@
 ---
-title: "Claude Code — Візуальні діаграми впровадження та навчання"
-description: "Шляхи адаптації, протокол навчання UVAL, матриця калібрування довіри"
+title: "Claude Code: Візуальні діаграми впровадження та навчання"
+description: "Шляхи адаптації, запропонована практика перевірки розуміння UVAL, калібрування довіри, перевірка схвалення змін agent"
 tags: [adoption, learning, onboarding, teams, trust]
 ---
 
 # Впровадження та навчання
 
-Як окремі розробники та команди успішно впроваджують Claude Code без втрати навичок чи контролю.
+Впроваджуйте Claude Code через завдання з чітко окресленим обсягом, релевантну верифікацію та явні перевірки людського розуміння. Виграш у навчанні та продуктивності потребує підтверджень від людей і завдань, яких він стосується.
 
 ---
 
 ### Шляхи адаптації та навчання (Onboarding Adaptive Paths)
 
-Різний досвід вимагає різних підходів до адаптації. Навчання за базовою програмою для досвідчених розробників марнує час; натомість занурення нетехнічних користувачів у просунуті функції викликає розчарування.
+Оберіть стартовий шлях за обов'язками та наявними навичками. Просувайтеся далі, коли спостережувані критерії виконано; жодна фіксована тривалість навчання чи впровадження в команді не мається на увазі.
 
 ```mermaid
 flowchart TD
-    A([Початок: Новачок у Claude Code]) --> B{Ваш досвід?}
+    A([Новачок у Claude Code]) --> B{Ваші обов'язки?}
+    B -->|Developer| C[Перше завдання з окресленим обсягом]
+    C --> D[Практикуйте робочий процес із релевантною верифікацією]
+    D --> E[Додавайте agents, hooks або MCP, коли цього потребує завдання]
+    E --> F([Поясніть і перевірте зміну; безпечно відновлюйтеся])
+    B -->|Non-technical user| G[Вивчіть концепції та межі доступу]
+    G --> H[Практикуйте оборотні правки та пояснення]
+    H --> I[Використовуйте обсяг, що відповідає навичкам і дозволам]
+    I --> J([Поясніть результат і дотримуйтесь меж доступу])
+    B -->|Team lead| K[Визначте критерії приймання та базову лінію витрат]
+    K --> L[Поділіться стислими конвенціями та засобами контролю]
+    L --> M[Проведіть невеликий пілот і зберіть докази]
+    M --> N[Перегляньте якість, переробки, витрати та відгуки]
+    N --> O([Розширюйте лише коли критерії пілота виконано])
 
-    B -->|Developer| C["🧑‍💻 Шлях розробника (Developer Path)<br/>~2 дні до продуктивності"]
-    C --> C1(Швидкий старт: перша сесія)
-    C1 --> C2(Робочі процеси: TDD, spec-first, plan-driven)
-    C2 --> C3(Просунутий рівень: agents, hooks, MCP-сервери)
-    C3 --> C4([Продуктивний розробник ✓])
-
-    B -->|Non-technical| D["👤 Нетехнічний шлях (Non-Tech Path)<br/>~1 тиждень до базового використання"]
-    D --> D1(Що таке Claude Code?<br/>Тільки ключові концепції)
-    D1 --> D2(Базове використання: редагування,<br/>пояснення, прості завдання)
-    D2 --> D3(Обмежена область: без<br/>розгортання на production)
-    D3 --> D4([Безпечний базовий користувач ✓])
-
-    B -->|Team lead| E["👔 Шлях тімліда (Team Lead Path)<br/>~2 тижні до впровадження в команді"]
-    E --> E1(Оцінка ROI<br/>аналіз цінності та витрат)
-    E1 --> E2(Стратегія CLAUDE.md<br/>конвенції команди)
-    E2 --> E3(Пілотний проект з 2-3 розробниками<br/>збір відгуків)
-    E3 --> E4(Поступове розгортання<br/>із захисними обмеженнями)
-    E4 --> E5([Впроваджено в команді ✓])
-
-    style A fill:#F5E6D3,color:#333
-    style B fill:#E87E2F,color:#fff
-    style C fill:#6DB3F2,color:#fff
-    style D fill:#6DB3F2,color:#fff
-    style E fill:#6DB3F2,color:#fff
-    style C4 fill:#7BC47F,color:#333
-    style D4 fill:#7BC47F,color:#333
-    style E5 fill:#7BC47F,color:#333
-
-    click A href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/roles/adoption-approaches.md" "Start: New to Claude Code"
-    click B href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/roles/adoption-approaches.md" "Your background?"
-    click C href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#12-first-workflow" "Developer Path"
-    click C1 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#12-first-workflow" "Quick Start: first session"
-    click C2 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#12-first-workflow" "Workflows: TDD, spec-first, plan-driven"
-    click C3 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/41-what-are-agents" "Advanced: agents, hooks, MCP"
-    click C4 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/roles/adoption-approaches.md" "Productive developer"
-    click D href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/roles/adoption-approaches.md" "Non-Tech Path"
-    click D1 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/roles/adoption-approaches.md" "What is Claude Code?"
-    click D2 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/roles/adoption-approaches.md" "Basic usage"
-    click D3 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/roles/adoption-approaches.md" "Limited scope"
-    click D4 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/roles/adoption-approaches.md" "Safe basic user"
-    click E href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/roles/adoption-approaches.md" "Team Lead Path"
-    click E1 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/roles/adoption-approaches.md" "ROI assessment"
-    click E2 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#31-memory-files-claudemd" "CLAUDE.md strategy"
-    click E3 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/roles/adoption-approaches.md" "Pilot with 2-3 devs"
-    click E4 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/roles/adoption-approaches.md" "Gradual rollout"
-    click E5 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/roles/adoption-approaches.md" "Team adoption"
+    classDef diagramNode fill:#F5E6D3,color:#333,stroke:#A64B00
+    class A,B,C,D,E,F,G,H,I,J,K,L,M,N,O diagramNode
+    click A href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/roles/adoption-approaches.md#start--build--scale-a-practical-navigation-layer" "Переглянути в посібнику"
+    click B href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/roles/adoption-approaches.md#start--build--scale-a-practical-navigation-layer" "Переглянути в посібнику"
+    click C href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/roles/adoption-approaches.md#start--build--scale-a-practical-navigation-layer" "Переглянути в посібнику"
+    click D href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/roles/adoption-approaches.md#start--build--scale-a-practical-navigation-layer" "Переглянути в посібнику"
+    click E href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#41-what-are-agents" "Переглянути в посібнику"
+    click F href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/roles/adoption-approaches.md#start--build--scale-a-practical-navigation-layer" "Переглянути в посібнику"
+    click G href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/roles/adoption-approaches.md#start--build--scale-a-practical-navigation-layer" "Переглянути в посібнику"
+    click H href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/roles/adoption-approaches.md#start--build--scale-a-practical-navigation-layer" "Переглянути в посібнику"
+    click I href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/roles/adoption-approaches.md#start--build--scale-a-practical-navigation-layer" "Переглянути в посібнику"
+    click J href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/roles/adoption-approaches.md#start--build--scale-a-practical-navigation-layer" "Переглянути в посібнику"
+    click K href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/roles/adoption-approaches.md#start--build--scale-a-practical-navigation-layer" "Переглянути в посібнику"
+    click L href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#31-memory-files-claudemd" "Переглянути в посібнику"
+    click M href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/roles/adoption-approaches.md#start--build--scale-a-practical-navigation-layer" "Переглянути в посібнику"
+    click N href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/roles/adoption-approaches.md#start--build--scale-a-practical-navigation-layer" "Переглянути в посібнику"
+    click O href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/roles/adoption-approaches.md#start--build--scale-a-practical-navigation-layer" "Переглянути в посібнику"
 ```
 
 <details>
 <summary>ASCII версія</summary>
 
-```
-Ваш досвід?
-├─ Розробник (~2 дні):
-│  Швидкий старт → Робочі процеси (TDD/spec/plan) → Просунутий (agents/hooks/MCP)
-│
-├─ Нетехнічний (~1 тиждень):
-│  Що таке CC? → Базове використання → Обмежена область (без prod-деплою)
-│
-└─ Тімлід (~2 тижні):
-   Оцінка ROI → Стратегія CLAUDE.md → Пілот 2-3 розробники → Поступове розгортання
+```text
+Developer:
+  Завдання з окресленим обсягом -> перевірений робочий процес -> додавання потрібних можливостей
+  Критерій: поясніть/перевірте зміну та безпечно відновіться
+
+Non-technical user:
+  Концепції/межі доступу -> оборотна практика -> відповідний обсяг
+  Критерій: поясніть результат і дотримуйтесь меж доступу
+
+Team lead:
+  Критерії приймання/базова лінія витрат -> спільні конвенції -> невеликий пілот
+  Критерій: перегляньте якість, переробки, витрати та відгуки перед розширенням
 ```
 
 </details>
 
-> **Джерело**: [Підходи до впровадження](../roles/adoption-approaches.uk.md)
+> **Джерело**: [Підходи до впровадження](../roles/adoption-approaches.uk.md#start--build--scale-a-practical-navigation-layer)
+
+> Це запропоновані шляхи, а не виміряний час проходження. Офіційний quickstart охоплює встановлення, підтримувані акаунти та перші завдання; організація має самостійно оцінювати результати свого пілота. [Офіційний quickstart](https://code.claude.com/docs/en/quickstart).
+
 
 ---
 
 ### Протокол навчання UVAL (UVAL Learning Protocol)
 
-Протокол UVAL запобігає "пастці копіпасту" (copy-paste trap) — коли ви використовуєте Claude Code без розуміння того, що він зробив. Кожен цикл будує реальну компетентність розробника, яка залишається навіть у разі недоступності інструменту AI.
+UVAL є запропонованою практикою перевірки розуміння під час роботи з підтримкою AI. Вона не доводить користі для запам'ятовування й не замінює політику прийняття змін.
 
 ```mermaid
 flowchart LR
-    U([U — Use It (Використай)<br/>Спочатку спробуй функцію<br/>самостійно]) --> V
+    U[U: Understand First<br/>Сформулюйте проблему та визначте прогалини] --> V
+    V[V: Verify<br/>Звірте пояснення та передбачення з доказами] --> A
+    A[A: Apply<br/>Перевірте вимогу або продіагностуйте дефект] --> L
+    L[L: Learn<br/>Зафіксуйте інсайт] --> N{Оцініть пізніше запам'ятовування чи перенесення}
+    N -->|Потрібно більше практики| U
+    N -->|Оцінку зафіксовано| R([Зберігайте докази; не припускайте засвоєння])
 
-    V([V — Verify (Перевір)<br/>Зрозумій, що зробив<br/>Claude та чому]) --> A
-
-    A([A — Adapt (Адаптуй)<br/>Змінюй підхід,<br/>експериментуй з варіантами]) --> L
-
-    L([L — Learn (Вчись)<br/>Занотуй патерн<br/>для майбутнього]) --> NEXT
-
-    NEXT{Ще є завдання<br/>з цим патерном?} -->|Yes| U
-    NEXT -->|No| DONE([Патерн засвоєно ✓])
-
-    TRAP["❌ Пастка копіпасту (Copy-Paste Trap):<br/>Прийняття результату →<br/>Деплой → Баг →<br/>'Claude все зламав'"] -.->|уникнути| V
-
-    style U fill:#6DB3F2,color:#fff
-    style V fill:#E87E2F,color:#fff
-    style A fill:#E87E2F,color:#fff
-    style L fill:#7BC47F,color:#333
-    style NEXT fill:#E87E2F,color:#fff
-    style DONE fill:#7BC47F,color:#333
-    style TRAP fill:#E85D5D,color:#fff
-
-    click U href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/roles/learning-with-ai.md" "Use It"
-    click V href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/roles/learning-with-ai.md" "Verify"
-    click A href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/roles/learning-with-ai.md" "Adapt"
-    click L href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/roles/learning-with-ai.md" "Learn"
-    click NEXT href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/roles/learning-with-ai.md" "More tasks using this pattern?"
-    click DONE href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/roles/learning-with-ai.md" "Pattern internalized"
-    click TRAP href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/roles/learning-with-ai.md" "Copy-Paste Trap"
+    classDef diagramNode fill:#F5E6D3,color:#333,stroke:#A64B00
+    class U,V,A,L,N,R diagramNode
+    click U href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/roles/learning-with-ai.md#the-uval-protocol" "Переглянути в посібнику"
+    click V href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/roles/learning-with-ai.md#the-uval-protocol" "Переглянути в посібнику"
+    click A href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/roles/learning-with-ai.md#the-uval-protocol" "Переглянути в посібнику"
+    click L href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/roles/learning-with-ai.md#the-uval-protocol" "Переглянути в посібнику"
+    click N href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/roles/learning-with-ai.md#the-uval-protocol" "Переглянути в посібнику"
+    click R href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/roles/learning-with-ai.md#the-uval-protocol" "Переглянути в посібнику"
 ```
 
 <details>
 <summary>ASCII версія</summary>
 
-```
-USE (ВИКОРИСТАЙ) → VERIFY (ПЕРЕВІР) → ADAPT (АДАПТУЙ) → LEARN (ВЧИСЬ) → (повторити для наступного)
+```text
+UNDERSTAND -> VERIFY -> APPLY -> LEARN
+U: Сформулюйте проблему та визначте прогалини в знаннях
+V: Звірте пояснення та передбачення з доказами
+A: Перевірте вимогу або продіагностуйте дефект; за потреби адаптуйте
+L: Зафіксуйте інсайт
 
-U: Спочатку спробуй самостійно
-V: Зрозумій, що і чому зробив Claude ← (антипатерн: просто копіювати)
-A: Змінюй підхід, експериментуй
-L: Занотуй патерн на майбутнє
-
-Антипатерн (УНИКАЙТЕ): Прийняв вивід → Деплой → Баг → "Claude зламав"
+Оцініть пізніше запам'ятовування/перенесення -> практикуйтеся далі або зафіксуйте результат
+Користь для запам'ятовування ще потрібно оцінити
 ```
 
 </details>
 
-> **Джерело**: [Навчання з AI](../roles/learning-with-ai.uk.md) — Рядок ~127
+> **Джерело**: [Протокол UVAL](../roles/learning-with-ai.uk.md#протокол-uval)
+
 
 ---
 
 ### Матриця калібрування довіри (Trust Calibration Matrix)
 
-Розуміння того, коли варто довіряти виводу Claude, а коли перевіряти — це найважливіша навичка у розробці за допомогою AI. Надмірна довіра призводить до багів; недостатня довіра зводить нанівець приріст продуктивності.
+Оцініть чутливість даних, безпеку та зовнішні наслідки до того, як приймати результат. Тести та відкат підтверджують лише свій перевірений обсяг; Git revert не може скасувати розкриття даних чи кожну зовнішню дію.
 
 ```mermaid
 flowchart TD
-    A([Claude видає результат]) --> B{Чи можу я протестувати<br/>цей результат?}
+    A([Claude пропонує результат або дію]) --> B{Чутливі дані, безпека<br/>або зовнішній ефект?}
+    B -->|Так| C[Кваліфіковане рев'ю та відповідна авторизація]
+    C --> D{Чи можна перевірити поведінку?}
+    B -->|Ні| D
+    D -->|Так| E[Запустіть перевірки, що покривають потрібну поведінку]
+    E --> F{Докази відповідають критеріям приймання?}
+    F -->|Ні| G[Виправте, звузьте обсяг або зупиніться]
+    F -->|Так| H{Наслідки та відновлення зрозумілі?}
+    D -->|Ні| I[Рев'ю з експертом предметної галузі<br/>або інший спосіб верифікації]
+    I --> F
+    H -->|Ні| I
+    H -->|Так| J([Приймайте лише в межах перевіреного обсягу])
+    K[Пояснення Claude є гіпотезами<br/>звіряйте їх із незалежними доказами] -.-> I
 
-    B -->|Yes| C{Тести дійсно<br/>проходять?}
-    C -->|Yes| D([Довіряти за наявності тестів ✓])
-    C -->|No| E([Виправити перед використанням])
-
-    B -->|No| F{Чи розумію я,<br/>що він зробив?}
-    F -->|No| G(Попросіть Claude пояснити<br/>крок за кроком)
-    G --> F
-
-    F -->|Yes| H{Чи є це<br/>зворотним?}
-    H -->|Yes, easily| I([Довіряти із захистом git ✓])
-    H -->|No: hard to undo| J(Необхідний додатковий огляд<br/>перевірка перед застосуванням)
-    J --> K{Чи є це критичним<br/>для безпеки?}
-
-    K -->|Yes: auth, crypto, perms| L([Огляд людиною-експертом<br/>ніколи не довіряти сліпо])
-    K -->|No| M{Знайома<br/>область?}
-    M -->|Yes| I
-    M -->|No| N([Парна робота з експертом<br/>або перевірка тестуванням])
-
-    style A fill:#F5E6D3,color:#333
-    style B fill:#E87E2F,color:#fff
-    style C fill:#E87E2F,color:#fff
-    style F fill:#E87E2F,color:#fff
-    style H fill:#E87E2F,color:#fff
-    style K fill:#E87E2F,color:#fff
-    style M fill:#E87E2F,color:#fff
-    style D fill:#7BC47F,color:#333
-    style I fill:#7BC47F,color:#333
-    style E fill:#E85D5D,color:#fff
-    style L fill:#E85D5D,color:#fff
-    style N fill:#6DB3F2,color:#fff
-    style J fill:#F5E6D3,color:#333
-
-    click A href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#17-trust-calibration-when-and-how-much-to-verify" "Claude produces output"
-    click B href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#17-trust-calibration-when-and-how-much-to-verify" "Can I test this output?"
-    click C href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#17-trust-calibration-when-and-how-much-to-verify" "Do the tests pass?"
-    click D href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#17-trust-calibration-when-and-how-much-to-verify" "Trust with test coverage"
-    click E href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#17-trust-calibration-when-and-how-much-to-verify" "Fix before using"
-    click F href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#17-trust-calibration-when-and-how-much-to-verify" "Do I understand what it did?"
-    click G href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#17-trust-calibration-when-and-how-much-to-verify" "Ask Claude to explain"
-    click H href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#17-trust-calibration-when-and-how-much-to-verify" "Is this reversible?"
-    click I href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#17-trust-calibration-when-and-how-much-to-verify" "Trust with git safety net"
-    click J href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#17-trust-calibration-when-and-how-much-to-verify" "Extra review required"
-    click K href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#17-trust-calibration-when-and-how-much-to-verify" "Is it security-critical?"
-    click L href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#17-trust-calibration-when-and-how-much-to-verify" "Human expert review"
-    click M href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#17-trust-calibration-when-and-how-much-to-verify" "Familiar domain?"
-    click N href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#17-trust-calibration-when-and-how-much-to-verify" "Pair with domain expert"
+    classDef diagramNode fill:#F5E6D3,color:#333,stroke:#A64B00
+    class A,B,C,D,E,F,G,H,I,J,K diagramNode
+    click A href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#17-trust-calibration-when-and-how-much-to-verify" "Переглянути в посібнику"
+    click B href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#17-trust-calibration-when-and-how-much-to-verify" "Переглянути в посібнику"
+    click C href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#17-trust-calibration-when-and-how-much-to-verify" "Переглянути в посібнику"
+    click D href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#17-trust-calibration-when-and-how-much-to-verify" "Переглянути в посібнику"
+    click E href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#17-trust-calibration-when-and-how-much-to-verify" "Переглянути в посібнику"
+    click F href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#17-trust-calibration-when-and-how-much-to-verify" "Переглянути в посібнику"
+    click G href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#17-trust-calibration-when-and-how-much-to-verify" "Переглянути в посібнику"
+    click H href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#17-trust-calibration-when-and-how-much-to-verify" "Переглянути в посібнику"
+    click I href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#17-trust-calibration-when-and-how-much-to-verify" "Переглянути в посібнику"
+    click J href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#17-trust-calibration-when-and-how-much-to-verify" "Переглянути в посібнику"
+    click K href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#17-trust-calibration-when-and-how-much-to-verify" "Переглянути в посібнику"
 ```
 
 <details>
 <summary>ASCII версія</summary>
 
-```
-Чи можу я протестувати це?
-├─ Так → Тести проходять? → Так → Довіряти з тестами ✓
-│                        → Ні  → Виправити перед викор.
-└─ Ні  → Чи розумію я це?
-          ├─ Ні  → Попросити пояснити → зрозумів → продовжити
-          └─ Так → Чи є зворотним?
-                  ├─ Так → Довіряти із захистом git ✓
-                  └─ Ні  → Критично для безпеки?
-                               ├─ Так → Огляд експертом (ніколи не пропускати)
-                               └─ Ні  → Знайома область?
-                                        ├─ Так → Довіряти з обережністю ✓
-                                        └─ Ні  → Робота з експертом
+```text
+Чутливі дані/безпека/зовнішній ефект?
+  Так -> кваліфіковане рев'ю та відповідна авторизація
+  Ні -> перехід до верифікації
+      |
+Чи можна перевірити поведінку?
+  Так -> запустіть релевантні перевірки
+  Ні -> рев'ю експертом галузі або інший спосіб верифікації
+      |
+Докази відповідають критеріям приймання?
+  Ні -> виправте, звузьте обсяг або зупиніться
+  Так -> зрозумійте наслідки та відновлення
+      -> приймайте лише в межах перевіреного обсягу
+
+Пояснення є гіпотезою; відкат у Git не скасовує розкриття даних
 ```
 
 </details>
 
-> **Джерело**: [Довіра та перевірка](../ultimate-guide.uk.md#trust-verification) — Рядок ~1039
+> **Джерело**: [Калібрування довіри](../ultimate-guide.uk.md#17-калібрування-довіри-коли-і-скільки-перевіряти)
+
+> Рецензент залишається відповідальним за безпеку запропонованого коду й команд. Вимоги до рев'ю залежать від дії та її наслідків. [Настанови Anthropic щодо безпеки](https://code.claude.com/docs/en/security#user-responsibility).
 
 ---
 
-*Назад до [diagrams/README.md](./README.uk.md) | Далі: [Оптимізація витрат](./09-cost-and-optimization.uk.md)*
+### Схвалюйте лише те, що можете пояснити
+
+Особиста перевірка перед схваленням зміни, внесеної agent. Це практика, яку варто оцінити у вашій команді, а не виміряне втручання. Пояснення agent є твердженням, яке слід звірити з кодом і доказами, а не доказом саме по собі.
+
+```mermaid
+flowchart TD
+    A([Зміна agent готова до схвалення]) --> B{Чи можете пояснити її намір<br/>своїми словами?}
+    B -->|Ні| Q[Поставте запитання<br/>поки не схвалюйте]
+    B -->|Так| C{Чи можете назвати її головний ризик<br/>і що вона може зламати?}
+    C -->|Ні| Q
+    C -->|Так| D{Чи покривають перевірені вами докази<br/>цей ризик?}
+    D -->|Ні| E[Запросіть зміну<br/>або виконайте відсутню перевірку]
+    D -->|Так| F([Схваліть у межах перевіреного обсягу])
+    Q --> B
+    G[Багаторазове натискання «так, продовжуй»<br/>є попереджувальною ознакою] -.-> B
+    K[Пояснення agent є твердженням<br/>звіряйте його з кодом і доказами] -.-> D
+
+    classDef diagramNode fill:#F5E6D3,color:#333,stroke:#A64B00
+    class A,B,C,D,E,F,G,K,Q diagramNode
+    click A href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/roles/learning-with-ai.md#reviewing-machine-output-is-a-third-mode" "Переглянути в посібнику"
+    click B href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/roles/learning-with-ai.md#reviewing-machine-output-is-a-third-mode" "Переглянути в посібнику"
+    click C href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/roles/learning-with-ai.md#reviewing-machine-output-is-a-third-mode" "Переглянути в посібнику"
+    click D href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/roles/learning-with-ai.md#reviewing-machine-output-is-a-third-mode" "Переглянути в посібнику"
+    click E href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/roles/learning-with-ai.md#reviewing-machine-output-is-a-third-mode" "Переглянути в посібнику"
+    click F href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/roles/learning-with-ai.md#reviewing-machine-output-is-a-third-mode" "Переглянути в посібнику"
+    click G href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/roles/learning-with-ai.md#reviewing-machine-output-is-a-third-mode" "Переглянути в посібнику"
+    click K href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/roles/learning-with-ai.md#reviewing-machine-output-is-a-third-mode" "Переглянути в посібнику"
+    click Q href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/roles/learning-with-ai.md#reviewing-machine-output-is-a-third-mode" "Переглянути в посібнику"
+```
+
+<details>
+<summary>ASCII версія</summary>
+
+```text
+Зміна agent готова до схвалення
+  Чи можете пояснити її намір своїми словами?
+    Ні  -> поставте запитання, поки не схвалюйте
+    Так -> чи можете назвати її головний ризик і що вона може зламати?
+             Ні  -> поставте запитання
+             Так -> чи покривають перевірені вами докази цей ризик?
+                      Ні  -> запросіть зміну або виконайте відсутню перевірку
+                      Так -> схваліть у межах перевіреного обсягу
+
+Попереджувальна ознака: багаторазове натискання «так, продовжуй»
+Пояснення agent є твердженням, а не доказом
+```
+
+</details>
+
+> **Джерело**: [Рев'ю результату машини як третій режим](../roles/learning-with-ai.uk.md#reviewing-machine-output-is-a-third-mode). Три запитання є синтезом цього посібника, що спирається на [Resisting Cognitive Surrender](https://knlb.dev/essays/surrender) і [Kaufman et al.](https://arxiv.org/abs/2607.08885), результат якого стосується пояснень згенерованих тверджень; застосування його до обґрунтувань agent є екстраполяцією.
 
 ---
 **Локалізація**: [Serhii (MacPlus Software)](https://macplus-software.com)

@@ -1,211 +1,221 @@
 ---
-title: "Claude Code — Візуальні діаграми корпоративного управління (Enterprise Governance)"
-description: "Рівні ризику управління, процес схвалення MCP, вибір рівнів захисних обмежень (guardrails)"
+title: "Claude Code: Enterprise Governance Diagrams"
+description: "Запропоновані рівні ризику, засоби контролю схвалення MCP, організаційні політики даних, атрибуція AI через переписування історії"
 tags: [security, enterprise, governance, compliance, mcp]
 ---
 
 # Корпоративне управління (Enterprise Governance)
 
-Патерни на рівні організації для команд, які розгортають Claude Code у масштабах підприємства — рівні використання, процеси схвалення MCP та конфігурації захисних обмежень (guardrails).
-
-> **Цільова аудиторія**: Технічні лідери, інженерні менеджери, офіцери з безпеки. Для безпеки окремих розробників див. [Безпека та Production](./08-security-and-production.uk.md).
+Ці діаграми пропонують організаційні політики для Claude Code. Адаптуйте їх до фактичних даних, дій, розгорнутих засобів контролю та договірних зобов'язань. Вони не засвідчують відповідність вимогам чи сертифікацію.
 
 ---
 
-### Рівні ризику управління — Що та коли контролювати
+### Рівні ризику управління: що та коли контролювати
 
-Не все потребує жорсткого та важкого регулювання. Це дерево рішень спрямовує ваші завдання на правильний рівень контролю на основі реального ризику — від особистого процесу розробки (мінімальний контроль) до регульованих корпоративних середовищ (повний стек комплаєнсу).
+Обирайте засоби контролю за наслідками та чутливістю роботи, а потім перевіряйте, що політика справді діє в потрібній сесії. Чотири рівні є запропонованими організаційними патернами, а не рівнями продукту Anthropic чи регуляторними сертифікаціями.
 
 ```mermaid
 flowchart TD
-    A([Що саме ви регулюєте?]) --> B{Контекст використання?}
+    A([Оцініть дані, дії та середовище]) --> B{Контекст роботи?}
+    B -->|Особиста ізольована робота| C[Стартова пропозиція<br/>Обмежений доступ і релевантна верифікація]
+    B -->|Спільний командний репозиторій| D[Командна пропозиція<br/>Спільні конвенції, гейти рев'ю<br/>і затверджена конфігурація MCP]
+    B -->|Production або чутливі наслідки| E[Сувора пропозиція<br/>Керовані дозволи та засоби sandbox<br/>Підтвердження та докази аудиту]
+    B -->|Регульована робота| F[Регульована пропозиція<br/>Застосовні зобов'язання та перегляд договорів<br/>Перевірені технічні засоби контролю]
+    C --> G[Перевірте застосовні засоби контролю]
+    D --> G
+    E --> G
+    F --> G
+    H[Керовані сесії можуть обмежувати дозволи,<br/>моделі, вхід і MCP<br/>Некеровані пристрої та облікові записи потребують окремої межі] -.-> B
+    G --> I([Оцініть докази, перш ніж розширювати використання])
 
-    B --> P["Особистий процес розробки (Personal dev workflow)<br/>Локальний, тимчасовий код<br/>Тільки один розробник"]
-    B --> T["Командна кодова база (Team codebase)<br/>Спільний репозиторій, не production<br/>5–20 розробників"]
-    B --> PR["Виробнича система (Production system)<br/>Орієнтована на клієнтів, реальні дані<br/>Будь-який розмір команди"]
-    B --> REG["Регульоване середовище (Regulated)<br/>HIPAA, SOC2, PCI, фінанси<br/>Юридичні зобов'язання та комплаєнс"]
-
-    P --> TIER1(["Рівень 1: Стартовий (Tier 1: Starter)<br/>Рекомендації CLAUDE.md<br/>+ хук dangerous-actions-blocker<br/>Налаштування за 10 хв"])
-    T --> TIER2(["Рівень 2: Стандартний (Tier 2: Standard)<br/>Спільний settings.json + реєстр MCP<br/>+ PR-шлюзи + лог аудиту<br/>Налаштування ~2 години"])
-    PR --> TIER3(["Рівень 3: Суворий (Tier 3: Strict)<br/>Повний список заборонених дозволів (deny list)<br/>+ процес затвердження (approval)<br/>+ повний аудит сесій"])
-    REG --> TIER4(["Рівень 4: Регульований (Tier 4: Regulated)<br/>Усе вищеперелічене<br/>+ аудит комплаєнсу<br/>+ контроль SOC2/ISO27001"])
-
-    NOTE["Ви МОЖЕТЕ контролювати: MCP-сервери, дозволи для інструментів,<br/>вміст CLAUDE.md, хуки, CI/CD-шлюзи<br/>Ви НЕ МОЖЕТЕ контролювати: особисті налаштування ~/.claude,<br/>моделі на особистих ключах API, особисті проекти"] -.-> B
-
-    style A fill:#F5E6D3,color:#333
-    style B fill:#E87E2F,color:#fff
-    style P fill:#B8B8B8,color:#333
-    style T fill:#6DB3F2,color:#fff
-    style PR fill:#E87E2F,color:#fff
-    style REG fill:#E85D5D,color:#fff
-    style TIER1 fill:#7BC47F,color:#333
-    style TIER2 fill:#7BC47F,color:#333
-    style TIER3 fill:#E87E2F,color:#fff
-    style TIER4 fill:#E85D5D,color:#fff
-    style NOTE fill:#F5E6D3,color:#333
-
-    click A href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/security/enterprise-governance.md#1-local-vs-shared-the-governance-split" "What are you governing?"
-    click B href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/security/enterprise-governance.md#1-local-vs-shared-the-governance-split" "Usage context?"
-    click P href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/security/enterprise-governance.md#4-guardrail-tiers" "Personal dev workflow"
-    click T href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/security/enterprise-governance.md#4-guardrail-tiers" "Team codebase"
-    click PR href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/security/enterprise-governance.md#4-guardrail-tiers" "Production system"
-    click REG href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/security/enterprise-governance.md#4-guardrail-tiers" "Regulated environment"
-    click TIER1 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/security/enterprise-governance.md#4-guardrail-tiers" "Tier 1: Starter"
-    click TIER2 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/security/enterprise-governance.md#4-guardrail-tiers" "Tier 2: Standard"
-    click TIER3 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/security/enterprise-governance.md#4-guardrail-tiers" "Tier 3: Strict"
-    click TIER4 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/security/enterprise-governance.md#4-guardrail-tiers" "Tier 4: Regulated"
-    click NOTE href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/security/enterprise-governance.md#12-what-you-can-and-cant-control" "What you can/cannot control"
+    classDef diagramNode fill:#F5E6D3,color:#333,stroke:#A64B00
+    class A,B,C,D,E,F,G,H,I diagramNode
+    click A href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/security/enterprise-governance.md#1-local-vs-shared-the-governance-split" "View in guide"
+    click B href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/security/enterprise-governance.md#1-local-vs-shared-the-governance-split" "View in guide"
+    click C href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/security/enterprise-governance.md#1-local-vs-shared-the-governance-split" "View in guide"
+    click D href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/security/enterprise-governance.md#1-local-vs-shared-the-governance-split" "View in guide"
+    click E href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/security/enterprise-governance.md#1-local-vs-shared-the-governance-split" "View in guide"
+    click F href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/security/enterprise-governance.md#1-local-vs-shared-the-governance-split" "View in guide"
+    click G href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/security/enterprise-governance.md#1-local-vs-shared-the-governance-split" "View in guide"
+    click H href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/security/enterprise-governance.md#1-local-vs-shared-the-governance-split" "View in guide"
+    click I href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/security/enterprise-governance.md#1-local-vs-shared-the-governance-split" "View in guide"
 ```
 
 <details>
-<summary>ASCII версія</summary>
+<summary>ASCII-версія</summary>
 
-```
-Контекст використання?
-├─ Особиста розробка (dev workflow)  → Рівень 1: Стартовий (CLAUDE.md + базові хуки, 10 хв)
-├─ Командна кодова база (team)      → Рівень 2: Стандарт  (спільний settings.json + реєстр MCP + PR-шлюзи)
-├─ Виробнича система (production)    → Рівень 3: Суворий   (повний deny list + затвердження + аудит)
-└─ Регульоване (HIPAA/SOC2/PCI)      → Рівень 4: Регульом. (усе вищеперелічене + аудит комплаєнсу)
+```text
+Особиста ізольована робота -> обмежений доступ + релевантна верифікація
+Спільний командний репозиторій -> спільні конвенції + засоби контролю рев'ю/MCP
+Production/чутливі наслідки -> керовані дозволи + sandbox + підтвердження
+Регульована робота -> зобов'язання/договори + перевірені засоби контролю
+    -> перевірте фактичне розгортання й наслідки, перш ніж розширювати використання
 
-Ви МОЖЕТЕ контролювати: settings.json у репозиторії, CLAUDE.md, хуки, CI/CD-шлюзи, реєстр MCP
-Ви НЕ МОЖЕТЕ контролювати: особистий ~/.claude, вибір моделі на особистих ключах API, особисті проекти
+Керовані сесії можуть обмежувати дозволи, моделі, вхід і MCP
+Некеровані пристрої/облікові записи лежать поза межею цього розгортання
+Це запропоновані політики; тривалість налаштування чи відповідність вимогам не гарантуються
 ```
 
 </details>
 
-> **Джерело**: [Корпоративне управління](../security/enterprise-governance.uk.md) — §1 Розділення управління, §4 Рівні захисних обмежень
+> **Джерело**: [Розподіл управління](../security/enterprise-governance.uk.md#1-локальне-vs-спільне-розподіл-управління)
+
+> Організаційні політики можуть обмежувати сесії через керовані налаштування (managed settings), списки дозволених моделей та обмеження входу. Застосовність залежить від розгортання й поверхні; сама конвенція в репозиторії не доводить примусового виконання. [Managed settings](https://code.claude.com/docs/en/managed-settings), [Settings precedence](https://code.claude.com/docs/en/settings#settings-precedence).
+
 
 ---
 
-### Робочий процес управління MCP (MCP Governance Workflow)
+### Робочий процес управління MCP
 
-Індивідуальна перевірка MCP розробником займає 5 хвилин. Корпоративне управління MCP — це 5-кроковий конвеєр, який гарантує, що схвалені сервери залишаються безпечними, версії зафіксовані, а рівень ризику класифіковано ще до розгортання.
+Розглядайте реєстр як організаційний облік, а розгорнуту конфігурацію MCP як окремий засіб контролю. Перевіряйте цілісність джерела, дозволи, місця призначення даних і advisories; популярність чи патч-версія не доводять безпеку сервера.
 
 ```mermaid
 sequenceDiagram
-    participant DEV as Розробник (Developer)
-    participant TL as Tech Lead + Безпека
-    participant REG as Реєстр MCP (Registry)<br/>.claude/mcp-registry.yaml
-    participant REPO as Спільний репозиторій конфігурацій<br/>settings.json
-
-    DEV->>TL: Подає запит на MCP<br/>Назва, URL джерела, сценарій, область даних
-
-    TL->>TL: 5-хвилинний аудит безпеки<br/>Зірок >50? Нещодавні комміти?<br/>CVE? Небезпечні прапорці?
-    TL->>TL: Класифікація ризику: LOW / MEDIUM / HIGH
-
-    alt LOW risk (Низький ризик)
-        TL->>REG: Схвалено — додати до реєстру<br/>Закріпити версію, термін дії 6 місяців
-    else MEDIUM або HIGH risk (Середній/Високий ризик)
-        TL->>TL: 2-тижневе випробування в пісочниці<br/>+ підпис команди безпеки
-        TL->>REG: Схвалено з обмеженнями<br/>Коротший термін дії (3 місяці)
-    else HIGH risk (Неприйнятний ризик)
-        TL->>TL: Відхилено — задокументувати причину в реєстрі
+    participant DEV as Розробник
+    participant SEC as Рев'юер та Security
+    participant REG as Організаційний реєстр MCP
+    participant CFG as Конфігурація MCP та керована політика
+    DEV->>SEC: Запит сервера, джерела/версії, сценарію використання та обсягу даних
+    SEC->>SEC: Перевірка цілісності, дозволів, місць призначення та advisories
+    alt Неприйнятний ризик або бракує потрібних доказів
+        SEC->>DEV: Відмова або запит доказів, запис причини
+    else Прийнятно в межах затвердженого обсягу
+        SEC->>SEC: Тест в ізольованому середовищі, якщо потрібно
+        SEC->>REG: Запис точної версії, обмежень і критеріїв перегляду
+        REG->>CFG: Розгортання .mcp.json та застосовних керованих обмежень
+        CFG->>SEC: Перевірка чинної політики та поведінки сервера
+        SEC->>REG: Запис доказів розгортання або зупинка, якщо перевірки не пройдено
     end
-
-    REG->>REPO: Розгортання через settings.json у репо<br/>Без локальних перевизначень для схвалених MCP
-    Note over REPO: Версія закріплена, для всієї команди, підлягає аудиту
-
-    REPO->>TL: Моніторинг кожні 30 днів<br/>Патч-оновлення: автозатвердження<br/>Мінорні+ оновлення: ручний перегляд<br/>Щоквартально: повний аудит реєстру
+    loop Зміна версії, дозволу, місця призначення або advisory
+        SEC->>SEC: Перегляд відповідної зміни та повтор потрібних перевірок
+        SEC->>REG: Поновлення схвалення, обмеження або відкликання
+    end
 ```
 
 <details>
-<summary>ASCII версія</summary>
+<summary>ASCII-версія</summary>
 
-```
-Розробник подає запит на MCP (назва, джерело, сценарій, область даних)
-    │
-Tech Lead: 5-хвилинний аудит безпеки (зірки, комміти, CVE, прапорці)
-    │
-Класифікація ризику: LOW / MEDIUM / HIGH
-    │
-┌───┴────────────────────────────┐
-LOW                             MED/HIGH
-Швидке схвалення               2-тижневий тест у пісочниці
-                                + підпис команди безпеки
-    │
-Додати до реєстру (.claude/mcp-registry.yaml)
-  - Закріпити точну версію
-  - Встановити термін (6 місяців для LOW, 3 для MED)
-  - Задокументувати дозволену область
-    │
-Розгортання через settings.json у репозиторії (без локальних змін)
-    │
-Моніторинг кожні 30 днів:
-  - Перевірка бюлетенів безпеки
-  - Патч-оновлення: авто | Мінорні+ оновлення: ручний перегляд
-  - Щоквартально: повний аудит реєстру
+```text
+Запит: джерело/версія, сценарій використання, обсяг даних
+  -> перевірка цілісності, дозволів, місць призначення, advisories
+  -> неприйнятний ризик або бракує доказів? Відмова/запит доказів
+  -> прийнятний обсяг? Тест в ізоляції, якщо потрібно
+  -> реєстр: версія, обмеження, критерії перегляду
+  -> розгортання .mcp.json + застосовні керовані обмеження
+  -> перевірка чинної політики й поведінки сервера; зупинка при невдалих перевірках
+
+Зміна/advisory -> перегляд відповідної різниці -> перевірка -> поновлення/обмеження/відкликання
+Жодного автоматичного схвалення лише тому, що приріст версії є патчем
 ```
 
 </details>
 
-> **Джерело**: [Процес управління MCP](../security/enterprise-governance.uk.md#3-mcp-governance-workflow) — §3.1 Процес схвалення
+> **Джерело**: [Робочий процес управління MCP](../security/enterprise-governance.uk.md#3-процес-управління-mcp)
+
+> Проєктні сервери визначаються в `.mcp.json`. Обмеження, що застосовуються організацією, потребують керованої конфігурації MCP або керованих налаштувань; сам лише коміт спільної конфігурації не забороняє локальні перевизначення. Організаційний реєстр не є нативним форматом конфігурації Claude Code. [Project MCP scope](https://code.claude.com/docs/en/mcp#project-scope), [Managed MCP configuration](https://code.claude.com/docs/en/mcp#managed-mcp-configuration).
+
+> Періодичність перегляду, строки дії та вимоги до пробного періоду є рішеннями організації. Встановлюйте їх за фактичним ризиком і тригерами змін; жодна фіксована тривалість перегляду чи універсальний інтервал схвалення не мається на увазі.
+
 
 ---
 
 ### Класифікація даних та правила доступу Claude Code
 
-Класифікація даних визначає, які типи інформації дозволено читати та обробляти Claude Code. Помилка на цьому етапі є найкритичнішим збоєм управління. Чотири рівні, чіткі правила, жодних винятків для категорії RESTRICTED.
+Це приклад політики класифікації в організації. Затверджуйте маршрут обробки й перевіряйте засоби контролю доступу для фактичних даних та інтеграцій. Публічний вміст також потребує дозволів на дії та може містити зловмисні інструкції.
 
 ```mermaid
 flowchart LR
-    subgraph PUBLIC["🟢 ПУБЛІЧНІ (PUBLIC)"]
-        PU1["Відкритий код (Open source)<br/>Публічна документація<br/>Контент блогів"]
-        PU2(["Дозволено — без обмежень"])
-    end
+    A[PUBLIC<br/>Публічний код і документація] --> B[Політика: дозволено в межах дозволів на дії]
+    C[INTERNAL<br/>Нечутливі матеріали організації] --> D[Політика: затверджений організацією маршрут і засоби контролю]
+    E[CONFIDENTIAL<br/>Комерційна таємниця та приватна IP] --> F[Політика: перевірити договори, зберігання,<br/>провайдера та засоби контролю інтеграцій]
+    G[RESTRICTED<br/>PII клієнтів, регульовані дані або облікові дані] --> H[Приклад політики: заборонити в контексті AI<br/>Забезпечити й перевірити межі]
+    I[Дозволи плюс OS sandbox і перегляд MCP<br/>Одне лише правило Read не доводить відсутність розкриття] -.-> H
 
-    subgraph INTERNAL["🔵 ВНУТРІШНІ (INTERNAL)"]
-        IN1["Внутрішні інструменти<br/>Нечутливий кодова база<br/>Командна документація"]
-        IN2(["Дозволено — стандартна конфігурація"])
-    end
-
-    subgraph CONFIDENTIAL["🟠 КОНФІДЕНЦІЙНІ (CONFIDENTIAL)"]
-        CO1["Внутрішні комерційні таємниці<br/>Нерегульована IP<br/>Архітектурна документація"]
-        CO2(["Тільки для тарифу Enterprise<br/>Вимагається політика Zero Data Retention"])
-    end
-
-    subgraph RESTRICTED["🔴 СУВОРО ОБМЕЖЕНІ (RESTRICTED)"]
-        RE1["Персональні дані (PII) клієнтів<br/>Дані банківських карток PCI / PHI<br/>Секрети, паролі та API-ключі"]
-        RE2(["НІКОЛИ не передавати в контекст AI<br/>Блокувати через permissions.deny<br/>Жодних винятків"])
-    end
-
-    PU1 --> PU2
-    IN1 --> IN2
-    CO1 --> CO2
-    RE1 --> RE2
-
-    style PU2 fill:#7BC47F,color:#333
-    style IN2 fill:#6DB3F2,color:#fff
-    style CO2 fill:#E87E2F,color:#fff
-    style RE2 fill:#E85D5D,color:#fff
-    style RE1 fill:#E85D5D,color:#fff
-
-    click PU1 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/security/enterprise-governance.md#2-ai-usage-charter" "PUBLIC data"
-    click IN1 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/security/enterprise-governance.md#2-ai-usage-charter" "INTERNAL data"
-    click CO1 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/security/enterprise-governance.md#2-ai-usage-charter" "CONFIDENTIAL data"
-    click RE1 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/security/enterprise-governance.md#2-ai-usage-charter" "RESTRICTED data"
-    click PU2 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/security/enterprise-governance.md#2-ai-usage-charter" "PUBLIC: allowed"
-    click IN2 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/security/enterprise-governance.md#2-ai-usage-charter" "INTERNAL: standard config"
-    click CO2 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/security/enterprise-governance.md#2-ai-usage-charter" "CONFIDENTIAL: Enterprise only"
-    click RE2 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/security/enterprise-governance.md#2-ai-usage-charter" "RESTRICTED: never in AI context"
+    classDef diagramNode fill:#F5E6D3,color:#333,stroke:#A64B00
+    class A,B,C,D,E,F,G,H,I diagramNode
+    click A href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/security/enterprise-governance.md#2-ai-usage-charter" "View in guide"
+    click B href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/security/enterprise-governance.md#2-ai-usage-charter" "View in guide"
+    click C href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/security/enterprise-governance.md#2-ai-usage-charter" "View in guide"
+    click D href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/security/enterprise-governance.md#2-ai-usage-charter" "View in guide"
+    click E href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/security/enterprise-governance.md#2-ai-usage-charter" "View in guide"
+    click F href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/security/enterprise-governance.md#2-ai-usage-charter" "View in guide"
+    click G href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/security/enterprise-governance.md#2-ai-usage-charter" "View in guide"
+    click H href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/security/enterprise-governance.md#2-ai-usage-charter" "View in guide"
+    click I href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/security/enterprise-governance.md#2-ai-usage-charter" "View in guide"
 ```
 
 <details>
-<summary>ASCII версія</summary>
+<summary>ASCII-версія</summary>
 
-```
-PUBLIC       → Дозволено, без обмежень
-INTERNAL     → Дозволено, стандартна конфігурація
-CONFIDENTIAL → Лише тариф Enterprise (вимагається Zero Data Retention)
-RESTRICTED   → НІКОЛИ не передавати в контекст AI (PII, PCI, PHI, секрети)
-               Блокувати через: permissions.deny Read(.env, *.key, *.pem, secrets/**)
+```text
+Приклад організаційної політики:
+  PUBLIC -> дозволено в межах дозволів на дії
+  INTERNAL -> затверджений маршрут обробки та засоби контролю
+  CONFIDENTIAL -> перевірити договори, зберігання, провайдера та інтеграції
+  RESTRICTED -> заборонено в контексті AI за цією прикладною політикою
+      -> забезпечте й перевірте межі файлів, shell, мережі та MCP
 
-Суворе правило: Дані з категорії RESTRICTED ніколи не потрапляють у вікно контексту.
-Ні в промптах, ні у файлах, які читає Claude, ні в якості прикладів.
+Окремі приклади deny: Read(./.env), Read(./secrets/**)
+Самі лише правила Read не доводять, що обмежені дані не потраплять у контекст
 ```
 
 </details>
 
-> **Джерело**: [Статут використання AI (AI Usage Charter)](../security/enterprise-governance.uk.md#2-ai-usage-charter) — §2.1 Класифікація даних
+> **Джерело**: [Хартія використання ШІ](../security/enterprise-governance.uk.md#2-хартія-використання-ші)
+
+> ZDR для Claude Code на Enterprise потребує окремої відповідності умовам і ввімкнення; він не охоплює сторонні інструменти чи сервіси MCP. Типові налаштування комерційного навчання, зберігання та організаційне схвалення обробки є окремими питаннями. [ZDR scope](https://code.claude.com/docs/en/zero-data-retention#what-zdr-does-not-cover), [Data policies](https://code.claude.com/docs/en/data-usage#data-policies).
+
+> Дозволи та sandbox є взаємодоповнювальними засобами контролю. Використовуйте окремі правила для окремих шаблонів файлів, перевіряйте доступ до shell та інтеграцій і тестуйте як дозволені, так і заблоковані сценарії. Ні інструкція, ні одне правило `Read` не доводять повного обмеження даних. [Permission syntax](https://code.claude.com/docs/en/permissions#permission-rule-syntax), [Permissions and sandboxing](https://code.claude.com/docs/en/permissions#how-permissions-interact-with-sandboxing).
+
+---
+
+### Атрибуція AI через переписування історії
+
+Де зберігається атрибуція AI, збережена в git notes: за локальним тестом git-ai 1.7.7 і звичайних нотаток git 2.56.0 для цього посібника. Кнопка злиття на forge переписує історію на сервері, поза обома механізмами; цей шлях не тестувався.
+
+```mermaid
+flowchart TD
+    A([Агент пише код]) --> B[git-ai checkpoint<br/>з hooks агента]
+    B --> C[Коміт: нотатка в refs/notes/ai<br/>діапазони рядків за сесіями агента]
+    C --> D{Локальне переписування?}
+    D -->|amend, rebase,<br/>merge --squash| E[Демон git-ai читає trace2<br/>і переносить нотатку: у тесті збереглася]
+    D -->|звичайні git notes з<br/>notes.rewriteRef| F[amend і rebase збереглися<br/>squash merge втратив нотатку]
+    E --> G[git push origin refs/notes/ai<br/>нотатки за замовчуванням не пушаться]
+    F --> G
+    G --> H{Squash або rebase<br/>кнопкою злиття на forge?}
+    H -->|Так| I[Переписування на сервері<br/>перевірте обробку в CI інструмента: не тестувалось]
+    H -->|Ні| J([Рев'юери та CI читають нотатки])
+    I --> J
+
+    classDef diagramNode fill:#F5E6D3,color:#333,stroke:#A64B00
+    class A,B,C,D,E,F,G,H,I,J diagramNode
+    click A href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ops/ai-traceability.md#35-provenance-in-git-notes" "View in guide"
+    click B href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ops/ai-traceability.md#35-provenance-in-git-notes" "View in guide"
+    click C href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ops/ai-traceability.md#35-provenance-in-git-notes" "View in guide"
+    click D href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ops/ai-traceability.md#35-provenance-in-git-notes" "View in guide"
+    click E href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ops/ai-traceability.md#35-provenance-in-git-notes" "View in guide"
+    click F href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ops/ai-traceability.md#35-provenance-in-git-notes" "View in guide"
+    click G href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ops/ai-traceability.md#35-provenance-in-git-notes" "View in guide"
+    click H href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ops/ai-traceability.md#35-provenance-in-git-notes" "View in guide"
+    click I href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ops/ai-traceability.md#35-provenance-in-git-notes" "View in guide"
+    click J href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ops/ai-traceability.md#35-provenance-in-git-notes" "View in guide"
+```
+
+<details>
+<summary>ASCII-версія</summary>
+
+```text
+Агент пише код -> git-ai checkpoint -> коміт із нотаткою в refs/notes/ai
+Локальне переписування:
+  демон git-ai (trace2)         amend, rebase, merge --squash: нотатка збереглася в тесті
+  звичайний git + notes.rewriteRef  amend, rebase збереглися; squash merge втратив нотатку
+Пуште нотатки явно: git push origin refs/notes/ai
+Squash або rebase кнопкою злиття на forge: на сервері, перевірте обробку в CI інструмента (не тестувалось)
+```
+
+</details>
+
+> **Джерело**: [Provenance in git notes](../ops/ai-traceability.uk.md) та [оцінка git-ai](https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/docs/resource-evaluations/git-ai-provenance-notes.md)
 
 ---
 **Локалізація**: [Serhii (MacPlus Software)](https://macplus-software.com)

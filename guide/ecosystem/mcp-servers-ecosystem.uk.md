@@ -6,29 +6,29 @@ tags: [mcp, reference, integration]
 
 # Екосистема MCP-серверів
 
-**Останнє оновлення**: Травень 2026 • **Наступний перегляд**: Червень 2026
+**Останнє оновлення**: Липень 2026 • **Наступний перегляд**: Серпень 2026
 
 Цей посібник охоплює перевірені сервери MCP від спільноти, окрім офіційних серверів від Anthropic. Усі перелічені сервери було оцінено на предмет готовності до використання у виробничому середовищі (production readiness), активності обслуговування та безпеки.
 
-> **Не впевнені, що використовувати: MCP-сервер чи CLI-інструмент?** Дивіться [Посібник із вибору: MCP проти CLI](./mcp-vs-cli.uk.md) для детального розбору компромісів, матриці рішень та рекомендацій для конкретних ситуацій.
+> **Не впевнені, що використовувати: MCP-сервер чи CLI-інструмент?** Дивіться [Посібник із вибору: MCP проти CLI](mcp-vs-cli.uk.md) для детального розбору компромісів, матриці рішень та рекомендацій для конкретних ситуацій.
 
-## Table of Contents
+## Зміст
 
-- [Офіційні сервери проти серверів спільноти (Official vs Community)](#official-vs-community-servers)
-- [Фреймворк оцінки (Evaluation Framework)](#evaluation-framework)
-- [Еволюція екосистеми (Ecosystem Evolution)](#ecosystem-evolution)
-- [Перевірені сервери спільноти (Validated Community Servers)](#validated-community-servers)
-  - [Автоматизація браузера (Browser Automation)](#browser-automation)
-  - [DevOps та інфраструктура (DevOps & Infrastructure)](#devops--infrastructure)
-  - [Безпека та аналіз коду (Security & Code Analysis)](#security--code-analysis)
-  - [Пошук та аналіз коду (Code Search & Analysis)](#code-search--analysis)
-  - [Документація та знання (Documentation & Knowledge)](#documentation--knowledge)
-  - [Управління проектами (Project Management)](#project-management)
-  - [Оркестрація (Orchestration)](#orchestration)
-- [Розгортання у продакшені (Production Deployment)](#production-deployment)
-- [Методологія щомісячного моніторингу (Monthly Watch Methodology)](#monthly-watch-methodology)
-- [Виключені сервери (Excluded Servers)](#excluded-servers)
-
+- [Офіційні сервери проти серверів спільноти (Official vs Community)](#офіційні-сервери-проти-серверів-спільноти-official-vs-community)
+- [Фреймворк оцінки (Evaluation Framework)](#фреймворк-оцінки-evaluation-framework)
+- [Еволюція екосистеми (Ecosystem Evolution)](#еволюція-екосистеми-ecosystem-evolution)
+- [Перевірені сервери спільноти (Validated Community Servers)](#перевірені-сервери-спільноти-validated-community-servers)
+  - [Автоматизація браузера (Browser Automation)](#автоматизація-браузера-browser-automation)
+  - [DevOps та інфраструктура (DevOps & Infrastructure)](#devops-та-інфраструктура-devops--infrastructure)
+  - [Безпека та аналіз коду (Security & Code Analysis)](#безпека-та-аналіз-коду-security--code-analysis)
+  - [Пошук та аналіз коду (Code Search & Analysis)](#пошук-та-аналіз-коду-code-search--analysis)
+  - [Документація та знання (Documentation & Knowledge)](#документація-та-знання-documentation--knowledge)
+  - [Управління проектами (Project Management)](#управління-проектами-project-management)
+  - [Підтримка клієнтів і CRM (Customer Support & CRM)](#підтримка-клієнтів-і-crm-customer-support--crm)
+  - [Оркестрація (Orchestration)](#оркестрація-orchestration)
+- [Розгортання у продакшені (Production Deployment)](#розгортання-у-продакшені-production-deployment)
+- [Методологія щомісячного моніторингу (Monthly Watch Methodology)](#методологія-щомісячного-моніторингу-monthly-watch-methodology)
+- [Виключені сервери (Excluded Servers)](#виключені-сервери-excluded-servers)
 ---
 
 ## Офіційні сервери проти серверів спільноти (Official vs Community)
@@ -64,6 +64,18 @@ tags: [mcp, reference, integration]
 
 **Загальна оцінка**: `/50` → Нормалізовано до `/10` для фінального рейтингу.
 
+### Принципи використання (понад чек-лист оцінки)
+
+**Тримайте кількість активних інструментів малою.** Кожна схема інструмента, надана моделі, споживає токени контексту й додає поверхню для вибору. Спостереження з продакшну свідчать, що одночасне надання великої кількості інструментів збільшує частоту галюцинацій: у моделі більше нерелевантних варіантів, які можна сплутати з правильним. Віддавайте перевагу кільком сфокусованим серверам (кожен обмежений своїм доменом) замість одного універсального сервера з десятками інструментів. (Zineb Bendhiba, Principal Software Engineer у Red Hat, [IFTTD ep 326 "MCP Servers"](https://www.ifttd.io/episodes/mcp-servers)). Реальні вимірювання токенів для популярних серверів, а не загальний принцип, дивіться в [what MCP servers really cost in tokens](https://www.florian.bruniaux.com/guides/mcp-servers-token-cost/).
+
+**Проєктуйте інструменти MCP навколо повних намірів користувача, а не окремих операцій API.** Інструмент, що обробляє один виклик API, змушує агента компонувати п'ять послідовних викликів, кожен з яких додає незалежну ймовірність збою. Інструмент, що інкапсулює повний воркфлоу ("оформити замовлення, застосувавши активну знижку"), тримає модель на єдиному чітко визначеному шляху. (Frédéric Barthelet, інженер, [IFTTD ep 329 "Front agentique"](https://www.ifttd.io/episodes/front-agentique))
+
+**LLM не має стану; клієнт тримає весь інтелект маршрутизації.** Модель отримує схеми інструментів при кожному запиті, але не пам'ятає попередніх викликів сервера з ранішої частини сесії. Claude Code (як клієнт MCP) відповідає за маршрутизацію, повтори й компонування результатів. Розуміння цього розділення запобігає поширеній помилці вважати віддалений сервер MCP розумним співрозмовником, а не API без стану. (Zineb Bendhiba, Principal Software Engineer у Red Hat, [IFTTD ep 326 "MCP Servers"](https://www.ifttd.io/episodes/mcp-servers))
+
+**MCP найкраще читати як стандартизований шар інтеграції, а не нову парадигму.** Замість написання окремої інтеграції для кожного джерела даних чи інструмента протокол дозволяє єдиному клієнту говорити однією мовою з багатьма серверами. Таке формулювання прибирає чимало ажіотажу навколо MCP: це та сама проблема, яку системний дизайн уже розв'язував через API gateway і service mesh, застосована до того, як LLM досягають інструментів. (ByteByteGo, "MCP", 2025)
+
+**Розрахунок сервера для агентного клієнта починається з тієї самої формули "на серветці", що й для будь-якого API, з одним застереженням.** Груба оцінка: QPS дорівнює активним користувачам помножити на дії на користувача поділити на 86 400 секунд на добу, при цьому пік зазвичай удвічі-втричі перевищує це середнє. Цей множник піку калібрувався на патернах людського трафіку й, ймовірно, занижений для агентів, які схильні потрапляти на сервер сплесками, а не згладженим потоком протягом дня; розраховуйте запас відповідно. (ByteByteGo, "Back-of-the-Envelope Estimation," 2022, і "URL Shortener," 2025)
+
 ---
 
 ## Еволюція екосистеми (Ecosystem Evolution)
@@ -98,13 +110,30 @@ Claude тепер підтримує інтерактивні інструмен
 
 - **Приклади**: Чернетки у Slack, діаграми у Figma, таймлайни в Asana
 - **Анонс**: [Smol.ai Newsletter](https://news.smol.ai/issues/26-01-26-mcp-apps)
-- **Глибоке занурення**: Дивіться [guide/architecture.md:656](../core/architecture.uk.md#mcp-extensions-apps-sep-1865)
+- **Глибоке занурення**: Дивіться [guide/architecture.md:656](../core/architecture.uk.md#розширення-mcp-додатки-apps-sep-1865)
 
 ### Інтеграція з IDE
 
 **Visual Studio 2026** має вбудовану інтеграцію з Azure MCP Server, GitHub Copilot Chat та клієнтами MCP.
 
 - **Анонс**: [Microsoft DevBlogs](https://devblogs.microsoft.com/visualstudio/azure-mcp-server-now-built-in-with-visual-studio-2026-a-new-era-for-agentic-workflows/)
+
+### Дорожня карта протоколу (середина 2026)
+
+Model Context Protocol не має за собою органу стандартів на кшталт IETF чи W3C для самого терміна; найближчим до інституційної формалізації є власна версійована специфікація MCP, що тепер перебуває під управлінням Linux Foundation (див. вище).
+
+Кандидат на реліз, опублікований 2026-07-28, додає чотири зміни, за якими варто стежити:
+
+- **Ядро протоколу без стану**: базова лінія, що не вимагає стану сесії, корисна для serverless і edge-розгортань серверів MCP
+- **Фреймворк розширень**: формальний механізм додавання можливостей (MCP Apps, вище, є першим випущеним прикладом) без перегляду основної специфікації
+- **Tasks**: підтримка довготривалих операцій, актуальна для серверів MCP, що обгортають асинхронні бекенди
+- **Формальна політика застарівання**: задокументований процес виведення функцій специфікації з експлуатації, плюс подальше посилення авторизації
+
+Джерело: [блог дорожньої карти MCP](https://blog.modelcontextprotocol.io/posts/2026-mcp-roadmap/), [оголошення кандидата на реліз 2026-07-28](https://blog.modelcontextprotocol.io/posts/2026-07-28-release-candidate/).
+
+### Настанови NSA щодо безпеки (червень 2026)
+
+Національне агентство безпеки США опублікувало настанови з безпеки, специфічні для MCP, у червні 2026 року ([CSI_MCP_SECURITY.PDF](https://media.defense.gov/2026/Jun/02/2003943289/-1/-1/0/CSI_MCP_SECURITY.PDF)), що стало першою увагою на рівні настанов від національного агентства безпеки до цього протоколу. Це настанови з безпеки, а не стандарт методології, але вони позначають перехід MCP від зручності для розробників до чогось, що інституції вважають поверхнею атаки, вартою документування. Звіряйтеся з [чек-листом безпеки](#контрольний-список-безпеки-security-checklist) нижче при оцінці нового сервера MCP для продакшн-використання.
 
 ---
 
@@ -119,7 +148,7 @@ Claude тепер підтримує інтерактивні інструмен
 **Репозиторій**: [modelcontextprotocol/servers/git](https://github.com/modelcontextprotocol/servers/tree/main/src/git)
 **Ліцензія**: MIT
 **Статус**: Рання розробка (API може змінюватися)
-**Зірки**: 77,908+ (батьківський репозиторій)
+**Зірки**: 88 957 (батьківський репозиторій, перевірено 2026-07-27, було 77 908+)
 
 **Сценарії використання**:
 - **Автоматизовані процеси комітів**: ШІ генерує повідомлення комітів, додає зміни до індексу, робить коміти
@@ -274,7 +303,7 @@ docker run -v /path/to/repo:/repo ghcr.io/modelcontextprotocol/mcp-server-git
 #### Ресурси
 
 - **GitHub**: https://github.com/modelcontextprotocol/servers/tree/main/src/git
-- **Батьківський репозиторій**: https://github.com/modelcontextprotocol/servers (77,908+ зірок)
+- **Батьківський репозиторій**: https://github.com/modelcontextprotocol/servers (88 957 зірок, 2026-07-27)
 - **MCP Inspector**: інструмент налагодження для тестування в реальному часі
 - **Docker Hub**: `ghcr.io/modelcontextprotocol/mcp-server-git`
 
@@ -305,9 +334,9 @@ docker run -v /path/to/repo:/repo ghcr.io/modelcontextprotocol/mcp-server-git
 
 ```bash
 # Встановлення
-npm install @microsoft/playwright-mcp
+npm install @playwright/mcp
 # або
-npx @microsoft/playwright-mcp
+npx @playwright/mcp
 ```
 
 **Конфігурація Claude Code** (`~/.claude.json`):
@@ -317,7 +346,7 @@ npx @microsoft/playwright-mcp
   "mcpServers": {
     "playwright": {
       "command": "npx",
-      "args": ["--yes", "@microsoft/playwright-mcp"]
+      "args": ["--yes", "@playwright/mcp"]
     }
   }
 }
@@ -442,7 +471,7 @@ npm install @browserbasehq/mcp-server-browserbase
 **Налаштування**:
 
 ```bash
-npm install @modelcontextprotocol/server-chrome-devtools
+npm install chrome-devtools-mcp
 ```
 
 **Конфігурація**:
@@ -452,7 +481,7 @@ npm install @modelcontextprotocol/server-chrome-devtools
   "mcpServers": {
     "chrome-devtools": {
       "command": "npx",
-      "args": ["@modelcontextprotocol/server-chrome-devtools"]
+      "args": ["-y", "chrome-devtools-mcp@latest"]
     }
   }
 }
@@ -475,7 +504,7 @@ npm install @modelcontextprotocol/server-chrome-devtools
 - Додаткові витрати ресурсів при увімкненому профілюванні
 
 **Ресурси**:
-- **npm**: https://www.npmjs.com/package/@modelcontextprotocol/server-chrome-devtools
+- **npm**: https://www.npmjs.com/package/chrome-devtools-mcp
 - **Chrome DevTools Protocol**: https://chromedevtools.github.io/devtools-protocol/
 
 ---
@@ -721,7 +750,7 @@ assigned:me is:unresolved             # помилки, призначені н�
 
 **Ресурси**:
 - **GitHub**: https://github.com/getsentry/sentry-mcp
-- **Sentry MCP Docs**: https://docs.sentry.io/product/integrations/mcp/
+- **Sentry MCP Docs**: https://docs.sentry.io/product/sentry-mcp/
 - **Довідковий файл**: `examples/skills/mcp-integration-reference/references/sentry-mcp.md`
 - **Налаштування токена авторизації**: https://sentry.io/settings/account/api/auth-tokens/
 
@@ -814,7 +843,7 @@ Claude: [Використовує інструмент security_check]
 
 **Ресурси**:
 - **GitHub**: https://github.com/semgrep/mcp
-- **Офіційна документація**: https://semgrep.dev/docs/mcp
+- **Офіційний README**: https://github.com/semgrep/mcp#readme
 - **Реєстр правил**: https://semgrep.dev/r
 - **Ціни**: https://semgrep.dev/pricing (безкоштовний тариф для MCP)
 
@@ -938,15 +967,81 @@ Claude: [Використовує grepai_trace_callers symbol="validateToken"]
 | Сервер | Перевага | Недолік |
 |--------|-----------|--------------|
 | **Grepai** | Локальний, приватний, семантичний + графи | Потребує налаштування Ollama |
+| **Semble** | Не потребує Ollama, область: код + документація + конфігурація | Без аналізу графа викликів |
 | Вбудований Grep | Миттєвий, точні шаблони | Немає семантичного розуміння |
 | GitHub Code Search | Хмарний, для багатьох репозиторіїв | Потребує GitHub, без графів викликів |
 
-**Перехресне посилання**: Дивіться [ultimate-guide.md — MCP Servers: Grepai](./ultimate-guide.md) для детального опису паттернів використання, стратегій промптів та інтеграції з іншими MCP-серверами.
+**Перехресне посилання**: Дивіться [ultimate-guide.md, MCP Servers: Grepai](../ultimate-guide.uk.md) для детального опису паттернів використання, стратегій промптів та інтеграції з іншими MCP-серверами.
 
 **Ресурси**:
 - **GitHub**: https://github.com/yoanbernabeu/grepai
 - **Ollama**: https://ollama.com
 - **Модель ембеддингів**: nomic-embed-text (nomic-ai)
+
+#### Semble
+
+**Сервер спільноти** для семантичного пошуку коду, документації та файлів конфігурації. Використовує вкладення Model2Vec з ранжуванням BM25 і злиттям RRF, працює лише на CPU без залежності від зовнішніх сервісів.
+
+**Репозиторій**: [MinishLab/semble](https://github.com/MinishLab/semble)
+**Ліцензія**: MIT
+**Статус**: Активний (v0.3.3, червень 2026), ~5 718 зірок (2026-07-27, було ~5 000)
+**Конфіденційність**: повністю локально (Model2Vec лише CPU), жодні дані не залишають вашу машину
+
+**Сценарій використання**: розробник хоче семантичний пошук коду без запуску Ollama локально. Semble будує локальний індекс (Model2Vec + BM25 + RRF) при першому запуску й кешує його. Шукає в коді, документації та файлах конфігурації за запитом природною мовою.
+
+**Ключові можливості**:
+
+| Можливість | Деталі |
+|------------|---------|
+| Семантичний пошук | Запити природною мовою по коду, документації та файлах конфігурації |
+| Сервер MCP | Нативна інтеграція (`semble mcp`), обгортка CLI не потрібна |
+| Без зовнішнього сервісу | Model2Vec працює лише на CPU; без Ollama, без API-ключа |
+| Індекс | Будується при першому запуску, кешується автоматично (кожен новий каталог потребує побудови) |
+
+**Ефективність токенів**:
+
+| Воркфлоу | Токени | Вердикт |
+|----------|--------|---------|
+| Grep + читання файлів (груба сила) | ~15K | Шумно, багато нерелевантного контексту |
+| Пошук Semble (код + документація + конфігурація) | ~2-4K | Цільові результати, ширша область, ніж лише код |
+
+Опис репозиторію MinishLab/semble (прочитано 2026-09-30) стверджує "99% fewer tokens than grep+read". Це твердження вендора, виміряне щодо воркфлоу "grep, потім читання файлів", а не щодо цілої сесії, а цифри в таблиці вище є ілюстративними, а не виміряними тут.
+
+**Налаштування**:
+
+```bash
+pip install semble
+
+# Start the MCP server
+semble mcp
+```
+
+**Конфігурація Claude Code**:
+
+```bash
+claude mcp add semble -- semble mcp
+```
+
+**Порівняння з Grepai**:
+
+| Аспект | Grepai | Semble |
+|--------|--------|--------|
+| Зовнішній сервіс | Так (Ollama + nomic-embed-text) | Ні (Model2Vec лише CPU) |
+| Інтеграція MCP | CLI обгортається в MCP | Нативний сервер MCP |
+| Область пошуку | Лише код | Код + документація + конфігурація |
+| Аналіз графа викликів | Так (trace_callers, trace_callees, trace_graph) | Ні |
+| Поширеність у спільноті | Активний мейнтейнер | ~5 718 зірок GitHub (2026-07-27) |
+
+**Коли обирати Semble замість Grepai**: ви хочете семантичний пошук коду, але не запускаєте Ollama локально. Ширша область Semble також допомагає в монорепозиторіях, де навігація конфігурацією та документацією важить так само, як навігація кодом. Обирайте Grepai, коли аналіз графа викликів є суттєвим; Semble цієї можливості не пропонує.
+
+> **Примітка щодо тверджень "без індексу"**: деякі дописи спільноти описують Semble як такий, що не потребує індексу. Це неправильно. Semble будує локальний індекс при першому запуску й кешує його. Кожен новий каталог потребує окремої побудови індексу.
+
+**Оцінка якості**: **7.2/10** (область: вузька оцінка, очікує ширшого сигналу спільноти)
+
+**Ресурси**:
+- **GitHub**: https://github.com/MinishLab/semble
+- **PyPI**: `pip install semble`
+- **Оцінка**: [docs/resource-evaluations/semble-code-search.md](https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/docs/resource-evaluations/semble-code-search.md)
 
 ---
 
@@ -1084,6 +1179,62 @@ Claude: [Використовує linear.issues.update]
 
 ---
 
+### Підтримка клієнтів і CRM (Customer Support & CRM)
+
+**Примітка щодо "офіційних" у цій категорії.** Репозиторій GitHub `modelcontextprotocol/servers` не є реєстром для пошуку: його README явно відсилає до офіційного MCP Registry (`registry.modelcontextprotocol.io`) для пошуку опублікованих серверів і містить лише кілька референсних реалізацій керівного комітету, які позначає як "not production-ready". Сам офіційний реєстр містить кілька самостійно опублікованих серверів HubSpot і Zendesk (запитуються через `/v0/servers?search=<name>`), але присутність у реєстрі означає лише, що мейнтейнер подав запис, а не що HubSpot чи Zendesk його перевірили чи схвалили. Жодна з компаній не публікує власного сервера. Наведені нижче сервери вибрано за кількістю зірок і свіжістю комітів на GitHub, що є сильнішим сигналом, ніж сама присутність у реєстрі на момент оцінки.
+
+#### HubSpot MCP
+
+**Сервери спільноти**, що надають Claude Code доступ до API HubSpot (контакти, компанії, угоди, взаємодії).
+
+**Сценарій використання**: агент підтримки чи CSM читає живі дані акаунта (план, історію тікетів, стадію угоди), не перемикаючи вкладки, або складає відповідь, ураховуючи фактичний запис CRM клієнта. Повний патерн, до якого це підключається, дивіться в [support-csm-agent.md](../workflows/support-csm-agent.uk.md).
+
+Із поля спільноти виділяються два сервери:
+
+| Сервер | Покриття | Примітки |
+|--------|----------|-------|
+| **shinzo-labs/hubspot-mcp** | Контакти, компанії, ліди, угоди, продукти, взаємодії, пакетні операції, асоціації (читання/запис) | Найширше покриття об'єктів, теговані релізи (v2.0.5+) |
+| **baryhuang/mcp-hubspot** | Контакти, компанії (читання/запис), отримання розмов, семантичний пошук по кешованих даних | Найбільше зірок у полі; раніше публікувався як `peakmojo/mcp-hubspot` |
+
+**Налаштування** (shinzo-labs/hubspot-mcp):
+
+```bash
+claude mcp add hubspot -e HUBSPOT_ACCESS_TOKEN=YOUR_HUBSPOT_PRIVATE_APP_TOKEN -- npx -y @shinzolabs/hubspot-mcp
+```
+
+**Оцінка якості**: **6.5/10** ⭐⭐⭐
+
+**Примітка**: проєкти, що підтримуються спільнотою одним мейнтейнером. Обмежуйте токен приватного застосунку лише читанням, де це дозволяє сценарій (див. [support-csm-agent.md](../workflows/support-csm-agent.uk.md#безпека-та-запобіжники) щодо обґрунтування найменших привілеїв). Існує кілька менших серверів HubSpot MCP поза цими двома (LokiMCPUniverse, bajwa61, v4lheru); їх оцінено й пропущено через малу кількість зірок і застарілі коміти (11+ місяців).
+
+**Ресурси**:
+- **GitHub**: https://github.com/shinzo-labs/hubspot-mcp
+- **GitHub (альтернативний)**: https://github.com/baryhuang/mcp-hubspot
+- **Документація API HubSpot**: https://developers.hubspot.com/docs/api/overview
+
+---
+
+#### Zendesk MCP
+
+**Сервер спільноти** для Zendesk (тікети, коментарі, статті Help Center).
+
+**Сценарій використання**: агент підтримки перевіряє статус тікета чи витягує історію тікетів клієнта, не залишаючи контексту агента, той самий патерн, що й сценарій Linear MCP вище, але для служби підтримки замість трекера задач.
+
+**Налаштування**:
+
+```bash
+claude mcp add zendesk -- npx -y zendesk-mcp-server --subdomain YOUR_SUBDOMAIN --email YOUR_EMAIL --token YOUR_API_TOKEN
+```
+
+**Оцінка якості**: **6.8/10** ⭐⭐⭐
+
+**Примітка**: підтримується спільнотою (`reminia/zendesk-mcp-server`), на момент оцінки найсвіжіше оновлений серед варіантів спільноти для Zendesk. Існує кілька менших альтернатив (mattcoatsworth, michaelrice, wlaubernds); цей має найздоровіший рівень активності.
+
+**Ресурси**:
+- **GitHub**: https://github.com/reminia/zendesk-mcp-server
+- **Документація API Zendesk**: https://developer.zendesk.com/api-reference/
+
+---
+
 ### Оркестрація (Orchestration)
 
 #### MCP-Compose
@@ -1193,7 +1344,7 @@ proxy:
 - **GitHub**: https://github.com/PackmindHub/packmind
 - **Приклади сценаріїв використання**: https://github.com/PackmindHub/demo-use-case-skills
 
-> **Перехресне посилання**: Повна оцінка інструменту наведена у [third-party-tools.md — Розповсюдження інженерних стандартів](./third-party-tools.uk.md#engineering-standards-distribution).
+> **Перехресне посилання**: Повна оцінка інструменту наведена у [third-party-tools.md — Розповсюдження інженерних стандартів](third-party-tools.uk.md#розповсюдження-інженерних-стандартів).
 
 ---
 
@@ -1207,33 +1358,424 @@ proxy:
 - [ ] **Резервні механізми** для випадків недоступності API реалізовано
 - [ ] **Моніторинг та логування** активовано для всіх MCP-серверів
 
+### Обробка помилок і надійність (Error handling & reliability)
+
+Інструменти MCP можуть давати збій з багатьох причин, і те, як ви повідомляєте про ці збої Claude, має значення. Протокол надає для цього окремий механізм: прапорець `isError` у відповідях інструментів.
+
+**Прапорець `isError`**
+
+Коли виклик інструмента завершується невдачею, встановіть `isError: true` у відповіді замість генерування винятку чи повернення фальшивого успіху. Це повідомляє Claude, що виклик не вдався, і запрошує його вирішити, що робити далі: повторити, спробувати інший підхід або повідомити про проблему користувачеві.
+
+```json
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "Database connection refused: ECONNREFUSED 127.0.0.1:5432"
+    }
+  ],
+  "isError": true
+}
+```
+
+Без `isError: true` Claude може інтерпретувати повідомлення про помилку як дані й упевнено продовжувати зі зламаним станом. З ним Claude розуміє, що крок не вдався, і може міркувати про відновлення.
+
+**Таксономія помилок: чотири категорії**
+
+Різні типи збоїв потребують різних стратегій відновлення. Структурування повідомлень про помилки навколо цих чотирьох категорій полегшує Claude вибір правильної дії відновлення:
+
+| Категорія | Коли | Очікувана реакція Claude | Приклад |
+|----------|------|---------------------------|---------|
+| **Transient** | Тимчасова недоступність, мережевий збій, ліміт частоти | Повторити після затримки | `503 Service Unavailable`, тайм-аут |
+| **Validation** | Неправильний ввід: хибний тип, відсутнє поле, помилка формату | Виправити ввід, повторити одразу | `invalid date format: expected ISO8601` |
+| **Business** | Правильний ввід, але операція не дозволена правилами домену | Ескалювати або пропустити | `cannot delete: record has active dependencies` |
+| **Permission** | Викликач не має авторизації | Зупинитися й пояснити користувачеві | `403 Forbidden: insufficient scope` |
+
+**Патерн реалізації**
+
+Включайте категорію в повідомлення про помилки, щоб Claude міг діяти без здогадок:
+
+```python
+def call_tool(params):
+    try:
+        result = execute(params)
+        return {"content": [{"type": "text", "text": result}], "isError": False}
+    except NetworkError as e:
+        return {
+            "content": [{"type": "text", "text": f"[transient] {e}. Retry in a few seconds."}],
+            "isError": True
+        }
+    except ValidationError as e:
+        return {
+            "content": [{"type": "text", "text": f"[validation] {e}. Check the input format."}],
+            "isError": True
+        }
+    except PermissionError as e:
+        return {
+            "content": [{"type": "text", "text": f"[permission] {e}. Cannot proceed without elevated access."}],
+            "isError": True
+        }
+    except BusinessError as e:
+        return {
+            "content": [{"type": "text", "text": f"[business] {e}. Operation not permitted by domain rules."}],
+            "isError": True
+        }
+```
+
+Transient-помилки є єдиною категорією, де має сенс автоматичний повтор. Validation-помилки слід повторювати з виправленим вводом, а не наосліп. Business- і permission-помилки мають зупинятися й доводитися до користувача, а не зациклюватися.
+
+### Патерни проєктування опису інструментів (Tool description design patterns)
+
+Описи інструментів є найвпливовішою частиною сервера MCP. Claude використовує їх, щоб вирішити, який інструмент викликати. Нечіткий чи такий, що перекривається, опис спричиняє хибну маршрутизацію надійніше за будь-яку іншу помилку проєктування.
+
+**Головна проблема: описи, що перекриваються, спричиняють хибну маршрутизацію**
+
+Два інструменти з подібними за звучанням описами створюють неоднозначність. Claude вибере один, часто непослідовно, бо вгадує за описом, який застосовується.
+
+```json
+// Bad — ambiguous, Claude will guess
+{ "name": "analyze_content", "description": "Analyzes content" }
+{ "name": "analyze_document", "description": "Analyzes document content" }
+
+// Good — each description carves out a specific input type
+{ "name": "analyze_content", "description": "Analyzes raw text strings or inline content (not files). Use for clipboard content, API responses, or text passed directly as a string." }
+{ "name": "analyze_document", "description": "Analyzes content from a file path or URL. Use when the content lives on disk or at a remote endpoint, not when you already have the text in memory." }
+```
+
+Тест: чи можете ви, прочитавши лише опис, точно знати, коли НЕ використовувати цей інструмент? Якщо ні, додайте межу.
+
+**Анатомія опису**
+
+Добрий опис інструмента має три частини в такому порядку:
+
+1. **Що він робить**: одне речення, теперішній час, дієслово дії
+2. **Що він приймає**: ключовий тип вводу чи обмеження (шлях файлу проти рядка, одиночний проти пакетного)
+3. **Коли використовувати його замість подібних інструментів**: межа рішення, явно сформульована
+
+```json
+{
+  "name": "search_codebase",
+  "description": "Searches source code files by regex pattern across the repository. Use for finding symbol definitions, function calls, and string literals in code. Not for searching documentation, configs, or prose — use search_docs for those."
+}
+```
+
+**Конвенції іменування, що запобігають хибній маршрутизації**
+
+| Патерн | Приклад пари | Чому працює |
+|---------|-------------|--------------|
+| Дієслово розрізняє намір | `get_user` проти `search_users` | Отримати за відомим ID проти пошуку за критеріями |
+| Іменник розрізняє тип вводу | `analyze_file` проти `analyze_text` | Шлях на диску проти вбудованого рядка |
+| Суфікс області | `list_tickets` проти `list_project_tickets` | Глобальний проти обмеженого |
+| Гранулярність дії | `create_record` проти `bulk_create_records` | Один проти пакета |
+
+Уникайте синонімів як назв інструментів: `fetch`, `get`, `retrieve` для Claude означають те саме. Вибирайте одну родину дієслів на одну семантичну операцію.
+
+**Антипатерни, яких слід уникати**
+
+- **Загальні дієслова без області**: `process`, `handle`, `manage` нічого не кажуть Claude про те, коли викликати інструмент
+- **Відсутня межа**: "Searches the database." Яка база даних? Уся? Конкретна таблиця?
+- **Булеві прапорці, що змінюють семантику**: інструмент, що робить зовсім різні речі залежно від прапорця, мав би бути двома інструментами
+- **Описи довші за 3 речення**: якщо потрібно більше, інструмент робить забагато
+
+**`input_examples` як доповнення**
+
+Коли схеми недостатньо, щоб виразити, які комбінації параметрів допустимі чи типові, додайте `input_examples` (підтримується API Anthropic з лютого 2026). Вони показують Claude конкретні патерни використання, особливо корисні для необов'язкових параметрів:
+
+```json
+{
+  "name": "create_ticket",
+  "input_examples": [
+    { "title": "Login page 500 error", "priority": "critical", "assignee": "oncall" },
+    { "title": "Add dark mode toggle", "priority": "low" },
+    { "title": "Update API docs for v2.1" }
+  ]
+}
+```
+
+Приклади навчають того, чого опис не може: що `assignee` задається лише для критичних елементів, а `priority` можна пропускати для рутинних завдань.
+
+---
+
+## Просунуте проєктування інструментів MCP (Advanced MCP tool design)
+
+Окрім базової таксономії помилок, три рішення проєктування суттєво впливають на те, як Claude використовує інструменти MCP у продакшні: семантика відповідей про помилки, відмінність між Resources і Tools та іменування інструментів.
+
+---
+
+### isRetryable: конвенція на рівні застосунку
+
+Специфікація MCP не включає поля `isRetryable` у схему відповіді про помилку. Проте конвенція вбудовування настанов щодо повтору в `structuredContent` постала як практичний патерн для інструментів, що викликають ненадійні зовнішні сервіси.
+
+```json
+{
+    "isError": true,
+    "content": [
+        {
+            "type": "text",
+            "text": "Database query timed out after 30s. Retrying with the same parameters is likely to succeed."
+        }
+    ],
+    "structuredContent": {
+        "error": {
+            "code": "DATABASE_TIMEOUT",
+            "message": "Query timed out",
+            "isRetryable": true,
+            "retryAfterMs": 5000,
+            "suggestedAction": "Retry the same query after 5 seconds"
+        }
+    }
+}
+```
+
+Для помилок, що не підлягають повтору:
+
+```json
+{
+    "isError": true,
+    "content": [
+        {
+            "type": "text",
+            "text": "Record not found. No record with ID 'usr_99999' exists in the database."
+        }
+    ],
+    "structuredContent": {
+        "error": {
+            "code": "RECORD_NOT_FOUND",
+            "message": "No record found for ID: usr_99999",
+            "isRetryable": false,
+            "suggestedAction": "Verify the ID is correct before retrying"
+        }
+    }
+}
+```
+
+Прапорець `isRetryable` не є тим, що Claude читає нативно зі специфікації MCP. Його читає ваш шар оркестрації, який вирішує, повторювати чи ескалювати. Патерн працює, бо `structuredContent` машиночитаний, і ваш код може перевірити його раніше за Claude.
+
+---
+
+### isError: false + порожній вміст проти isError: true
+
+Ці дві форми відповіді мають цілком різну семантику. Їх змішування спричиняє мовчазні збої, які важко налагоджувати.
+
+| Відповідь | Значення |
+|---|---|
+| `isError: false` + непорожній вміст | Інструмент завершився успішно, ось результат |
+| `isError: false` + порожній вміст | Інструмент завершився успішно, результатів нуль (легітимний порожній стан) |
+| `isError: true` | Інструмент завершився невдало: операцію не вдалося виконати |
+
+```json
+// Search returning no results: NOT an error
+{
+    "isError": false,
+    "content": [
+        {
+            "type": "text",
+            "text": "No documents found matching query: 'quarterly report Q5 2024'"
+        }
+    ]
+}
+
+// Search that failed to execute: IS an error
+{
+    "isError": true,
+    "content": [
+        {
+            "type": "text",
+            "text": "Search service unavailable. Could not execute query."
+        }
+    ]
+}
+```
+
+Коли пошук повертає нуль результатів, Claude має повідомити про це користувачеві й, можливо, спробувати інші терміни. Коли пошук не вдалося виконати, Claude має повідомити про збій інструмента, а оркестратору слід розглянути повтор чи ескалацію. Ці шляхи розходяться, і лише правильна семантика помилок змушує їх розходитися правильно.
+
+---
+
+### Ресурси MCP проти інструментів
+
+Resources і Tools слугують різним цілям і контролюються різними акторами. Їх змішування призводить до інструментів, що не можуть бути проіндексовані, і ресурсів, що не можуть бути параметризовані.
+
+| Вимір | Resources | Tools |
+|---|---|---|
+| Хто контролює доступ | Застосунок (наперед визначені, ініційовані не моделлю) | Модель (викликає за потреби під час розмови) |
+| Параметри | Немає (читання за URI) | Повна схема параметрів |
+| Сценарій використання | Каталог даних лише для читання: файли конфігурації, довідкові дані, документи | Параметризовані операції: пошук, обчислення, запис, виклики API |
+| Виявлення | Перелічуються при запуску, можна переглядати | Описані в системному prompt, викликаються на вимогу |
+| Побічні ефекти | Немає (лише читання за конвенцією) | Дозволені |
+| Приклад | Документ політики компанії | `search_policy_documents(query, date_range)` |
+
+```python
+# Resource: static reference data, application-controlled
+@server.list_resources()
+async def list_resources():
+    return [
+        Resource(
+            uri="config://database/schema",
+            name="Database Schema",
+            description="Current production database schema",
+            mimeType="application/json"
+        ),
+        Resource(
+            uri="docs://api/reference",
+            name="API Reference",
+            description="Internal API documentation",
+            mimeType="text/markdown"
+        )
+    ]
+
+@server.read_resource()
+async def read_resource(uri: str) -> str:
+    if uri == "config://database/schema":
+        return json.dumps(get_current_schema())
+    elif uri == "docs://api/reference":
+        return read_file("docs/api-reference.md")
+    raise ValueError(f"Unknown resource: {uri}")
+
+# Tool: parameterized operation, model-controlled
+@server.list_tools()
+async def list_tools():
+    return [
+        Tool(
+            name="search_database",
+            description="Search the database with a structured query",
+            inputSchema={
+                "type": "object",
+                "properties": {
+                    "query": {"type": "string"},
+                    "table": {"type": "string"},
+                    "limit": {"type": "integer", "default": 10}
+                },
+                "required": ["query", "table"]
+            }
+        )
+    ]
+```
+
+**Міст ResourceLink:** коли інструмент повертає посилання на ресурс (а не вбудований вміст), використовуйте ResourceLink:
+
+```json
+{
+    "isError": false,
+    "content": [
+        {
+            "type": "resource",
+            "resource": {
+                "uri": "docs://reports/Q3-2024",
+                "mimeType": "application/pdf",
+                "text": "Q3 2024 Financial Report (use read_resource to access full content)"
+            }
+        }
+    ]
+}
+```
+
+---
+
+### Іменування інструментів і конфлікти з системним prompt
+
+Назви інструментів, що з'являються як ключові слова в системному prompt, змушують Claude асоціювати інструмент з непов'язаними інструкціями. Інструмент з назвою `process` буде подумки пов'язаний із будь-яким входженням слова "process" у системному prompt, створюючи непередбачувані патерни активації.
+
+Правила для назв інструментів:
+- Використовуйте конкретні складені назви: `search_customer_records`, а не `search`
+- Уникайте загальних дієслів, що з'являються в системних prompt: `run`, `process`, `execute`, `handle`, `manage`
+- Використовуйте підкреслення, а не camelCase чи дефіси (конвенція MCP)
+- Додавайте префікс домену, коли інструментів багато: `crm_get_contact`, `crm_update_contact`, `crm_search`
+
+```python
+# Bad: generic names that conflict with system prompt keywords
+tools = ["search", "process", "run", "execute", "get", "update"]
+
+# Good: specific compound names with domain prefix
+tools = [
+    "crm_search_contacts",
+    "crm_get_contact_by_id",
+    "crm_update_contact_status",
+    "billing_create_invoice",
+    "billing_get_invoice_status"
+]
+```
+
+---
+
+### Профілі інструментів, обмежені завданням (Task-scoped tool profiles)
+
+Надання кожного доступного інструмента кожному виклику агента марнотратне й збільшує ризик ненавмисних записів під час фаз лише для читання. Профілі інструментів, обмежені завданням, обмежують доступні інструменти залежно від поточної фази завдання.
+
+```python
+TOOL_PROFILES = {
+    "exploration": [
+        "search_documents",
+        "get_document_by_id",
+        "list_categories",
+        "read_config"
+    ],
+    "analysis": [
+        "search_documents",
+        "get_document_by_id",
+        "calculate_metrics",
+        "compare_versions"
+    ],
+    "execution": [
+        "create_document",
+        "update_document",
+        "delete_document",
+        "send_notification"
+    ]
+}
+
+def get_tools_for_phase(phase: str) -> list[str]:
+    return TOOL_PROFILES.get(phase, TOOL_PROFILES["exploration"])
+```
+
+Профіль дослідження доступний лише для читання. Профіль виконання додає операції запису. Claude не може випадково викликати `delete_document` під час фази аналізу, бо інструмента просто немає у виклику.
+
+Для багаторольових систем, де різні ролі користувачів мають доступ до різних інструментів, обмежуйте на рівні ролі, а не фільтруйте після виклику:
+
+```python
+ROLE_TOOL_ACCESS = {
+    "viewer": ["search_documents", "get_document_by_id"],
+    "editor": ["search_documents", "get_document_by_id", "create_document", "update_document"],
+    "admin": ["*"]  # all tools
+}
+
+def get_tools_for_role(role: str, all_tools: list) -> list:
+    if role == "admin":
+        return all_tools
+    allowed = ROLE_TOOL_ACCESS.get(role, [])
+    return [t for t in all_tools if t.name in allowed]
+```
+
+Обмежений доступ особливо цінний для патерну інструмента `verify_fact`: субагент, якому потрібно верифікувати лише одне твердження, може отримати лише `verify_fact`, зменшуючи і затримку (менше інструментів для опису в контексті), і ризик (немає інструментів запису в області).
+
+---
+
 ### Базовий стек розробника (Quick Start Stack)
 
 **Мінімум (Essentials)**:
 
-1. **Playwright MCP** — E2E-тестування, веб-веріфікація
-2. **Semgrep MCP** — Безпечне написання коду
+1. **Playwright MCP**: E2E-тестування, веб-веріфікація
+2. **Semgrep MCP**: Безпечне написання коду
 
 **Важливі додатки**:
 
-3. **Context7 MCP** — Точність довідкових даних API
-4. **Linear MCP** (опціонально) — Інтеграція відстеження завдань
+3. **Context7 MCP**: Точність довідкових даних API
+4. **Linear MCP** (опціонально): Інтеграція відстеження завдань
 
 **Стек для DevOps/SRE**:
 
-5. **Kubernetes MCP** — Керування кластером
-6. **Vercel MCP** — Автоматизація деплою Next.js
+5. **Kubernetes MCP**: Керування кластером
+6. **Vercel MCP**: Автоматизація деплою Next.js
 
 **Складні конфігурації**:
 
-7. **MCP-Compose** — Оркестрація кількох серверів
-8. **Browserbase MCP** — Потужна автоматизація веб-інтерфейсів (premium)
+7. **MCP-Compose**: Оркестрація кількох серверів
+8. **Browserbase MCP**: Потужна автоматизація веб-інтерфейсів (premium)
 
 ### Приклади встановлення
 
 ```bash
 # Playwright (тестування браузера)
-npm install @microsoft/playwright-mcp
+npm install @playwright/mcp
 
 # Semgrep (безпека)
 uvx semgrep-mcp
@@ -1301,7 +1843,7 @@ npm install mcp-linear
    - Чи повна документація (README + приклади + налаштування)?
    - Чи присутні тести/CI?
 
-2. **Оцінка якості** (див. [Фреймворк оцінки](#evaluation-framework)):
+2. **Оцінка якості** (див. [Фреймворк оцінки](#фреймворк-оцінки-evaluation-framework)):
    - Обслуговування: `/10`
    - Документація: `/10`
    - Тести: `/10`
@@ -1316,8 +1858,8 @@ npm install mcp-linear
 
 4. **Рішення**:
    - **Інтегрувати** (оцінка ≥8): додавання розділу до посібника
-   - **Спостерігати** (оцінка 6-7): додавання до [Списку спостереження](../../docs/resource-evaluations/watch-list.md), повторна оцінка наступного місяця
-   - **Відхилити** (оцінка <6): документування причин у розділі [Виключені сервери](#excluded-servers)
+   - **Спостерігати** (оцінка 6-7): додавання до [Списку спостереження](https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/docs/resource-evaluations/watch-list.md), повторна оцінка наступного місяця
+   - **Відхилити** (оцінка <6): документування причин у розділі [Виключені сервери](#виключені-сервери-excluded-servers)
 
 ### Процес інтеграції
 
@@ -1333,8 +1875,8 @@ npm install mcp-linear
    - Обмеження та обхідні шляхи
    - Порівняння альтернатив
    - Ресурси (GitHub, документація, інструкції)
-3. Оновіть [Базовий стек розробника](#quick-start-stack), якщо інструмент є критично важливим
-4. Оновіть [Контрольний список безпеки](#security-checklist), если это важно для безопасности
+3. Оновіть [Базовий стек розробника](#базовий-стек-розробника-quick-start-stack), якщо інструмент є критично важливим
+4. Оновіть [Контрольний список безпеки](#контрольний-список-безпеки-security-checklist), якщо це важливо для безпеки
 
 ---
 
@@ -1396,7 +1938,7 @@ npm install mcp-linear
 - `references/sentry-mcp.md` із повною документацією параметрів, підводними каменями, прикладами запитів та списком виключення шуму
 - Інструкції з адаптації під будь-який інший сервер MCP
 
-> Створено на основі довідкового файлу Datadog MCP з [офіційного репозиторію Packmind](https://github.com/packmind/packmind) (Apache 2.0, Cédric Teyton). Повний опис авторства дивіться у [Credits](../core/credits.uk.md).
+> Створено на основі довідкового файлу Datadog MCP з [офіційного репозиторію Packmind](https://github.com/PackmindHub/packmind) (Apache 2.0, Cédric Teyton). Повний опис авторства дивіться у [Credits](../core/credits.uk.md).
 
 ---
 
@@ -1426,18 +1968,23 @@ npm install mcp-linear
 | **Документація/Знання** | 1 (Context7) | Довідник API, приклади коду |
 | **Управління проектами** | 1 (Linear) | Відстеження завдань, планування спринтів |
 | **Оркестрація** | 1 (MCP-Compose) | Керування кількома серверами |
+| **Підтримка клієнтів і CRM** | 2 (HubSpot, Zendesk) | Сортування тікетів, діагностика акаунтів, брифінг CSM |
 
 ### Типи розробників
 
 - **Офіційні сервери** (6): Playwright (Microsoft), Browserbase, Semgrep, Context7, Kubernetes (Red Hat), Chrome DevTools (Anthropic)
-- **Сервери спільноти** (4): Linear, Vercel, MCP-Compose, Grepai (якісні, активно підтримуються)
+- **Сервери спільноти** (6): Linear, Vercel, MCP-Compose, Grepai, HubSpot, Zendesk (якісні, активно підтримуються)
 
 ---
 
-**Останнє оновлення**: Травень 2026
-**Наступний перегляд**: Червень 2026
+**Останнє оновлення**: Липень 2026
+**Наступний перегляд**: Серпень 2026
 **Підтримка**: Команда Claude Code Ultimate Guide
 
 ---
 
-*Назад до [основного посібника](./ultimate-guide.md) | [README](./README.md)*
+Про сервери MCP як патерн Adapter, із режимом збою та перевіркою для запуску, дивіться [AI Design Patterns: Adapter](../core/ai-design-patterns.uk.md#adapter).
+
+---
+
+*Назад до [основного посібника](../ultimate-guide.uk.md) | [README](../README.uk.md)*

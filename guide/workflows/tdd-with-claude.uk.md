@@ -6,7 +6,7 @@ tags: [workflow, tdd, testing]
 
 # TDD з Claude Code
 
-> **Рівень впевненості**: Tier 1 — на основі офіційних рекомендацій Anthropic та широкої перевірки спільнотою.
+> **Рівень впевненості**: Tier 1, на основі офіційних рекомендацій Anthropic та широкої перевірки спільнотою.
 
 Розробка через тестування (Test-Driven Development) з Claude потребує явних інструкцій. Зазвичай Claude намагається спочатку написати код реалізації, а вже потім тести. TDD вимагає протилежного підходу.
 
@@ -185,7 +185,12 @@ Claude дослідить кодову базу в режимі «тільки �
     "PostToolUse": [
       {
         "matcher": "Edit|Write",
-        "command": "npm test --watchAll=false 2>&1 | head -20"
+        "hooks": [
+          {
+            "type": "command",
+            "command": "npm test --watchAll=false 2>&1 | head -20"
+          }
+        ]
       }
     ]
   }
@@ -281,7 +286,7 @@ After tests pass, run mutation testing to find weak spots.
 Identify tests that don't catch mutations.
 ```
 
-> **Дивитися глибше**: JiTTesting автоматично застосовує мутаційне тестування під час створення Pull Request — це згенеровані LLM, тимчасові тести, які не потребують обслуговування. Meta впровадила це у великих масштабах і отримала 4-кратне покращення виявлення регресій порівняно з традиційними тестами. Дивіться статтю [Just-in-Time Catching Test Generation at Meta](https://arxiv.org/abs/2601.22832) та [посібник з методологій](../core/methodologies.uk.md#jittesting-just-in-time-testing) щодо використання цього шаблону з Claude Code сьогодні.
+> **Дивитися глибше**: JiTTesting автоматично застосовує мутаційне тестування під час створення Pull Request: згенеровані LLM, тимчасові тести, які не потребують обслуговування. Meta впровадила це у великих масштабах і отримала 4-кратне покращення виявлення регресій порівняно з традиційними тестами. Дивіться статтю [Just-in-Time Catching Test Generation at Meta](https://arxiv.org/abs/2601.22832) та [посібник з методологій](../core/methodologies.uk.md#jittesting-just-in-time-testing) щодо використання цього шаблону з Claude Code сьогодні.
 
 ### TDD з успадкованим кодом (Legacy Code)
 
@@ -290,6 +295,120 @@ I need to refactor legacyFunction.
 First, write characterization tests that capture current behavior.
 Then we'll refactor with confidence.
 ```
+
+Характеризаційні тести фіксують те, що код робить сьогодні, а не те, що він мав би робити. Залишайте дивні виходи: у старій системі частина такої поведінки — це саме те, на що покладаються інші команди або бізнес, а агент охоче «виправить» її за зеленим набором тестів.
+
+Не дозволяйте, щоб сесія, яка змінюватиме код, була єдиним автором тестів, що оцінюють цю зміну. Тоді вона напише набір, який закріплює реалізацію, що її вона ось-ось вигадає. Зафіксуйте поведінку в окремій сесії, в окремому коміті, який переглядають до початку рефакторингу, або нехай тести напише людина; потім починайте рефакторинг у новій сесії, якій сказано, що характеризаційні тести доступні лише для читання:
+
+```
+The tests in tests/characterization/ are read-only.
+Refactor legacyFunction until they pass. If a test looks wrong,
+stop and report it instead of editing it.
+```
+
+Хук `PreToolUse`, який забороняє `Edit` і `Write` у теці з характеризаційними тестами, перетворює цю інструкцію на гарантію. Джерело: Addy Osmani, [Brownfield Agentic Engineering](https://addyo.substack.com/p/brownfield-agentic-engineering) (вересень 2026); про зони та повноту міграції в успадкованих кодових базах див. [Legacy Codebase Modernization](https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#921-legacy-codebase-modernization).
+
+#### Знайдіть шов, перш ніж писати перший тест
+
+Характеризаційні тести припускають, що код можна запустити в тестовому середовищі. Успадкований код часто цьому опирається: він відкриває SMTP-з'єднання, читає годинник або звертається до бази даних просто зсередини функції, яку ви хочете зафіксувати. Відповідь Майкла Фезерса в *Working Effectively with Legacy Code* (2004, розділ 4) — **шов** (seam): «місце, де можна змінити поведінку програми, не редагуючи код у цьому місці». Кожен шов має **точку активації** (enabling point) — місце, де ви вирішуєте, яка поведінка виконуватиметься. Фезерс називає три види:
+
+| Шов | Точка активації | Типове застосування |
+|-----|-----------------|---------------------|
+| Шов об'єкта (object seam) | Де об'єкт створюють або передають (конструктор, параметр, фабрика) | Перший вибір в об'єктно-орієнтованому коді |
+| Шов компонування (link seam) | Поза кодом: classpath, лінкер, розв'язання модулів (`jest.mock()` — найближчий аналог у JavaScript) | Жорстко прописані імпорти, які не хочеться редагувати |
+| Шов препроцесора (preprocessing seam) | Макроси та прапорці компілятора | C і C++ |
+
+І шов, і точка активації працюють як [семантичні якорі](../ultimate-guide.uk.md#29-semantic-anchors): Claude знає цю книжку, тож їхня назва дає структуровану відповідь замість загального «додайте кілька моків».
+
+Коли шов є, обирайте тестового двійника за тим, що тесту потрібно від залежності. Ґерард Мезарош у *xUnit Test Patterns* (2007) називає п'ять видів; [таблиця в skill для TDD](https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/examples/skills/tdd-workflow.md#test-doubles) містить чотири з них:
+
+| Двійник | Застосовуйте, коли тесту потрібно... |
+|---------|--------------------------------------|
+| Dummy | Заповнити параметр, який шлях коду ніколи не використовує |
+| Stub | Керувати непрямим входом (що повертає залежність: поточний час, помилку) |
+| Spy | Записувати непрямі виходи й перевіряти їх потім |
+| Mock | Звіряти непрямі виходи з очікуваннями, заданими наперед |
+| Fake | Замінити важку залежність робочою легкою (репозиторій у пам'яті) |
+
+Фезерс наводить дві причини розривати залежність: *сприйняття* (sensing: ви не бачите, що зробив код) і *відокремлення* (separation: код узагалі неможливо запустити). Як практичне правило, для сприйняття потрібен spy або mock, для відокремлення — stub, fake або dummy. Стежте за термінологією: Фезерс називає свого двійника для сприйняття «fake object»; за Мезарошем, це spy. Для характеризаційних тестів spy зазвичай кращий за mock: ви записуєте, що код робить сьогодні, а не приписуєте йому поведінку.
+
+**Один приклад від початку до кінця.** Ця функція не може виконатися в тесті: вона надсилає справжні листи й читає справжній годинник.
+
+```ts
+// src/billing/reminders.ts (before)
+export function sendOverdueReminders(invoices: Invoice[]) {
+  const mailer = new SmtpMailer(process.env.SMTP_HOST);
+  const today = new Date();
+  for (const inv of invoices) {
+    if (!inv.paid && inv.dueDate < today) {
+      mailer.send(inv.customerEmail, `Invoice ${inv.id} is overdue`);
+    }
+  }
+}
+```
+
+1. Попросіть аналіз до будь-яких правок:
+
+   ```
+   Find the seams in sendOverdueReminders (Feathers, Working Effectively
+   with Legacy Code). For each dependency that blocks a unit test, name the
+   seam type and its enabling point, and say whether the test needs sensing
+   or separation. Then pick a test double from Meszaros' taxonomy and justify
+   it in one line. Do not change any code yet.
+   ```
+
+   Очікуваний результат: жодна із залежностей ще не має шва, бо обидві створюються всередині функції. Годинник — це непрямий вхід (stub), поштовий клієнт — непрямий вихід, який потрібно сприймати (spy).
+
+2. Нехай Claude зробить найменшу зміну, що створює шви, і більше нічого:
+
+   ```
+   Create the two object seams with Parameterize Method. Keep the current
+   behavior as default arguments so no production caller changes.
+   No other edits.
+   ```
+
+   ```ts
+   type Mailer = Pick<SmtpMailer, 'send'>;
+
+   export function sendOverdueReminders(
+     invoices: Invoice[],
+     mailer: Mailer = new SmtpMailer(process.env.SMTP_HOST),
+     now: () => Date = () => new Date(),
+   ) {
+     const today = now();
+     // loop unchanged; only the two local declarations moved into the signature
+   }
+   ```
+
+   Жоден тест ще не захищає цю правку, тож diff має бути тривіально придатним до перегляду: сигнатура, один змінений рядок, один видалений.
+
+3. Зафіксуйте поведінку через шви, в окремій сесії, як описано вище:
+
+   ```ts
+   const now = () => new Date('2026-03-10T09:00:00Z');  // stub
+
+   function sentTo(dueDate: string): string[] {
+     const sent: string[] = [];
+     const spy: Mailer = { send: (to) => { sent.push(to); } };
+     const inv = invoice({ dueDate: new Date(dueDate), paid: false });  // test data builder
+     sendOverdueReminders([inv], spy, now);
+     return sent;
+   }
+
+   it('reminds on the due date itself, not only after it', () => {
+     expect(sentTo('2026-03-10T00:00:00Z')).toHaveLength(1);
+   });
+
+   it('does not remind before the due date', () => {
+     expect(sentTo('2026-03-11T00:00:00Z')).toEqual([]);
+   });
+   ```
+
+   Перший тест фіксує дивацтво, яке варто зберегти: дати платежу не мають часу доби, тому `dueDate < today` істинне в будь-який момент саме в день платежу.
+
+4. Перевірте результат, перш ніж йому довіряти:
+   - Приберіть аргумент `now` із тестів: другий має стати червоним, інакше шов годинника не використовується.
+   - Змініть порівняння на цілі дні (`inv.dueDate.toISOString().slice(0, 10) < today.toISOString().slice(0, 10)`) — це «виправлення», яке міг би зробити агент: перший тест має стати червоним. Якщо він лишається зеленим, він нічого не фіксує. Порівнюйте в UTC, як тут; геттери дати в локальному часі роблять результат залежним від часового поясу машини.
 
 ---
 
@@ -331,12 +450,14 @@ Run tests after each change to ensure they stay green.
 
 ## Див. також
 
-- [../core/methodologies.uk.md](../core/methodologies.uk.md) — Повний довідник з методологій
-- [Tight Feedback Loops](../ultimate-guide.uk.md) — Розділ 9.5
-- [examples/skills/tdd-workflow.uk.md](../../examples/skills/tdd-workflow.uk.md) — Шаблон навичок TDD
+- [AI Design Patterns: Template Method](../core/ai-design-patterns.uk.md#template-method): skill, що перелічує кроки, зі Stop hook, який перевіряє останній
+- [../core/methodologies.uk.md](../core/methodologies.uk.md): повний довідник з методологій
+- [Tight Feedback Loops](../ultimate-guide.uk.md): розділ 9.5
+- [examples/skills/tdd-workflow.md](https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/examples/skills/tdd-workflow.md): шаблон skill для TDD
 - [Anthropic Best Practices](https://www.anthropic.com/engineering/claude-code-best-practices)
-- [task-management.uk.md](./task-management.uk.md) — Відстеження циклів TDD між сесіями за допомогою Tasks API
-- [Superpowers](https://github.com/obra/superpowers) — Набір плагінів, який примусово впроваджує TDD: код, написаний до створення тесту, що падає, видаляється і створюється заново з нуля. Більш суворе дотримання правил, ніж за допомогою звичайних підказок.
+- [task-management.uk.md](./task-management.uk.md): відстеження циклів TDD між сесіями за допомогою Tasks API
+- [Superpowers](https://github.com/obra/superpowers): набір plugin, який примусово впроваджує TDD як обов'язковий бар'єр, код, написаний до появи тесту, що падає, видаляється і створюється заново з нуля. Суворіше дотримання правил, ніж за допомогою звичайних prompt.
+- [TDD with Claude Code](https://www.florian.bruniaux.com/guides/tdd-with-claude-code/): окремий практичний посібник про той самий робочий процес
 
 ---
 **Локалізація**: [Serhii (MacPlus Software)](https://macplus-software.com)

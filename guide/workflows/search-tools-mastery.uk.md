@@ -1,16 +1,16 @@
 ---
-title: "Майстерність інструментів пошуку: поєднання rg, grepai, Serena та ast-grep"
-description: "Опануйте пошук у коді, поєднуючи правильні інструменти для максимальної ефективності"
+title: "Майстерність інструментів пошуку: поєднання rg, grepai, Serena, ast-grep, scip-search та lilmd"
+description: "Опануйте пошук у коді та навігацію документацією, поєднуючи правильні інструменти для максимальної ефективності"
 tags: [workflow, search, guide, mcp]
 ---
 
-# Майстерність інструментів пошуку: поєднання rg, grepai, Serena та ast-grep
+# Майстерність інструментів пошуку: поєднання rg, grepai, Serena, ast-grep, scip-search та lilmd
 
-> **Опануйте мистецтво пошуку в коді, поєднуючи правильні інструменти для максимальної ефективності**
+> **Опануйте пошук у коді та навігацію документацією, поєднуючи правильні інструменти для максимальної ефективності**
 
 **Автор**: Florian BRUNIAUX | Внесок від Claude (Anthropic)
-**Час читання**: ~20 хвилин
-**Останнє оновлення**: Січень 2026
+**Час читання**: ~25 хвилин
+**Останнє оновлення**: Травень 2026
 
 ---
 
@@ -23,6 +23,7 @@ tags: [workflow, search, guide, mcp]
 5. [Реальні сценарії використання](#реальні-сценарії-використання)
 6. [Оптимізація продуктивності](#оптимізація-продуктивності)
 7. [Поширені помилки](#поширені-помилки)
+8. [Розширений набір інструментів: scip-search та lilmd](#розширений-набір-інструментів-scip-search-та-lilmd)
 
 ---
 
@@ -38,6 +39,8 @@ tags: [workflow, search, guide, mcp]
 | Отримати структуру файлу | `Serena` | `serena get_symbols_overview` |
 | Рефакторинг у багатьох файлах | `Serena + ast-grep` | Комбінований робочий процес |
 | Дослідити невідому кодову базу | `grepai → Serena` | Патерн виявлення |
+| Знайти посилання на символ без MCP (безпечно для worktree) | `scip-search` | `scip-search refs AuthService.login` |
+| Орієнтуватися у великому документі Markdown | `lilmd` | `lilmd read docs/arch.md "Authentication"` |
 
 ---
 
@@ -71,6 +74,15 @@ tags: [workflow, search, guide, mcp]
 | **ast-grep** | AST pattern | ~1500 | Структурні збіги |
 
 **Ключовий висновок**: `rg` у 4 рази ефективніший за витратами токенів, але в 10 разів менш «інтелектуальний» порівняно з семантичними інструментами.
+
+### Розширений довідник інструментів
+
+Два інструменти, що закривають прогалини в базовому наборі, детально розглянуто в [розділі «Розширений набір інструментів»](#розширений-набір-інструментів-scip-search-та-lilmd):
+
+| Інструмент | Категорія | Порівняно з наявним набором |
+|------|----------|-------------------|
+| **scip-search** | Пошук за індексом символів (SCIP) | Як Serena, але без стану, без MCP, безпечний для worktree |
+| **lilmd** | Навігація за розділами Markdown | Аналога в наборі немає (працює з документацією, а не з кодом) |
 
 ---
 
@@ -109,6 +121,17 @@ What's your search intent?
 └─ "Understand DEPENDENCIES"
    → Use grepai trace
    └─ Example: grepai trace callers "validatePayment"
+```
+
+### Level 2 (worktree / no MCP)
+
+Коли ви працюєте в середовищі CI, у git worktree або в будь-якому контексті, де сервери MCP недоступні:
+
+```
+Known symbol name, no MCP available?
+│
+└─ Use scip-search (pre-built SCIP index, millisecond cold start)
+   └─ scip-search refs "AuthService.login" --format json
 ```
 
 ### Level 3: Optimization
@@ -618,6 +641,76 @@ rg "TODO" --type ts
 
 ---
 
+## Розширений набір інструментів: scip-search та lilmd
+
+Два CLI-інструменти, що закривають прогалини в наборі rg/grepai/Serena.
+
+### scip-search
+
+scip-search виконує запити до заздалегідь побудованих індексів символів SCIP (Sourcegraph Code Intelligence Protocol). Якщо grepai шукає за семантичним змістом, а Serena вимагає живого з'єднання MCP, то scip-search працює зі статичним бінарним індексом із холодним стартом за мілісекунди.
+
+| Атрибут | Деталі |
+|-----------|---------|
+| **Джерело** | [github.com/liza-mas/scip-search](https://github.com/liza-mas/scip-search) |
+| **Встановлення** | `curl -fsSL https://raw.githubusercontent.com/liza-mas/scip-search/main/install.sh \| bash` |
+| **Формат індексу** | SCIP (Go, TypeScript, Python, Java, Rust та інші) |
+| **Вивід** | Однорядковий текст, JSON або лише розташування |
+
+**Робочий процес**: scip-search замінює 5-10 звернень rg/read, типових для пошуку символу.
+
+```bash
+# Step 1: generate SCIP index once per language
+scip-typescript index --output index.scip
+
+# Step 2: find a symbol definition
+scip-search find AuthService
+
+# Step 3: get all references with line numbers
+scip-search refs AuthService.login --format json
+
+# Step 4: read only the returned line ranges
+```
+
+**Порівняно з Serena**: Serena підключається до language server і має пам'ять сесії. scip-search не має стану й працює зі знімком: без MCP, без постійного процесу. Тому він надійний у worktree та в ефемерних середовищах CI, де LSP-бекенд Serena може бути недоступним.
+
+**Порівняно з grepai**: grepai знаходить за семантичним наміром («логіка валідації платежів»). scip-search знаходить за точним або майже точним ідентифікатором символу. Вони працюють послідовно: grepai відкриває поняття, scip-search підтверджує символ.
+
+**Сумісність із worktree**: індекси є файлами окремого репозиторію без спільного стану. Запуск `scip-typescript index` усередині worktree створює локальний індекс для цього worktree.
+
+---
+
+### lilmd
+
+lilmd розглядає файли Markdown як бази даних. Він повертає зміст із діапазонами рядків і дає змогу читати окремі розділи. Agent, що читає посібник на 2000 рядків, отримує один розділ одним викликом замість читання всього файлу.
+
+| Атрибут | Деталі |
+|-----------|---------|
+| **Джерело** | [github.com/molefrog/lilmd](https://github.com/molefrog/lilmd) |
+| **Встановлення** | `npm install -g lilmd` |
+| **Середовище виконання** | Node або Bun |
+
+**Ключові команди**:
+
+```bash
+# TOC with line ranges (inclusive, 1-indexed)
+lilmd docs/architecture.md
+
+# Read a section by name (fuzzy match by default)
+lilmd read docs/architecture.md "Authentication"
+
+# Read a nested section
+lilmd read docs/architecture.md "Security > JWT"
+
+# Exact match (prefix with =)
+lilmd read docs/architecture.md "=Authentication Flow"
+```
+
+**Цінність для agent**: вивід змісту містить діапазони рядків для кожного заголовка. Agent розбирає їх і запитує лише потрібний розділ замість завантаження всього файлу. Природний конвеєр: `rg` (знайти файл), потім `lilmd` (отримати зміст із діапазонами), потім `Read lines:N-M` (завантажити конкретний розділ). Це працює також для CHANGELOG.md, великих файлів README та документів бази знань.
+
+**Сумісність із worktree**: без стану й індексу, працює окремо для кожного файлу. Підходить будь-де.
+
+---
+
 ## Пріоритет налаштування
 
 **Рекомендований порядок налаштування**:
@@ -625,13 +718,15 @@ rg "TODO" --type ts
 1. **Початок**: `rg` (вже вбудований в інструмент `Grep`) ✅
 2. **Далі**: `Serena` MCP (розуміння символів, пам'ять сесії)
 3. **Потім**: `grepai` (семантичний пошук + граф викликів)
-4. **Нарешті**: `ast-grep` (структурні патерни, великий рефакторинг)
+4. **Якщо worktree входять до вашого робочого процесу**: `scip-search` (пошук символів без стану, MCP не потрібен)
+5. **Для великої документації**: `lilmd` (точкове читання розділів Markdown, без налаштування)
+6. **Нарешті**: `ast-grep` (структурні патерни, великий рефакторинг)
 
-**Обґрунтування**: 90% пошукових запитів успішно виконуються за допомогою `rg` + `Serena`. Додавайте `grepai` для семантичних потреб. Додавайте `ast-grep` лише в разі проведення великомасштабного рефакторингу чи міграції.
+**Обґрунтування**: 90% пошукових запитів успішно виконуються за допомогою `rg` + `Serena`. Додавайте `grepai` для семантичних потреб. Додавайте `scip-search` для середовищ worktree або CI, де MCP недоступний. Додавайте `ast-grep` лише для великомасштабного рефакторингу.
 
 ---
 
-## Підсумок: симфонія 4 інструментів
+## Підсумок: набір із 6 інструментів
 
 ```
 ┌─────────────────────────────────────────────────────────┐
@@ -640,24 +735,32 @@ rg "TODO" --type ts
 │ │
 │ rg (ripgrep) → Fast, exact text matching │
 │ ├─ Use: 90% of searches │
-│ └─ Speed: ⚡ ~20ms │
+│ └─ Speed: ~20ms │
 │ │
 │ grepai → Semantic + Call graph │
 │ ├─ Use: Concept discovery, dependency tracing │
-│ └─ Speed: 🐢 ~500ms (but finds what rg can't) │
+│ └─ Speed: ~500ms (finds what rg cannot) │
 │ │
 │ Serena → Symbol-aware + Session memory │
 │ ├─ Use: Refactoring, structure understanding │
-│ └─ Speed: ⚡ ~100ms │
+│ └─ Speed: ~100ms │
 │ │
 │ ast-grep → AST structural patterns │
 │ ├─ Use: Large migrations, complex patterns │
-│ └─ Speed: 🕐 ~200ms │
+│ └─ Speed: ~200ms │
+│ │
+│ scip-search → Symbol index (stateless, SCIP) │
+│ ├─ Use: CI / worktrees / no MCP environments │
+│ └─ Speed: ~5ms cold start │
+│ │
+│ lilmd → Markdown section navigation │
+│ ├─ Use: Large docs, TOC + line ranges per section │
+│ └─ Speed: instant, no index │
 │ │
 │ ═══════════════════════════════════════════════════ │
 │ │
 │ Master the combination, not individual tools. │
-│ Each tool has a sweet spot — use the right one. │
+│ Each tool has a sweet spot. Use the right one. │
 │ │
 └─────────────────────────────────────────────────────────┘
 ```
@@ -668,12 +771,14 @@ rg "TODO" --type ts
 
 - [Serena MCP Guide](#serena-semantic-code-analysis)
 - [grepai Documentation](#grepai-recommended-semantic-search)
-- [ast-grep Patterns Skill](../../examples/skills/ast-grep-patterns.md)
-- [Architecture: Grep vs RAG History](../core/architecture.uk.md#search-strategy-evolution)
+- [ast-grep Patterns Skill](https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/examples/skills/ast-grep-patterns.md)
+- [Architecture: Grep vs RAG History](../core/architecture.uk.md)
+- [scip-search GitHub](https://github.com/liza-mas/scip-search)
+- [lilmd GitHub](https://github.com/molefrog/lilmd)
 
 ---
 
-**Останнє оновлення**: Січень 2026
+**Останнє оновлення**: Травень 2026
 **Сумісність**: Claude Code 2.1.7+
 
 ---

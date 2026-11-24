@@ -163,7 +163,7 @@ Semantic:
 | Вимога | Деталі |
 |-------------|---------|
 | **Claude Code** | Версія 1.5.0+ (підтримка MCP) |
-| **Figma MCP Server** | `npm install -g @modelcontextprotocol/server-figma` |
+| **Figma MCP Server** | Серверна реалізація спільноти `figma-developer-mcp` ([Framelink](https://github.com/GLips/Figma-Context-MCP)), запускається через `npx` |
 | **Персональний токен доступу** | Генерується в налаштуваннях облікового запису Figma → Tokens |
 | **Конфігурація MCP** | Токен налаштований у конфігурації Claude Code |
 
@@ -176,9 +176,9 @@ Semantic:
   "mcpServers": {
     "figma": {
       "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-figma"],
+      "args": ["-y", "figma-developer-mcp", "--stdio"],
       "env": {
-        "FIGMA_PERSONAL_ACCESS_TOKEN": "your-token-here"
+        "FIGMA_API_KEY": "your-token-here"
       }
     }
   }
@@ -189,7 +189,7 @@ Semantic:
 ```json
 {
   "env": {
-    "FIGMA_PERSONAL_ACCESS_TOKEN": "${FIGMA_TOKEN}"
+    "FIGMA_API_KEY": "${FIGMA_TOKEN}"
   }
 }
 ```
@@ -797,9 +797,9 @@ Provide rough timeline for dev implementation.
 
 ### Офіційна документація
 
-- **Figma MCP Server**: [@modelcontextprotocol/server-figma](https://github.com/modelcontextprotocol/servers/tree/main/src/figma) (GitHub)
+- **Figma MCP Server**: [документація Figma MCP server](https://developers.figma.com/docs/figma-mcp-server/)
 - **Figma Developer Docs**: [figma.com/developers](https://www.figma.com/developers)
-- **Style Dictionary**: [amzn.github.io/style-dictionary](https://amzn.github.io/style-dictionary/)
+- **Style Dictionary**: [styledictionary.com](https://styledictionary.com/)
 - **Tokens Studio Plugin**: [tokens.studio](https://tokens.studio/)
 
 ### Кейс-стаді та навчальні посібники

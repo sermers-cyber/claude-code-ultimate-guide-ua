@@ -1,401 +1,363 @@
 ---
-title: "Claude Code — Візуальні діаграми робочих процесів розробки"
-description: "Цикл TDD, конвеєр спочатку-специфікація, робочий процес на основі плану, цикл ітераційного вдосконалення"
+title: "Claude Code: Діаграми робочих процесів розробки"
+description: "TDD, spec-first, plan-driven, уточнення, спостережувані поведінки AI fluency і місця, де пояснюється зміна агента"
 tags: [workflows, tdd, spec-first, plan-driven, iterative]
 ---
 
 # Робочі процеси розробки
 
-Перевірені патерни для структурування сесій розробки за допомогою AI.
+Методи структурування розробки за допомогою AI. Їхні кроки перевірки підтверджують лише ту поведінку й той обсяг, які справді перевірено.
 
 ---
 
-### TDD Red-Green-Refactor з Claude
+### TDD red-green-refactor з Claude
 
-Розробка через тестування (TDD), адаптована для Claude Code: спочатку напишіть тест, що падає, а потім попросіть Claude реалізувати лише те, що необхідно для його проходження. Це запобігає надмірному ускладненню (over-engineering) та гарантує, що тести справді перевіряють поведінку.
+Напишіть тест поведінки, з'ясуйте, чому він падає, реалізуйте потрібну поведінку, а потім робіть рефакторинг, тримаючи перевірки зеленими. Тест, що проходить, доводить лише свої твердження (assertions). Якщо новий тест проходить ще до реалізації, переконайтеся, що функції ще немає, і відрізняйте очікувані збої від помилок налаштування.
 
 ```mermaid
 flowchart TD
-    A([Початок: Потрібна нова функція]) --> B(Написання тесту, що падає,<br/>разом із людиною)
-    B --> C(Запуск тестів)
-    C --> D{Тести падають<br/>як очікувалося?}
-    D -->|No: tests pass<br/>before impl!| E(Fix test — це занадто слабко)
-    E --> B
-    D -->|Yes: RED ✓| F(Попросіть Claude впровадити<br/>мінімальний код для проходження)
-    F --> G(Повторний запуск тестів)
-    G --> H{Тести проходять?}
-    H -->|No| I(Діагностика з Claude<br/>виправлення реалізації)
-    I --> G
-    H -->|Yes: GREEN ✓| J{Код потребує<br/>рефакторингу?}
-    J -->|Yes| K(Рефакторинг з Claude)
-    K --> L(Запуск тестів: усе ще green?)
-    L -->|No| I
-    L -->|Yes: REFACTOR ✓| M{Потрібні ще<br/>функції?}
-    J -->|No| M
-    M -->|Yes| B
-    M -->|No| N([Функція готова ✓])
-
-    style B fill:#E85D5D,color:#fff
-    style F fill:#E85D5D,color:#fff
-    style D fill:#E87E2F,color:#fff
-    style H fill:#E87E2F,color:#fff
-    style J fill:#E87E2F,color:#fff
-    style G fill:#7BC47F,color:#333
-    style K fill:#6DB3F2,color:#fff
-    style N fill:#7BC47F,color:#333
-
-    click A href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/tdd-with-claude.md" "TDD — Нова функція"
-    click B href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/tdd-with-claude.md" "Написання тесту, що падає (RED)"
-    click C href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/tdd-with-claude.md" "Запуск тестів"
-    click D href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/tdd-with-claude.md" "Тести падають як очікувалося?"
-    click E href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/tdd-with-claude.md" "Виправте тест — занадто слабкий"
-    click F href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/tdd-with-claude.md" "Claude впроваджує мінімальний код"
-    click G href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/tdd-with-claude.md" "Повторний запуск тестів"
-    click H href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/tdd-with-claude.md" "Тести проходять? (GREEN)"
-    click I href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/tdd-with-claude.md" "Діагностика з Claude"
-    click J href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/tdd-with-claude.md" "Код потребує рефакторингу?"
-    click K href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/tdd-with-claude.md" "Рефакторинг з Claude"
-    click L href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/tdd-with-claude.md" "Запуск тестів: усе ще green?"
-    click M href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/tdd-with-claude.md" "Потрібні ще функції?"
-    click N href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/tdd-with-claude.md" "Функція готова ✓"
+    START["Запит нової поведінки"] --> TEST["Напишіть тест поведінки<br/>з явними assertions"]
+    TEST --> RUN["Запустіть тест"]
+    RUN --> WHY{"Який результат?"}
+    WHY -->|Уже проходить| EXISTS["Перевірте наявну поведінку<br/>або посильте assertions"]
+    EXISTS --> TEST
+    WHY -->|Помилка налаштування| SETUP["Виправте тестове середовище"]
+    SETUP --> RUN
+    WHY -->|Очікуваний збій поведінки| IMPL["Claude реалізує<br/>мінімальну поведінку"]
+    IMPL --> CHECK["Запустіть тести поведінки та регресії"]
+    CHECK --> PASS{"Перевірки проходять?"}
+    PASS -->|Ні| FIX["Діагностика й виправлення"]
+    FIX --> CHECK
+    PASS -->|Так| REFACTOR{"Потрібен рефакторинг?"}
+    REFACTOR -->|Так| CLEAN["Рефакторинг і повторний запуск перевірок"]
+    CLEAN --> CHECK
+    REFACTOR -->|Ні| REVIEW["Перегляньте assertions і зміну<br/>Перевірено в межах протестованого обсягу"]
+    classDef default fill:#F5E6D3,color:#333,stroke:#E87E2F
+    click START href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/tdd-with-claude.uk.md" "Переглянути цей патерн у посібнику"
+    click TEST href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/tdd-with-claude.uk.md" "Переглянути цей патерн у посібнику"
+    click RUN href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/tdd-with-claude.uk.md" "Переглянути цей патерн у посібнику"
+    click WHY href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/tdd-with-claude.uk.md" "Переглянути цей патерн у посібнику"
+    click EXISTS href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/tdd-with-claude.uk.md" "Переглянути цей патерн у посібнику"
+    click SETUP href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/tdd-with-claude.uk.md" "Переглянути цей патерн у посібнику"
+    click IMPL href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/tdd-with-claude.uk.md" "Переглянути цей патерн у посібнику"
+    click CHECK href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/tdd-with-claude.uk.md" "Переглянути цей патерн у посібнику"
+    click PASS href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/tdd-with-claude.uk.md" "Переглянути цей патерн у посібнику"
+    click FIX href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/tdd-with-claude.uk.md" "Переглянути цей патерн у посібнику"
+    click REFACTOR href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/tdd-with-claude.uk.md" "Переглянути цей патерн у посібнику"
+    click CLEAN href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/tdd-with-claude.uk.md" "Переглянути цей патерн у посібнику"
+    click REVIEW href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/tdd-with-claude.uk.md" "Переглянути цей патерн у посібнику"
 ```
 
 <details>
 <summary>ASCII версія</summary>
 
 ```
-Написання тесту, що падає (RED)
-        │
-    Run tests
-        │
-  Падають як очікувалося?
-  ├─ No  → Виправити тест (занадто слабкий)
-  └─ Yes → Попросити Claude: написати мін. код
-                │
-           Запуск тестів
-                │
-           Проходять? (GREEN)
-           ├─ No  → Діагностика + виправлення
-           └─ Yes → Рефакторинг?
-                    ├─ Yes → Рефакторинг (REFACTOR) → перезапуск тестів
-                    └─ No  → Наступна функція
+Напишіть тест поведінки → запустіть його
+├─ Уже проходить → наявна поведінка? за потреби посильте assertions
+├─ Помилка налаштування → виправте середовище, запустіть знову
+└─ Очікуваний збій (RED) → реалізуйте мінімальну поведінку
+                            → запустіть тести поведінки + регресії
+                            ├─ Збій → діагностика й виправлення
+                            └─ Проходять (GREEN) → рефакторинг за потреби
+                                              → повторний запуск перевірок
+                                              → перегляд протестованого обсягу
 ```
 
 </details>
 
-> **Джерело**: [TDD з Claude](../workflows/tdd-with-claude.uk.md)
+> **Джерело**: [Посібник: TDD red-green-refactor з Claude](../workflows/tdd-with-claude.uk.md); [Критерії перевірки](https://code.claude.com/docs/en/best-practices)
 
 ---
 
-### Конвеєр розробки "Спочатку специфікація" (Spec-First)
+### Конвеєр розробки Spec-First
 
-Створюйте специфікацію перед кодом. Claude використовує spec-файл як єдине джерело істини — це запобігає розбіжностям між запланованим і фактично побудованим кодом.
-
-```mermaid
-flowchart LR
-    A([Ідея / Вимога]) --> B(Написання spec.md<br/>природною мовою)
-    B --> C(Claude переглядає специфікацію<br/>на чіткість + повноту)
-    C --> D{Специфікація схвалена<br/> людиною?}
-    D -->|No: gaps found| E(Вдосконалення специфікації<br/>усунення прогалин)
-    E --> C
-    D -->|Yes| F(Генерація тестів<br/>на основі специфікації)
-    F --> G(Генерація реалізації<br/>на основі специфікації + тестів)
-    G --> H(Запуск набору тестів)
-    H --> I{Усі тести<br/>проходять?}
-    I -->|No| J(Claude виправляє<br/>реалізацію)
-    J --> H
-    I -->|Yes| K(Перевірка людиною<br/>специфікація проти результату)
-    K --> L{Відповідає<br/>специфікації?}
-    L -->|No| M(Оновлення специфікації<br/>або реалізації)
-    M --> K
-    L -->|Yes| N([Merge ✓])
-
-    style A fill:#F5E6D3,color:#333
-    style B fill:#6DB3F2,color:#fff
-    style D fill:#E87E2F,color:#fff
-    style I fill:#E87E2F,color:#fff
-    style L fill:#E87E2F,color:#fff
-    style N fill:#7BC47F,color:#333
-
-    click A href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/spec-first.md" "Ідея / Вимога"
-    click B href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/spec-first.md" "Write spec.md"
-    click C href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/spec-first.md" "Claude reviews spec"
-    click D href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/spec-first.md" "Spec approved by human?"
-    click E href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/spec-first.md" "Refine spec"
-    click F href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/spec-first.md" "Generate tests from spec"
-    click G href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/spec-first.md" "Generate implementation"
-    click H href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/spec-first.md" "Run test suite"
-    click I href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/spec-first.md" "All tests pass?"
-    click J href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/spec-first.md" "Claude fixes implementation"
-    click K href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/spec-first.md" "Human review"
-    click L href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/spec-first.md" "Matches spec?"
-    click M href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/spec-first.md" "Update spec or implementation"
-    click N href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/spec-first.md" "Merge ✓"
-```
-
-<details>
-<summary>ASCII версія</summary>
-
-```
-Ідея → Написання spec.md → Перегляд Claude
-                             │
-                       Схвалено? ─No→ Вдосконалити специфікацію
-                             │ Yes
-                       Згенерувати тести зі специфікації
-                             │
-                       Згенерувати реалізацію
-                             │
-                       Запуск тестів → Проходять? ─No→ Виправлення Claude
-                             │ Yes
-                       Перевірка людиною → Відповідає специфікації? ─No→ Виправити
-                             │ Yes
-                           Merge ✓
-```
-
-</details>
-
-> **Джерело**: [Розробка спочатку специфікація (Spec-First)](../workflows/spec-first.uk.md)
-
----
-
-### Робочий процес на основі плану з коментуванням (Plan-Driven)
-
-Для складних завдань корисний режим планування (Plan Mode): Claude досліджує кодову базу, пропонує план, ви коментуєте його, і лише після цього Claude починає виконання схваленого плану. Це запобігає несподіванкам під час великих рефакторингів.
+Специфікація допомагає порівняти задуману поведінку з реалізацією, але не гарантує, що розбіжності неможливі. Цикл Maintain є налаштованим патерном автоматизації: детермінований тригер викликає Claude, власник сортує отриманий intent, а зміни проходять рев'ю та етапи розгортання. Claude Code не запускає цей цикл моніторингу лише тому, що існує файл специфікації.
 
 ```mermaid
 flowchart TD
-    A([Дано складне завдання]) --> B(Вхід у Plan Mode<br/>Shift+Tab × 2)
-    B --> C(Claude досліджує<br/>структуру кодової бази)
-    C --> D(Claude пропонує план<br/>із списком файлів)
-    D --> E(Людина переглядає план)
-    E --> F{План<br/>прийнятний?}
-    F -->|No: issues found| G(Людина коментує план<br/>робить виправлення)
-    G --> H(Claude переглядає план)
-    H --> E
-    F -->|Yes| I(Схвалення плану<br/>Вихід з Plan Mode)
-    I --> J(Claude виконує<br/>крок за кроком)
-    J --> K(Claude звітує про<br/>прогрес)
-    K --> L{Неочікувана<br/>проблема?}
-    L -->|Yes| M(Claude позначає проблему<br/>запитує вказівки)
-    M --> F
-    L -->|No| N{Усі кроки<br/>завершені?}
-    N -->|No| J
-    N -->|Yes| O([Завдання виконано ✓])
-
-    style A fill:#F5E6D3,color:#333
-    style B fill:#6DB3F2,color:#fff
-    style F fill:#E87E2F,color:#fff
-    style L fill:#E87E2F,color:#fff
-    style N fill:#E87E2F,color:#fff
-    style G fill:#F5E6D3,color:#333
-    style O fill:#7BC47F,color:#333
-
-    click A href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/plan-driven.md" "Дано складне завдання"
-    click B href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#23-plan-mode" "Enter Plan Mode"
-    click C href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/plan-driven.md" "Claude explores codebase"
-    click D href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/plan-driven.md" "Claude proposes plan"
-    click E href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/plan-driven.md" "Human reviews plan"
-    click F href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/plan-driven.md" "Plan acceptable?"
-    click G href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/plan-driven.md" "Human annotates plan"
-    click H href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/plan-driven.md" "Claude revises plan"
-    click I href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#23-plan-mode" "Approve plan — Exit Plan Mode"
-    click J href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/plan-driven.md" "Claude executes step by step"
-    click K href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/plan-driven.md" "Claude reports progress"
-    click L href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/plan-driven.md" "Unexpected issue?"
-    click M href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/plan-driven.md" "Claude flags issue"
-    click N href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/plan-driven.md" "All steps complete?"
-    click O href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/plan-driven.md" "Task done ✓"
+    IDEA["Вимога"] --> INTENT["Напишіть intent.md<br/>Проблема, власник і обмеження"]
+    INTENT --> IA{"Intent схвалив власник?"}
+    IA -->|Ні| INTENT
+    IA -->|Так| SPEC["Напишіть і уточніть spec.md"]
+    SPEC --> SA{"Людина схвалює spec?"}
+    SA -->|Ні| SPEC
+    SA -->|Так| TESTS["Згенеруйте тести поведінки"]
+    TESTS --> IMPL["Реалізація за spec і тестами"]
+    IMPL --> RUN["Запустіть перевірки"]
+    RUN --> PASS{"Перевірки проходять?"}
+    PASS -->|Ні| IMPL
+    PASS -->|Так| REVIEW{"Рев'ю людини: відповідає spec?"}
+    REVIEW -->|Ні| FIX["Перегляньте spec або реалізацію"]
+    FIX --> RUN
+    REVIEW -->|Так| MERGE["Merge після рев'ю"]
+    MERGE --> DEPLOY["Етап розгортання та перевірки в runtime"]
+    DEPLOY --> MON["Налаштований моніторинг<br/>Детермінований тригер"]
+    MON --> BREACH{"Поріг перевищено?"}
+    BREACH -->|Ні| MON
+    BREACH -->|Так| DRAFT["Claude складає чернетку intent.md"]
+    DRAFT --> TRIAGE{"Власник сервісу або черговий сортує"}
+    TRIAGE -->|Виправити або запланувати| INTENT
+    TRIAGE -->|Відхилити| MON
+    classDef default fill:#F5E6D3,color:#333,stroke:#E87E2F
+    click IDEA href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/spec-first.uk.md" "Переглянути цей патерн у посібнику"
+    click INTENT href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/spec-first.uk.md" "Переглянути цей патерн у посібнику"
+    click IA href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/spec-first.uk.md" "Переглянути цей патерн у посібнику"
+    click SPEC href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/spec-first.uk.md" "Переглянути цей патерн у посібнику"
+    click SA href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/spec-first.uk.md" "Переглянути цей патерн у посібнику"
+    click TESTS href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/spec-first.uk.md" "Переглянути цей патерн у посібнику"
+    click IMPL href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/spec-first.uk.md" "Переглянути цей патерн у посібнику"
+    click RUN href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/spec-first.uk.md" "Переглянути цей патерн у посібнику"
+    click PASS href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/spec-first.uk.md" "Переглянути цей патерн у посібнику"
+    click REVIEW href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/spec-first.uk.md" "Переглянути цей патерн у посібнику"
+    click FIX href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/spec-first.uk.md" "Переглянути цей патерн у посібнику"
+    click MERGE href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/spec-first.uk.md" "Переглянути цей патерн у посібнику"
+    click DEPLOY href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/spec-first.uk.md" "Переглянути цей патерн у посібнику"
+    click MON href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/spec-first.uk.md" "Переглянути цей патерн у посібнику"
+    click BREACH href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/spec-first.uk.md" "Переглянути цей патерн у посібнику"
+    click DRAFT href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/spec-first.uk.md" "Переглянути цей патерн у посібнику"
+    click TRIAGE href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/spec-first.uk.md" "Переглянути цей патерн у посібнику"
 ```
 
 <details>
 <summary>ASCII версія</summary>
 
 ```
-Складне завдання
-     │
-Plan Mode (Shift+Tab×2)
-     │
-Claude досліджує кодову базу
-     │
-Claude пропонує план
-     │
-Перевірка людиною ──No──► Коментарі + Claude переглядає ──► перегляд
-     │ Yes
-Схвалення + вихід з Plan Mode
-     │
-Claude виконує крок за кроком
-     │
-Неочікувано? ──Yes──► Позначити + запитати вказівки
-     │ No
-Готово? ──No──► продовжити
-     │ Yes
-Завершено ✓
+Вимога → intent, схвалений власником → spec, схвалена людиною
+            → тести → реалізація → перевірки
+                           ↑             │ збій
+                           └─────────────┘
+Перевірки проходять → людина порівнює spec/результат
+├─ Розбіжність → перегляд spec або коду, повторні перевірки
+└─ Збіг → рев'ю/merge → етап розгортання + перевірки в runtime
+                          → налаштований моніторинг
+                          ├─ Порогу не перевищено → продовжувати
+                          └─ Перевищено → Claude складає чернетку intent
+                                      → сортування власником/черговим
+                                      ├─ Виправити/запланувати → цикл intent
+                                      └─ Відхилити → моніторинг
 ```
 
 </details>
 
-> **Джерело**: [Робочий процес на основі плану](../workflows/plan-driven.uk.md)
+> **Джерело**: [Посібник: конвеєр розробки Spec-First](../workflows/spec-first.uk.md); [Anthropic AI-native SDLC playbook](https://claude.com/resources/articles/the-ai-native-sdlc-playbook)
+
+---
+
+### Робочий процес Plan-Driven із коментуванням
+
+Використовуйте Plan mode, щоб відокремити дослідження від змін у коді. Натискайте Shift+Tab, доки індикатор не покаже Plan, або запустіть із --permission-mode plan; кількість натискань залежить від початкового режиму. Перегляньте план, прокоментуйте його, а потім перевірте реалізацію щодо нього. Цей процес є дисципліною рев'ю, а не гарантією, що кожна дія відповідатиме плану.
+
+```mermaid
+flowchart TD
+    TASK["Завдання потребує дослідження"] --> PLAN["Увійдіть у Plan mode<br/>Shift+Tab до Plan<br/>або --permission-mode plan"]
+    PLAN --> EXPLORE["Дослідіть код і вимоги"]
+    EXPLORE --> DRAFT["Складіть план із файлами та перевірками"]
+    DRAFT --> HUMAN{"Людина приймає план?"}
+    HUMAN -->|Ні| ANNOTATE["Прокоментуйте прогалини<br/>Ctrl+G для редагування плану"]
+    ANNOTATE --> DRAFT
+    HUMAN -->|Так| EXEC["Схваліть і вийдіть із Plan mode<br/>Виконайте кроки"]
+    EXEC --> ISSUE{"Змінився обсяг або припущення?"}
+    ISSUE -->|Так| HUMAN
+    ISSUE -->|Ні| VERIFY["Запустіть відповідні перевірки<br/>і порівняйте зміну з планом"]
+    VERIFY --> DONE{"Докази відповідають критеріям?"}
+    DONE -->|Ні| EXEC
+    DONE -->|Так| END["Повідомте результат і межі доказів"]
+    classDef default fill:#F5E6D3,color:#333,stroke:#E87E2F
+    click TASK href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/plan-driven.uk.md" "Переглянути цей патерн у посібнику"
+    click PLAN href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/plan-driven.uk.md" "Переглянути цей патерн у посібнику"
+    click EXPLORE href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/plan-driven.uk.md" "Переглянути цей патерн у посібнику"
+    click DRAFT href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/plan-driven.uk.md" "Переглянути цей патерн у посібнику"
+    click HUMAN href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/plan-driven.uk.md" "Переглянути цей патерн у посібнику"
+    click ANNOTATE href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/plan-driven.uk.md" "Переглянути цей патерн у посібнику"
+    click EXEC href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/plan-driven.uk.md" "Переглянути цей патерн у посібнику"
+    click ISSUE href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/plan-driven.uk.md" "Переглянути цей патерн у посібнику"
+    click VERIFY href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/plan-driven.uk.md" "Переглянути цей патерн у посібнику"
+    click DONE href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/plan-driven.uk.md" "Переглянути цей патерн у посібнику"
+    click END href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/plan-driven.uk.md" "Переглянути цей патерн у посібнику"
+```
+
+<details>
+<summary>ASCII версія</summary>
+
+```
+Завдання → Plan mode (Shift+Tab до Plan, або --permission-mode plan)
+     → дослідження → пропозиція плану → рев'ю людини
+                                 ├─ Переглянути → прокоментувати, скласти знову
+                                 └─ Прийняти → схвалити й реалізувати
+                                             ├─ Обсяг змінився → рев'ю знову
+                                             └─ Запустити перевірки + порівняти з планом
+                                                 → повідомити докази й межі
+```
+
+</details>
+
+> **Джерело**: [Посібник: Plan-Driven із коментуванням](../workflows/plan-driven.uk.md); [Explore, plan, implement](https://code.claude.com/docs/en/best-practices)
 
 ---
 
 ### Цикл ітераційного вдосконалення
 
-Результат рідко буває ідеальним з першої спроби. Цей цикл надає вам систематичний спосіб покращити результати за допомогою точкового зворотного зв'язку замість нечітких інструкцій на кшталт "зроби краще".
+Давайте точковий зворотний зв'язок, порівнюйте редакції й зупиняйтеся, коли виконано явні критерії. Зовнішній вигляд і задоволення самі по собі не доводять фактичної правильності; запускайте перевірки, доречні для результату.
 
 ```mermaid
 flowchart TD
-    A([Початковий промпт]) --> B(Claude генерує результат)
-    B --> C(Оцінка якості результату)
-    C --> D{Достатньо<br/>добре?}
-    D -->|Yes| E([Готово ✓])
-    D -->|No| F(Визначення конкретної проблеми<br/>Що саме не так?)
-    F --> G{Тип проблеми?}
-    G -->|Стиль/тон| H(Додати: стильові обмеження)
-    G -->|Бракує інформації| I(Додати: надати відсутній контекст)
-    G -->|Неправильний підхід| J(Додати: перенаправити підхід)
-    G -->|Задовгий/короткий| K(Додати: обмеження довжини)
-    H --> L(Вдосконалення інструкції)
-    I --> L
-    J --> L
-    K --> L
-    L --> M(Claude вдосконалює результат)
-    M --> N(Порівняння до/після)
-    N --> O{Покращення<br/>виявлено?}
-    O -->|Yes| C
-    O -->|No| P(Потрібен інший<br/>підхід)
-    P --> F
-
-    style A fill:#F5E6D3,color:#333
-    style D fill:#E87E2F,color:#fff
-    style G fill:#E87E2F,color:#fff
-    style O fill:#E87E2F,color:#fff
-    style E fill:#7BC47F,color:#333
-    style L fill:#6DB3F2,color:#fff
-    style P fill:#E85D5D,color:#fff
-
-    click A href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/iterative-refinement.md" "Початковий промпт"
-    click B href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/iterative-refinement.md" "Claude generates output"
-    click C href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/iterative-refinement.md" "Evaluate output quality"
-    click D href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/iterative-refinement.md" "Good enough?"
-    click E href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/iterative-refinement.md" "Done ✓"
-    click F href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/iterative-refinement.md" "Identify specific issue"
-    click G href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/iterative-refinement.md" "Issue type?"
-    click H href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/iterative-refinement.md" "Add style constraints"
-    click I href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/iterative-refinement.md" "Provide missing context"
-    click J href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/iterative-refinement.md" "Redirect approach"
-    click K href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/iterative-refinement.md" "Add length constraint"
-    click L href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/iterative-refinement.md" "Refine instruction"
-    click M href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/iterative-refinement.md" "Claude refines output"
-    click N href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/iterative-refinement.md" "Compare before/after"
-    click O href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/iterative-refinement.md" "Improvement detected?"
-    click P href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/iterative-refinement.md" "Different approach needed"
+    PROMPT["Запит із критеріями"] --> OUTPUT["Claude створює результат"]
+    OUTPUT --> EVAL["Порівняйте з критеріями<br/>і запустіть відповідні перевірки"]
+    EVAL --> GOOD{"Критерії виконано?"}
+    GOOD -->|Так| DONE["Повідомте результат і протестований обсяг"]
+    GOOD -->|Ні| ISSUE["Визначте конкретну прогалину"]
+    ISSUE --> TYPE{"Що потрібно змінити?"}
+    TYPE -->|Стиль або довжина| STYLE["Задайте обмеження для результату"]
+    TYPE -->|Бракує контексту| CONTEXT["Надайте потрібну інформацію"]
+    TYPE -->|Хибний підхід| APPROACH["Перегляньте припущення та підхід"]
+    STYLE --> REVISE["Claude переглядає результат"]
+    CONTEXT --> REVISE
+    APPROACH --> REVISE
+    REVISE --> COMPARE["Порівняйте до і після"]
+    COMPARE --> BETTER{"Є докази покращення?"}
+    BETTER -->|Так| EVAL
+    BETTER -->|Ні| ISSUE
+    classDef default fill:#F5E6D3,color:#333,stroke:#E87E2F
+    click PROMPT href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/iterative-refinement.uk.md" "Переглянути цей патерн у посібнику"
+    click OUTPUT href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/iterative-refinement.uk.md" "Переглянути цей патерн у посібнику"
+    click EVAL href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/iterative-refinement.uk.md" "Переглянути цей патерн у посібнику"
+    click GOOD href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/iterative-refinement.uk.md" "Переглянути цей патерн у посібнику"
+    click DONE href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/iterative-refinement.uk.md" "Переглянути цей патерн у посібнику"
+    click ISSUE href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/iterative-refinement.uk.md" "Переглянути цей патерн у посібнику"
+    click TYPE href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/iterative-refinement.uk.md" "Переглянути цей патерн у посібнику"
+    click STYLE href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/iterative-refinement.uk.md" "Переглянути цей патерн у посібнику"
+    click CONTEXT href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/iterative-refinement.uk.md" "Переглянути цей патерн у посібнику"
+    click APPROACH href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/iterative-refinement.uk.md" "Переглянути цей патерн у посібнику"
+    click REVISE href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/iterative-refinement.uk.md" "Переглянути цей патерн у посібнику"
+    click COMPARE href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/iterative-refinement.uk.md" "Переглянути цей патерн у посібнику"
+    click BETTER href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/iterative-refinement.uk.md" "Переглянути цей патерн у посібнику"
 ```
 
 <details>
 <summary>ASCII версія</summary>
 
 ```
-Промпт → Результат → Оцінка → Добре? ──Yes──► Готово
-                                 │ No
-                       Визначити конкретну проблему
-                                 │
-                          ┌──────┴──────────────┐
-                         Стиль  Бракує  Неправ.  Довжина
-                          └──────┬──────────────┘
-                         Вдосконалити інструкцію
-                                 │
-                          Claude вдосконалює
-                                 │
-                         Краще? ──Yes──► Оцінити знову
-                                 │ No
-                          Інший підхід
+Запит + критерії → результат → оцінка та відповідні перевірки
+                              ├─ Критерії виконано → повідомити протестований обсяг
+                              └─ Прогалина → конкретний зворотний зв'язок
+                                        ├─ Обмеження стилю/довжини
+                                        ├─ Бракує контексту
+                                        └─ Інший підхід
+                                        → редакція → порівняння
+                                          ├─ Краще → оцінити знову
+                                          └─ Без покращення → повернутися до прогалини
 ```
 
 </details>
 
-> **Джерело**: [Ітераційне вдосконалення](../workflows/iterative-refinement.uk.md) — Рядок ~347
+> **Джерело**: [Посібник: цикл ітераційного вдосконалення](../workflows/iterative-refinement.uk.md); [Provide verification and context](https://code.claude.com/docs/en/best-practices)
 
 ---
 
-### AI Fluency — Шляхи високої проти низької адаптації (High vs Low Fluency)
+### AI Fluency: спостережувані поведінки співпраці
 
-Коли Claude генерує ідеально оформлений результат, спрацьовує когнітивне упередження: що більш завершеним здається результат, то менш критично оцінює його більшість користувачів. Це "Парадокс артефакту" (Artifact Paradox), задокументований Anthropic на основі 9 830 розмов. Ця схема демонструє, що відрізняє 30% високоадаптованих користувачів від 70% тих, хто бездумно приймає перші ж результати — та показує вимірювану різницю в якості результатів.
+Anthropic дослідила 9 830 розмов у Claude.ai. Ітерація траплялася у 85,7% вибірки. В ітеративних розмовах користувачі в 5,6 раза частіше ставили під сумнів міркування, а додаткових поведінок fluency було 2,67 проти 1,33. У розмовах з артефактами визначення відсутнього контексту, перевірка фактів і запитання щодо міркувань траплялися рідше на 5,2, 3,7 і 3,1 відсоткового пункту. Це асоціації між поведінками в розмовах, а не виміряні виявлені помилки й не доказ того, що відшліфований результат спричиняє упередження прийняття.
 
 ```mermaid
 flowchart TD
-    A([Користувач надсилає запит до Claude]) --> B(Claude генерує результат<br/>код · файл · конфігурація · план)
-    B --> C["⚠️ Парадокс артефакту (Artifact Paradox)<br/>Візуально ідеальний результат викликає<br/>когнітивне упередження прийняття"]
-
-    C -->|"70% користувачів"| D(Приймають перший результат<br/>без критичного перегляду)
-    C -->|"30% користувачів"| E(Ітерують + задають питання<br/>визначають межі співпраці)
-
-    D --> D1["Показники адаптації (Fluency) падають:<br/>−5.2 відс. п. виявлення прогалин<br/>−3.7 відс. п. перевірка фактів<br/>−3.1 відс. п. оскарження міркувань"]
-    D1 --> D2([Приховані дефекти · пропущені вимоги])
-
-    E --> E1("Оскаржують результат:<br/>'Що ти пропустив?<br/>Які припущення було зроблено?'")
-    E1 --> E2(Виявляють прогалини<br/>Вдосконалюють із повним контекстом)
-    E2 --> E3{Задоволені?}
-    E3 -->|No — iterate again| E1
-    E3 -->|Yes| E4([Перевірений, надійний результат ✓])
-
-    E4 --> G["Виміряний вплив:<br/>в 5.6 разів більше виявлених проблем<br/>2.67 проти 1.33 середніх дій<br/>Джерело: Anthropic AI Fluency Index, 2026"]
-
-    style A fill:#F5E6D3,color:#333
-    style B fill:#E87E2F,color:#fff
-    style C fill:#E85D5D,color:#fff
-    style D fill:#E85D5D,color:#fff
-    style D1 fill:#E85D5D,color:#fff
-    style D2 fill:#E85D5D,color:#fff
-    style E fill:#7BC47F,color:#333
-    style E1 fill:#6DB3F2,color:#fff
-    style E2 fill:#6DB3F2,color:#fff
-    style E3 fill:#E87E2F,color:#fff
-    style E4 fill:#7BC47F,color:#333
-    style G fill:#7BC47F,color:#333
-
-    click A href "https://www.anthropic.com/research/AI-fluency-index" "AI Fluency Index — Anthropic 2026"
-    click B href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#common-pitfalls--best-practices" "Claude generates output"
-    click C href "https://www.anthropic.com/research/AI-fluency-index" "Artifact Paradox — Anthropic AI Fluency Index"
-    click D href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#common-pitfalls--best-practices" "Accept without review"
-    click D1 href "https://www.anthropic.com/research/AI-fluency-index" "Fluency behaviors drop"
-    click D2 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#common-pitfalls--best-practices" "Silent defects"
-    click E href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#23-plan-mode" "Iterate and question"
-    click E1 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#rev-the-engine" "Challenge the output"
-    click E2 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/iterative-refinement.md" "Identify gaps and refine"
-    click E3 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/iterative-refinement.md" "Satisfied?"
-    click E4 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/iterative-refinement.md" "Verified output"
-    click G href "https://www.anthropic.com/research/AI-fluency-index" "Measured impact — AI Fluency Index"
+    SAMPLE["9 830 розмов у вибірці<br/>Спостережне дослідження"] --> ITER["Порівняння 1:<br/>Ітерація є чи немає"]
+    SAMPLE --> ART["Порівняння 2:<br/>З артефактом чи без"]
+    ITER --> PREV["85,7% демонструють ітерацію"]
+    ITER --> REASON["Міркування ставлять під сумнів<br/>у 5,6 раза частіше з ітерацією"]
+    ITER --> BEHAVIOR["Додаткові поведінки fluency<br/>у середньому 2,67 проти 1,33"]
+    ART --> DISCERN["Розмови з артефактами:<br/>визначення відсутнього контексту -5,2 в.п.<br/>перевірка фактів -3,7 в.п.<br/>запитання щодо міркувань -3,1 в.п."]
+    PREV --> LIMIT["Асоціації, а не причинність<br/>Множника виявлення дефектів не виміряно"]
+    REASON --> LIMIT
+    BEHAVIOR --> LIMIT
+    DISCERN --> LIMIT
+    LIMIT --> PRACTICE["Практична рекомендація:<br/>сумнівайтеся в припущеннях і перевіряйте<br/>незалежними доказами"]
+    classDef default fill:#F5E6D3,color:#333,stroke:#E87E2F
+    click SAMPLE href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.uk.md#911-типові-помилки-та-найкращі-практики" "Переглянути цей патерн у посібнику"
+    click ITER href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.uk.md#911-типові-помилки-та-найкращі-практики" "Переглянути цей патерн у посібнику"
+    click ART href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.uk.md#911-типові-помилки-та-найкращі-практики" "Переглянути цей патерн у посібнику"
+    click PREV href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.uk.md#911-типові-помилки-та-найкращі-практики" "Переглянути цей патерн у посібнику"
+    click REASON href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.uk.md#911-типові-помилки-та-найкращі-практики" "Переглянути цей патерн у посібнику"
+    click BEHAVIOR href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.uk.md#911-типові-помилки-та-найкращі-практики" "Переглянути цей патерн у посібнику"
+    click DISCERN href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.uk.md#911-типові-помилки-та-найкращі-практики" "Переглянути цей патерн у посібнику"
+    click LIMIT href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.uk.md#911-типові-помилки-та-найкращі-практики" "Переглянути цей патерн у посібнику"
+    click PRACTICE href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.uk.md#911-типові-помилки-та-найкращі-практики" "Переглянути цей патерн у посібнику"
 ```
 
 <details>
 <summary>ASCII версія</summary>
 
 ```
-Запит користувача → Результат Claude (код · файл · конфігурація · план)
-                        ↓
-              ⚠️ Парадокс артефакту (Artifact Paradox)
-          Ідеальний вигляд → когнітивне упередження
-                        ↓
-    ┌───────────────────┴──────────────────────┐
-70% користувачів                         30% користувачів
-Прийняття без перевірки              Ітерація + запитання
-        ↓                                     ↓
-Дії з перевірки (Fluency) падають:   Оскарження: "Що ти пропустив?
-−5.2 відс. п. виявлення прогалин             Які припущення зробив?"
-−3.7 відс. п. перевірка фактів                        ↓
-−3.1 відс. п. оскарження міркувань   Виявлення прогалин → вдосконалення
-        ↓                                     ↓
-Приховані дефекти                    Задоволені? ──No──► ітерація
-                                            ↓ Yes
-                                     Перевірений результат ✓
-                                            ↓
-                                     в 5.6 разів більше виявлених проблем
-                                     2.67 проти 1.33 середніх дій
+9 830 розмов у вибірці (спостережне дослідження)
+├─ Ітерація є чи немає
+│  ├─ 85,7% демонструють ітерацію
+│  ├─ Сумнів у міркуваннях: у 5,6 раза частіше з ітерацією
+│  └─ Додаткові поведінки fluency: у середньому 2,67 проти 1,33
+└─ Розмови з артефактом і без нього
+   ├─ Визначення відсутнього контексту: -5,2 відсоткового пункту
+   ├─ Перевірка фактів: -3,7 відсоткового пункту
+   └─ Запитання щодо міркувань: -3,1 відсоткового пункту
+
+Асоціація не доводить причинності чи виявлених дефектів.
+Рекомендація: сумнівайтеся в припущеннях, потім перевіряйте доказами.
 ```
 
 </details>
 
-> **Джерело**: [Anthropic AI Fluency Index](https://www.anthropic.com/research/AI-fluency-index) (Swanson et al., 2026-02-23) — [Розділ керівництва: Загальні помилки](../ultimate-guide.uk.md#common-pitfalls--best-practices)
+> **Джерело**: [Посібник: AI Fluency: спостережувані поведінки співпраці](../ultimate-guide.uk.md#911-типові-помилки-та-найкращі-практики); [Anthropic AI Fluency Index](https://academy.claude.com/tutorials/the-ai-fluency-index)
+
+---
+
+### Три місця, де пояснюється зміна агента
+
+Зміну агента може пояснити сам агент, огляд, згенерований постфактум із diff, або review-бот після push. Названі інструменти є прикладами, прочитаними для цього посібника, а не рекомендаціями, і жоден із них не повідомляє про виміряний вплив на якість рев'ю.
+
+```mermaid
+flowchart LR
+    subgraph W [Пише агент]
+        W1[Агент редагує код] --> W2[Агент записує своє обґрунтування<br/>під час редагування: glassbox<br/>у сесії або під час рев'ю: diffo, hunk]
+    end
+    subgraph L [Локальна поверхня рев'ю]
+        L1[Diff із нотатками] --> L2{Відгук рев'юера}
+    end
+    subgraph C [CI review-боти]
+        C1[Push або merge request] --> C2[Бот коментує diff]
+    end
+    A1[Огляд, згенерований постфактум<br/>ai-pr-review, guidedreview] --> L1
+    W2 --> L1
+    L2 -->|Запитання або запит на зміну| W1
+    L2 -->|Готово для forge| C1
+    C2 --> H([Рішення людини про merge])
+
+    classDef diagramNode fill:#F5E6D3,color:#333,stroke:#A64B00
+    class W1,W2,L1,L2,C1,C2,A1,H diagramNode
+    click W1 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/multi-provider-code-review.uk.md#локальні-поверхні-ревю-для-змін-написаних-агентом" "Переглянути в посібнику"
+    click W2 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/multi-provider-code-review.uk.md#локальні-поверхні-ревю-для-змін-написаних-агентом" "Переглянути в посібнику"
+    click L1 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/multi-provider-code-review.uk.md#локальні-поверхні-ревю-для-змін-написаних-агентом" "Переглянути в посібнику"
+    click L2 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/multi-provider-code-review.uk.md#локальні-поверхні-ревю-для-змін-написаних-агентом" "Переглянути в посібнику"
+    click C1 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/multi-provider-code-review.uk.md#локальні-поверхні-ревю-для-змін-написаних-агентом" "Переглянути в посібнику"
+    click C2 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/multi-provider-code-review.uk.md#локальні-поверхні-ревю-для-змін-написаних-агентом" "Переглянути в посібнику"
+    click A1 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/multi-provider-code-review.uk.md#локальні-поверхні-ревю-для-змін-написаних-агентом" "Переглянути в посібнику"
+    click H href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/workflows/multi-provider-code-review.uk.md#локальні-поверхні-ревю-для-змін-написаних-агентом" "Переглянути в посібнику"
+```
+
+<details>
+<summary>ASCII версія</summary>
+
+```text
+Пише агент               агент редагує код -> записує обґрунтування (під час редагування: glassbox; у сесії або під час рев'ю: diffo, hunk)
+                                                  |
+Постфактум               огляд із diff (ai-pr-review, guidedreview)
+                                                  |
+Локальна поверхня рев'ю  diff із нотатками -> відгук рев'юера
+                           запитання або запит на зміну -> назад до агента
+                           готово -> push або merge request
+                                                  |
+CI review-боти           бот коментує diff -> рішення людини про merge
+```
+
+</details>
+
+> **Джерело**: [Локальні поверхні рев'ю для змін, написаних агентом](../workflows/multi-provider-code-review.uk.md#локальні-поверхні-ревю-для-змін-написаних-агентом)
 
 ---
 **Локалізація**: [Serhii (MacPlus Software)](https://macplus-software.com)

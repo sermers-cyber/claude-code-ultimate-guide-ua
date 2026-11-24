@@ -1,6 +1,13 @@
-# Module 04: Agents & Specialization
+---
+title: "Module 04: Agents & Specialization"
+description: "Module 04 навчального шляху: створюйте спеціалізованих agents Claude Code за допомогою AGENT.md, обмежуйте їхні можливості та визначайте, коли використовувати agent, а коли просити Claude напряму. 1,5 години, середній рівень."
+---
+
+# Module 04: Agents & specialization
 
 **Час**: 1.5 години | **Складність**: ⭐⭐ Intermediate
+
+**Попередній:** [Module 03: Memory & Config](03-memory.uk.md)
 
 ## Мета
 
@@ -122,6 +129,8 @@ Run agents with: /agent [name]
 ---
 
 ## Шаблони проектування (Design Patterns) для Agents
+
+Наведені нижче шаблони є шаблонами agents для типових завдань. Про архітектурні патерни (Observer, Mediator, Circuit Breaker та інші, зіставлені з механізмами Claude Code) читайте в [AI Design Patterns](../core/ai-design-patterns.uk.md).
 
 ### Шаблон 1: Перевірка якості (Quality Checker)
 
@@ -463,6 +472,10 @@ Agent зробить наступне:
 - Створення власної бази знань (custom knowledge base)
 
 Це навчить вас пакувати знання та інструкції, щоб Claude пам'ятав їх у різних sessions.
+
+---
+
+**Завершили Module 04?** → Готові до [Module 05: Skills & Automation](05-skills.uk.md)
 
 ---
 **Локалізація**: [Serhii (MacPlus Software)](https://macplus-software.com)

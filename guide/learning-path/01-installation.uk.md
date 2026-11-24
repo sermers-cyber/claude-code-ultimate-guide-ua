@@ -1,4 +1,9 @@
-# Module 01: Installation & Setup
+---
+title: "Module 01: Installation & setup"
+description: "Module 01 навчального шляху: встановіть Claude Code, перевірте, що він запускається, і надішліть першу команду. 15 хвилин, для початківців."
+---
+
+# Module 01: Installation & setup
 
 **Час**: 15 хвилин | **Складність**: ⭐ Beginner
 
@@ -194,7 +199,7 @@ Claude прочитає структуру проєкту та відповіс�
 - 70%+: Запустіть `/compact`, щоб звільнити місце
 - 90%+: Вас змусять зробити очищення
 
-### Git Awareness
+### Git awareness
 
 Claude Code інтегрований з **git**. Він:
 - Визначає вашу поточну гілку
@@ -250,6 +255,10 @@ chmod +x /usr/local/bin/claude
 - **Офіційна документація**: https://code.claude.com/docs
 - **FAQ**: Дивіться `guide/ultimate-guide.md` Додаток B
 - **Приклади**: Директорія `examples/` у цьому посібнику
+
+---
+
+**Завершили Module 01?** → Готові до [Module 02: Core Loop](02-core-loop.uk.md)
 
 ---
 **Локалізація**: [Serhii (MacPlus Software)](https://macplus-software.com)

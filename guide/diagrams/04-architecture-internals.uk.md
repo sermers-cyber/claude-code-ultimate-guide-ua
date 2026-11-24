@@ -1,299 +1,338 @@
 ---
-title: "Claude Code — Візуальні діаграми архітектури та нутрощів"
-description: "Головний цикл (master loop), категорії інструментів, збірка системного промпту, ізоляція sub-agents"
+title: "Claude Code: Діаграми внутрішньої архітектури"
+description: "Агентний цикл, ілюстративні сімейства інструментів, контекст запиту, межі subagent і конвеєри моделей"
 tags: [architecture, internals, master-loop, tools]
 ---
 
-# Архітектурні нутрощі
+# Внутрішня архітектура
 
-Що відбувається "під капотом" під час роботи Claude Code.
+Концептуальні діаграми циклу «модель - інструменти», сімейств інструментів і меж контексту.
 
 ---
 
-### Головний цикл (The Master Loop)
+### Головний цикл (The master loop)
 
-Основне виконання Claude Code складається з двох вкладених циклів: **внутрішнього циклу агента (inner agent loop)**, який продовжує викликати API, доки повертаються виклики інструментів, та **зовнішнього циклу розмови (outer conversation loop)**, який починає новий раунд, коли користувач дає відповідь.
+Спрощений цикл «модель - інструменти»: Claude запитує інструменти, дозволені операції виконуються, а їхні результати повертаються в розмову. Ходи також можуть завершуватися через помилки, скасування або ліміти. Незалежні операції можуть виконуватися паралельно; фіксований ліміт паралельності не стверджується.
 
 ```mermaid
 flowchart TD
-    A([Введення користувача]) --> B(Побудова System Prompt<br/>+ контекст + інструменти)
-    B --> C
-
-    subgraph AGENT_LOOP["Agent Loop — повторюється, доки є виклики інструментів"]
-        C{{Виклик Claude API}} --> D{Відповідь<br/>містить виклики інструментів?}
-        D -->|Yes| E(Паралельне виконання інструментів<br/>Glob, Grep, Bash...)
-        E --> F(Додавання результатів інструментів<br/>до розмови)
-        F --> C
-    end
-
-    D -->|No| H(Вилучення текстової відповіді)
-    H --> I([Відображення користувачу])
-    I --> J{Користувач надсилає<br/>наступне повідомлення?}
-    J -->|Yes| B
-    J -->|No| K([Сесія завершується])
-
-    style A fill:#F5E6D3,color:#333
-    style C fill:#E87E2F,color:#fff
-    style D fill:#E87E2F,color:#fff
-    style E fill:#6DB3F2,color:#fff
-    style F fill:#6DB3F2,color:#fff
-    style I fill:#7BC47F,color:#333
-    style J fill:#E87E2F,color:#fff
-    style K fill:#B8B8B8,color:#333
-
-    click A href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#12-first-workflow" "Введення користувача"
-    click B href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/core/architecture.md#1-the-master-loop" "Побудова System Prompt"
-    click C href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/core/architecture.md#1-the-master-loop" "Виклик Claude API"
-    click D href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/core/architecture.md#1-the-master-loop" "Відповідь містить виклики інструментів?"
-    click E href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/core/architecture.md#2-the-tool-arsenal" "Паралельне виконання інструментів"
-    click F href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/core/architecture.md#1-the-master-loop" "Додавання результатів інструментів"
-    click H href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/core/architecture.md#1-the-master-loop" "Вилучення текстової відповіді"
-    click I href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#12-first-workflow" "Відображення користувачу"
-    click J href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/core/architecture.md#1-the-master-loop" "Користувач надсилає наступне повідомлення?"
-    click K href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/core/architecture.md#1-the-master-loop" "Сесія завершується"
+    A([Введення користувача]) --> B[Підготовка контексту запиту<br/>Інструкції, історія, доступні інструменти]
+    B --> C{{Запит до моделі}}
+    C --> D{Виклики інструментів?}
+    D -->|Так| PERM{Дозволено?}
+    PERM -->|Так| E[Виконання дозволених інструментів]
+    PERM -->|Ні| DENY[Повернення відмови в розмову]
+    E --> F[Додавання результатів інструментів]
+    DENY --> F
+    F --> C
+    D -->|Ні| I[Відображення відповіді]
+    I --> J{Наступна дія користувача?}
+    J -->|Нове повідомлення| B
+    J -->|Вихід| K([Сесія завершується])
+    E -.->|Помилка, скасування або ліміт| STOP[Обробка переривання або збою]
+    style A fill:#6DB3F2,color:#222
+    click A href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/core/architecture.uk.md#1-основний-цикл-the-master-loop" "Головний цикл"
+    style B fill:#6DB3F2,color:#222
+    click B href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/core/architecture.uk.md#1-основний-цикл-the-master-loop" "Головний цикл"
+    style C fill:#6DB3F2,color:#222
+    click C href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/core/architecture.uk.md#1-основний-цикл-the-master-loop" "Головний цикл"
+    style D fill:#6DB3F2,color:#222
+    click D href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/core/architecture.uk.md#1-основний-цикл-the-master-loop" "Головний цикл"
+    style PERM fill:#6DB3F2,color:#222
+    click PERM href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/core/architecture.uk.md#1-основний-цикл-the-master-loop" "Головний цикл"
+    style E fill:#6DB3F2,color:#222
+    click E href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/core/architecture.uk.md#1-основний-цикл-the-master-loop" "Головний цикл"
+    style DENY fill:#6DB3F2,color:#222
+    click DENY href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/core/architecture.uk.md#1-основний-цикл-the-master-loop" "Головний цикл"
+    style F fill:#6DB3F2,color:#222
+    click F href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/core/architecture.uk.md#1-основний-цикл-the-master-loop" "Головний цикл"
+    style I fill:#6DB3F2,color:#222
+    click I href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/core/architecture.uk.md#1-основний-цикл-the-master-loop" "Головний цикл"
+    style J fill:#6DB3F2,color:#222
+    click J href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/core/architecture.uk.md#1-основний-цикл-the-master-loop" "Головний цикл"
+    style K fill:#6DB3F2,color:#222
+    click K href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/core/architecture.uk.md#1-основний-цикл-the-master-loop" "Головний цикл"
+    style STOP fill:#6DB3F2,color:#222
+    click STOP href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/core/architecture.uk.md#1-основний-цикл-the-master-loop" "Головний цикл"
 ```
 
 <details>
 <summary>ASCII версія</summary>
 
 ```
-Введення користувача
-     │
-Побудова промпту (system + context + tools)
-     │
- ┌── Agent Loop ──────────────────────┐
- │ Claude API ◄────────────────────┐  │
- │      │                          │  │
- │ Виклики інструментів?           │  │
- │  ├─ Yes → Виконати інструменти ─┘  │
- │  └─ No  → вихід з циклу            │
- └────────────────────────────────────┘
-               │
-       Відображення відповіді
-               │
-       Користувач надсилає далі? ──► Yes → перебудувати промпт → цикл
-               └─ No → Сесія завершується
+Введення користувача -> контекст запиту -> модель
+                    ^             |
+                    |        виклики інструментів?
+                    |          Так -> дозволи -> виконати або відмовити -> додати результат
+                    +-------------------------------------------------------------+
+                               Ні -> показати відповідь -> наступне повідомлення або вихід
+Помилки, скасування та ліміти можуть перервати цикл.
+Незалежні операції можуть виконуватися паралельно.
 ```
 
 </details>
 
-> **Джерело**: [Архітектура: Головний цикл](../core/architecture.uk.md#master-loop) — Рядок ~72
+> **Джерело**: [Головний цикл](../core/architecture.uk.md#1-основний-цикл-the-master-loop)
 >
-> *Підтверджено джерелом (2026-03-31): Внутрішній цикл є асинхронним генератором `queryLoop()`. Інструменти виконуються через `StreamingToolExecutor` (до 10 паралельно). Цикл завершується з однієї з 10 кінцевих причин (`completed`, `max_turns`, `aborted_tools` тощо).*
+> **Офіційний довідник**: [Задокументований агентний цикл](https://code.claude.com/docs/en/how-claude-code-works#the-agentic-loop).
 
 ---
 
-### Категорії інструментів та вибір
+### Категорії інструментів і вибір
 
-Claude Code має 6 категорій інструментів, кожна з яких оптимізована для різних операцій. Розуміння того, який інструмент вибирає Claude (і чому), допомагає писати інструкції, що спрямовують до кращого вибору інструментів.
+Ці шість категорій, визначених автором, упорядковують приклади із задокументованого переліку інструментів. Доступність залежить від версії Claude Code, моделі, поверхні та конфігурації; це не повний перелік інструментів і не нативна таксономія з шести категорій.
 
 ```mermaid
 flowchart TD
-    ROOT["Інструменти Claude Code"] --> READ
-    ROOT --> WRITE
-    ROOT --> EXECUTE
-    ROOT --> WEB
-    ROOT --> WORKFLOW
-    ROOT --> CONTROL
-
-    subgraph READ["📖 Інструменти читання (Read Tools)"]
-        R1[Glob<br/>Пошук файлів за патерном]
-        R2[Grep<br/>Пошук у вмісті файлів]
-        R3[Read<br/>Читання вмісту файлу]
-        R4[LS<br/>Список директорії]
-    end
-
-    subgraph WRITE["✏️ Інструменти запису (Write Tools)"]
-        W1[Write<br/>Створення нового файлу]
-        W2[Edit<br/>Зміна існуючого файлу]
-        W3[MultiEdit<br/>Групові зміни]
-    end
-
-    subgraph EXECUTE["⚙️ Інструменти виконання (Execute Tools)"]
-        E1[Bash<br/>Команди оболонки]
-        E2[Task<br/>Запуск sub-agent]
-    end
-
-    subgraph WEB["🌐 Веб-інструменти (Web Tools)"]
-        WB1[WebSearch<br/>Пошук в Інтернеті]
-        WB2[WebFetch<br/>Отримання вмісту URL]
-    end
-
-    subgraph WORKFLOW["📋 Інструменти робочого процесу (Workflow Tools)"]
-        WF1[TodoWrite<br/>Керування списком завдань]
-        WF2[NotebookEdit<br/>Jupyter notebooks]
-    end
-
-    subgraph CONTROL["🎛️ Інструменти керування потоком (Control Flow Tools)"]
-        CF1[EnterPlanMode / ExitPlanMode<br/>Перемикання режиму планування]
-        CF2[EnterWorktree / ExitWorktree<br/>Навігація у worktree]
-        CF3[AskUserQuestion<br/>Запит введення від користувача]
-    end
-
-    style ROOT fill:#E87E2F,color:#fff
-    style R1 fill:#6DB3F2,color:#fff
-    style R2 fill:#6DB3F2,color:#fff
-    style R3 fill:#6DB3F2,color:#fff
-    style R4 fill:#6DB3F2,color:#fff
-    style W1 fill:#F5E6D3,color:#333
-    style W2 fill:#F5E6D3,color:#333
-    style W3 fill:#F5E6D3,color:#333
-    style E1 fill:#E85D5D,color:#fff
-    style E2 fill:#E87E2F,color:#fff
-    style WB1 fill:#7BC47F,color:#333
-    style WB2 fill:#7BC47F,color:#333
-    style WF1 fill:#B8B8B8,color:#333
-    style WF2 fill:#B8B8B8,color:#333
-    style CF1 fill:#B8B8B8,color:#333
-    style CF2 fill:#B8B8B8,color:#333
-    style CF3 fill:#B8B8B8,color:#333
-
-    click ROOT href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/core/architecture.md#2-the-tool-arsenal" "Інструменти Claude Code"
-    click R1 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/core/architecture.md#2-the-tool-arsenal" "Glob — Пошук файлів за патерном"
-    click R2 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/core/architecture.md#2-the-tool-arsenal" "Grep — Пошук у вмісті файлів"
-    click R3 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/core/architecture.md#2-the-tool-arsenal" "Read — Читання вмісту файлу"
-    click R4 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/core/architecture.md#2-the-tool-arsenal" "LS — Список директорії"
-    click W1 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/core/architecture.md#2-the-tool-arsenal" "Write — Створення нового файлу"
-    click W2 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/core/architecture.md#2-the-tool-arsenal" "Edit — Зміна існуючого файлу"
-    click W3 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/core/architecture.md#2-the-tool-arsenal" "MultiEdit — Групові зміни"
-    click E1 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/core/architecture.md#2-the-tool-arsenal" "Bash — Команди оболонки"
-    click E2 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#41-what-are-agents" "Task — Запуск sub-agent"
-    click WB1 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/core/architecture.md#2-the-tool-arsenal" "WebSearch"
-    click WB2 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/core/architecture.md#2-the-tool-arsenal" "WebFetch"
-    click WF1 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/core/architecture.md#2-the-tool-arsenal" "TodoWrite — Список завдань"
-    click WF2 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/core/architecture.md#2-the-tool-arsenal" "NotebookEdit — Jupyter"
-    click CONTROL href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/core/architecture.md#2-the-tool-arsenal" "Інструменти керування потоком"
-    click CF1 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/core/architecture.md#2-the-tool-arsenal" "EnterPlanMode / ExitPlanMode"
-    click CF2 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/core/architecture.md#2-the-tool-arsenal" "EnterWorktree / ExitWorktree"
-    click CF3 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/core/architecture.md#2-the-tool-arsenal" "AskUserQuestion"
+    ROOT[Ілюстративні сімейства інструментів] --> READ[Читання та пошук<br/>Glob, Grep, Read]
+    ROOT --> WRITE[Зміна файлів<br/>Write, Edit, NotebookEdit]
+    ROOT --> EXEC[Виконання та делегування<br/>Bash, Agent]
+    ROOT --> WEB[Доступ до вебу<br/>WebSearch, WebFetch]
+    ROOT --> TRACK[Відстеження завдань, коли доступно<br/>TaskCreate, TaskGet,<br/>TaskList, TaskUpdate]
+    ROOT --> CONTROL[Керування робочим процесом<br/>EnterPlanMode, ExitPlanMode,<br/>EnterWorktree, ExitWorktree,<br/>AskUserQuestion]
+    style ROOT fill:#6DB3F2,color:#222
+    click ROOT href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/core/architecture.uk.md#2-арсенал-інструментів" "Арсенал інструментів"
+    style READ fill:#6DB3F2,color:#222
+    click READ href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/core/architecture.uk.md#2-арсенал-інструментів" "Арсенал інструментів"
+    style WRITE fill:#6DB3F2,color:#222
+    click WRITE href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/core/architecture.uk.md#2-арсенал-інструментів" "Арсенал інструментів"
+    style EXEC fill:#6DB3F2,color:#222
+    click EXEC href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/core/architecture.uk.md#2-арсенал-інструментів" "Арсенал інструментів"
+    style WEB fill:#6DB3F2,color:#222
+    click WEB href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/core/architecture.uk.md#2-арсенал-інструментів" "Арсенал інструментів"
+    style TRACK fill:#6DB3F2,color:#222
+    click TRACK href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/core/architecture.uk.md#2-арсенал-інструментів" "Арсенал інструментів"
+    style CONTROL fill:#6DB3F2,color:#222
+    click CONTROL href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/core/architecture.uk.md#2-арсенал-інструментів" "Арсенал інструментів"
 ```
 
 <details>
 <summary>ASCII версія</summary>
 
 ```
-READ:     Glob (пошук), Grep (пошук у вмісті), Read (вміст), LS (список)
-WRITE:    Write (створити), Edit (змінити), MultiEdit (групове)
-EXECUTE:  Bash (оболонка), Task (sub-agent)  ← найпотужніші/найризикованіші
-WEB:      WebSearch, WebFetch
-WORKFLOW: TodoWrite, NotebookEdit
-CONTROL:  EnterPlanMode/ExitPlanMode, EnterWorktree/ExitWorktree, AskUserQuestion
+READ / SEARCH : Glob, Grep, Read
+MODIFY        : Write, Edit, NotebookEdit
+EXECUTE       : Bash, Agent
+WEB           : WebSearch, WebFetch
+TASK TRACKING : TaskCreate, TaskGet, TaskList, TaskUpdate, коли доступно
+CONTROL       : EnterPlanMode / ExitPlanMode, EnterWorktree / ExitWorktree,
+                AskUserQuestion
+
+Ілюстративні сімейства, а не повний чи універсально доступний перелік.
+Переглядайте директорії через команду оболонки; звіряйтеся з актуальним довідником інструментів.
 ```
 
 </details>
 
-> **Джерело**: [Архітектура: Інструменти](../core/architecture.uk.md#tools) — Рядок ~213
+> **Джерело**: [Арсенал інструментів](../core/architecture.uk.md#2-арсенал-інструментів)
 >
-> *Спрощено — доступні додаткові інструменти. Див. [Архітектура: Арсенал інструментів](../core/architecture.uk.md#tools) для повного списку.*
+> **Офіційний довідник**: [Актуальні інструменти та їх доступність](https://code.claude.com/docs/en/tools-reference).
+>
+> TodoWrite є альтернативним інструментом чекліста в підтримуваних конфігураціях, а не універсально активним типовим варіантом. Agent є актуальною назвою інструмента subagent; Task залишається псевдонімом у налаштуваннях і визначеннях.
 
 ---
 
 ### Збірка системного промпту
 
-Перед кожним викликом API Claude Code збирає системний промпт з кількох джерел у певному порядку. Промпт розділений на дві зони кешування маркером межі.
+Ця концептуальна діаграма запиту групує стабільні інструкції разом зі змінним контекстом розмови. Вона не визначає точного внутрішнього порядку збірки, меж кешу чи моменту повторного читання кожного входу. Файли інструкцій і пам'ять можуть потрапляти в контекст розмови; визначення MCP можуть завантажуватися на вимогу.
 
 ```mermaid
-sequenceDiagram
-    participant CC as Claude Code
-    participant G as Global CLAUDE.md
-    participant P as Project CLAUDE.md
-    participant T as Реєстр інструментів (Tool Registry)
-    participant A as Claude API
-
-    Note over CC: СТАТИЧНА зона (кешується глобально — спільна для всіх користувачів)
-    CC->>CC: 1. Завантаження базових інструкцій + правил безпеки
-    CC->>G: 2. Читання ~/.claude/CLAUDE.md
-    G->>CC: Глобальні уподобання, правила
-    CC->>P: 3. Читання проектного(их) CLAUDE.md
-    P->>CC: Конвенції проекту, контекст
-    CC->>T: 4. Отримання списку доступних інструментів
-    T->>CC: Схеми інструментів (Glob, Grep, Bash...)
-    Note over CC: ── МАРКЕР МЕЖІ (BOUNDARY MARKER) ──────────
-    Note over CC: ДИНАМІЧНА зона (кешується для кожної сесії окремо)
-    CC->>CC: 5. Додавання робочої директорії + git-інформації
-    CC->>CC: 6. Додавання можливостей MCP-серверів (не кешується — обчислюється щоразу)
-    CC->>CC: 7. Додавання пам'яті (MEMORY.md), керівництва з сесій, мови
-    CC->>A: System prompt (зібраний)<br/>+ повідомлення користувача
-    Note over A: Один великий виклик із<br/>впровадженим усім контекстом
+flowchart TD
+    S[Системні інструкції] --> REQ[Запит до моделі]
+    T[Визначення доступних інструментів<br/>Визначення MCP завантажуються за потреби] --> REQ
+    U[Інструкції користувача та проєкту<br/>Релевантні правила й auto memory] --> CTX[Контекст розмови]
+    W[Релевантний контекст середовища та файлів] --> CTX
+    H[Повідомлення користувача та результати інструментів] --> CTX
+    CTX --> REQ
+    REQ --> API[Claude API або налаштований провайдер]
+    NOTE[Повторне використання кешу залежить від стабільних префіксів<br/>і контракту провайдера] -.-> API
+    style S fill:#6DB3F2,color:#222
+    click S href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/core/architecture.uk.md#вміст-системного-промпту" "Вміст системного промпту"
+    style T fill:#6DB3F2,color:#222
+    click T href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/core/architecture.uk.md#вміст-системного-промпту" "Вміст системного промпту"
+    style U fill:#6DB3F2,color:#222
+    click U href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/core/architecture.uk.md#вміст-системного-промпту" "Вміст системного промпту"
+    style W fill:#6DB3F2,color:#222
+    click W href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/core/architecture.uk.md#вміст-системного-промпту" "Вміст системного промпту"
+    style H fill:#6DB3F2,color:#222
+    click H href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/core/architecture.uk.md#вміст-системного-промпту" "Вміст системного промпту"
+    style CTX fill:#6DB3F2,color:#222
+    click CTX href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/core/architecture.uk.md#вміст-системного-промпту" "Вміст системного промпту"
+    style REQ fill:#6DB3F2,color:#222
+    click REQ href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/core/architecture.uk.md#вміст-системного-промпту" "Вміст системного промпту"
+    style API fill:#6DB3F2,color:#222
+    click API href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/core/architecture.uk.md#вміст-системного-промпту" "Вміст системного промпту"
+    style NOTE fill:#6DB3F2,color:#222
+    click NOTE href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/core/architecture.uk.md#вміст-системного-промпту" "Вміст системного промпту"
 ```
 
 <details>
 <summary>ASCII версія</summary>
 
 ```
-СТАТИЧНА зона (кешується глобально):
-1. Базові інструкції (жорстко закодовані)
-2. ~/.claude/CLAUDE.md
-3. /project/CLAUDE.md + піддиректорії
-4. Список визначень інструментів
-────── МАРКЕР МЕЖІ (BOUNDARY MARKER) ──────────
-ДИНАМІЧНА зона (кеш на сесію):
-5. Робоча директорія + git status
-6. Можливості MCP-серверів (завжди обчислюються наново)
-7. Пам'ять, керівництво з сесій, мова
-──────────────────────────────────────────────
-→ Усе об'єднано → Виклик Claude API
+Системні інструкції ----------------------+
+Доступні / завантажені визначення інструментів -+--> Запит до моделі -> налаштований провайдер
+Контекст розмови --------------------------+
+  - релевантні файли інструкцій, правила та доступна пам'ять
+  - інформація про середовище та файли
+  - повідомлення та результати інструментів
+
+Концептуальне групування; не буквальний порядок промпту і не розкладка кешу.
+Ізоляція та повторне використання кешу визначаються контрактом провайдера.
 ```
 
 </details>
 
-> **Джерело**: [Архітектура: Системний промпт](../core/architecture.uk.md#system-prompt) — Рядок ~354
+> **Джерело**: [Вміст системного промпту](../core/architecture.uk.md#вміст-системного-промпту)
 >
-> *Підтверджено джерелом (2026-03-31): Двозонна архітектура за допомогою маркера `SYSTEM_PROMPT_DYNAMIC_BOUNDARY`. Статична зона має `cacheScope: 'global'` (спільна для всіх користувачів). Інструкції MCP явно не кешуються — коментар у коді: "servers connect/disconnect between turns".*
+> **Офіційний довідник**: [Завантаження контексту](https://code.claude.com/docs/en/how-claude-code-works#context-claude-code-adds-on-its-own) та [ізоляція кешу](https://platform.claude.com/docs/en/build-with-claude/prompt-caching#cache-storage-and-sharing).
+>
+> Кеші публічного Anthropic API не спільні між організаціями. Ізоляція за робочими просторами також діє в провайдерів, названих у документації з кешування. Повторне використання приватного вмісту CLAUDE.md між користувачами чи організаціями не стверджується.
 
 ---
 
-### Ізоляція контексту sub-agents
+### Ізоляція контексту sub-agent
 
-Sub-agents повністю ізольовані від батьківського агента — вони не можуть читати розмову батьківського агента чи змінювати його стан. Ця ізоляція є водночас захистом (безпека) та обмеженням (навмисний дизайн).
+Ізоляція розмови й ізоляція файлової системи це різні межі. Звичайний subagent має свіжий контекст; fork успадковує розмову батьківського агента. Обидва повертають фінальний результат, тоді як дозволені операції можуть впливати на спільні файли чи зовнішні сервіси.
 
 ```mermaid
-sequenceDiagram
-    participant P as Батьківський Claude
-    participant T as Інструмент Task
-    participant S as Sub-Agent
-    participant EXT as Зовнішні сервіси (External Services)
-
-    Note over P: Має повну історію розмов
-    P->>T: Task(prompt="do X", tools=[Read,Write,Bash])
-    Note over T: Створює новий інстанс Claude
-    T->>S: spawn(лише промпт + права на інструменти)
-    Note over S: НЕ отримує:<br/>- Батьківську розмову<br/>- Результати батьківських інструментів<br/>- Батьківський стан
-
-    S->>EXT: читання файлів, bash, web (якщо дозволено)
-    EXT->>S: Результати
-
-    Note over S: Незалежне міркування<br/>з обмеженим контекстом
-
-    S->>T: return "task complete: details..."
-    Note over T: Назад передається тільки текст
-    T->>P: Рядок результату (Result string)
-    Note over P: Батьківський агент отримує тільки текст<br/>Спільного стану немає
+flowchart TD
+    P[Батьківська розмова] --> A{Тип делегування Agent}
+    A -->|Звичайний subagent| F[Свіжий контекст<br/>Промпт завдання та визначення агента]
+    A -->|Fork| INHERIT[Успадкована розмова<br/>Промпт, інструменти та історія батьківського агента]
+    F --> S[Операції інструментів subagent]
+    INHERIT --> S
+    S --> SHARE[Спільний checkout або зовнішні сервіси<br/>Наслідки залишаються видимими]
+    S --> WT[Необов'язкова ізоляція: worktree<br/>Окремий checkout репозиторію]
+    SHARE --> RESULT[Фінальний результат потрапляє в батьківський контекст]
+    WT --> RESULT
+    RESULT --> P
+    style P fill:#6DB3F2,color:#222
+    click P href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/core/architecture.uk.md#4-архітектура-під-агентів" "Архітектура під-агентів"
+    style A fill:#6DB3F2,color:#222
+    click A href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/core/architecture.uk.md#4-архітектура-під-агентів" "Архітектура під-агентів"
+    style F fill:#6DB3F2,color:#222
+    click F href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/core/architecture.uk.md#4-архітектура-під-агентів" "Архітектура під-агентів"
+    style INHERIT fill:#6DB3F2,color:#222
+    click INHERIT href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/core/architecture.uk.md#4-архітектура-під-агентів" "Архітектура під-агентів"
+    style S fill:#6DB3F2,color:#222
+    click S href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/core/architecture.uk.md#4-архітектура-під-агентів" "Архітектура під-агентів"
+    style SHARE fill:#6DB3F2,color:#222
+    click SHARE href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/core/architecture.uk.md#4-архітектура-під-агентів" "Архітектура під-агентів"
+    style WT fill:#6DB3F2,color:#222
+    click WT href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/core/architecture.uk.md#4-архітектура-під-агентів" "Архітектура під-агентів"
+    style RESULT fill:#6DB3F2,color:#222
+    click RESULT href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/core/architecture.uk.md#4-архітектура-під-агентів" "Архітектура під-агентів"
 ```
 
 <details>
 <summary>ASCII версія</summary>
 
 ```
-Батьківський (повний контекст)
-    │
-    Task(prompt, tools=[...])
-    │
-    ▼
-Sub-Agent (ІЗОЛЬОВАНИЙ)
-  Введення: тільки промпт + дозволи на інструменти
-  Може: використовувати надані інструменти незалежно
-  Не може: бачити батьківську розмову, змінювати батьківський стан
-  Вихід: ТІЛЬКИ текстовий результат
-    │
-    ▼
-Батьківський отримує: текстовий рядок
+Батьківський -> Agent
+  звичайний -> свіжий контекст із делегованим завданням і визначенням
+  fork      -> успадкована розмова та конфігурація батьківського агента
+       |
+       +-> спільні файли й зовнішні сервіси: дозволені наслідки зберігаються
+       +-> необов'язковий worktree: окремий checkout для змін у репозиторії
+       |
+       +-> фінальний результат потрапляє в батьківський контекст
+
+Проміжні виклики інструментів не потрапляють у батьківський контекст.
+Worktree не ізолює зовнішні сервіси.
 ```
 
 </details>
 
-> **Джерело**: [Архітектура: Sub-Agents](../core/architecture.uk.md#sub-agents) — Рядок ~444
+> **Джерело**: [Архітектура під-агентів](../core/architecture.uk.md#4-архітектура-під-агентів)
+>
+> **Офіційний довідник**: [Контекст fork і необов'язкова ізоляція worktree](https://code.claude.com/docs/en/sub-agents#how-forks-differ-from-other-subagents).
+
+---
+
+### Три конвеєри моделей: dense, MoE та VLM
+
+Це концептуальне спрощення. Dense проти mixture-of-experts (MoE) описує, як побудовано шари, а текстова модель проти vision-language (VLM) описує, які входи приймає модель. Це різні осі, що можуть поєднуватися: модель MoE також може приймати зображення. Anthropic публічно не документує внутрішню архітектуру Claude, тому діаграми показують опубліковані відкриті архітектури, а не Claude. Таблицю осей дивіться в розділі [архітектура, клас розміру, модальність і завдання](../core/ai-concept-boundaries.uk.md#архітектура-клас-розміру-модальність-і-завдання).
+
+```mermaid
+flowchart LR
+    subgraph DENSE["Dense-декодерна LLM"]
+        D1["Текст"] --> D2["Токенізатор"]
+        D2 --> D3["Ембединги токенів"]
+        D3 --> D4["Стек шарів transformer<br/>attention + feed-forward"]
+        D4 --> D5["Ймовірності наступного токена"]
+        D5 --> D6["Вибраний токен"]
+        D6 -.->|"додається до входу, повтор"| D3
+    end
+    subgraph MOE["Варіант шару MoE"]
+        M1["Стани токенів<br/>після attention"] --> M2["Router<br/>оцінює N експертів для кожного токена"]
+        M2 -->|"top-k, Mixtral: 2 з 8"| M3["Вибрані експерти<br/>замінюють блок feed-forward"]
+        M2 -.->|"не вибрані"| M4["Неактивні експерти"]
+        M3 --> M5["Зважена сума<br/>за вагами router"]
+        M5 --> M6["Вихід шару"]
+        M7["Примітка: зберігаються всі експерти,<br/>обчислюють лише k"] -.- M3
+    end
+    subgraph VLM["Vision-language модель"]
+        V1["Зображення"] --> V2["Візуальний енкодер"]
+        V2 --> V3["Проєкція в простір<br/>ембедингів LLM"]
+        V4["Текстові токени<br/>після ембедингу"] --> V5["Об'єднана послідовність"]
+        V3 --> V5
+        V5 --> V6["Мовна модель<br/>dense або MoE"]
+        V6 --> V7["Текстовий вихід"]
+    end
+    style D1 fill:#6DB3F2,color:#222
+    style D2 fill:#6DB3F2,color:#222
+    style D3 fill:#6DB3F2,color:#222
+    style D4 fill:#6DB3F2,color:#222
+    style D5 fill:#6DB3F2,color:#222
+    style D6 fill:#6DB3F2,color:#222
+    style M1 fill:#6DB3F2,color:#222
+    style M2 fill:#6DB3F2,color:#222
+    style M3 fill:#6DB3F2,color:#222
+    style M4 fill:#6DB3F2,color:#222
+    style M5 fill:#6DB3F2,color:#222
+    style M6 fill:#6DB3F2,color:#222
+    style M7 fill:#6DB3F2,color:#222
+    style V1 fill:#6DB3F2,color:#222
+    style V2 fill:#6DB3F2,color:#222
+    style V3 fill:#6DB3F2,color:#222
+    style V4 fill:#6DB3F2,color:#222
+    style V5 fill:#6DB3F2,color:#222
+    style V6 fill:#6DB3F2,color:#222
+    style V7 fill:#6DB3F2,color:#222
+```
+
+<details>
+<summary>ASCII версія</summary>
+
+```
+Dense : текст -> токенізатор -> ембединги токенів
+        -> стек шарів transformer (attention + feed-forward)
+        -> ймовірності наступного токена -> вибраний токен
+        -> додається до входу, повтор
+
+Варіант шару MoE:
+        стани токенів після attention -> router (оцінює N експертів для кожного токена)
+        -> top-k, Mixtral: 2 з 8 -> вибрані експерти
+           (замінюють блок feed-forward) -> зважена сума за вагами
+           router -> вихід шару
+        не вибрані -> неактивні експерти
+        Примітка: зберігаються всі експерти, обчислюють лише k.
+
+VLM   : зображення -> візуальний енкодер -> проєкція в простір ембедингів LLM
+        текстові токени після ембедингу ----------------+
+        спроєктоване зображення + текст після ембедингу -> об'єднана послідовність
+        -> мовна модель (dense або MoE) -> текстовий вихід
+```
+
+</details>
+
+> **Джерело**: [Архітектура, клас розміру, модальність і завдання](../core/ai-concept-boundaries.uk.md#архітектура-клас-розміру-модальність-і-завдання)
+
+> Експерти це не окремі повноцінні моделі: вони розташовані всередині кожного шару, замість блоку feed-forward.
+>
+> Джерела: [технічний звіт Phi-3](https://ar5iv.labs.arxiv.org/html/2404.14219) (архітектура transformer-декодера), [глосарій Anthropic](https://platform.claude.com/docs/en/about-claude/glossary) (авторегресивна мовна модель), [Attention Is All You Need](https://ar5iv.labs.arxiv.org/html/1706.03762) (оригінальний transformer, енкодер-декодер), [Mixtral of Experts](https://arxiv.org/html/2401.04088), [Switch Transformers](https://ar5iv.labs.arxiv.org/html/2101.03961), [LLaVA](https://ar5iv.labs.arxiv.org/html/2304.08485), [документація Claude щодо зору](https://platform.claude.com/docs/en/build-with-claude/vision) (зображення споживають токени).
 
 ---
 **Локалізація**: [Serhii (MacPlus Software)](https://macplus-software.com)
-*Остання синхронізація: Травень 2026*
+*Остання синхронізація: Листопад 2026 (v3.46.0)*

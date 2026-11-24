@@ -1,492 +1,428 @@
-# Module 05: Skills & Automation
+---
+title: "Module 05: Skills & Automation"
+description: "Модуль 05 навчального шляху: створення skills для Claude Code з обмеженою областю дії через SKILL.md, progressive disclosure, керування викликом, оцінювання та критерії виведення з обігу. 1.5 години, рівень intermediate."
+---
+
+# Module 05: Skills & automation
 
 **Час**: 1.5 години | **Складність**: ⭐⭐ Intermediate
 
+**Попередній:** [Module 04: Agents & Specialization](04-agents.uk.md)
+
 ## Мета
 
-Створювати багаторазові skills, які надають Claude специфічні для вашого домену знання. Пакувати готові рішення для повторюваних завдань.
+Створити skill проєкту, який надає Claude релевантні знання або повторно використовувану процедуру без завантаження всього свого вмісту в кожну session.
 
 ---
 
 ## Що ви дізнаєтеся
 
-- Що таке skills та чому вони ефективні
-- Створення skills за допомогою файлів SKILL.md
-- Блок frontmatter та метадані для skills
-- Автоматичний виклик skills (auto-invocation)
-- Побудова власної бази знань (knowledge base)
-- Додавання skills до ваших проєктів
+- Що skills завантажують і коли
+- Як створити коректний `SKILL.md`
+- Як `description` керує виявленням skill моделлю
+- Як керувати викликом із боку користувача та моделі
+- Як вибрати область власності (ownership scope)
+- Як відокремити judgment від гарантованої оркестрації
+- Як оцінювати, підтримувати та виводити skill з обігу
 
 ---
 
-## Що таке Skills?
+## Що таке skills?
 
-**Skill** — це багаторазовий модуль знань (knowledge module). Він навчає Claude тому, як саме робити конкретні речі у вашому проєкті.
+**Skill** — це каталог із файлом `SKILL.md` та необов'язковими допоміжними файлами. Його опис (description) оголошується Claude. Повні інструкції завантажуються лише тоді, коли ви або Claude викликаєте skill.
+
+Через це skills корисні для повторюваних процедур, чеклістів і довідкових матеріалів, які були б надто дорогими або відволікаючими в завжди завантаженому `CLAUDE.md`.
 
 ### Приклад: Skill для тестування
 
-Замість того, щоб кожної session пояснювати ваш підхід до тестування, ви створюєте окремий skill:
+Замість того щоб пояснювати підхід до тестування в кожній session, створіть skill проєкту, чий опис вказує, коли він застосовується:
 
 ```markdown
-# Testing Best Practices for Our Project
+---
+name: testing-standards
+description: Apply this project's Jest and Testing Library conventions when creating, reviewing, or debugging tests.
+---
 
-## Framework: Jest
+# Testing Standards
 
-## Style
-- Descriptive names: "should validate email with + symbols"
-- Arrange-Act-Assert pattern
-- Mock external dependencies
-- Test behavior, not implementation
-
-## Coverage Target
-Minimum 80%
+- Use descriptive test names.
+- Follow Arrange, Act, Assert.
+- Mock external boundaries, not implementation details.
+- Run the relevant test file before the full suite.
 ```
 
-Тепер щоразу, коли Claude допомагатиме вам писати або перевіряти тести, він прочитає цей skill та діятиме відповідно до ваших вимог.
+Claude бачить назву й опис під час session. Він завантажує тіло, коли поточний запит відповідає опису або коли ви вводите `/testing-standards`.
 
-### Skills проти Agents
+### Skills проти CLAUDE.md, agents і воркфлоу
 
-| Аспект | Skill | Agent |
-|--------|-------|-------|
-| **Мета** | Надання знань | Виконання завдань |
-| **Scope** | Доменні знання | Спеціалізований workflow |
-| **Збереження**| Запам'ятовується кожної session| Викликається явно |
-| **Автовиклик**| Так (опціонально) | Лише вручну |
-| **Приклад** | "Як ми тестуємо код" | "test-writer agent" |
+| Механізм | Найкраще підходить для | Завантаження або виконання |
+|-----------|----------|----------------------|
+| `CLAUDE.md` | Короткі факти й правила, релевантні для більшості sessions | Завантажується на початку session |
+| Skill | Повторно використовувані знання, judgment або адаптивна процедура | Опис оголошується; тіло завантажується під час виклику |
+| Agent | Ізольований контекст, спеціалізовані інструменти або паралельна робота | Працює в окремому контексті |
+| Hook або скриптований воркфлоу | Передумови, порядок, повтори, правила зупинки та перевірки, які мають бути примусовими | Виконується кодом або harness |
+
+Нумеровані кроки самі по собі не є причиною залишати формат skill. Переносьте операцію в hook, скрипт або воркфлоу, коли коректність залежить від гарантованого порядку, обов'язкового артефакту, політики повторів або жорсткої зупинки. Залишайте judgment у skill, наприклад оцінку неоднозначності чи вибір між прийнятними компромісами.
 
 ---
 
-## Створення вашого першого Skill
+## Спершу оберіть область власності
 
-Skills описуються як markdown файли в директорії `.claude/skills/`.
+Спільне використання skill не вимагає спільної підтримки однієї універсальної копії. Стаття Фредеріка Камблора [Un Skill n'est pas une librairie](https://devx.writizzy.blog/p/un-skill-nest-pas-une-lib) дає корисне застереження: присвоєння, локальний контекст і тихий дрейф поведінки можуть коштувати дорожче, ніж копіювання файлу та його спеціалізація.
+
+Використовуйте одну з чотирьох областей:
+
+| Область | Розташування або канал | Контракт підтримки |
+|-------|---------------------|----------------------|
+| Особиста | `~/.claude/skills/` | Оптимізовано під звички однієї людини; жодних обіцянок сумісності |
+| Проєкт або команда | `.claude/skills/` у Git | Спільні конвенції з названим власником і шляхом рев'ю |
+| Інструмент або вендор | Plugin або підтримуваний репозиторій | Версіонована підтримка користувачів інструмента |
+| Маркетплейс або глобальна | Реєстр або публічний репозиторій | За замовчуванням джерело для виявлення; приймайте лише після рев'ю та локального оцінювання |
+
+З погляду безпеки ставтеся до будь-якого завантаженого skill як до виконуваної залежності, бо він може містити дозволи інструментів, скрипти та інструкції. З погляду власності ставтеся до нього як до контекстно-залежного матеріалу: записуйте його область, власника, припущення та сигнал виведення з обігу. Ці правила доповнюють одне одного.
+
+---
+
+## Створення вашого першого skill
+
+Skills розміщуються в каталогах `.claude/skills/{skill-name}/`. Обов'язковий файл — `SKILL.md`.
+
+### Розташування файлу
+
+```text
+my-project/
+└── .claude/
+    └── skills/
+        └── testing-standards/
+            └── SKILL.md
+```
 
 ### Базова структура
 
 ```markdown
 ---
 name: testing-standards
-description: Our project's testing practices and conventions
-triggers: [test, testing, jest, spec]
-auto_invoke: false
-keywords: [jest, unit-test, integration-test, mocking]
-version: 1.0.0
+description: Apply this project's Jest and Testing Library conventions when creating, reviewing, or debugging tests.
+metadata:
+  version: 1.0.0
 ---
 
 # Testing Standards
 
-## Framework
-Jest with @testing-library/react
+## When to apply
 
-## File Organization
-- Tests live next to source code
-- Naming: `[Component].test.tsx`
-- Fixtures in `__fixtures__/`
-- Mocks in `__mocks__/`
+Use for unit tests, component tests, mocks, fixtures, or coverage changes.
+Do not use for end-to-end tests maintained by the QA repository.
 
-## Test Structure (AAA)
-1. **Arrange**: Set up test data
-2. **Act**: Call the function/component
-3. **Assert**: Check results
+## Test structure
 
-## Example
+1. Arrange the smallest realistic input.
+2. Act through the public interface.
+3. Assert behavior and user-visible effects.
 
-```typescript
-describe('validateEmail', () => {
-  it('should accept valid email addresses', () => {
-    // Arrange
-    const email = 'user@example.com';
-    
-    // Act
-    const result = validateEmail(email);
-    
-    // Assert
-    expect(result).toBe(true);
-  });
-});
+## Verification
+
+Run the changed test file, then the relevant package suite.
 ```
 
-## Coverage Requirements
-- Target: 80% minimum
-- Critical paths: 100%
-- Types of coverage: line, branch, function
+`name` і `description` є основними полями для виявлення. Власні метадані, як-от версія, належать до `metadata`. Поля `triggers`, `auto_invoke` і `keywords` не є frontmatter skills Claude Code.
 
-## Mocking Strategy
-- External APIs: use jest.mock()
-- Database: use test fixtures
-- Timers: use jest.useFakeTimers()
+---
 
-## Running Tests
-```bash
-npm test                 # Run all tests
-npm test -- --coverage   # With coverage report
-npm test -- --watch      # Watch mode
-```
-```
+## Виявлення та виклик skill
 
-### Розташування файлу
+### Пишіть опис як правило маршрутизації
 
-```
-my-project/
-└── .claude/
-    └── skills/
-        └── testing-standards.md
+Claude використовує `description`, щоб вирішити, чи релевантний skill. Включайте:
+
+- Що робить skill
+- Ситуації, у яких його слід використовувати
+- Важливі антитригери, коли суміжні завдання належать іншому місцю
+
+```yaml
+description: Review PostgreSQL schema and query changes for indexes, locking, and migration safety. Use for SQL migrations and slow-query investigations; do not use for application-level API design.
 ```
 
----
+### Керуйте тим, хто може його викликати
 
-## Можливості та атрибути Skills
+За замовчуванням і ви, і Claude можете викликати skill.
 
-### Triggers (Тригери)
-
-Автоматично активують skill, коли Claude бачить певні ключові слова у вашому запиті:
-
-```markdown
----
-triggers: [test, jest, spec, coverage, mock]
----
+```yaml
+# Manual only. Appropriate for deploy, commit, or message-sending workflows.
+disable-model-invocation: true
 ```
 
-Якщо Claude зустрічає фразу "add tests to this function", він автоматично зчитує ваш testing-standards skill.
-
-### Auto-Invoke (Автовиклик)
-
-```markdown
----
-auto_invoke: true
----
+```yaml
+# Model only. Appropriate for background knowledge with no useful slash command.
+user-invocable: false
 ```
 
-Якщо встановлено значення `true`, Claude завантажує цей skill на самому початку session (навіть якщо ви його не викликали). Використовуйте це для найважливіших правил проєкту.
+Режиму `auto_invoke: true` на початку session не існує. У звичайній session Claude отримує описи доступних skills і завантажує тіло skill лише під час виклику. Викликане тіло залишається в розмові; дозволи інструментів із `allowed-tools` діють лише протягом ходу, що викликав skill.
 
-### Keywords (Ключові слова)
+### Тримайте дозволи інструментів вузькими
 
-Допомагають пошуковій системі Claude знаходити потрібний skill:
+`allowed-tools` попередньо схвалює відповідні інструменти на хід, що викликає skill. Воно не прибирає інші інструменти з набору Claude.
 
-```markdown
----
-keywords: [testing, jest, unit-test, mocking, assertions]
----
+```yaml
+allowed-tools: Read Grep Glob Bash(npm test *)
 ```
 
-### Version (Версія)
+Перегляньте це поле, перш ніж використовувати сторонній skill. Широкий дозвіл на Bash може суттєво змінити його ризик.
 
-Допомагає відстежувати зміни у skills:
+---
 
-```markdown
----
-version: 1.0.0
----
+## Progressive disclosure
+
+Тримайте `SKILL.md` сфокусованим і виносьте детальні матеріали в допоміжні файли:
+
+```text
+testing-standards/
+├── SKILL.md
+├── references/
+│   ├── mocking.md
+│   └── integration-tests.md
+└── scripts/
+    └── select-tests.sh
 ```
 
-Оновлюйте версію при суттєвих змінах у правилах чи підходах.
+Посилайтеся на кожен допоміжний файл із `SKILL.md` і вказуйте, коли його відкривати чи виконувати. Офіційні рекомендації радять тримати `SKILL.md` до 500 рядків.
 
 ---
 
-## Популярні шаблони (Patterns) для Skills
+## Поширені шаблони skills
 
-### Шаблон 1: Стандарти кодування (Coding Standards)
+### Шаблон 1: Конвенції проєкту
+
+Використовуйте skill проєкту, коли порада залежить від архітектури репозиторію, рішень команди або локальних інструментів.
 
 ```markdown
 ---
 name: python-standards
-triggers: [python, flask, django]
+description: Apply this repository's Python typing, import, packaging, and pytest conventions when editing Python code.
 ---
 
-# Python Coding Standards
+# Python Standards
 
-## Style
-- PEP 8 compliance (max 100 chars)
-- Type hints on all functions
-- Docstrings in Google format
-
-## Testing
-- pytest for unit tests
-- 80% minimum coverage
-- Mock external dependencies
-
-## File Organization
-src/
-├── models/
-├── services/
-├── controllers/
-└── tests/
-
-## Imports
-```python
-# ✅ Good: specific imports
-from models import User
-from services.auth import authenticate
-
-# ❌ Bad: wildcard imports
-from models import *
-```
+- Use type hints on public functions.
+- Keep tests next to their package under `tests/`.
+- Follow the repository's configured formatter and linter.
+- Verify with the narrowest relevant pytest target first.
 ```
 
-### Шаблон 2: Доменні знання (Domain Knowledge)
+### Шаблон 2: Доменні знання
 
 ```markdown
 ---
 name: payment-processing
-description: Payment system rules and edge cases
-auto_invoke: true
+description: Apply this product's payment state machine, idempotency, and audit rules when changing checkout or refund flows.
+user-invocable: false
 ---
 
 # Payment Processing Rules
 
-## PCI Compliance
-- Never log card numbers
-- Use tokenization (Stripe)
-- Encrypt sensitive data
-- Audit all transactions
-
-## Common Issues
-1. Partial charges: Retry with exponential backoff
-2. Currency conversion: Always round to 2 decimals
-3. Timezone handling: Store all times in UTC
-
-## Edge Cases
-- Declined cards: Provide clear error message
-- Expired cards: Suggest updating payment method
-- 3D Secure: Handle verification flow
+- Never log card data or payment secrets.
+- Reuse the existing idempotency key at retry boundaries.
+- Treat provider callbacks as untrusted and potentially duplicated.
+- Verify state transitions against the canonical state machine.
 ```
 
-### Шаблон 3: Документація процесів (Process Documentation)
+### Шаблон 3: Ручний воркфлоу
 
 ```markdown
 ---
-name: code-review-checklist
-triggers: [review, pull request, pr]
+name: release-check
+description: Prepare and verify a release candidate for this repository.
+disable-model-invocation: true
 ---
 
-# Code Review Checklist
+# Release Check
 
-## Before Requesting Review
-- [ ] Tests pass locally
-- [ ] No console.log statements
-- [ ] No secrets in code
-- [ ] Commit messages are clear
-
-## Security Checks
-- [ ] No SQL injection vulnerabilities
-- [ ] No XSS vulnerabilities
-- [ ] No exposed API keys
-- [ ] Input is validated
-
-## Performance
-- [ ] No N+1 queries
-- [ ] No infinite loops
-- [ ] Load times acceptable
-
-## Testing
-- [ ] Unit tests added
-- [ ] Integration tests updated
-- [ ] Coverage >80%
+1. Read the repository release instructions.
+2. Verify the version and working tree.
+3. Run the required checks.
+4. Report blockers without publishing.
 ```
+
+Модель може адаптувати ці кроки. Якщо публікація ніколи не має відбуватися до певного шлюзу, забезпечуйте цей шлюз скриптом, hook, CI-завданням або воркфлоу, а не лише прозовим текстом.
 
 ---
 
-## Об'єднання Skills (Bundling Skills)
+## Пакування та поширення skills
 
-Ви можете об'єднувати кілька пов'язаних skills в один пакет.
+Skills проєкту можна комітити разом із репозиторієм:
 
-### Набір skills проєкту (Project Skill Bundle)
-
-```
+```text
 my-project/
 └── .claude/
     └── skills/
-        ├── testing-standards.md
-        ├── api-design.md
-        ├── database-patterns.md
-        └── security-checklist.md
+        ├── testing-standards/
+        │   └── SKILL.md
+        ├── api-design/
+        │   └── SKILL.md
+        └── security-checklist/
+            └── SKILL.md
 ```
 
-Зробіть посилання на них у вашому файлі CLAUDE.md:
+Колеги отримують файли через Git, але виявлення не доводить коректну активацію чи вивід. Записуйте власника й припущення в кожному skill, а потім запускайте репрезентативні випадки в нових sessions.
 
-```markdown
-## Available Skills
-Our custom skills are loaded automatically:
-- **testing-standards**: How we write tests
-- **api-design**: REST API conventions
-- **database-patterns**: Common queries and migrations
-- **security-checklist**: Security review process
-```
+Використовуйте публічні каталоги, щоб знаходити шаблони. Перш ніж приймати сторонній skill:
 
-### Поширення Skills
-
-Щоб поділитися skills з вашою командою, додайте їх до системи контролю версій git:
-
-```bash
-git add .claude/skills/
-git commit -m "Add testing and API design skills"
-git push
-```
-
-Колеги по команді отримають ці оновлені skills автоматично під час checkout проєкту.
+1. Прочитайте його повні інструкції, скрипти й дозволи інструментів.
+2. Вирішіть, чи споживати його без змін, робити fork, чи витягнути лише корисний шаблон.
+3. Вкажіть локального власника та очікування щодо підтримки.
+4. Порівняйте репрезентативні промпти із skill і без нього.
+5. Зафіксуйте або запишіть переглянуту версію, якщо оновлення можуть змінити поведінку.
 
 ---
 
-## Вправа: Створення Domain Skill
+## Вправа: створіть доменний skill
 
 ### Сценарій
 
-Ви будуєте e-commerce платформу. Вам потрібно, щоб Claude добре розумів модель даних ваших товарів.
+Ви будуєте сайт електронної комерції. Claude потрібна модель продуктів проєкту, коли він змінює код каталогу та складу.
 
-### Крок 1: Створіть Skill
+### Крок 1: Створіть каталог
 
 ```bash
-cat > .claude/skills/product-data-model.md << 'EOF'
+mkdir -p .claude/skills/product-data-model
+```
+
+Збережіть наступне як `.claude/skills/product-data-model/SKILL.md`:
+
+```markdown
 ---
 name: product-data-model
-description: E-commerce product data structure and rules
-triggers: [product, catalog, sku, price, inventory]
-auto_invoke: false
-version: 1.0.0
+description: Apply the product, SKU, price, and inventory model when changing catalog queries or stock behavior in this repository.
+metadata:
+  owner: commerce-team
+  version: 1.0.0
 ---
 
 # Product Data Model
 
-## Core Entities
+## When to apply
 
-### Product
-```
-{
-  id: UUID,
-  name: string,
-  slug: string,  // URL-friendly
-  description: string,
-  category_id: UUID,
-  created_at: timestamp,
-  updated_at: timestamp
-}
-```
+Use for catalog, SKU, pricing, and inventory changes.
 
-### SKU (Stock Keeping Unit)
-```
-{
-  id: UUID,
-  product_id: UUID,
-  sku: string,  // e.g., "BLUE-XL-001"
-  price: decimal,  // Always 2 decimals
-  cost: decimal,
-  inventory: integer,
-  weight: float,  // In kg
-}
+## Core rules
+
+- A Product owns one or more SKUs.
+- Price and inventory belong to the SKU, not Product.
+- Inventory cannot become negative.
+- Store monetary values using the repository's decimal type.
+
+## Verification
+
+- Check the schema and existing migrations before proposing SQL.
+- Exercise out-of-stock and concurrent-order cases.
 ```
 
-### Inventory Rules
-- Decrement on order placement
-- Increment on return
-- Low stock alert: <5 units
-- Reorder level: Set per product
+### Крок 2: Тестуйте виявлення та вивід окремо
 
-## Common Queries
+Відкривайте нові sessions для кожного випадку:
 
-### Get product with all SKUs
-```sql
-SELECT p.*, s.* 
-FROM products p 
-JOIN skus s ON p.id = s.product_id 
-WHERE p.slug = ?
-```
+| Промпт | Очікувана маршрутизація |
+|--------|------------------|
+| "Add a query for products with fewer than five units" | Skill має викликатися |
+| "Change the marketing page headline" | Skill не має викликатися |
 
-### Check inventory
-```sql
-SELECT sum(inventory) FROM skus WHERE product_id = ?
-```
+У позитивному випадку перевіряйте й результат: skill має маршрутизуватися правильно, а запропонована зміна має відповідати реальній схемі репозиторію. Сам лише тригер не є успіхом.
 
-## Edge Cases
-1. Out of stock: Return 404 or "unavailable"
-2. Variant selection: Show price per SKU
-3. Price changes: Update in SKU, not Product
-EOF
-```
+---
 
-### Крок 2: Додайте посилання у CLAUDE.md
+## Оцінювання та ітерації
 
-```markdown
-## Skills
-- **product-data-model**: Understanding our product structure
-```
+Тестуйте дві незалежні властивості:
 
-### Крок 3: Перевірте його роботу
+1. **Коректність тригера**: чи викликає Claude skill на релевантних промптах і уникає його на нерелевантних?
+2. **Якість виводу**: чи задовольняє результат явні твердження (assertions) після виклику?
 
-Під час session надішліть запит:
+Запускайте кожен промпт у новій session зі skill увімкненим і вимкненим. Запуск без skill є базовою лінією. Записуйте модель, версію Claude Code, набір промптів, кількість запусків, твердження, кількість успіхів, використання токенів і дисперсію. Структурний валідатор доводить формат, а не якість поведінки.
 
-```
-Add a query to find all products with low inventory (< 5 units)
-```
+Офіційний plugin `skill-creator` може зберігати випадки в `evals/evals.json`, запускати ізольовані порівняння, створювати докази оцінювання, робити бенчмарк skill проти його відсутності, порівнювати версії наосліп і налаштовувати описи. Оцінювання LLM і самокритика залишаються генераторами доказів, а не незалежним підтвердженням. Переглядайте важливі результати детермінованими перевірками або кваліфікованою людиною.
 
-Claude зробить наступне:
-1. Прочитає `product-data-model` skill
-2. Зрозуміє вашу схему даних
-3. Напише правильний SQL-запит
+Обирайте пороги прийняття за ризиком і вартістю збою конкретного skill. Універсальна цільова частка успіхів приховує знаменник, дисперсію та серйозність окремих збоїв.
+
+---
+
+## Життєвий цикл skill
+
+1. **Область**: оберіть особисту, проєктну/командну, інструментальну/вендорську або маркетплейсну/глобальну власність.
+2. **Базова лінія**: зберіть репрезентативні промпти до додавання skill.
+3. **Створення**: напишіть найменший корисний `SKILL.md` і допоміжні файли.
+4. **Оцінювання**: протестуйте маршрутизацію та якість виводу в нових sessions.
+5. **Спостереження**: фіксуйте реальні промахи, здогадки та активації в хибному контексті.
+6. **Рев'ю**: пропонуйте зміни, а потім повторно запускайте базову лінію перед їх прийняттям.
+7. **Виведення з обігу**: вимикайте або видаляйте skills, які не використовуються, застаріли, надлишкові чи шкідливі.
+
+Запустіть `/skill-doctor` у терміналі, щоб перевірити вартість контексту та невикористані skills. Його звіт виключає вбудовані й enterprise skills, недоступний через Remote Control і вимагає отримання feature flags. Сприймайте позначку «не використовується» як сигнал для рев'ю, а не як автоматичний наказ видалити.
+
+Не архівуйте виведений з обігу skill у `.claude/skills/`, бо вкладене виявлення може залишати його видимим. Збережіть його в історії Git або перенесіть поза каталоги, де відбувається виявлення skills, із датованою приміткою про виведення з обігу.
 
 ---
 
 ## Найкращі практики
 
-### РЕКОМЕНДУЄТЬСЯ
+### Робіть
 
-✅ Створювати skills для повторюваних завдань або концепцій
+- Тримайте одну чітку відповідальність на skill.
+- Пишіть опис як правило маршрутизації.
+- Записуйте область, власника, припущення та критерії виведення з обігу.
+- Тримайте основний файл коротким і посилайтеся на допоміжні матеріали.
+- Переглядайте сторонні інструкції, скрипти та дозволи перед використанням.
+- Порівнюйте зі skill і без нього в нових sessions.
+- Розміщуйте гарантовані шлюзи в коді, hooks, CI або воркфлоу.
 
-✅ Робити skills вузькоспрямованими (один домен — один skill)
+### Не робіть
 
-✅ Зберігати skills під контролем версій git
-
-✅ Додавати практичні приклади всередину skills
-
-✅ Оновлювати вміст skills при зміні вимог
-
-✅ Ділитися корисними skills зі своєю командою
-
-### НЕ РЕКОМЕНДУЄТЬСЯ
-
-❌ Створювати skill для разових завдань та знань (краще скористатися CLAUDE.md)
-
-❌ Робити skills занадто великими (якщо >500 рядків, розбийте на декілька дрібних)
-
-❌ Використовувати skills для тимчасових інструкцій (для цього призначені CLAUDE.md або AGENT.md)
-
-❌ Вважати, що skills повністю замінюють вичерпну технічну документацію
-
----
-
-## Життєвий цикл Skill
-
-1. **Визначення**: Виявити повторюваний шаблон роботи чи область знань
-2. **Документування**: Описати skill, додавши практичні приклади
-3. **Тестування**: Запустити в session і переконатися, що Claude дотримується правил
-4. **Вдосконалення**: Оновити на основі досвіду використання
-5. **Поширення**: Зробити commit у git для вашої команди
-6. **Підтримка**: Актуалізувати знання у міру еволюції вашого проєкту
+- Не розміщуйте тимчасові чи одноразові інструкції в `CLAUDE.md`; використовуйте поточний промпт.
+- Не вважайте встановлення з маркетплейсу контрактом підтримки.
+- Не робіть висновків про якість виводу з успішного виклику.
+- Не приймайте самокритику як валідацію без зовнішніх перевірок.
+- Не тримайте неактивні skills у каталогах, де відбувається виявлення.
+- Не додавайте загальні гілки, що розмивають типовий випадок проєкту.
 
 ---
 
 ## Валідація: Ви готові, якщо...
 
-✓ Ви створили принаймні один користувацький skill
+✓ Ваш skill збережено в `.claude/skills/{name}/SKILL.md`
 
-✓ Ви розумієте різницю між triggers та auto-invoke
+✓ Його `description` охоплює тригери та важливі антитригери
 
-✓ Ви знаєте, чим відрізняються skills від agents
+✓ Ви можете пояснити його область власності та контракт підтримки
 
-✓ Ви можете пояснити, коли варто створити skill, а коли використати CLAUDE.md
+✓ Ви протестували релевантні й нерелевантні промпти в нових sessions
 
-✓ Ваш новий skill успішно пройшов тестування в реальній session
+✓ Ви порівняли вивід зі skill і без нього
+
+✓ Ви знаєте, які гарантії належать hook, скрипту, CI-завданню чи воркфлоу
+
+✓ Ви визначили, як переглядати та виводити skill з обігу
+
+---
+
+## Джерела
+
+- [Claude Code: Extend Claude with skills](https://code.claude.com/docs/en/skills)
+- [Agent Skills open standard](https://agentskills.io/)
+- [Frédéric Camblor: Un Skill n'est pas une librairie](https://devx.writizzy.blog/p/un-skill-nest-pas-une-lib)
 
 ---
 
 ## Що далі?
 
 **Module 06: Hooks & Events** охоплює:
-- Автоматизацію реакцій на системні події
-- Валідацію перед створенням commit (pre-commit validation)
-- Сповіщення після виконання дій (post-action notifications)
-- Побудову безпечних ланцюгів автоматизації
 
-Це навчить вас автоматизувати повторювані рутинні кроки без ручного втручання.
+- Автоматизацію реакцій на системні події
+- Валідацію перед комітом (pre-commit)
+- Сповіщення після виконання дій
+- Побудову автоматизації, що примусово виконується
+
+---
+
+**Завершили Module 05?** → Готові до [Module 06: Hooks & Events](06-hooks.uk.md)
 
 ---
 **Локалізація**: [Serhii (MacPlus Software)](https://macplus-software.com)
-*Остання синхронізація: Травень 2026*
+*Остання синхронізація: Листопад 2026*

@@ -50,12 +50,12 @@ claude --version
 # Check model availability
 claude
 > /model opus
-# Should show: "Model changed to opus (claude-opus-4-6-20250624)"
+# Check the resolved model in /model; provider aliases can differ
 ```
 
 **Мінімальні вимоги**:
 - Claude Code v2.1.32+
-- Модель Opus 4.6
+- Модель, доступна вашому обліковому запису; Opus необов'язковий, а teammates можуть використовувати різні моделі
 - Git-репозиторій (команди агентів використовують git для координації)
 
 ### Крок 2: Увімкнення функції
@@ -173,7 +173,7 @@ Team: landing-sync (2 agents)
 ```
 > Validate guide/landing synchronization:
 > - Guide scanner: Extract version from VERSION file, template count (find examples/ -type f | wc -l), eval count (find docs/resource-evaluations/ -name "*.md" | wc -l), guide lines (wc -l guide/ultimate-guide.md), FAQ entries from README.md
-> - Landing scanner: Check /Users/florianbruniaux/Sites/perso/claude-code-ultimate-guide-landing/index.html and examples.html for version in footer+FAQ, template count in badges, eval count, guide lines approximation (~9800+)
+> - Landing scanner: Check ../claude-code-ultimate-guide-landing/index.html and examples.html for version in footer+FAQ, template count in badges, eval count, guide lines approximation (~9800+)
 >
 > Report: Synced ✅ / Mismatches with line numbers
 ```
@@ -348,6 +348,15 @@ Verdict: ✅ Critical security issues caught, PR requires revision
 - ❌ Обмежений бюджет (3x токенів, резервуйте для високовартісних завдань)
 - ❌ Багато записів (багато редагувань одних і тих самих файлів = конфлікти злиття)
 
+### Офіційні рекомендації щодо розміру та обмеження (перевірено 2026-11-01)
+
+[Документація Agent Teams](https://code.claude.com/docs/en/agent-teams) рекомендує починати з **3-5 teammates** і **5-6 завдань на teammate**. Два обмеження впливають на планування сесії:
+
+- `/resume` і `/rewind` не відновлюють teammates, що працюють у тому самому процесі (in-process); після відновлення lead створіть заміну.
+- Teammates за замовчуванням не ізольовані у worktrees; призначайте їм окремі набори файлів або дайте кожному власний worktree.
+
+Перш ніж братися за команду, прочитайте [Single agent, subagents or a team: the October 2026 evidence](https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#single-agent-subagents-or-a-team-the-october-2026-evidence): на обмежених завданнях один цикл агента зі skills часто відповідав мультиагентним схемам або перевершував їх.
+
 ---
 
 ## 4. Мінімальний шаблон робочого процесу
@@ -413,7 +422,7 @@ claude
 ```
 > Validate guide/landing synchronization:
 > - Guide scanner: Extract version from VERSION file, template count (find examples/ -type f | wc -l), eval count (find docs/resource-evaluations/ -name "*.md" | wc -l), guide lines (wc -l guide/ultimate-guide.md)
-> - Landing scanner: Check /Users/florianbruniaux/Sites/perso/claude-code-ultimate-guide-landing/index.html and examples.html for version, counts, guide lines approximation
+> - Landing scanner: Check ../claude-code-ultimate-guide-landing/index.html and examples.html for version, counts, guide lines approximation
 ```
 
 ---

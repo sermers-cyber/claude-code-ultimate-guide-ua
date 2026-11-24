@@ -6,25 +6,27 @@ tags: [workflow, agents, automation, event-driven, kanban]
 
 # Автоматизація агентів на основі подій (Event-Driven Agent Automation)
 
-> **Рівень впевненості**: Рівень 3 — новий патерн, ранні послідовники повідомляють про позитивні результати, але інструментарій все ще розвивається.
+> **Рівень впевненості**: Рівень 3. Новий патерн, ранні послідовники повідомляють про позитивні результати, але інструментарій все ще розвивається.
 
 Замість того, щоб вручну запускати Claude Code для кожного завдання, дозвольте зовнішнім подіям керувати роботою. Картка переміщується в «In Progress» у Linear, і Claude автоматично бере її в роботу. GitHub issue отримує мітку `claude-fix`, і за кілька секунд агент починає над ним працювати.
 
 Це перехід від моделі опитування / pull-based («гей, Claude, зроби це») до моделі сповіщення / push-based («події запускають агентів»).
 
+Подія є тригером, а не повним контрактом керування. Використовуйте [Loop & Graph Engineering](../core/loop-graph-engineering.uk.md), щоб визначити допустимі переходи, власника стану, правила зупинки, повторні спроби, відновлення й ескалацію до того, як подія зможе запустити або просунути роботу.
+
 ---
 
 ## Зміст
 
-1. [Основна концепція](#core-concept)
-2. [Цикл агента, керований Linear](#the-linear-driven-agent-loop)
-3. [Загальний патерн «подія-в-агента»](#generic-event-to-agent-pattern)
-4. [Приклад реалізації](#implementation-example)
-5. [Сумісність із джерелами подій](#event-source-compatibility)
-6. [Запобіжники (Guardrails)](#guardrails)
-7. [Антипатерни](#anti-patterns)
-8. [Інструменти та ресурси](#tools--resources)
-9. [Дивіться також](#see-also)
+1. [Основна концепція](#основна-концепція)
+2. [Цикл агента, керований Linear](#цикл-агента-керований-linear)
+3. [Загальний патерн «подія-в-агента»](#загальний-патерн-подія-в-агента)
+4. [Приклад реалізації](#приклад-реалізації)
+5. [Сумісність із джерелами подій](#сумісність-із-джерелами-подій)
+6. [Запобіжники (Guardrails)](#запобіжники-guardrails)
+7. [Антипатерни](#антипатерни)
+8. [Інструменти та ресурси](#інструменти-та-ресурси)
+9. [Дивіться також](#дивіться-також)
 
 ---
 
@@ -107,7 +109,7 @@ fi
 
 ### 3. Вилучення контексту
 
-Витягування релевантних даних із корисного навантаження події та форматування їх як промпту для Claude Code. Тут ви перекладаєте схему вашого інструменту в інструкції природною мовою.
+Витягніть релевантні дані з корисного навантаження події й зберігайте їх як дані. Не перетворюйте заголовок issue, опис, коментар чи тіло webhook на інструкцію. Вилучайте лише ті поля, які потрібні наступному, затвердженому воркфлоу.
 
 ### 4. Вибір агента
 
@@ -125,19 +127,18 @@ fi
 
 ## Приклад реалізації
 
-Мінімальний bash-цикл, який опитує Linear на наявність карток у стані «In Progress» та запускає агентів Claude Code:
+Цей мінімальний цикл класифікує картки Linear, не запускаючи агента й не змінюючи репозиторій. Він записує заголовок і опис як дані, а потім спрямовує запит на запис до воркфлоу із шлюзом:
 
 ```bash
 #!/bin/bash
 # linear-agent-loop.sh
-# Polls Linear for cards in "In Progress" state and spawns Claude agents
+# Polls Linear for cards in "In Progress" state and creates triage records
 
 LINEAR_API_KEY="${LINEAR_API_KEY:?Missing LINEAR_API_KEY}"
 TEAM_ID="${LINEAR_TEAM_ID:?Missing LINEAR_TEAM_ID}"
-PROCESSED_FILE="/tmp/linear-agent-processed.txt"
-MAX_CONCURRENT=3
+TRIAGE_FILE="/tmp/linear-triage.jsonl"
 
-touch "$PROCESSED_FILE"
+touch "$TRIAGE_FILE"
 
 poll_linear() {
     curl -s -X POST https://api.linear.app/graphql \
@@ -145,51 +146,36 @@ poll_linear() {
         -H "Content-Type: application/json" \
         -d '{
             "query": "query { team(id: \"'"$TEAM_ID"'\") { issues(filter: { state: { name: { eq: \"In Progress\" } }, labels: { name: { eq: \"claude-auto\" } } }) { nodes { id title description } } } }"
-        }' | jq -r '.data.team.issues.nodes[] | "\(.id)|\(.title)|\(.description)"'
+        }' | jq -c '.data.team.issues.nodes[] | {id, title, description}'
 }
 
-spawn_agent() {
-    local issue_id="$1"
-    local title="$2"
-    local description="$3"
+classify_card() {
+    local card="$1"
+    local issue_id
+    issue_id=$(jq -r '.id' <<< "$card")
 
-    echo "[$(date)] Spawning agent for: $title ($issue_id)"
+    # The complete compact JSON record is retained. No shell command or agent
+    # prompt is constructed from the title or description.
+    jq -c '. + {classification: "needs-human-review", next_step: "gated-workflow"}' \
+      <<< "$card" >> "$TRIAGE_FILE"
 
-    claude --print --dangerously-skip-permissions \
-        "Implement the following Linear card:
-        Title: $title
-        Description: $description
-
-        Requirements:
-        1. Create a feature branch named feat/$issue_id
-        2. Implement the described feature
-        3. Run tests and fix any failures
-        4. Create a PR with the card title" \
-        2>&1 | tee "/tmp/agent-$issue_id.log"
-
-    echo "$issue_id" >> "$PROCESSED_FILE"
+    echo "[$(date)] Triaged $issue_id. Any write request must use monitor-event-delegation.md."
 }
 
 while true; do
-    active_agents=$(jobs -r | wc -l)
-    if [ "$active_agents" -ge "$MAX_CONCURRENT" ]; then
-        echo "[$(date)] Max concurrent agents reached ($MAX_CONCURRENT), waiting..."
-        sleep 30
-        continue
-    fi
-
-    poll_linear | while IFS='|' read -r id title description; do
-        if grep -q "$id" "$PROCESSED_FILE"; then
+    poll_linear | while IFS= read -r card; do
+        id=$(jq -r '.id' <<< "$card")
+        if jq -e --arg id "$id" 'select(.id == $id)' "$TRIAGE_FILE" >/dev/null; then
             continue  # Already processed
         fi
-        spawn_agent "$id" "$title" "$description" &
+        classify_card "$card"
     done
 
     sleep 60  # Poll interval
 done
 ```
 
-Це лише відправна точка, а не готовий до продакшену код. Реальне впровадження вимагає належної обробки помилок, постійного сховища стану (а не текстового файлу) та тригерів на основі webhooks замість опитування (polling).
+Це приклад тріажу без змін у системі, а не готовий до продакшену код. Реальне впровадження вимагає належної обробки помилок, атомарного постійного сховища стану та тригерів на основі webhooks замість опитування (polling). Щоб реалізувати перевірену картку, скористайтеся окремим шляхом затвердження та ізольованого worktree з [Monitor, channels і безпечне делегування до Codex](./monitor-event-delegation.uk.md#етап-2-запис-лише-після-шлюзу).
 
 ---
 
@@ -210,6 +196,8 @@ done
 ## Запобіжники (Guardrails)
 
 Агенти на основі подій за дизайном працюють з меншим контролем з боку людини, тому запобіжники (guardrails) стають критично важливими.
+
+> **Оновлення безпеки**: ця сторінка описує загальний патерн. Щодо нативного прийому Monitor/WebSocket, plugin monitors, Channels, Routines і делегування до Codex із шлюзом дотримуйтеся [Monitor, channels і безпечне делегування до Codex](./monitor-event-delegation.uk.md). Вхідна подія є даними, а ніколи не авторизацією.
 
 ### Ідемпотентність
 
@@ -287,10 +275,12 @@ fi
 
 ## Дивіться також
 
-- [agent-teams.md](./agent-teams.uk.md) — мультиагентна паралельна координація.
-- [iterative-refinement.md](./iterative-refinement.uk.md) — базовий цикл «промпт-спостереження-повторний промпт».
-- [plan-driven.md](./plan-driven.uk.md) — планування перед виконанням.
-- [../../examples/agents/](../../examples/agents/) — готові до використання шаблони агентів.
+- [Monitor, channels і безпечне делегування до Codex](./monitor-event-delegation.uk.md): перевірені події, монітори WebSocket і делегування до Codex з режимом «спершу лише читання»
+
+- [agent-teams.md](./agent-teams.uk.md): мультиагентна паралельна координація
+- [iterative-refinement.md](./iterative-refinement.uk.md): базовий цикл «промпт-спостереження-повторний промпт»
+- [plan-driven.md](./plan-driven.uk.md): планування перед виконанням
+- [../../examples/agents/](https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/examples/agents/): готові до використання шаблони агентів
 
 ---
 **Локалізація**: [Serhii (MacPlus Software)](https://macplus-software.com)

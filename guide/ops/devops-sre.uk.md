@@ -138,7 +138,7 @@ claude "Create a brief incident note for our wiki:
   "mcpServers": {
     "kubernetes": {
       "command": "npx",
-      "args": ["-y", "@anthropic/mcp-kubernetes"]
+      "args": ["-y", "kubernetes-mcp-server@latest"]
     }
   }
 }
@@ -314,7 +314,7 @@ Include the alert rule YAML too"
 - **Інциденти з високим ступенем конфіденційності**: Розслідування витоків даних (юридичні наслідки).
 - **Прості та очевидні виправлення**: Якщо ви вже знаєте, що робити — просто зробіть це.
 - **Суворі регуляторні обмеження (compliance)**: Переконайтеся, що політики безпеки компанії дозволяють використовувати AI-помічників для таких даних.
-- **Специфічні інциденти безпеки ШІ**: Виявлено ін'єкцію промптів, скомпрометовано MCP-сервер або помічено підозрілий витік даних агентом → див. [Посилення безпеки — Реагування](../security/security-hardening.uk.md#частина-3-реагування-коли-щось-іде-не-так) для вивчення аварійного вимкнення (kill switch), рівнів локалізації та ведення хронології.
+- **Специфічні інциденти безпеки ШІ**: Виявлено ін'єкцію промптів, скомпрометовано MCP-сервер або помічено підозрілий витік даних агентом → див. [Посилення безпеки: Реагування](../security/security-hardening.uk.md#частина-3-реагування-коли-щось-іде-не-так) для вивчення аварійного вимкнення (kill switch), рівнів локалізації та ведення хронології.
 
 ### Де Claude демонструє найкращі результати
 
@@ -493,7 +493,7 @@ Output: Prioritized prevention measures, effort estimates, ownership suggestions
 - Складання постмортемів: 95% готові протягом 24 годин
 - Обмін знаннями: Згенеровані за допомогою Claude регламенти стали доступними та зрозумілими для кожного інженера
 
-**Головний інсайт**: Основна перевага полягала не просто у швидкості, а у вирівнюванні стандартів роботи та якості ведення документації.
+**Головний інсайт**: Найбільший виграш дали узгодженість і документація, а не швидкість.
 
 ---
 
@@ -662,13 +662,13 @@ cat iam-policy.json | claude "Review this IAM policy:
 
 | Модель | Вхід (1 млн токенів) | Вихід (1 млн токенів) |
 |-------|-------------------|-------------------|
-| Sonnet 4 | $3 | $15 |
-| Opus 4 | $15 | $75 |
+| Sonnet 5.5 | $2 | $10 |
+| Opus 5.5 | $4 | $20 |
 
-**Типова DevOps сесія**: 20K-50K токенів = $0.10-$0.50
+Стандартні тарифи API перевірено 24 вересня 2026 року. Для визначення вартості сесії потрібні окремі підрахунки вхідних, вихідних, кешованих токенів і повторних спроб. [Офіційні ціни](https://platform.claude.com/docs/en/about-claude/pricing).
 
 **Стратегії контролю витрат**:
-1. Використовуйте Sonnet для рутинних та повсякденних завдань (за замовчуванням).
+1. Оцініть Sonnet для рутинних завдань; це вибір маршрутизації, а не типове налаштування акаунта.
 2. Залишайте Opus для особливо складного крос-системного аналізу архітектур та великих логів.
 3. Використовуйте команду `/compact` для зменшення обсягу активного контексту під час довгих діалогів.
 4. Уникайте прямого копіювання гігантських лог-файлів; спочатку фільтруйте їх за допомогою grep/tail.
@@ -825,11 +825,13 @@ approval_required:
 
 | Сервер | Призначення | Встановлення |
 |--------|---------|---------|
-| Kubernetes | Прямий доступ до стану кластера | `npx -y @anthropic/mcp-kubernetes` |
-| AWS | Взаємодія з API AWS | `npx -y @anthropic/mcp-aws` |
-| GCP | Взаємодія з API GCP | `npx -y @anthropic/mcp-gcp` |
+| Kubernetes | Прямий доступ до стану кластера | `npx -y kubernetes-mcp-server@latest` |
+| AWS | Взаємодія з API AWS | `uvx awslabs.aws-api-mcp-server@latest` (Python) |
+| GCP | Взаємодія з API GCP | `npx -y @google-cloud/gcloud-mcp` |
 | Prometheus | Прямі запити до метрик | Спільнота: awesome-mcp-servers |
 | Terraform | Аналіз стану та планів | Спільнота: awesome-mcp-servers |
+
+Жоден із цих серверів не створений Anthropic: сервер Kubernetes підтримує [організація containers](https://github.com/containers/kubernetes-mcp-server) (Red Hat), сервер AWS підтримує [AWS Labs](https://github.com/awslabs/mcp), а сервер GCP підтримує [Google](https://github.com/googleapis/gcloud-mcp).
 
 **Розташування файлу конфігурації**: `~/.claude.json` (ключ `"mcpServers"`)
 
@@ -838,7 +840,7 @@ approval_required:
   "mcpServers": {
     "kubernetes": {
       "command": "npx",
-      "args": ["-y", "@anthropic/mcp-kubernetes"]
+      "args": ["-y", "kubernetes-mcp-server@latest"]
     }
   }
 }
@@ -848,13 +850,13 @@ approval_required:
 
 ### Корисні списки (Awesome Lists)
 
-- **[awesome-claude-code-subagents](https://github.com/VoltAgent/awesome-claude-code-subagents)** (8.1k зірок): Корисні інструменти та профілі агентів, включаючи SRE.
-- **[awesome-claude-skills](https://github.com/travisvn/awesome-claude-skills)** (4.6k зірок): Готові скіли, у тому числі для роботи з інфраструктурою.
+- **[awesome-claude-code-subagents](https://github.com/VoltAgent/awesome-claude-code-subagents)** (23.8K зірок, перевірено 2026-07-27, було 8.1k): Корисні інструменти та профілі агентів, включаючи SRE.
+- **[awesome-claude-skills](https://github.com/travisvn/awesome-claude-skills)** (14.4K зірок, перевірено 2026-07-27, було 4.6k): Готові скіли, у тому числі для роботи з інфраструктурою.
 
 ### Офіційні репозиторії
 
 - **[terraform-skill](https://github.com/antonbabenko/terraform-skill)**: Професійний скіл Terraform від Антона Бабенка.
-- **[Claude Code Docs](https://docs.anthropic.com/en/docs/claude-code)**: Офіційна документація розробника.
+- **[Claude Code Docs](https://code.claude.com/docs)**: Офіційна документація розробника.
 
 ### Спільнота
 
@@ -866,8 +868,8 @@ approval_required:
 
 ## Дивіться також
 
-- **[Шаблон агента](../examples/agents/devops-sre.md)**: Налаштування персонажу DevOps/SRE для Claude.
-- **[CLAUDE.md для DevOps](../examples/claude-md/devops-sre.md)**: Специфічний шаблон конфігурації проекту для DevOps-команд.
+- **[Шаблон агента](https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/examples/agents/devops-sre.md)**: Налаштування персонажу DevOps/SRE для Claude.
+- **[CLAUDE.md для DevOps](https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/examples/claude-md/devops-sre.md)**: Специфічний шаблон конфігурації проекту для DevOps-команд.
 - **[Гайд з посилення безпеки](../security/security-hardening.uk.md)**: Додаткові інструкції з безпеки.
 - **[Гайд з архітектури](../core/architecture.uk.md)**: Як влаштовані внутрішні процеси Claude Code.
 

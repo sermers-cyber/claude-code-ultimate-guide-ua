@@ -1,277 +1,272 @@
 ---
-title: "Claude Code — Візуальні діаграми системи конфігурації"
-description: "Пріоритет конфігурації, порівняння навичок, команд та агентів, життєвий цикл агента, конвеєр hooks"
+title: "Claude Code: Візуальні діаграми системи конфігурації"
+description: "Пріоритет managed settings, skills і commands, subagents та життєвий цикл hooks"
 tags: [configuration, hooks, agents, skills, commands]
 ---
 
 # Система конфігурації
 
-Як Claude Code завантажує налаштування, вирішує конфлікти та організовує розширюваність.
+Задокументований пріоритет налаштувань і спрощений огляд розширюваності та hooks.
 
 ---
 
 ### Пріоритет конфігурації (5 рівнів)
 
-Claude Code визначає налаштування за суворою ієрархією пріоритетів. Вищі рівні перевизначають нижчі. Розуміння цього запобігає виникненню багів на кшталт "чому моя конфігурація не працює?".
+Для одного й того самого ключа налаштувань задокументований стек має п'ять рівнів, від найвищого. Списки можуть зливатися, а для чутливих до безпеки налаштувань діють винятки. Пріоритет змінних оточення визначається окремо для кожного налаштування; CLAUDE.md належить до контексту інструкцій, а не до цього стеку налаштувань.
 
 ```mermaid
 flowchart TD
-    A["1️⃣ CLI Flags<br/>--model, --dangerously-skip-permissions<br/>--max-turns, --system-prompt"] --> B["2️⃣ Environment Variables<br/>ANTHROPIC_API_KEY<br/>CLAUDE_MODEL, CLAUDE_CONFIG"]
-    B --> C["3️⃣ Project Config<br/>.claude/settings.json<br/>.claude/settings.local.json"]
-    C --> D["4️⃣ Global Config<br/>~/.claude/settings.json<br/>~/.claude/CLAUDE.md"]
-    D --> E["5️⃣ Built-in Defaults<br/>Hardcoded in Claude Code binary"]
-
-    A1["Найвищий пріоритет<br/>Перевизначає все<br/>Використання: автоматизація, CI/CD"] --> A
-    E1["Найнижчий пріоритет<br/>Резервні значення<br/>Використання: базова поведінка"] --> E
-
-    style A fill:#E87E2F,color:#fff
-    style B fill:#6DB3F2,color:#fff
-    style C fill:#6DB3F2,color:#fff
-    style D fill:#F5E6D3,color:#333
-    style E fill:#B8B8B8,color:#333
-    style A1 fill:#B8B8B8,color:#333
-    style E1 fill:#B8B8B8,color:#333
-
-    click A href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#34-precedence-rules" "CLI Flags — найвищий пріоритет"
-    click B href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#33-settings--permissions" "Змінні середовища (Environment Variables)"
-    click C href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#33-settings--permissions" "Конфігурація проекту (Project Config)"
-    click D href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#31-memory-files-claudemd" "Глобальна конфігурація (Global Config)"
-    click E href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#34-precedence-rules" "Вбудовані значення за замовчуванням (Built-in Defaults)"
-    click A1 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#34-precedence-rules" "Найвищий пріоритет"
-    click E1 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#34-precedence-rules" "Найнижчий пріоритет"
+    A[1. Managed settings<br/>Політика організації] --> B[2. Аргументи командного рядка<br/>Прапорці сесії та --settings]
+    B --> C[3. Локальні налаштування проєкту<br/>.claude/settings.local.json]
+    C --> D[4. Спільні налаштування проєкту<br/>.claude/settings.json]
+    D --> E[5. Налаштування користувача<br/>~/.claude/settings.json]
+    E -.-> FALL[Вбудоване резервне значення<br/>Якщо жодне джерело не задає значення]
+    ENV[Змінні оточення<br/>Пріоритет визначається для кожного ключа] -.-> B
+    style A fill:#6DB3F2,color:#222
+    click A href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#34-precedence-rules" "Precedence rules"
+    style B fill:#6DB3F2,color:#222
+    click B href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#34-precedence-rules" "Precedence rules"
+    style C fill:#6DB3F2,color:#222
+    click C href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#34-precedence-rules" "Precedence rules"
+    style D fill:#6DB3F2,color:#222
+    click D href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#34-precedence-rules" "Precedence rules"
+    style E fill:#6DB3F2,color:#222
+    click E href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#34-precedence-rules" "Precedence rules"
+    style FALL fill:#6DB3F2,color:#222
+    click FALL href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#34-precedence-rules" "Precedence rules"
+    style ENV fill:#6DB3F2,color:#222
+    click ENV href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#34-precedence-rules" "Precedence rules"
 ```
 
 <details>
 <summary>ASCII версія</summary>
 
 ```
-ПРІОРИТЕТ (від найвищого до найнижчого)
-══════════════════════════════════════
-1. CLI Flags            ← --model, --system-prompt
-2. Environment Vars     ← ANTHROPIC_API_KEY
-3. Project .claude/     ← settings.json, settings.local.json
-4. Global ~/.claude/    ← settings.json, CLAUDE.md
-5. Вбудовані defaults   ← жорстко закодовані значення
+Найвищий пріоритет
+1. Managed settings
+2. Аргументи командного рядка
+3. .claude/settings.local.json
+4. .claude/settings.json
+5. ~/.claude/settings.json
+Резерв: вбудоване значення, якщо нічого не налаштовано
+
+Змінні оточення: визначаються для кожного ключа, це не універсальний шостий рівень.
+CLAUDE.md: інструкції, поза цим стеком налаштувань.
+Списки можуть зливатися; див. задокументовані винятки для чутливих до безпеки налаштувань.
 ```
 
 </details>
 
-> **Джерело**: [Система конфігурації](../ultimate-guide.uk.md#configuration) — Рядок ~3760
+> **Джерело**: [Правила пріоритету](../ultimate-guide.uk.md#34-правила-пріоритету)
+>
+> **Офіційний довідник**: [Settings precedence](https://code.claude.com/docs/en/settings#settings-precedence) та [environment-variable precedence](https://code.claude.com/docs/en/env-vars#precedence).
+>
+> Для вибору моделі використовується змінна ANTHROPIC_MODEL. CLAUDE_CONFIG_DIR змінює каталог конфігурації. Вибір моделі через CLI залишається обмеженим managed-параметром availableModels і не перевизначає політику організації.
 
 ---
 
-### Skills проти Commands проти Agents — Коли що використовувати
+### Skills проти commands проти agents: коли що використовувати
 
-Три механізми розширення з різними цілями та компромісами. Вибір неправильної абстракції призводить до надмірної складності (over-engineering) або недостатньо потужної автоматизації.
+Власні commands об'єднано зі skills. Обидва формати файлів створюють slash-команду; skills також підтримують вбудовані ресурси та виклик самим Claude. Subagent використовують окреме вікно контексту для делегованої роботи. Для цих механізмів існують рівні користувача й проєкту.
 
 ```mermaid
 flowchart LR
-    subgraph SKILLS["📦 Skills (.claude/skills/)"]
-        S1[Зібрана можливість<br/>з ресурсами]
-        S2[Викликається через /skillname]
-        S3[Переносний між проектами]
-        S4["Використовувати для: багаторазових<br/>міжпроектних можливостей"]
-    end
-
-    subgraph COMMANDS["⚡ Commands (.claude/commands/)"]
-        C1[Простий шаблон<br/>або скрипт]
-        C2[Slash-команда проекту]
-        C3[Тільки для конкретного проекту]
-        C4["Використовувати для: автоматизації<br/>проекту, ярликів"]
-    end
-
-    subgraph AGENTS["🤖 Agents (.claude/agents/)"]
-        A1[Повністю автономний агент]
-        A2[Власний набір інструментів та CLAUDE.md]
-        A3[Запускається через інструмент Task]
-        A4["Використовувати для: складних<br/>делегованих завдань"]
-    end
-
-    Q{Що ви<br/>створюєте?} --> |Багаторазова функція| SKILLS
-    Q --> |Ярлик проекту| COMMANDS
-    Q --> |Складне підзавдання| AGENTS
-
-    style S1 fill:#6DB3F2,color:#fff
-    style S4 fill:#7BC47F,color:#333
-    style C1 fill:#F5E6D3,color:#333
-    style C4 fill:#7BC47F,color:#333
-    style A1 fill:#E87E2F,color:#fff
-    style A4 fill:#7BC47F,color:#333
-    style Q fill:#E87E2F,color:#fff
-
-    click S1 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#51-understanding-skills" "Skills: Зібрана можливість"
-    click S2 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#51-understanding-skills" "Skills: Викликається через /skillname"
-    click S3 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#51-understanding-skills" "Skills: Переносний між проектами"
-    click S4 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#51-understanding-skills" "Skills: Багаторазові можливості"
-    click C1 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#62-creating-custom-commands" "Commands: Простий шаблон"
-    click C2 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#62-creating-custom-commands" "Commands: Slash-команда проекту"
-    click C3 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#62-creating-custom-commands" "Commands: Тільки для конкретного проекту"
-    click C4 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#62-creating-custom-commands" "Commands: Автоматизація проекту"
-    click A1 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#41-what-are-agents" "Agents: Повністю автономний"
-    click A2 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#41-what-are-agents" "Agents: Власний набір інструментів"
-    click A3 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#41-what-are-agents" "Agents: Запускається через інструмент Task"
-    click A4 href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#41-what-are-agents" "Agents: Складні делеговані завдання"
-    click Q href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#41-what-are-agents" "Що ви створюєте?"
+    Q{Потрібен окремий контекст<br/>для делегованих міркувань?} -->|Так| A[Визначення subagent<br/>.claude/agents/name.md<br/>Інструмент Agent, власний prompt та інструменти]
+    Q -->|Ні| S[Skill<br/>.claude/skills/name/SKILL.md<br/>Ресурси та керування викликом]
+    C[Сумісний формат command<br/>.claude/commands/name.md] --> S
+    S --> I[Slash-команда або виклик Claude<br/>Залежно від конфігурації]
+    A --> R[Підсумок повертається до батьківського]
+    I --> U[Рівень користувача або проєкту]
+    R --> U
+    style Q fill:#6DB3F2,color:#222
+    click Q href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#51-understanding-skills" "Understanding skills"
+    style A fill:#6DB3F2,color:#222
+    click A href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#51-understanding-skills" "Understanding skills"
+    style S fill:#6DB3F2,color:#222
+    click S href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#51-understanding-skills" "Understanding skills"
+    style C fill:#6DB3F2,color:#222
+    click C href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#51-understanding-skills" "Understanding skills"
+    style I fill:#6DB3F2,color:#222
+    click I href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#51-understanding-skills" "Understanding skills"
+    style R fill:#6DB3F2,color:#222
+    click R href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#51-understanding-skills" "Understanding skills"
+    style U fill:#6DB3F2,color:#222
+    click U href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#51-understanding-skills" "Understanding skills"
 ```
 
 <details>
 <summary>ASCII версія</summary>
 
 ```
-                    Skills              Commands           Agents
-Місце:         .claude/skills/     .claude/commands/  .claude/agents/
-Тригер:        /skillname          /commandname       Інструмент Task
-Область дії:   Міжпроектна         Цей проект         Будь-який контекст
-Складність:    Середня (зібрана)   Низька (шаблон)    Висока (автономна)
-Коли:          Багаторазові ф-ції  Швидкі ярлики      Складні завдання
+Багаторазові інструкції / workflow:
+  .claude/skills/name/SKILL.md -> /name або виклик Claude залежно від конфігурації
+  .claude/commands/name.md    -> сумісний формат /name
+  Обидва можуть діяти на рівні користувача або проєкту.
+
+Делегована робота:
+  .claude/agents/name.md -> інструмент Agent -> власний контекст, prompt і дозволені інструменти
+  Підсумок повертається до батьківського; ефекти на файли й сервіси можуть бути спільними.
 ```
 
 </details>
 
-> **Джерело**: [Система розширюваності](../ultimate-guide.uk.md#extensibility) — Рядок ~4495, ~5025, ~3900
+> **Джерело**: [Розуміння скілів](../ultimate-guide.uk.md#51-розуміння-скілів)
+>
+> **Офіційний довідник**: [Skills and command compatibility](https://code.claude.com/docs/en/skills) та [subagent definitions](https://code.claude.com/docs/en/sub-agents).
 
 ---
 
-### Життєвий цикл агента та ізоляція областей дії
+### Життєвий цикл agent та ізоляція області видимості
 
-Sub-agents працюють у повній ізоляції від батьківського агента. Вони отримують копію контексту, але не ділять спільний стан. Розуміння цього запобігає плутанині на кшталт "чому мій sub-agent не бачить X?".
+Окреме вікно контексту не пускає проміжну активність інструментів у батьківську розмову, але не ізолює ефекти на файли чи сервіси. Звичайні subagent починають з чистого аркуша; fork успадковують розмову. Worktree може відокремити зміни в репозиторії.
 
 ```mermaid
 sequenceDiagram
     participant P as Батьківський Claude
-    participant T as Інструмент Task
-    participant S as Sub-Agent
-    participant FS as Файлова система
-
-    P->>T: Task(prompt, tools_allowed)
-    T->>S: Створює новий інстанс Claude
-    Note over S: Отримує: промпт + права на інструменти<br/>НЕ отримує: розмову батьківського агента
-
-    S->>FS: Читає файли (якщо дозволено)
-    S->>FS: Редагує файли (якщо дозволено)
-    S->>S: Незалежне міркування
-
-    Note over S,FS: Повністю ізольоване виконання
-    Note over S: Немає доступу до батьківського стану
-
-    S->>T: Повертає: тільки текстовий результат
-    T->>P: Рядок результату (Result string)
-    P->>P: Продовжує роботу з результатом
-
-    Note over P,T: Батьківський агент бачить тільки фінальний текст<br/>Побічні ефекти не повертаються назад
+    participant A as Інструмент Agent
+    participant S as Subagent
+    participant FS as Файли та сервіси
+    P->>A: Делегує завдання
+    alt Звичайний subagent
+        A->>S: Prompt завдання та конфігурація agent
+        Note over S: Чистий контекст розмови
+    else Fork
+        A->>S: Копія батьківської розмови та конфігурації
+    end
+    S->>FS: Дозволені читання, редагування або зовнішні виклики
+    Note over S,FS: Ефекти можуть бути спільними<br/>Необов'язковий worktree відокремлює зміни в репозиторії
+    FS->>S: Результати
+    S->>A: Фінальний підсумок
+    A->>P: Підсумок потрапляє до батьківського контексту
 ```
 
 <details>
 <summary>ASCII версія</summary>
 
 ```
-Батьківський ──Task(prompt, tools)──► Sub-Agent
-                                          │
-                                     [ізольоване виконання]
-                                     - читання файлів
-                                     - редагування файлів
-                                     - bash (якщо дозволено)
-                                          │
-Батьківський ◄───── текстовий результат ──┘
-(без спільного використання стану, без побічних ефектів)
+Батьківський -> інструмент Agent -> Subagent
+  Звичайний: prompt завдання + визначення; чистий контекст розмови
+  Fork:      успадковує батьківську розмову та конфігурацію
+  Tools:     дозволені операції з файлами/сервісами; ефекти можуть бути спільними
+  Необов'язковий worktree: окремий checkout репозиторію, зовнішні сервіси не ізольовані
+Subagent -> фінальний підсумок -> батьківський контекст
 ```
 
 </details>
 
-> **Джерело**: [Sub-Agents](../ultimate-guide.uk.md#sub-agents) — Рядок ~3900
+> **Джерело**: [Архітектура під-агентів](../core/architecture.uk.md#4-архітектура-під-агентів)
+>
+> **Офіційний довідник**: [Forks and ordinary subagents](https://code.claude.com/docs/en/sub-agents#how-forks-differ-from-other-subagents).
 
 ---
 
-### Конвеєр подій Hooks
+### Конвеєр подій hooks
 
-Hooks дозволяють виконувати власний код у ключових точках життєвого циклу Claude Code — для перевірки безпеки, логування, примусового виконання правил або сповіщень. Порядок виконання має значення.
+Цей спрощений життєвий цикл розрізняє події сесії, події ходу та події інструментів. PermissionRequest є умовною подією. Типи hook і керування рішеннями залежать від події; це не вичерпний перелік подій.
 
 ```mermaid
 flowchart TD
-    INIT([Старт сесії]) -.->|v2.1.69+| INST{InstructionsLoaded Hook}
-    INST -.-> A
-
-    A([Користувач надсилає повідомлення]) --> UPS{UserPromptSubmit Hook}
-    UPS -->|Exit 0: proceed| B{PreToolUse Hook}
-    UPS -->|Exit 2: feedback| A
-    B -->|Exit 0: allow| C[Інструмент виконується]
-    B -->|Exit 1: block| D([Інструмент заблоковано<br/>Claude зупиняється])
-    C --> E{PostToolUse Hook}
-    E --> F[Наступний інструмент або відповідь]
-    F --> G{Потрібні ще інструменти?}
-    G -->|Yes| B
-    G -->|No| H([Сесія завершується])
-    H --> I{Stop / SessionEnd Hook}
-    I --> J([Завершено])
-
-    K{PreCompact Hook} -.->|Перед /compact| L[Виконується /compact]
-    L --> M{PostCompact Hook}
-
-    NOTE["Типи hooks:<br/>bash (exit 0/1/2)<br/>http (POST JSON → URL, v2.1.63+)"] -.-> B
-
-    style INST fill:#6DB3F2,color:#fff
-    style UPS fill:#6DB3F2,color:#fff
-    style B fill:#E87E2F,color:#fff
-    style D fill:#E85D5D,color:#fff
-    style E fill:#E87E2F,color:#fff
-    style I fill:#E87E2F,color:#fff
-    style K fill:#6DB3F2,color:#fff
-    style M fill:#6DB3F2,color:#fff
-    style C fill:#7BC47F,color:#333
-    style J fill:#7BC47F,color:#333
-    style NOTE fill:#F5E6D3,color:#333
-
-    click INIT href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#71-the-event-system" "Старт сесії"
-    click INST href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#71-the-event-system" "InstructionsLoaded Hook — v2.1.69+"
-    click A href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#71-the-event-system" "Користувач надсилає повідомлення"
-    click UPS href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#71-the-event-system" "UserPromptSubmit Hook"
-    click B href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#71-the-event-system" "PreToolUse Hook"
-    click C href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/core/architecture.md#2-the-tool-arsenal" "Інструмент виконується"
-    click D href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#71-the-event-system" "Інструмент заблоковано"
-    click E href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#71-the-event-system" "PostToolUse Hook"
-    click F href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#71-the-event-system" "Наступний інструмент або відповідь"
-    click G href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#71-the-event-system" "Потрібні ще інструменти?"
-    click H href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#71-the-event-system" "Сесія завершується"
-    click I href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#71-the-event-system" "Stop / SessionEnd Hook"
-    click J href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#72-creating-hooks" "Завершено"
-    click K href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#71-the-event-system" "PreCompact Hook"
-    click L href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#71-the-event-system" "Виконується /compact"
-    click M href "https://github.com/gerasimsergey/claude-code-ultimate-guide-ua/blob/main/guide/ultimate-guide.md#71-the-event-system" "PostCompact Hook"
+    INIT([Сесія починається]) --> START[SessionStart]
+    START --> A[Prompt надіслано]
+    A --> UPS[UserPromptSubmit]
+    UPS -->|Exit 2 або блокування| REJECT[Prompt заблоковано<br/>Причину показано користувачу]
+    UPS -->|Продовжити| MODEL[Модель обробляє контекст]
+    MODEL --> TOOL{Виклик інструмента?}
+    TOOL -->|Так| B[PreToolUse]
+    TOOL -->|Ні, відповідь завершено| STOP[Stop]
+    B -->|Блокування| BLOCK[Інструмент заблоковано]
+    B -->|Продовжити| NEED{Потрібен запит дозволу?}
+    NEED -->|Ні, дозволено| C[Інструмент виконується]
+    NEED -->|Так| PR[PermissionRequest]
+    PR -->|Дозволено| C
+    PR -->|Відхилено| BLOCK
+    C --> RESULT{Інструмент виконано успішно?}
+    RESULT -->|Так| E[PostToolUse]
+    RESULT -->|Ні| FAIL[PostToolUseFailure]
+    E --> MODEL
+    FAIL --> MODEL
+    BLOCK --> MODEL
+    STOP --> WAIT[Очікування наступного ходу або завершення сесії]
+    WAIT -->|Наступний prompt| A
+    WAIT -->|Сесія завершується| END[SessionEnd]
+    INST[InstructionsLoaded<br/>Асинхронно, коли завантажуються файли інструкцій] -.-> A
+    SS[SubagentStop<br/>Коли subagent завершує роботу] -.-> WAIT
+    PRE[PreCompact] --> COMPACT[Стиснення] --> POST[PostCompact]
+    style INIT fill:#6DB3F2,color:#222
+    click INIT href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#71-the-event-system" "The event system"
+    style START fill:#6DB3F2,color:#222
+    click START href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#71-the-event-system" "The event system"
+    style A fill:#6DB3F2,color:#222
+    click A href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#71-the-event-system" "The event system"
+    style UPS fill:#6DB3F2,color:#222
+    click UPS href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#71-the-event-system" "The event system"
+    style REJECT fill:#6DB3F2,color:#222
+    click REJECT href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#71-the-event-system" "The event system"
+    style B fill:#6DB3F2,color:#222
+    click B href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#71-the-event-system" "The event system"
+    style BLOCK fill:#6DB3F2,color:#222
+    click BLOCK href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#71-the-event-system" "The event system"
+    style NEED fill:#6DB3F2,color:#222
+    click NEED href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#71-the-event-system" "The event system"
+    style C fill:#6DB3F2,color:#222
+    click C href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#71-the-event-system" "The event system"
+    style PR fill:#6DB3F2,color:#222
+    click PR href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#71-the-event-system" "The event system"
+    style RESULT fill:#6DB3F2,color:#222
+    click RESULT href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#71-the-event-system" "The event system"
+    style E fill:#6DB3F2,color:#222
+    click E href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#71-the-event-system" "The event system"
+    style FAIL fill:#6DB3F2,color:#222
+    click FAIL href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#71-the-event-system" "The event system"
+    style MODEL fill:#6DB3F2,color:#222
+    click MODEL href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#71-the-event-system" "The event system"
+    style TOOL fill:#6DB3F2,color:#222
+    click TOOL href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#71-the-event-system" "The event system"
+    style STOP fill:#6DB3F2,color:#222
+    click STOP href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#71-the-event-system" "The event system"
+    style WAIT fill:#6DB3F2,color:#222
+    click WAIT href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#71-the-event-system" "The event system"
+    style END fill:#6DB3F2,color:#222
+    click END href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#71-the-event-system" "The event system"
+    style INST fill:#6DB3F2,color:#222
+    click INST href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#71-the-event-system" "The event system"
+    style SS fill:#6DB3F2,color:#222
+    click SS href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#71-the-event-system" "The event system"
+    style PRE fill:#6DB3F2,color:#222
+    click PRE href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#71-the-event-system" "The event system"
+    style COMPACT fill:#6DB3F2,color:#222
+    click COMPACT href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#71-the-event-system" "The event system"
+    style POST fill:#6DB3F2,color:#222
+    click POST href "https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/guide/ultimate-guide.md#71-the-event-system" "The event system"
 ```
 
 <details>
 <summary>ASCII версія</summary>
 
 ```
-Старт сесії
-     │ (InstructionsLoaded Hook — v2.1.69+)
-Повідомлення користувача
-     │
- UserPromptSubmit ──exit 2──► зворотний зв'язок для Claude (цикл)
-     │ exit 0
- PreToolUse ──exit 1──► ЗАБЛОКОВАНО
-     │ exit 0
-     ▼
-Інструмент виконується
-     │
-PostToolUse
-     │
-Потрібні ще інструменти? ──yes──► PreToolUse (цикл)
-     │ no
-Сесія завершується
-     │
-  Stop / SessionEnd Hook
-     │
- Завершено
+SessionStart -> prompt -> UserPromptSubmit
+  заблоковано (exit 2 / рішення): причину показано користувачу; prompt не обробляється
+  продовжити -> модель обробляє контекст -> виклик інструмента?
+    ні, відповідь завершено -> Stop -> наступний хід або SessionEnd
+    так -> PreToolUse -> перевірка дозволів
+              заблоковано -> інструмент заблоковано -> модель
+              потрібен запит -> PermissionRequest -> allow / deny
+              уже дозволено -> виконання
+  успіх інструмента -> PostToolUse -> модель
+  збій інструмента -> PostToolUseFailure -> модель
 
-Окремо: PreCompact ──► /compact ──► PostCompact
-
-Типи hooks: bash (exit 0/1/2) | http POST JSON (v2.1.63+)
+Окремі події: InstructionsLoaded (асинхронна), SubagentStop
+Стиснення: PreCompact -> стиснення -> PostCompact
+Типи hook: command, http, mcp_tool, prompt, agent; підтримка залежить від події.
 ```
 
 </details>
 
-> **Джерело**: [Система Hooks](../ultimate-guide.uk.md#hooks) — Рядок ~5350 | UserPromptSubmit + HTTP hooks: v2.1.63+ | InstructionsLoaded: v2.1.69+
+> **Джерело**: [Система подій](../ultimate-guide.uk.md#71-система-подій)
+>
+> **Офіційний довідник**: [Hook lifecycle and decisions](https://code.claude.com/docs/en/hooks#hook-lifecycle).
+>
+> InstructionsLoaded також спрацьовує під час відкладеного (lazy) завантаження інструкцій. Stop спрацьовує на кожну відповідь, SessionEnd на кожну сесію; для помилок API є StopFailure. Деякі спеціальні інструменти пропускають звичайні hooks інструментів. Офіційний довідник перелічує ці винятки та підтримувані типи hook для кожної події.
 
 ---
 **Локалізація**: [Serhii (MacPlus Software)](https://macplus-software.com)

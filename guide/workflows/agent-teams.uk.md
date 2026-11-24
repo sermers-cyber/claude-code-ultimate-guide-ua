@@ -7,21 +7,29 @@ tags: [workflow, agents, architecture]
 # Робочий процес команд агентів (Agent Teams Workflow)
 
 > **Мультиагентна паралельна координація для складних завдань**
-> **Статус**: Експериментальний (v2.1.32+) | **Модель**: Потрібна Opus 4.6+ | **Прапорець**: `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1`
+> **Статус**: Експериментальний (v2.1.32+) | **Модель**: Будь-яка модель, доступна сесії; обирайте для кожного учасника окремо | **Прапорець**: `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1`
 
 **Що**: Кілька інстансів Claude працюють паралельно над спільною кодовою базою, координуючи свої дії автономно без активного втручання людини. Одна сесія діє як лідер команди (team lead), щоб розбивати завдання на частини та синтезувати результати від інших партнерів по команді.
 
 **Коли впроваджено**: v2.1.32 (2026-02-05) як попередній перегляд дослідження
 **Час читання**: ~30 хв
-**Передумови**: Модель Opus 4.6, розуміння [Sub-Agents](#split-role-sub-agents), знайомство з Task Tool
+**Передумови**: доступна модель і експериментальний прапорець Agent Teams, розуміння [Sub-Agents](../ultimate-guide.uk.md#split-role-sub-agents), знайомство з Task Tool
 
-**🚀 Бажаєте почати швидко?** Дивіться **[Швидкий старт для команд агентів](./agent-teams-quick-start.uk.md)** (8-10 хв, готові шаблони для копіювання-вставки у ваші проекти)
+**🚀 Бажаєте почати швидко?** Дивіться **[Швидкий старт для команд агентів](agent-teams-quick-start.uk.md)** (8-10 хв, готові шаблони для копіювання-вставки у ваші проекти)
+
+---
+
+## Координація команди не є циклом виконання (runtime loop)
+
+Agent Teams координує кілька сесій Claude Code. Claude Code лишається runtime harness, що володіє циклом "модель-інструменти" кожної сесії; repository harness володіє спільними інструкціями, налаштуванням, станом завдань і верифікацією. Ставтеся до менеджера команди, дашборда чи черги як до оркестратора, якщо він сам не запускає цикл.
+
+Використовуйте [мапу Agent Harness](../ecosystem/agent-harness-landscape.uk.md), щоб порівнювати runtime, що володіють циклом, з окремим шаром оркестрації. [Agent Harness Engineering](../core/agent-harness.uk.md) визначає чотири рівні, а [Agent Tools: Beyond Claude Code](../ecosystem/agentic-tools.uk.md) охоплює додаткові фреймворки та площини керування. Оцінюйте передачі й відновлення за допомогою [Agent Evaluation](../roles/agent-evaluation.uk.md), спостерігайте виконання команди через [Session Observability](../ops/observability.uk.md) і застосовуйте [Security Hardening](../security/security-hardening.uk.md), перш ніж підключати агентів до чутливих систем. Визначення наведені в [глосарії](../core/glossary.uk.md).
 
 ---
 
 ## Зміст
 
-1. [Огляд](#1-огляд)
+1. [Огляд](#1-overview)
 2. [Глибоке занурення в архітектуру](#2-глибоке-занурення-в-архітектуру)
 3. [Встановлення та налаштування](#3-встановлення-та-налаштування)
 4. [Випадки використання у продакшені](#4-випадки-використання-у-продакшені)
@@ -41,23 +49,25 @@ tags: [workflow, agents, architecture]
 Команди агентів дозволяють **кільком інстансам Claude працювати паралельно** над різними підзавданнями, координуючи свої дії через систему на базі git. На відміну від ручних робочих процесів з кількома інстансами, де ви самостійно оркеструєте окремі сесії Claude, команди агентів надають вбудовану координацію, у якій агенти беруть завдання в роботу, безперервно зливають зміни та автоматично вирішують конфлікти.
 
 **Ключові характеристики**:
-- ✅ **Автономна координація** — Team lead делегує завдання, інші члени команди спілкуються через mailbox.
-- ✅ **Одноранговий обмін повідомленнями (Peer-to-peer)** — Пряма комунікація між агентами (не лише ієрархічна).
-- ✅ **Блокування на основі git** — Агенти заявляють про права на завдання, записуючи у спільну директорію.
-- ✅ **Безперервне злиття (Continuous merge)** — Зміни завантажуються (pull) та надсилаються (push) без ручного втручання.
-- ✅ **Незалежний контекст** — Кожен агент має власне ізольоване вікно контексту розміром 1M tokens.
-- ⚠️ **Експериментальна функція** — Попередній перегляд дослідження, стабільність не гарантується.
-- ⚠️ **Інтенсивне споживання токенів** — Кілька одночасних викликів моделі = висока вартість.
+- ✅ **Автономна координація**: Team lead делегує завдання, інші члени команди спілкуються через mailbox.
+- ✅ **Одноранговий обмін повідомленнями (Peer-to-peer)**: Пряма комунікація між агентами (не лише ієрархічна).
+- ✅ **Блокування на основі git**: Агенти заявляють про права на завдання, записуючи у спільну директорію.
+- ✅ **Безперервне злиття (Continuous merge)**: Зміни завантажуються (pull) та надсилаються (push) без ручного втручання.
+- ✅ **Незалежний контекст**: Кожен агент має власне ізольоване вікно контексту розміром 1M tokens.
+- ⚠️ **Експериментальна функція**: Попередній перегляд дослідження, стабільність не гарантується.
+- ⚠️ **Інтенсивне споживання токенів**: Кілька одночасних викликів моделі означає високу вартість.
+
+> **Не те саме, що міжсесійні повідомлення**: mailbox вище з'єднує учасників, яких team lead створив сам. Щоб надіслати повідомлення сесії, що вже існує незалежно, яку ви запустили й спрямовуєте самі, дивіться натомість [Cross-Session Messaging](cross-session-messaging.uk.md). Обидва використовують той самий базовий інструмент `SendMessage`.
 
 ### Коли впроваджено
 
 **Версія**: v2.1.32 (2026-02-05)
-**Модель**: Мінімум Opus 4.6
+**Модель**: Будь-яка модель, доступна сесії; обирайте для кожного учасника окремо
 **Статус**: Попередній перегляд дослідження (потрібен експериментальний прапорець)
 
 **Офіційний анонс**:
 > "Ми впровадили команди агентів у Claude Code як попередній перегляд дослідження. Тепер ви можете запустити кількох агентів, які працюють паралельно як команда та автономно координують свої дії у спільних кодових базах."
-> — [Anthropic, Introducing Claude Opus 4.6](https://www.anthropic.com/news/claude-opus-4-6)
+> Джерело: [Anthropic, Introducing Claude Opus 4.6](https://www.anthropic.com/news/claude-opus-4-6)
 
 > **📝 Оновлення документації (2026-02-09)**: Розділ архітектури виправлено на основі [дослідження Адді Османі](https://addyosmani.com/blog/claude-code-agent-teams/). Важливе уточнення: Агенти спілкуються за допомогою **однорангового обміну повідомленнями** через систему mailbox, а не лише через синтез лідера команди. Вікна контексту залишаються ізольованими (1M tokens на агента), але явний обмін повідомленнями дозволяє безпосередню координацію між членами команди.
 
@@ -137,7 +147,7 @@ tags: [workflow, agents, architecture]
 
 **Коли більше агентів шкодять**: Якщо агентам постійно потрібно читати вивід один одного або змінювати спільні файли, додавання агентів призводить до конфліктів злиття та координаційних повідомлень, які з'їдають той самий контекст, який ви намагалися заощадити.
 
-> **Примітка щодо вибору моделі для кожної ролі**: Станом на березень 2026 року всі агенти в команді працюють на одній моделі (потрібна Opus 4.6 для Agent Teams). Спільнота вимагала вибору моделей на основі ролей, де лідер команди запускає Opus для планування, агенти з реалізації запускають Sonnet для швидкості, а агенти з тестування запускають Haiku для економії коштів. Наразі це не підтримується. Поточним обхідним шляхом є запуск окремих процесів Claude Code з явними прапорцями `--model`, але при цьому ви втрачаєте вбудовану координацію та спільний список завдань. Відстежуйте це як запит на функцію від спільноти.
+> **Вибір моделі для кожної ролі**: учасники команди можуть використовувати різні моделі. Вкажіть модель у запиті на створення або у визначенні агента. Інакше типове значення надає `CLAUDE_CODE_SUBAGENT_MODEL` або модель лідера; примусове налаштування моделі subagent може змінити цей порядок. Учасники успадковують налаштування effort лідера. Обирайте моделі за завданням і оцінюйте повну вартість команди. [Офіційна документація Agent Teams](https://code.claude.com/docs/en/agent-teams).
 
 Для ширшого контексту галузі: Gartner прогнозує, що 40% корпоративних додатків включатимуть специфічні для завдань агенти до кінця 2026 року. Паттерни координації команд, що встановлюються зараз у Claude Code та подібних інструментах, ймовірно, стануть стандартною практикою.
 
@@ -191,7 +201,7 @@ tags: [workflow, agents, architecture]
 1. **Запит завдань**: Агенти записують файли блокування (lock files) у спільну директорію (`.claude/tasks/`).
 2. **Виконання роботи**: Кожен агент працює незалежно у своєму контексті.
 3. **Безперервне злиття**: Агенти завантажують (pull) та надсилають (push) зміни до спільного репозиторію git.
-4. **Вирішення конфліктів**: Автоматичне злиття (з обмеженнями, див. [§6](#6-limitations--gotchas)).
+4. **Вирішення конфліктів**: Автоматичне злиття (з обмеженнями, див. [§6](#6-обмеження-та-підводні-камені)).
 5. **Синтез результатів**: Team lead збирає висновки та представляє єдину відповідь.
 
 **Приклад структури файлів блокування**:
@@ -255,7 +265,7 @@ claude
 ### Керування контекстом
 
 **Контекст на одного агента**:
-- Кожен агент має **вікно контексту в 1M токенів** (Opus 4.6).
+- Кожен агент має власне вікно контексту, що визначається вибраною моделлю та провайдером.
 - ~30,000 рядків коду на сесію.
 - **Ізоляція контексту**: Агенти не діляться всім своїм вікном контексту.
 - **Комунікація**: Через систему mailbox (peer-to-peer + синтез team lead).
@@ -278,11 +288,11 @@ claude
 
 **Обов'язково**:
 - ✅ Claude Code версії v2.1.32 або новішої
-- ✅ Модель Opus 4.6 (`/model opus`)
+- ✅ Модель, доступна вашому акаунту; `/model opus` є одним із варіантів
 - ✅ Git-репозиторій (для координації)
 
 **Рекомендовано**:
-- ✅ Розуміння концепції [Sub-Agents](#split-role-sub-agents)
+- ✅ Розуміння концепції [Sub-Agents](../ultimate-guide.uk.md#split-role-sub-agents)
 - ✅ Знайомство з робочими процесами git
 - ✅ Контроль бюджету (функція інтенсивно витрачає токени)
 
@@ -380,6 +390,8 @@ claude
 | **Автономний компілятор C** | Дослідження Anthropic | Завершення проекту | Складні багатофазні проекти |
 | **Додаток для пошуку роботи** | Paul Rayner (LinkedIn) | "Досить вражаюче" | Дослідження дизайну + виправлення багів |
 | **Автоматизація бізнес-операцій** | Paul Rayner (LinkedIn) | Н/Д | Операційна система + планування конференцій |
+
+Для кейсу поза цими даними, повідомленими вендорами, [оркестрація понад 20 агентів на продакшн-міграції](https://www.florian.bruniaux.com/guides/plan-execute-migrations/) розбирає налаштування plan-execute такого масштабу, зокрема те, де координація ламалася.
 
 ### 4.1 Багаторівневий огляд коду (Fountain)
 
@@ -728,17 +740,17 @@ function processUser(user: User) {
 - Завантаження контексту для кожного агента (1M токенів × 3 = 3M ємності).
 - Накладні витрати на координацію (синтез лідера команди).
 
-**Приклад впливу на бюджет** (ціноутворення Opus 4.6):
+**Ілюстративний бюджет** (стандартні тарифи Opus 5.5, без кешування та додаткових токенів координації):
 ```
 Single agent session:
-- Input: 50K tokens @ $15/M = $0.75
-- Output: 5K tokens @ $75/M = $0.38
-- Total: $1.13
+- Input: 50K tokens @ $4/M = $0.20
+- Output: 5K tokens @ $20/M = $0.10
+- Total: $0.30
 
 Agent teams (3 agents):
-- Input: 150K tokens @ $15/M = $2.25
-- Output: 15K tokens @ $75/M = $1.13
-- Total: $3.38
+- Input: 150K tokens @ $4/M = $0.60
+- Output: 15K tokens @ $20/M = $0.30
+- Total: $0.90
 
 Cost multiplier: 3x
 ```
@@ -945,9 +957,9 @@ Start
 
 **Відкрите питання** (станом на лютий 2026):
 > "Я не впевнений щодо рекомендацій Claude стосовно того, коли використовувати beads, а коли сесії команд агентів."
-> — Paul Rayner, лютий 2026
+> Джерело: Paul Rayner, лютий 2026
 
-**Потрібен зворотний зв'язок від спільноти**: Anthropic не опублікувала офіційного керівництва щодо цього вибору. Практикам пропонується ділитися досвідом у [GitHub Discussions](https://github.com/anthropics/claude-code/discussions).
+**Потрібен зворотний зв'язок від спільноти**: Anthropic не опублікувала офіційного керівництва щодо цього вибору. Для відтворюваних багів скористайтеся [трекером issues Claude Code](https://github.com/anthropics/claude-code/issues).
 
 ---
 
@@ -1056,7 +1068,7 @@ Team lead
 - Error codes live in src/constants/errors.ts — always reuse, never hardcode strings
 ```
 
-**Критичне правило — ніколи не дозволяйте агентам писати в AGENTS.md безпосередньо**. Дослідження ETH Zürich (Gloaguen et al., 2026) підтверджує, що створені LLM файли контексту знижують успішність виконання завдань приблизно на 3% і збільшують витрати на виведення на 20%+, порівняно з покращенням приблизно на 4% від файлів, написаних розробниками. Механізм: агенти створюють загальний, роздутий контекст, який створює когнітивне навантаження для кожного наступного агента, що його читає.
+**Критичне правило: ніколи не дозволяйте агентам писати в AGENTS.md безпосередньо**. Дослідження ETH Zürich (Gloaguen et al., 2026) підтверджує, що створені LLM файли контексту знижують успішність виконання завдань приблизно на 3% і збільшують витрати на виведення на 20%+, порівняно з покращенням приблизно на 4% від файлів, написаних розробниками. Механізм: агенти створюють загальний, роздутий контекст, який створює когнітивне навантаження для кожного наступного агента, що його читає.
 
 Кожен рядок в `AGENTS.md` має бути схвалений людиною. Якщо член команди виявляє новий паттерн, вартий документування, він надсилає пропозицію лідеру команди — лідер вирішує, чи додавати її.
 
@@ -1174,7 +1186,7 @@ If still blocked after 8 attempts, stop and report to team lead."
 **Налаштування**:
 ```
 Reviewer brief:
-- Model: Claude Opus 4.6 (for thoroughness)
+- Model: Claude Opus 5.5 (an explicit choice to evaluate)
 - Tools available: lint, run tests, security-scan only — no file writes
 - Trigger: automatically review on every TaskCompleted event
 - Scope: the specific files changed in that task, not the full codebase
@@ -1199,7 +1211,7 @@ Reviewer brief:
 
 **Причини**:
 1. Неправильно встановлено прапорець функції.
-2. Використовується модель, відмінна від Opus 4.6 (командам потрібна Opus).
+2. Вибрана модель учасника недоступна акаунту або заблокована політикою організації.
 3. Завдання недостатньо складне (Claude вирішив, що одного агента достатньо).
 
 **Рішення**:
@@ -1208,7 +1220,7 @@ Reviewer brief:
 echo $CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS  # Має вивести "1" або "true"
 
 # Перевірте налаштування
-cat ~/.claude/settings.json | grep agentTeams  # Має бути true
+cat ~/.claude/settings.json | grep CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS  # Має містити "1"
 
 # Примусово встановіть модель
 /model opus
@@ -1434,12 +1446,12 @@ State explicitly: "I need [X] because [Y]" — not "I might need more context"
 
 | Ситуація | Використовувати ітеративне отримання? |
 |-----------|------------------------|
-| Sub-agent змінює 1–2 відомі файли | Ні — надайте файли безпосередньо |
-| Sub-agent має зрозуміти поведінку системи | Так — може знадобитися відстеження графів викликів |
-| Sub-agent приймає архітектурні рішення | Так — завжди |
-| Sub-agent пише тести для існуючого коду | Часто — потрібно прочитати те, що тестується |
+| Sub-agent змінює 1–2 відомі файли | Ні: надайте файли безпосередньо |
+| Sub-agent має зрозуміти поведінку системи | Так: може знадобитися відстеження графів викликів |
+| Sub-agent приймає архітектурні рішення | Так, завжди |
+| Sub-agent пише тести для існуючого коду | Часто: потрібно прочитати те, що тестується |
 
-Накладні витрати є реальними (кожен цикл коштує токенів та часу). Застосовуйте це до завдань, де неправильні припущення коштуватимуть дорожче, ніж отримання інформації — зазвичай це все, що стосується інтерфейсів, контрактів або публічних API.
+Накладні витрати є реальними (кожен цикл коштує токенів та часу). Застосовуйте це до завдань, де неправильні припущення коштуватимуть дорожче, ніж отримання інформації, зазвичай це все, що стосується інтерфейсів, контрактів або публічних API.
 
 > **Подяка**: Патерн ітеративного отримання для sub-agents запозичено з [Everything Claude Code](https://github.com/affaan-m/everything-claude-code) (Affaan Mustafa). Межа в максимум 3 цикли та розділення ЧОМУ/ЩО задокументовані в їхньому розлогому посібнику.
 
@@ -1483,13 +1495,34 @@ State explicitly: "I need [X] because [Y]" — not "I might need more context"
    Paul Rayner (CEO Virtual Genius, автор EventStorming Handbook), лютий 2026
    Використання в продакшені: 3 одночасні робочі процеси (додаток для пошуку роботи, бізнес-операції, інфраструктура).
 
+8. **[IFTTD ep 311 "IA Agentique"](https://www.ifttd.io/episodes/ia-agentique)**
+   Samy Lastmann (CTO, Smart Tribune), 2024
+   Продакшн-система з кількох агентів: мікроагенти замість одного мега-prompt. Кожен агент має одне завдання та відповідні інструменти. Масштабованість, пояснюваність і вимірюваність покращуються, коли агентів розділяють за відповідальністю. Не кожному агентові в конвеєрі потрібен LLM; детерміновані кроки (regex, BM25, SQL-пошук) належать коду, а не моделі міркування.
+
+9. **[IFTTD ep 361 "Pourquoi le RAG n'est pas mort"](https://www.ifttd.io/episodes/rag)**
+   Guillaume Laforge (Developer Advocate, Google Cloud), 2025
+   Запровадив "harness engineering" як дисципліну керування потоком контексту через багатоагентний конвеєр. Оркестрація ізольованих sub-agents є такою ж проблемою архітектури контексту, як і проблемою декомпозиції завдань: кожен агент отримує лише ту частину контексту, яка йому потрібна, а harness контролює, що і куди передається.
+
+10. **[IFTTD ep 341 "Bilan 2025"](https://www.ifttd.io/episodes/bilan-2025)**
+    Quentin Adam (CEO, Clever Cloud), 2025
+    Патерн багатомодельної оркестрації: Claude розкладає завдання й оркеструє Gemini (більше вікно контексту) для виконання масштабних переписувань кодової бази, що перевищили б вікно Claude. Планування й формулювання завдань лишаються за сильнішим міркувачем; масове поглинання контексту йде до моделі, створеної для цього.
+
+11. **[IFTTD ep 346 "IA & DevX"](https://www.ifttd.io/episodes/ia-devx)**
+    Jocelyn N'takpe (Head of Engineering & Architecture, ManoMano), 2025
+    У масштабі (250 інженерів, 400+ мікросервісів): виділена платформна команда підтримує skills і правила, що кодують внутрішні архітектурні конвенції (патерни підключення до баз даних, кодування повідомлень Kafka, стандарти іменування). Агентів сприймають як нових розробників, яким потрібен онбординг. Документація для агентів тепер підтримується краще, ніж Confluence. Стек MCP у продакшені: Serena (семантичний пошук коду через LSP), Playwright, Context7.
+
+12. **Devoxx, 2026: "The Spec Paradox"**
+    Max Sumrall, 2026
+    Надто вузьке обмеження завдання агента погіршує якість результату майже так само, як і відсутність специфікації взагалі; ширші, амбітніші цілі іноді витягують з агента більш творчі результати, ніж вузьке завдання. Задокументований випадок у Picnic показав той самий патерн на рівні команди: сприйнята продуктивність різко зросла в перші тижні розробки з допомогою ШІ, а потім знизилася, коли код почав випускатися швидше, ніж його встигали переглядати, що призводило до повторного доопрацювання тих самих фіч.
+
 ### Пов'язана документація
 
-- [Claude Code Releases](../core/claude-code-releases.uk.md) — Примітки до релізів v2.1.32, v2.1.33.
-- [Sub-Agents](#split-role-sub-agents) — Делегування завдань одному агенту.
-- [Multi-Instance Workflows](#917-scaling-patterns-multi-instance-workflows) — Ручна паралельна координація.
-- [Dual-Instance Pattern](#alternative-pattern-dual-instance-planning-vertical-separation) — Розподіл «план-виконання».
-- [AI Ecosystem: Beads Framework](../ecosystem/ai-ecosystem.uk.md#beads-framework) — Альтернативна оркестрація (Gas Town).
+- [AI Design Patterns: Mediator](../core/ai-design-patterns.uk.md#mediator): основна розмова як посередник і agent teams як альтернатива з peer-обміном повідомленнями
+- [Claude Code Releases](../core/claude-code-releases.uk.md): примітки до релізів v2.1.32, v2.1.33
+- [Sub-Agents](../ultimate-guide.uk.md#split-role-sub-agents): делегування завдань одному агенту
+- [Multi-Instance Workflows](../ultimate-guide.uk.md#917-scaling-patterns-multi-instance-workflows): ручна паралельна координація
+- [Dual-Instance Pattern](../ultimate-guide.uk.md#альтернативний-патерн-dual-instance-planning-вертикальне-розділення): розподіл «план-виконання»
+- [AI Ecosystem: Beads Framework](../ecosystem/ai-ecosystem.uk.md#beads-framework): альтернативна оркестрація (Gas Town)
 
 ---
 
@@ -1497,13 +1530,494 @@ State explicitly: "I need [X] because [Y]" — not "I might need more context"
 
 **Виникли проблеми?** Повідомляйте про них у [Anthropic GitHub Issues](https://github.com/anthropics/claude-code/issues)
 
-**Маєте практичні висновки?** Діліться в [GitHub Discussions](https://github.com/anthropics/claude-code/discussions)
+**Повідомляєте про баг?** Скористайтеся [трекером issues Claude Code](https://github.com/anthropics/claude-code/issues).
 
 **Запитання?** Задавайте у [Dev With AI Community](https://www.devw.ai/) (1500+ розробників, Slack)
 
 ---
 
-*Версія 1.0.0 | Створено: 2026-02-07 | Agent Teams (v2.1.32+, Експериментальна функція)*
+## Просунуті патерни оркестрації
+
+Ці патерни адресують режими збоїв, що виникають у масштабі в багатоагентних конвеєрах: координатори, які самі виконують забагато роботи, агенти, що рухаються далі без передумов, і конвеєри, які не можуть відновитися після збою посеред виконання.
+
+---
+
+### Координатор hub-and-spoke
+
+Патерн hub-and-spoke відокремлює координацію від виконання. Агент-координатор розкладає завдання, вибирає subagents, розсилає роботу, відстежує результати й агрегує виходи. Він сам не виконує жодної предметної роботи: ні дослідження, ні аналізу, ні генерації. Саме це розділення робить координатор придатним для повторного використання з різними типами завдань.
+
+```python
+from dataclasses import dataclass
+from typing import Callable, Any
+
+@dataclass
+class SubagentResult:
+    agent_id: str
+    task: str
+    result: Any
+    success: bool
+    error: str | None = None
+
+class ResearchCoordinator:
+    def __init__(self, subagents: dict[str, Callable]):
+        self.subagents = subagents  # name -> callable
+
+    def run(self, research_question: str) -> dict:
+        # Decompose into parallel subtasks
+        subtasks = self.decompose(research_question)
+
+        # Dispatch to appropriate subagents
+        results = []
+        for subtask in subtasks:
+            agent_name = self.select_agent(subtask)
+            if agent_name not in self.subagents:
+                results.append(SubagentResult(
+                    agent_id=agent_name, task=subtask,
+                    result=None, success=False,
+                    error=f"No agent available for: {agent_name}"
+                ))
+                continue
+
+            try:
+                result = self.subagents[agent_name](subtask)
+                results.append(SubagentResult(
+                    agent_id=agent_name, task=subtask,
+                    result=result, success=True
+                ))
+            except Exception as e:
+                results.append(SubagentResult(
+                    agent_id=agent_name, task=subtask,
+                    result=None, success=False, error=str(e)
+                ))
+
+        # Aggregate — coordinator's only domain responsibility
+        return self.aggregate(research_question, results)
+
+    def decompose(self, question: str) -> list[str]:
+        # Returns subtasks — coordinator decides structure, not domain content
+        raise NotImplementedError
+
+    def select_agent(self, subtask: str) -> str:
+        # Routing logic — pattern matching or LLM-based selection
+        raise NotImplementedError
+
+    def aggregate(self, original_question: str, results: list[SubagentResult]) -> dict:
+        successful = [r for r in results if r.success]
+        failed = [r for r in results if not r.success]
+
+        return {
+            "question": original_question,
+            "findings": [r.result for r in successful],
+            "coverage": len(successful) / len(results) if results else 0.0,
+            "failures": [{"task": r.task, "error": r.error} for r in failed]
+        }
+```
+
+Координатор ніколи не торкається змісту результатів, а лише маршрутизує їх, підраховує й передає на крок агрегації. Якщо ви знаходите код координатора, що містить логіку аналізу, бізнес-правила чи предметну обробку, ця логіка належить subagent.
+
+---
+
+### Програмні передумови
+
+Перевірки передумов мають бути детермінованими шлюзами, а не інструкціями в prompt. Сказати моделі "переконайся, що дані готові, перш ніж продовжувати" означає зробити пропозицію, а не передумову. Програмна передумова є перевіркою стану, що або дозволяє продовжити виконання, або повертає структуровану помилку.
+
+**Патерн 1: шлюз за прапорцем стану**
+
+```python
+@dataclass
+class PipelineState:
+    data_ingested: bool = False
+    schema_validated: bool = False
+    permissions_checked: bool = False
+
+    def can_proceed_to_analysis(self) -> tuple[bool, list[str]]:
+        missing = []
+        if not self.data_ingested:
+            missing.append("data_ingested")
+        if not self.schema_validated:
+            missing.append("schema_validated")
+        if not self.permissions_checked:
+            missing.append("permissions_checked")
+        return len(missing) == 0, missing
+
+def run_analysis_phase(state: PipelineState, data: dict) -> dict:
+    can_proceed, missing = state.can_proceed_to_analysis()
+    if not can_proceed:
+        return {
+            "status": "blocked",
+            "reason": f"Prerequisites not met: {', '.join(missing)}",
+            "required": missing
+        }
+
+    # Proceed with analysis — all prerequisites confirmed
+    return perform_analysis(data)
+```
+
+**Патерн 2: диспетчеризація за фазами**
+
+Для конвеєрів із послідовними фазами оркестратор диспетчеризує за завершеними фазами, а не за минулим часом чи кількістю ходів:
+
+```python
+from enum import Enum
+
+class PipelinePhase(Enum):
+    INIT = "init"
+    INGESTION = "ingestion"
+    VALIDATION = "validation"
+    PROCESSING = "processing"
+    COMPLETE = "complete"
+    FAILED = "failed"
+
+@dataclass
+class PipelineContext:
+    phase: PipelinePhase = PipelinePhase.INIT
+    phase_results: dict = None
+
+    def __post_init__(self):
+        if self.phase_results is None:
+            self.phase_results = {}
+
+def dispatch_next_phase(context: PipelineContext, agents: dict) -> PipelineContext:
+    next_phase_map = {
+        PipelinePhase.INIT: PipelinePhase.INGESTION,
+        PipelinePhase.INGESTION: PipelinePhase.VALIDATION,
+        PipelinePhase.VALIDATION: PipelinePhase.PROCESSING,
+        PipelinePhase.PROCESSING: PipelinePhase.COMPLETE
+    }
+
+    next_phase = next_phase_map.get(context.phase)
+    if next_phase is None:
+        return context
+
+    agent = agents.get(next_phase.value)
+    if agent is None:
+        context.phase = PipelinePhase.FAILED
+        return context
+
+    try:
+        result = agent(context.phase_results)
+        context.phase_results[next_phase.value] = result
+        context.phase = next_phase
+    except Exception as e:
+        context.phase = PipelinePhase.FAILED
+        context.phase_results["error"] = str(e)
+
+    return context
+```
+
+---
+
+### Динамічний вибір subagent
+
+Замість жорсткого кодування того, який агент обробляє яке завдання, координатор може вибирати subagents динамічно на основі характеристик завдання. Це дозволяє тому самому координатору обробляти нові типи завдань без змін коду.
+
+```python
+@dataclass
+class AgentCapability:
+    name: str
+    handles: list[str]  # task type keywords
+    cost: float          # relative cost (1.0 = baseline)
+    latency: float       # expected seconds
+
+class DynamicSelector:
+    def __init__(self, agents: list[AgentCapability]):
+        self.agents = agents
+
+    def select(self, task: str, budget_tier: str = "standard") -> str:
+        candidates = [
+            a for a in self.agents
+            if any(keyword in task.lower() for keyword in a.handles)
+        ]
+
+        if not candidates:
+            return "general"  # fallback agent
+
+        if budget_tier == "economy":
+            # Cheapest capable agent
+            return min(candidates, key=lambda a: a.cost).name
+        elif budget_tier == "performance":
+            # Fastest capable agent
+            return min(candidates, key=lambda a: a.latency).name
+        else:
+            # Balanced: cheapest among the fast agents
+            fast = [a for a in candidates if a.latency < 10.0]
+            pool = fast if fast else candidates
+            return min(pool, key=lambda a: a.cost).name
+```
+
+---
+
+### Розбиття простору дослідження
+
+Коли кілька агентів досліджують одну широку тему, вони повертають результати, що перекриваються, якщо координатор явно не розбиває простір пошуку. Перекриття марнує бюджет і ускладнює агрегацію.
+
+```python
+def partition_research_space(
+    topic: str,
+    num_agents: int,
+    partition_dimensions: list[str]
+) -> list[dict]:
+    """
+    Divide a research topic into non-overlapping partitions.
+    Each agent receives a partition with explicit scope boundaries.
+    """
+    if len(partition_dimensions) >= num_agents:
+        dimensions = partition_dimensions[:num_agents]
+    else:
+        # Create additional partitions if not enough thematic dimensions
+        dimensions = partition_dimensions + [
+            f"recent_{i}" for i in range(num_agents - len(partition_dimensions))
+        ]
+
+    return [
+        {
+            "agent_id": f"researcher_{i}",
+            "topic": topic,
+            "scope": dimension,
+            "exclusions": [d for j, d in enumerate(dimensions) if j != i],
+            "instruction": (
+                f"Research '{topic}' focusing exclusively on '{dimension}'. "
+                f"Do NOT cover: {', '.join(dimensions[:i] + dimensions[i+1:])}. "
+                f"This constraint prevents duplication with parallel researchers."
+            )
+        }
+        for i, dimension in enumerate(dimensions)
+    ]
+
+# Example: 3-agent research on "vector database performance"
+partitions = partition_research_space(
+    topic="vector database performance",
+    num_agents=3,
+    partition_dimensions=["indexing algorithms", "query optimization", "hardware scaling"]
+)
+```
+
+---
+
+### Маніфест відновлення після збою
+
+Довготривалі агентні конвеєри (години, нічні завдання) потребують відновлення після збою. Маніфест записує виконану роботу на межах фаз, щоб перезапуск міг продовжити з останньої контрольної точки, а не починати спочатку.
+
+```python
+import json
+import os
+from dataclasses import dataclass, field, asdict
+from datetime import datetime
+
+@dataclass
+class PipelineManifest:
+    pipeline_id: str
+    created_at: str
+    task_description: str
+    total_items: int
+    completed_items: list[str] = field(default_factory=list)
+    failed_items: list[dict] = field(default_factory=list)
+    phase_checkpoints: dict = field(default_factory=dict)
+    status: str = "in_progress"  # "in_progress" | "complete" | "failed"
+
+    def save(self, path: str):
+        with open(path, "w") as f:
+            json.dump(asdict(self), f, indent=2)
+
+    @classmethod
+    def load(cls, path: str) -> "PipelineManifest":
+        with open(path) as f:
+            data = json.load(f)
+        return cls(**data)
+
+    def checkpoint(self, phase: str, result: dict, manifest_path: str):
+        self.phase_checkpoints[phase] = {
+            "completed_at": datetime.utcnow().isoformat(),
+            "result_summary": result.get("summary", "")
+        }
+        self.save(manifest_path)
+
+    def mark_item_complete(self, item_id: str, manifest_path: str):
+        self.completed_items.append(item_id)
+        self.save(manifest_path)  # write after every item
+
+class RecoverableOrchestrator:
+    def __init__(self, manifest_path: str):
+        self.manifest_path = manifest_path
+
+    def run(self, pipeline_id: str, items: list[str], processor) -> PipelineManifest:
+        # Load or create manifest
+        if os.path.exists(self.manifest_path):
+            manifest = PipelineManifest.load(self.manifest_path)
+            print(f"Resuming: {len(manifest.completed_items)}/{manifest.total_items} done")
+        else:
+            manifest = PipelineManifest(
+                pipeline_id=pipeline_id,
+                created_at=datetime.utcnow().isoformat(),
+                task_description=f"Processing {len(items)} items",
+                total_items=len(items)
+            )
+
+        for item_id in items:
+            if item_id in manifest.completed_items:
+                continue  # skip completed items
+
+            try:
+                processor(item_id)
+                manifest.mark_item_complete(item_id, self.manifest_path)
+            except Exception as e:
+                manifest.failed_items.append({"id": item_id, "error": str(e)})
+                manifest.save(self.manifest_path)
+
+        manifest.status = "complete" if not manifest.failed_items else "partial"
+        manifest.save(self.manifest_path)
+        return manifest
+```
+
+Фіксуйте контрольні точки на межах фаз, а не лише по завершенні завдання. Для триетапного конвеєра (прийом, аналіз, звіт) збій посеред аналізу має відновлюватися з початку аналізу, а не з початку прийому.
+
+---
+
+### Цикл ітеративного вдосконалення
+
+Деякі завдання потребують кількох проходів, щоб досягти прийнятної якості. Ітерацією керує координатор, а не subagent. Це розділення означає, що subagent лишається без стану, а координатор контролює критерії зупинки.
+
+```python
+@dataclass
+class RefinementState:
+    iteration: int
+    current_output: str
+    quality_score: float
+    feedback: str | None
+    max_iterations: int = 5
+    target_quality: float = 0.85
+
+    def should_continue(self) -> bool:
+        return (
+            self.iteration < self.max_iterations
+            and self.quality_score < self.target_quality
+        )
+
+def iterative_refine(
+    initial_task: str,
+    generator_fn,
+    evaluator_fn,
+    max_iterations: int = 5
+) -> RefinementState:
+    state = RefinementState(
+        iteration=0,
+        current_output="",
+        quality_score=0.0,
+        feedback=None,
+        max_iterations=max_iterations
+    )
+
+    while True:
+        # Generate (or refine based on feedback)
+        if state.iteration == 0:
+            state.current_output = generator_fn(initial_task)
+        else:
+            state.current_output = generator_fn(
+                f"{initial_task}\n\nPrevious attempt:\n{state.current_output}\n\n"
+                f"Feedback to address:\n{state.feedback}"
+            )
+
+        # Evaluate — separate pass with fresh context
+        evaluation = evaluator_fn(state.current_output, initial_task)
+        state.quality_score = evaluation["score"]
+        state.feedback = evaluation["feedback"]
+        state.iteration += 1
+
+        if not state.should_continue():
+            break
+
+    return state
+```
+
+Критерії зупинки важливі. "Продовжуй, доки не стане ідеально" не є критерієм зупинки. Визначте `target_quality` як числовий поріг на основі валідаційного набору, а `max_iterations` як жорсткий бюджет. Без обох цикл або завершується зарано, або працює нескінченно.
+
+---
+
+### Вузька декомпозиція завдань
+
+Широка декомпозиція завдань породжує subagents із нечіткими критеріями успіху. Використовуйте тест SPEC, щоб перевірити кожне підзавдання перед відправленням:
+
+**Тест SPEC для підзавдань:**
+- **S**pecific (конкретне): опис завдання не залишає двозначності щодо того, що створювати
+- **P**rogrammatically evaluable (програмно оцінюване): успіх чи невдачу можна перевірити без людського судження
+- **E**xplicit scope (явний обсяг): що входить в обсяг і що ні, зазначено, а не мається на увазі
+- **C**onstrained (обмежене): завдання має визначений формат виходу, довжину чи схему
+
+Підзавдання, що не проходить тест SPEC, слід далі декомпонувати або уточнити перед відправленням.
+
+| Підзавдання | Проходить SPEC? | Проблема |
+|---|---|---|
+| "Research the topic" | Ні | Не конкретне, не оцінюване програмно |
+| "Find 3 peer-reviewed papers on vector indexing published 2022-2024" | Так | Конкретне, піддається підрахунку, обмежене за обсягом, з обмеженим форматом |
+| "Analyze the data" | Ні | Не конкретне, немає схеми виходу |
+| "Extract vendor names from invoices 001-050, output as JSON array" | Так | Конкретне, обмежене схемою, з визначеним обсягом |
+| "Write something good" | Ні | Немає критеріїв якості, не оцінюване |
+| "Write a 150-word executive summary with: problem, approach, outcome" | Так | Кількість слів, структуру та зміст визначено |
+
+Коли підзавдання неможливо виразити так, щоб воно проходило тест SPEC, це зазвичай сигнал, що в координатора ще недостатньо інформації для декомпозиції цієї частини роботи. Зберіть більше контексту, перш ніж декомпонувати далі.
+
+---
+
+### Керування агентом, що працює
+
+Коли координатор може надсилати повідомлення агентові посеред виконання, виникає спокуса виправляти все, що виглядає неоптимальним. Цей інстинкт хибний, і він коштує реального часу.
+
+**Правило: спрямовуйте агента, який дрейфує, ніколи не агента, який просувається.**
+
+Повідомлення, доставлене здоровому агенту, не прискорює його. Воно перериває роботу, примушує до перемикання контексту й купує відповідь замість результату. В одному задокументованому випадку добронамірене втручання змусило виконавця близько десяти хвилин відповідати на повідомлення замість просуватися у своєму завданні. Агент працював нормально, доки йому не сказали іншого.
+
+Дрейф, навпаки, варто переривати негайно, і його можна впізнати без читання міркувань агента. Сигнал завжди поведінковий, видимий ззовні:
+
+| Спостережувана поведінка | Вердикт | Втручання |
+|---|---|---|
+| Пише скрипт 12 хвилин, жодного разу його не виконавши | Дрейф | Оголосити невдалим, перезапустити чисто. Без дебатів і циклу очікування |
+| Цикл, що вбиває власний процес (наприклад, `grep`, який збігається з власним PID) | Дрейф | Перенаправити в один-два рядки: "fixed PIDs, no loop" |
+| 22 секунди на виявлення каталогу, який йому вже надали | Дрейф | Повторно відправити з абсолютним робочим каталогом |
+| Випускає буквальний `$now` у JSON через зламану підстановку оболонки | Дрейф | Переписати крок мовою зі справжньою передачею аргументів |
+| Натрапляє на перешкоду й самостійно адаптується (наприклад, переходить на `find -o` після зіпсованих оболонкою циклів `for`) | Прогрес | Не втручатися |
+| Файл статусу оновлюється, вихід зростає, помилок немає | Прогрес | Не втручатися |
+
+Практичний наслідок: координатору потрібен **неблокувальний канал нагляду**, а не розмовний. Файл статусу для кожного агента, що містить останній прев'ю виходу, кількість кроків і код завершення, дозволяє координатору оцінити дрейф, нічого не надсилаючи. Повідомлення потім залишаються для випадків, коли спостереження вказує, що втручання виправдане, що не дозволяє peer-to-peer mailbox стати "вузьким місцем", яке він мав усунути.
+
+Корисний поріг: стежте за файлом статусу й розглядайте втручання лише тоді, коли він не оновлювався довше за очікувану тривалість кроку завдання. Приблизно 30 секунд підходить для роботи на рівні оболонки; крок збірки чи тесту потребує пропорційно довшого вікна.
+
+> Повідомлено з практики Mathieu Grenier (CTO, Easystrat) на мережі агентів із п'яти проєктів, 2026-08-15. Повна оцінка: [`docs/resource-evaluations/grenier-multi-project-agent-network.md`](https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/docs/resource-evaluations/grenier-multi-project-agent-network.md)
+
+---
+
+### Single-Writer для спільних файлів плану
+
+Кілька агентів, що редагують один файл плану, списку завдань чи чек-листа, є найпоширенішим джерелом тихого псування в командному налаштуванні. Два агенти викреслюють той самий пункт і створюють дублікат. Один пише, поки інший тримає застаріле читання, й перезаписує зміну. Пакетний запис уривається на півдорозі й лишає файл структурно зламаним.
+
+Ізольовані вікна контексту тут не допомагають, бо конфлікт відбувається на диску, а не в контексті.
+
+**Правило: рівно один агент має доступ на запис до спільного файлу. Усі інші агенти запитують запис через шину повідомлень.**
+
+Агент-запитувач створює вміст і надсилає його. Агент-власник виконує запис. Механізм коштує один обмін повідомленнями туди-назад і усуває цілий клас збоїв одночасного запису, бо за побудовою ніколи не буває більше одного автора.
+
+```
+memory-curator  --(coms: "strike items 4-9, batch complete")-->  orchestrator
+                <--(ack)--                                        writes plan file
+```
+
+Задокументований приклад: агент `memory-curator` без права запису створив три записи, а потім попросив свого оркестратора через шину викреслити відповідну партію в плані оркестрації. Оркестратор виконав єдиний запис. Жодних дублікатів, жодного конфлікту.
+
+Це поєднується з уже використовуваним розділенням читання/запису для агентів-розслідувачів. Агент, що читає недовірений ввід (логи продакшену, текст сторонніх issue, зіскановані сторінки), з міркувань безпеки від ін'єкцій не повинен мати доступу на запис до будь-чого; змушуючи його запитувати записи через власника, ми задовольняємо і вимогу конкурентності, і вимогу безпеки одним і тим самим механізмом.
+
+| Спільний артефакт | Рекомендований власник |
+|---|---|
+| План оркестрації / список завдань | Team lead або координатор |
+| Файл статусу для кожного агента | Агент, якого він описує (єдиний автор за визначенням) |
+| Спільний документ знахідок | Координатор, дописує за повідомленням |
+| Вихідні файли | Той, хто тримає worktree, один агент на worktree |
+
+Останній рядок пояснює, чому ізоляція worktree і single-writer є взаємодоповнювальними, а не надлишковими: worktrees дають кожному агентові власне дерево вихідного коду, а single-writer охоплює координаційні артефакти, які неминуче лишаються спільними. Дивіться також [Multi-Agent Shared Memory](../core/memory-systems.uk.md#5-спільна-память-кількох-агентів) щодо аспекту збереження тієї самої проблеми.
+
+> Повідомлено з практики Mathieu Grenier (CTO, Easystrat), 2026-08-15. Повна оцінка: [`docs/resource-evaluations/grenier-multi-project-agent-network.md`](https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/docs/resource-evaluations/grenier-multi-project-agent-network.md)
+
+---
+
+*Версія 1.1.0 | Створено: 2026-02-07 | Оновлено: 2026-08-16 | Agent Teams (v2.1.32+, Експериментальна функція)*
 
 ---
 **Локалізація**: [Serhii (MacPlus Software)](https://macplus-software.com)

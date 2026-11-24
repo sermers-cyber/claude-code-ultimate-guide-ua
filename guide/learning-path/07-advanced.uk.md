@@ -1,3 +1,8 @@
+---
+title: "Module 07: Advanced Patterns"
+description: "Модуль 07 навчального шляху: оркестрація multi-agent workflows у Claude Code, відновлення після помилок і шаблони автоматизації рівня production для командних процесів. 2-3 години, рівень advanced."
+---
+
 # Module 07: Advanced Patterns
 
 **Час**: 2-3 години | **Складність**: ⭐⭐⭐ Advanced
@@ -22,6 +27,8 @@
 ## Multi-Agent Systems
 
 **Multi-agent system** — це архітектура, у якій кілька спеціалізованих agents спільно працюють над досягненням однієї мети.
+
+Перш ніж обирати командний шаблон, розділіть рівні: модель видає токени, runtime harness керує циклом «модель — інструменти» в межах сесії, harness репозиторію надає інструкції та верифікацію, а оркестратор координує сесії. Цю модель пояснює [Agent Harness Engineering](../core/agent-harness.uk.md); [Карта agent harness](../ecosystem/agent-harness-landscape.uk.md) порівнює рантайми, що керують циклом, і окремо тримає ширший каталог. Для фреймворків і площин керування використовуйте [Інструменти агентів: поза межами Claude Code](../ecosystem/agentic-tools.uk.md), для термінів — [глосарій](../core/glossary.uk.md), щоб оцінити результат — [Agent Evaluation](../roles/agent-evaluation.uk.md), щоб перевірити виконання — [Спостережуваність сесій](../ops/observability.uk.md), а перед запуском роботи без нагляду — [Зміцнення безпеки](../security/security-hardening.uk.md).
 
 ### Приклад: Workflow випуску коду (Code Release Workflow)
 
@@ -572,6 +579,12 @@ Usage:
 - Запустіть `/self-assessment comprehensive`, щоб виявити можливі прогалини в знаннях
 - Отримайте персоналізовані рекомендації
 - Створіть план навчання для підтягування слабких зон
+
+---
+
+**Завершили Module 07?** → Ви — досвідчений користувач Claude Code.
+
+Для глибшого занурення відкрийте повний посібник `guide/ultimate-guide.md` або навчіть інших тому, що ви вивчили.
 
 ---
 **Локалізація**: [Serhii (MacPlus Software)](https://macplus-software.com)

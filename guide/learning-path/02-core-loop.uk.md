@@ -1,10 +1,17 @@
-# Module 02: Core Loop
+---
+title: "Module 02: Core loop"
+description: "Модуль 02 навчального шляху: як працює цикл прийняття рішень і context у Claude Code та як ефективно структурувати запити. 45 хвилин, рівень для початківців."
+---
+
+# Module 02: Core loop
 
 **Час**: 45 хвилин | **Складність**: ⭐ Beginner
 
+**Попередній:** [Module 01: Installation & Setup](01-installation.uk.md)
+
 ## Мета
 
-Зрозуміти, як насправді працює Claude Code — цикл прийняття рішень, context та способи ефективного структурування запитів.
+Зрозуміти, як насправді працює Claude Code: цикл прийняття рішень, context та способи ефективного структурування запитів.
 
 ---
 
@@ -302,11 +309,11 @@ VERIFY: Write tests in tests/validators.test.js
 
 ✓ Будьте конкретними (WHAT/WHERE/HOW/VERIFY) для швидших результатів
 
-✓ Context обмежений — стежте за відсотками та використовуйте `/compact` при 70%+
+✓ Context обмежений, стежте за відсотками та використовуйте `/compact` при 70%+
 
 ✓ Використовуєте `/plan` для ризикованих змін, а normal mode для безпечних
 
-✓ Sessions тимчасові — використовуйте `/checkpoint` для збереження важливої роботи
+✓ Sessions тимчасові, використовуйте `/checkpoint` для збереження важливої роботи
 
 ---
 
@@ -329,6 +336,10 @@ VERIFY: Write tests in tests/validators.test.js
 - Власна конфігурація
 
 Цей модуль навчить вас, як змусити Claude Code пам'ятати ваш стиль та вподобання.
+
+---
+
+**Завершили Module 02?** → Готові до [Module 03: Memory & Config](03-memory.uk.md)
 
 ---
 **Локалізація**: [Serhii (MacPlus Software)](https://macplus-software.com)
