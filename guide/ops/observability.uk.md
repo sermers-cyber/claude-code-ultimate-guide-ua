@@ -617,7 +617,7 @@ jq -r 'select(.type == "assistant") | .message.content[]? | select(.type == "too
 | **ccusage** | CLI / TUI | Відстеження витрат на основі JSONL. Де-факто стандарт для фінансового аналізу. ~10K зірок на GitHub. | `npm i -g ccusage` |
 | **claude-code-otel** | OpenTelemetry експортер | Надсилає спани у будь-який сумісний OTEL-коллектор. Інтегрується з Grafana. | `npm i -g claude-code-otel` |
 | **Akto** | SaaS / Self-hosted | Перевірка безпеки API та логування аудиту на рівні мережевих запитів API. | [akto.io](https://akto.io) |
-| **MLflow Tracing** | CLI + SDK | Точний підрахунок токенів, спани інструментів, оцінка якості. Не вимагає знання Python в режимі CLI. | `pip install mlflow` → [див. деталі нижче](#mlflow-tracing) |
+| **MLflow Tracing** | CLI + SDK | Точний підрахунок токенів, спани інструментів, оцінка якості. Не вимагає знання Python в режимі CLI. | `pip install mlflow` → [див. деталі нижче](#трасування-mlflow-mlflow-tracing) |
 | **ccboard** | TUI + Web | Єдиний дашборд для сесій, витрат та статистики. Розробляється вкладка аудиту активності. | `cargo install ccboard` |
 | **claude-crusts** | CLI | Однокомандний сканер забруднення контексту: позначає застарілі файли, завеликі файли пам'яті та надлишкове завантаження правил. Помітьте, що роздуває ваш контекст, до запуску сесій. | [github.com/Abinesh-L/claude-crusts](https://github.com/Abinesh-L/claude-crusts) |
 

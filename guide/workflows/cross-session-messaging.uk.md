@@ -10,7 +10,7 @@ tags: [multi-agent, sessions, security, tools-reference]
 
 **Офіційна документація**: [code.claude.com/docs/en/cross-session-messaging](https://code.claude.com/docs/en/cross-session-messaging)
 
-> **Див. також**: [Tools Reference](../core/tools-reference.uk.md#cross-session-messaging-listagents--sendmessage) — запис у таблиці інструментів, [Agent Teams](./agent-teams.uk.md) — споріднений, але відмінний механізм поштових скриньок учасників команди, [Security Hardening: Cross-Session Messaging](../security/security-hardening.uk.md#cross-session-messaging-threat-model) — модель загроз каналу, [Native Sandboxing: Cross-session inbox sockets](../security/sandbox-native.uk.md#cross-session-inbox-sockets) — ізоляція процесів Bash і винятки для Unix-сокетів, а також [Agent Harness: Creator-Verifier](../core/agent-harness.uk.md#8-creator-verifier-pattern) — контролі доказів і незалежності рецензента.
+> **Див. також**: [Tools Reference](../core/tools-reference.uk.md#міжсесійні-повідомлення-listagents--sendmessage) — запис у таблиці інструментів, [Agent Teams](./agent-teams.uk.md) — споріднений, але відмінний механізм поштових скриньок учасників команди, [Security Hardening: Cross-Session Messaging](../security/security-hardening.uk.md#cross-session-messaging-threat-model) — модель загроз каналу, [Native Sandboxing: Cross-session inbox sockets](../security/sandbox-native.uk.md#inbox-сокети-між-сесіями) — ізоляція процесів Bash і винятки для Unix-сокетів, а також [Agent Harness: Creator-Verifier](../core/agent-harness.uk.md#8-патерн-створювачверифікатор) — контролі доказів і незалежності рецензента.
 
 ---
 
@@ -26,7 +26,7 @@ Claude Code має окрему функцію для кожного спосо�
 | Скоординовану команду сесій, яку Claude сам створює й контролює | [Agent Teams](./agent-teams.uk.md) |
 | Спостерігати й керувати багатьма сесіями з одного місця | Agent view (фонові сесії) |
 | Керувати сесією самостійно з телефону чи іншого пристрою | [Remote Control](../ultimate-guide.uk.md#922-remote-control-mobile-access) |
-| Передавати зовнішні події (результати CI, повідомлення чатів) у сесію | [Channels](./monitor-event-delegation.uk.md#plugin-monitors-and-channels) |
+| Передавати зовнішні події (результати CI, повідомлення чатів) у сесію | [Channels](./monitor-event-delegation.uk.md#плагінні-монітори-та-channels) |
 | **Обмінюватися повідомленнями між незалежними сесіями, які ви запускаєте й ведете самі** | **Обмін повідомленнями між сесіями** |
 
 Останній рядок — випадок, який охоплює решта цієї сторінки: сесії без відносин породження між собою, кожна відкрита у власному терміналі, кожна зі своїм вікном контексту, дозволами й робочим каталогом.
@@ -126,7 +126,7 @@ Claude Code прив'язує сокет inbox для кожної сесії з
 
 Сесії `claude -p` прив'язують inbox так само, як інтерактивні. Сесії, запущені в [bare mode](../ultimate-guide.uk.md#headless-mode), не прив'язують сокет і ніколи не з'являються в списку агентів.
 
-`ListAgents` і `SendMessage` виконуються в самому Claude Code, поза пісочницею Bash. Тому звичайна доставка між сесіями не потребує винятку для Unix-сокетів. Виняток важливий лише тоді, коли команда Bash у пісочниці підключається безпосередньо до `CLAUDE_CODE_MESSAGING_SOCKET`. На macOS [`sandbox.network.allowUnixSockets`](../core/settings-reference.uk.md#sandboxnetworkallowunixsockets) може обмежити виняток за шляхом сокета. На Linux і WSL2 allowlist сокетів за шляхом недоступний; [`sandbox.network.allowAllUnixSockets: true`](../core/settings-reference.uk.md#sandboxnetworkallowallunixsockets) знімає фільтр Unix-сокетів для кожного сокета, якого може досягти команда. Надавайте перевагу вбудованому інструменту `SendMessage` і не розширюйте доступ до Unix-сокетів лише для того, щоб увімкнути звичайний обмін повідомленнями між сесіями. [Native Sandboxing: Cross-session inbox sockets](../security/sandbox-native.uk.md#cross-session-inbox-sockets) розглядає компроміс для кожної платформи.
+`ListAgents` і `SendMessage` виконуються в самому Claude Code, поза пісочницею Bash. Тому звичайна доставка між сесіями не потребує винятку для Unix-сокетів. Виняток важливий лише тоді, коли команда Bash у пісочниці підключається безпосередньо до `CLAUDE_CODE_MESSAGING_SOCKET`. На macOS [`sandbox.network.allowUnixSockets`](../core/settings-reference.uk.md#sandboxnetworkallowunixsockets) може обмежити виняток за шляхом сокета. На Linux і WSL2 allowlist сокетів за шляхом недоступний; [`sandbox.network.allowAllUnixSockets: true`](../core/settings-reference.uk.md#sandboxnetworkallowallunixsockets) знімає фільтр Unix-сокетів для кожного сокета, якого може досягти команда. Надавайте перевагу вбудованому інструменту `SendMessage` і не розширюйте доступ до Unix-сокетів лише для того, щоб увімкнути звичайний обмін повідомленнями між сесіями. [Native Sandboxing: Cross-session inbox sockets](../security/sandbox-native.uk.md#inbox-сокети-між-сесіями) розглядає компроміс для кожної платформи.
 
 ---
 
@@ -189,9 +189,9 @@ Claude Code утримує щонайбільше 100 повідомлень, о
 | Межа | Що вона контролює | Чого вона не гарантує |
 |---|---|---|
 | `crossSessionInbound`, `isolatePeerMachines` і дозволи інструментів | Які повідомлення надходять, чи залишають вони машину без схвалення та які інструменти може викликати одержувач | Що доставлене твердження правильне чи актуальне |
-| [Нативна пісочниця](../security/sandbox-native.uk.md#cross-session-inbox-sockets) | Вплив команд Bash та їхніх дочірніх процесів на файлову систему й мережу | Безпека вбудованих викликів `Read`, `Edit` чи `Write`; правильність повідомлення; незалежність сесій |
+| [Нативна пісочниця](../security/sandbox-native.uk.md#inbox-сокети-між-сесіями) | Вплив команд Bash та їхніх дочірніх процесів на файлову систему й мережу | Безпека вбудованих викликів `Read`, `Edit` чи `Write`; правильність повідомлення; незалежність сесій |
 | Один worktree на кожного паралельного автора змін | Розділення робочих файлів та індексів під час паралельних змін | Ізоляція хоста, облікових даних, мережі чи процесів |
-| [Harness і CI-бар'єри](../core/agent-harness.uk.md#8-creator-verifier-pattern) | Відтворювані перевірки поточного коміту та незалежне рев'ю за вимогами | Ізоляція на рівні ОС чи політика дозволів |
+| [Harness і CI-бар'єри](../core/agent-harness.uk.md#8-патерн-створювачверифікатор) | Відтворювані перевірки поточного коміту та незалежне рев'ю за вимогами | Ізоляція на рівні ОС чи політика дозволів |
 
 Нативна пісочниця обмежує частину радіуса ураження, якщо одержувач діє за шкідливим чи хибним повідомленням. Вона не запобігає корельованому дрейфу і не перетворює дві сесії, що діляться одним checkout, на ізольованих виконавців.
 
@@ -222,7 +222,7 @@ Uncertainty: rollback was not tested
 Requested action: verify compatibility against your current HEAD
 ```
 
-Скористайтеся [моделлю загроз Security Hardening](../security/security-hardening.uk.md#cross-session-messaging-threat-model) для контролів відправника, транспорту, політики вхідних повідомлень і меж виконання. [Посібник Agent Harness](../core/agent-harness.uk.md#8-creator-verifier-pattern) охоплює незалежність верифікатора й пакети доказів. [Посібник Agent Evaluation](../roles/agent-evaluation.uk.md#evaluate-judgment-allocation-and-reviewer-independence) пояснює, як вимірювати хибні прийняття, хибні відхилення, врятовані збої та розбіжності, замість того щоб припускати, що другий агент незалежний.
+Скористайтеся [моделлю загроз Security Hardening](../security/security-hardening.uk.md#cross-session-messaging-threat-model) для контролів відправника, транспорту, політики вхідних повідомлень і меж виконання. [Посібник Agent Harness](../core/agent-harness.uk.md#8-патерн-створювачверифікатор) охоплює незалежність верифікатора й пакети доказів. [Посібник Agent Evaluation](../roles/agent-evaluation.uk.md#оцінюйте-розподіл-прийняття-рішень-і-незалежність-рецензента) пояснює, як вимірювати хибні прийняття, хибні відхилення, врятовані збої та розбіжності, замість того щоб припускати, що другий агент незалежний.
 
 ---
 

@@ -13,7 +13,7 @@ tags: [workflow, agents, architecture]
 
 **Коли впроваджено**: v2.1.32 (2026-02-05) як попередній перегляд дослідження
 **Час читання**: ~30 хв
-**Передумови**: доступна модель і експериментальний прапорець Agent Teams, розуміння [Sub-Agents](../ultimate-guide.uk.md#split-role-sub-agents), знайомство з Task Tool
+**Передумови**: доступна модель і експериментальний прапорець Agent Teams, розуміння [Sub-Agents](../ultimate-guide.uk.md#subagents-з-розділеними-ролями-split-role), знайомство з Task Tool
 
 **🚀 Бажаєте почати швидко?** Дивіться **[Швидкий старт для команд агентів](agent-teams-quick-start.uk.md)** (8-10 хв, готові шаблони для копіювання-вставки у ваші проекти)
 
@@ -292,7 +292,7 @@ claude
 - ✅ Git-репозиторій (для координації)
 
 **Рекомендовано**:
-- ✅ Розуміння концепції [Sub-Agents](../ultimate-guide.uk.md#split-role-sub-agents)
+- ✅ Розуміння концепції [Sub-Agents](../ultimate-guide.uk.md#subagents-з-розділеними-ролями-split-role)
 - ✅ Знайомство з робочими процесами git
 - ✅ Контроль бюджету (функція інтенсивно витрачає токени)
 
@@ -1519,7 +1519,7 @@ State explicitly: "I need [X] because [Y]" — not "I might need more context"
 
 - [AI Design Patterns: Mediator](../core/ai-design-patterns.uk.md#mediator): основна розмова як посередник і agent teams як альтернатива з peer-обміном повідомленнями
 - [Claude Code Releases](../core/claude-code-releases.uk.md): примітки до релізів v2.1.32, v2.1.33
-- [Sub-Agents](../ultimate-guide.uk.md#split-role-sub-agents): делегування завдань одному агенту
+- [Sub-Agents](../ultimate-guide.uk.md#subagents-з-розділеними-ролями-split-role): делегування завдань одному агенту
 - [Multi-Instance Workflows](../ultimate-guide.uk.md#917-scaling-patterns-multi-instance-workflows): ручна паралельна координація
 - [Dual-Instance Pattern](../ultimate-guide.uk.md#альтернативний-патерн-dual-instance-planning-вертикальне-розділення): розподіл «план-виконання»
 - [AI Ecosystem: Beads Framework](../ecosystem/ai-ecosystem.uk.md#beads-framework): альтернативна оркестрація (Gas Town)

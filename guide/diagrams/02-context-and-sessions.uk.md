@@ -83,7 +83,7 @@ flowchart LR
 
 </details>
 
-> **Джерело**: [Керування контекстом](../ultimate-guide.uk.md#context-management) — Рядок ~1335
+> **Джерело**: [Керування контекстом](../ultimate-guide.uk.md#керування-контекстом) — Рядок ~1335
 
 ---
 

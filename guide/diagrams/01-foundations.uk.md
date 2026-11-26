@@ -54,7 +54,7 @@ flowchart TD
 
 </details>
 
-> **Джерело**: [Керування контекстом](../ultimate-guide.uk.md#22-context-management)
+> **Джерело**: [Керування контекстом](../ultimate-guide.uk.md#22-керування-контекстом)
 >
 > **Офіційна довідка**: [Context Claude Code adds](https://code.claude.com/docs/en/how-claude-code-works#context-claude-code-adds-on-its-own) та [відкладені визначення MCP](https://code.claude.com/docs/en/how-claude-code-works#when-context-fills-up).
 

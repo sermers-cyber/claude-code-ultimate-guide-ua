@@ -82,7 +82,7 @@ pre-commit run --all-files
 
 ### 3. Внесіть зміни
 
-Дотримуйтесь [Content Guidelines](#content-guidelines) нижче.
+Дотримуйтесь [Content Guidelines](#content-guidelines-рекомендації-щодо-контенту) нижче.
 
 ### 4. Протестуйте ваші зміни
 

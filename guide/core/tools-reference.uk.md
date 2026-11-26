@@ -122,7 +122,7 @@ Claude Code постачається з набором вбудованих ін
 
 Правило дозволу `Edit(...)` також надає доступ на читання до того самого шляху, тож відповідне правило `Read(...)` поруч не потрібне.
 
-Повний синтаксис, зокрема форми префіксів шляху (`//`, `~/`, `/`, `./`) і семантику wildcard для Bash, див. у [Permission Rule Syntax у settings-reference.md](./settings-reference.uk.md#permission-rule-syntax).
+Повний синтаксис, зокрема форми префіксів шляху (`//`, `~/`, `/`, `./`) і семантику wildcard для Bash, див. у [Permission Rule Syntax у settings-reference.md](./settings-reference.uk.md#синтаксис-правил-дозволів-permission-rule-syntax).
 
 ---
 
@@ -271,7 +271,7 @@ Claude викликає `PushNotification`, щоб надіслати спові
 ## Див. також
 
 - [Внутрішня архітектура](./architecture.uk.md): головний цикл, логіка вибору інструментів, бюджет контексту
-- [Permission Rule Syntax](./settings-reference.uk.md#permission-rule-syntax): повний формат правил `allow`/`deny` з усіма формами специфікаторів
+- [Permission Rule Syntax](./settings-reference.uk.md#синтаксис-правил-дозволів-permission-rule-syntax): повний формат правил `allow`/`deny` з усіма формами специфікаторів
 - [Sub-agents](../ultimate-guide.uk.md#sub-agents): як працює породження через `Agent`, успадкування інструментів, foreground проти background
 - [Cross-Session Messaging](../workflows/cross-session-messaging.uk.md): повна механіка `ListAgents`/`SendMessage` між незалежними сесіями
 - [Monitor, Channels і безпечне делегування Codex](../workflows/monitor-event-delegation.uk.md): джерела WebSocket, plugin-monitor, Channels, Routines і подієво кероване мінімальне привілеювання

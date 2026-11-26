@@ -50,7 +50,7 @@ keywords:
 | 2026-09-14 | Messages API може стискати розмову на вимогу, у бета-версії (заголовок `compact-2026-09-04`) | Розробників на API та Agent SDK | [Нотатки до релізів API](https://platform.claude.com/docs/en/release-notes/api) |
 | Тиждень 2026-08-31 | Фонове керування комп'ютером (background computer use) в застосунку Claude Code Desktop на macOS, у бета-версії | Pro і Max | [What's new, week 36](https://code.claude.com/docs/en/whats-new/2026-w36) |
 
-План Max 20x тепер називається Ultra, а Max 5x тепер називається Max (сторінки оновлено 2026-10-31); дивіться [Плани підписки та ліміти](../ultimate-guide.uk.md#subscription-plans--limits).
+План Max 20x тепер називається Ultra, а Max 5x тепер називається Max (сторінки оновлено 2026-10-31); дивіться [Плани підписки та ліміти](../ultimate-guide.uk.md#підписки-та-ліміти).
 
 ---
 

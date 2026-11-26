@@ -26,8 +26,8 @@ tags: [agents, harness, comparison, runtimes, orchestrators, agent-tools, deepse
 | Що на практиці підтримує названий coding-агентний продукт? | [Agent Tools: Beyond Claude Code](./agentic-tools.uk.md) |
 | Як репозиторій має підготувати інструкції, налаштування, стан і верифікацію для будь-якого рантайму? | [Repository Harness Engineering](../ultimate-guide.uk.md#925-harness-engineering) |
 | Як оцінювати й інструментувати шортлист? | [Оцінювання агентів](../roles/agent-evaluation.uk.md) та [Спостережуваність](../ops/observability.uk.md) |
-| Які системи оптимізують harness, а не виконують завдання напряму? | [Оптимізатори harness і мета-harness](#harness-optimizers-and-meta-harnesses) |
-| Яке настільне робоче середовище має координувати наявні CLI агентів? | [Порівняння настільних робочих просторів агентів](./third-party-tools.uk.md#desktop-agent-workspace-comparison): Conductor, Emdash, Superset, Escouade, Nimbalyst і Vibe Kanban |
+| Які системи оптимізують harness, а не виконують завдання напряму? | [Оптимізатори harness і мета-harness](#оптимізатори-harness-і-мета-harness) |
+| Яке настільне робоче середовище має координувати наявні CLI агентів? | [Порівняння настільних робочих просторів агентів](./third-party-tools.uk.md#порівняння-десктопних-робочих-просторів-агентів): Conductor, Emdash, Superset, Escouade, Nimbalyst і Vibe Kanban |
 
 Ці сторінки пов'язані, але свідомо не об'єднані. Інженерний довідник пояснює стабільні механізми. Ця карта — датований знімок доказів, проєкти, ліцензії, функції та сигнали GitHub якого потребують окремого циклу оновлення.
 
@@ -119,7 +119,7 @@ tags: [agents, harness, comparison, runtimes, orchestrators, agent-tools, deepse
 | [OpenHarness (HKUDS)](https://github.com/HKUDS/OpenHarness)<br><small>★ 15,492 · 2026-08-23</small> | Chat, CLI, TUI | Підтверджено | Відкритий код | Відкритий agent harness із вбудованим персональним агентом («Ohmo»), що працює у Feishu, Slack, Telegram і Discord; базове використання інструментів, skills, пам'ять, мультиагентна координація з... |
 | [Open Interpreter](https://github.com/openinterpreter/openinterpreter)<br><small>★ 68,121 · 2026-08-23</small> | CLI | Заявлено | Відкритий код | Легкий термінальний coding-агент, орієнтований на відкриті моделі (DeepSeek, Kimi, Qwen). |
 | [Open SWE](https://github.com/langchain-ai/open-swe)<br><small>★ 10,624 · 2026-08-28</small> | Chat, Web | Заявлено | Mit | Офіційний репозиторій описує Open SWE як асинхронного coding-агента для завдань у репозиторії. |
-| [opencode](https://github.com/anomalyco/opencode)<br><small>★ 200,557 · 2026-08-23</small> | CLI, TUI | Заявлено | Відкритий код | Термінальний coding-агент із відкритим кодом (раніше sst/opencode; передано anomalyco). [Профіль у посібнику](./agentic-tools.uk.md#15-opencode-anomaly-formerly-sst) |
+| [opencode](https://github.com/anomalyco/opencode)<br><small>★ 200,557 · 2026-08-23</small> | CLI, TUI | Заявлено | Відкритий код | Термінальний coding-агент із відкритим кодом (раніше sst/opencode; передано anomalyco). [Профіль у посібнику](./agentic-tools.uk.md#15-opencode-anomaly-раніше-sst) |
 | [OpenCode Harness](https://github.com/samarailly51-pixel/opencode-harness)<br><small>★ 148 · 2026-08-28</small> | CLI, TUI, Web | Підтверджено | <abbr title="Не встановлено із зафіксованих джерел">?</abbr> | README документує цикл coding-агента з інструментами, дозволами, трасами, оцінюванням і зворотним зв'язком для виправлення. |
 | [OpenHands](https://github.com/OpenHands/OpenHands)<br><small>★ 84,844 · 2026-08-23</small> | Web | Заявлено | Обмежена ((multi-license)) | Докеризований агент програмної інженерії. [Профіль у посібнику](./agentic-tools.uk.md#24-openhands-all-hands-ai) |
 | [OpenHarness](https://github.com/AgentBoardTT/openharness)<br><small>★ 12 · 2026-08-28</small> | CLI, TUI | Підтверджено | <abbr title="Не встановлено із зафіксованих джерел">?</abbr> | README документує цикл агента «провайдер — інструменти» та точки ін'єкції в рантаймі. |
@@ -141,7 +141,7 @@ DeepSeek Harness потребує застереження щодо зрілос
 - [Інтерв'ю Building Claude Code](https://www.youtube.com/watch?v=julbw1JuAz0&t=1520s) Бориса Черни (Boris Cherny) простежує перехід продукту від чат-бота до агента з інструментами, а [обговорення дозволів](https://www.youtube.com/watch?v=julbw1JuAz0&t=3176s) пояснює багаторівневий контроль виконання команд.
 - [Інтерв'ю Building OpenCode](https://www.youtube.com/watch?v=1VqKUrxR2C8&t=1104s) Дакса Рааду (Dax Raad) документує позиціонування рантайму з відкритим кодом і нейтральністю щодо провайдерів. Пізніше [обговорення площини керування](https://www.youtube.com/watch?v=1VqKUrxR2C8&t=2045s) відокремлює загальноорганізаційні контролі провайдера, дозволів, бюджету та лімітів частоти від самого рантайму.
 
-Ці інтерв'ю самі по собі не підвищують згенерований стан доказів. Це датовані свідчення, тож поточна доступність, ліцензія та поведінка функцій усе одно потребують прямого офіційного джерела. [Реєстр доказів практиків у відео](../core/agent-harness.uk.md#10-practitioner-video-evidence) фіксує коротку дослівну цитату, часову мітку та межу для кожного джерела.
+Ці інтерв'ю самі по собі не підвищують згенерований стан доказів. Це датовані свідчення, тож поточна доступність, ліцензія та поведінка функцій усе одно потребують прямого офіційного джерела. [Реєстр доказів практиків у відео](../core/agent-harness.uk.md#10-практичні-відеодокази) фіксує коротку дослівну цитату, часову мітку та межу для кожного джерела.
 
 ## Оркестратори: продукти над рантаймом
 
@@ -176,7 +176,7 @@ DeepSeek Harness потребує застереження щодо зрілос
 
 Це оголошення фіксує плани вендора, а не живе тестування кожного сервісу чи доказ сталої підтримки спільнотою. Перш ніж впроваджувати, перевірте версію, шлях експорту та сервіси, потрібні вашому робочому процесу. Згенеровані рядки Vibe Kanban на цій сторінці зберігають знімок каталогу від 23 серпня; їхній опис функцій і зірки історичні й не встановлюють поточну доступність розміщених сервісів.
 
-Альтернативи дивіться в [порівнянні настільних робочих просторів](./third-party-tools.uk.md#desktop-agent-workspace-comparison). Emdash, Superset і Escouade задокументовано там як вибіркові доповнення, без завищення кількості суворих рантаймів чи дублювання їхніх профілів у цьому згенерованому каталозі.
+Альтернативи дивіться в [порівнянні настільних робочих просторів](./third-party-tools.uk.md#порівняння-десктопних-робочих-просторів-агентів). Emdash, Superset і Escouade задокументовано там як вибіркові доповнення, без завищення кількості суворих рантаймів чи дублювання їхніх профілів у цьому згенерованому каталозі.
 
 ### Liza: репозиторний harness і площина керування в одному
 
@@ -216,7 +216,7 @@ DeepSeek Harness потребує застереження щодо зрілос
 | [Agentic Harness Engineering](https://arxiv.org/abs/2604.25850) | Промпт, інструменти, middleware, skills, субагенти та пам'ять | pass@1 на Terminal-Bench 2 з 69,7% до 77,0% за десять ітерацій | Препринт 2026, зосереджений на coding-бенчмарках |
 | [HarnessOpt-Bench](https://arxiv.org/abs/2608.06301) | Оцінює оптимізатор, а не один цільовий harness | П'ять моделей-оптимізаторів, чотири подальші завдання, 111 оцінених запусків | Препринт бенчмарку 2026; ранній протокол очікує ширшого відтворення |
 
-Не включайте ці системи до підрахунку 42 рантаймів. Рантайм володіє циклом завдання. Оптимізатор володіє пошуковим циклом над кандидатами-harness. [Agent Harness Engineering §11](../core/agent-harness.uk.md#11-harness-optimizers-and-meta-harnesses) документує докази та мінімальний протокол оцінювання.
+Не включайте ці системи до підрахунку 42 рантаймів. Рантайм володіє циклом завдання. Оптимізатор володіє пошуковим циклом над кандидатами-harness. [Agent Harness Engineering §11](../core/agent-harness.uk.md#11-оптимізатори-harness-та-мета-harness) документує докази та мінімальний протокол оцінювання.
 
 ## Чотири шари, чотири відповідальності
 
@@ -582,7 +582,7 @@ DeepSeek Harness потребує застереження щодо зрілос
 
 ## Додаткове читання
 
-- [Agent Harness Engineering](../core/agent-harness.uk.md): стабільна архітектура, контрольна точка реалізації Claude Code, [докази щодо meta-harness](../core/agent-harness.uk.md#11-harness-optimizers-and-meta-harnesses) та [відеодокази практиків із часовими мітками](../core/agent-harness.uk.md#10-practitioner-video-evidence)
+- [Agent Harness Engineering](../core/agent-harness.uk.md): стабільна архітектура, контрольна точка реалізації Claude Code, [докази щодо meta-harness](../core/agent-harness.uk.md#11-оптимізатори-harness-та-мета-harness) та [відеодокази практиків із часовими мітками](../core/agent-harness.uk.md#10-практичні-відеодокази)
 - [Архітектура](../core/architecture.uk.md): головний цикл, арсенал інструментів, контекст, субагенти, дозволи та MCP
 - [Довідник інструментів](../core/tools-reference.uk.md) і [Довідник подій hooks](../core/hooks-events-reference.uk.md): точні інтерфейси Claude Code за кількома критеріями порівняння
 - [Agent Tools: Beyond Claude Code](./agentic-tools.uk.md): глибші профілі вибраних coding-агентів

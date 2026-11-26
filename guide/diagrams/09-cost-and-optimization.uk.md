@@ -88,7 +88,7 @@ flowchart TD
 
 </details>
 
-> **Джерело**: [Вибір моделі](../ultimate-guide.uk.md#model-selection) — Рядок ~2634
+> **Джерело**: [Вибір моделі](../ultimate-guide.uk.md#вибір-моделі) — Рядок ~2634
 
 ---
 

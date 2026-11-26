@@ -10,7 +10,7 @@ tags: [reference, hooks]
 
 Про skill для аудиту дивіться `examples/skills/eval-hooks/SKILL.md`.
 
-Див. також: [Event-Driven Agent Automation](../workflows/event-driven-agents.uk.md) про побудову робочих процесів на hooks і [Security Hardening: Startup Hooks](../security/security-hardening.uk.md#16-startup-hooks-code-execution-before-your-first-prompt) про ризики виконання коду через hooks.
+Див. також: [Event-Driven Agent Automation](../workflows/event-driven-agents.uk.md) про побудову робочих процесів на hooks і [Security Hardening: Startup Hooks](../security/security-hardening.uk.md#16-startup-hooks-виконання-коду-до-вашого-першого-prompt) про ризики виконання коду через hooks.
 
 ---
 
@@ -447,7 +447,7 @@ Command hooks друкують абсолютний шлях у stdout. HTTP hoo
 | `model` | Перевизначення моделі (типово: швидка модель, зазвичай Haiku) |
 | `continueOnBlock` | Коли `ok: false`, повернути причину Claude й продовжити замість зупинки |
 
-Повертає `{ "ok": true/false, "reason": "..." }`. Події, що приймають hooks типу `prompt`, дивіться в [Підтримка типів hooks для кожної події](#hook-type-support-per-event).
+Повертає `{ "ok": true/false, "reason": "..." }`. Події, що приймають hooks типу `prompt`, дивіться в [Підтримка типів hooks для кожної події](#підтримка-типів-hooks-для-кожної-події).
 
 ### Поля agent hook
 

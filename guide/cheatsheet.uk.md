@@ -339,7 +339,7 @@ claude --model sonnet
 
 Швидкий режим Opus 5.5 коштує $8/$40. Квоти підписки, кредити використання, токени кешу та ціни хмарних провайдерів є окремими. [Офіційні ціни](https://platform.claude.com/docs/en/about-claude/pricing).
 
-На прямому сервісі Anthropic типовий для облікового запису варіант та `opus` вибирають Opus 5.5; `sonnet` вибирає Sonnet 5.5, а `haiku` вибирає Haiku 5.5 (v2.1.293+). Аліаси провайдерів відрізняються: дивіться [таблицю провайдерів](ultimate-guide.uk.md#model-aliases). `fable` зазвичай вибирає Fable 5.1, а сесії шлюзу додатків Claude резолвлять його у Fable 5.
+На прямому сервісі Anthropic типовий для облікового запису варіант та `opus` вибирають Opus 5.5; `sonnet` вибирає Sonnet 5.5, а `haiku` вибирає Haiku 5.5 (v2.1.293+). Аліаси провайдерів відрізняються: дивіться [таблицю провайдерів](ultimate-guide.uk.md#псевдоніми-моделей). `fable` зазвичай вибирає Fable 5.1, а сесії шлюзу додатків Claude резолвлять його у Fable 5.
 
 **Джерело**: [Gur Sannikov embedded engineering workflow](https://www.linkedin.com/posts/gursannikov_claudecode-embeddedengineering-aiagents-activity-7423851983331328001-DrFb)
 

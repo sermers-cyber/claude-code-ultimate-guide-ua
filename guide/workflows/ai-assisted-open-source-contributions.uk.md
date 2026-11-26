@@ -65,4 +65,4 @@ Stop with a local diff and a draft contribution packet. Do not submit or push.
 - [Code Review](code-review.uk.md) — для перевірки патча
 - [TDD with Claude](tdd-with-claude.uk.md) — для встановлення регресійного тесту
 - [Learning with AI](../roles/learning-with-ai.uk.md) — для перевірки розуміння автором
-- [Review admission control](../core/loop-graph-engineering.uk.md#limit-admission-to-verification-capacity) — для перевантаженої спільної черги рев'ю
+- [Review admission control](../core/loop-graph-engineering.uk.md#обмежуйте-допуск-ємністю-верифікації) — для перевантаженої спільної черги рев'ю

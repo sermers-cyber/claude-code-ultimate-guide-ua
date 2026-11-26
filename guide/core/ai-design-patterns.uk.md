@@ -25,17 +25,17 @@ keywords:
 ## Зміст
 
 1. [TL;DR](#tldr)
-2. [Походження](#lineage)
-3. [Як читати](#how-to-read)
+2. [Походження](#походження)
+3. [Як читати](#як-читати)
 4. [Crosswalk](#crosswalk)
-5. [Картки патернів](#pattern-cards)
-6. [Де аналогія ламається](#where-the-analogy-breaks)
-7. [Нативні агентні патерни](#native-agent-patterns)
-8. [Вибір патерну](#choose-a-pattern)
-9. [Антипатерни](#anti-patterns)
-10. [Класична сторона](#classic-side)
-11. [Подальше читання](#further-reading)
-12. [Джерела](#sources)
+5. [Картки патернів](#картки-патернів)
+6. [Де аналогія ламається](#де-аналогія-ламається)
+7. [Нативні агентні патерни](#нативні-агентні-патерни)
+8. [Вибір патерну](#вибір-патерну)
+9. [Антипатерни](#антипатерни)
+10. [Класична сторона](#класична-сторона)
+11. [Подальше читання](#подальше-читання)
+12. [Джерела](#джерела)
 
 ---
 
@@ -137,7 +137,7 @@ keywords:
 - **У Claude Code:** [Ієрархія CLAUDE.md та auto memory (спільний стан, а не Singleton)](https://code.claude.com/docs/en/memory)
 - **Режим відмови:** Claude Code тут не надає Singleton: кілька файлів CLAUDE.md і пам'яті завантажуються й поєднуються, і ніщо не примушує до одного екземпляра чи однієї точки доступу. Переноситься ризик некерованого спільного стану: паралельні сесії чи агенти, що одночасно пишуть той самий файл пам'яті, можуть перезаписати записи одне одного.
 - **Як перевірити:** запустіть дві сесії, що обидві додають у той самий файл пам'яті, і перевірте, чи не втрачено котрийсь запис.
-- **Докладніше:** [Memory systems: нативний стек пам'яті Claude Code](memory-systems.uk.md#2-native-claude-code-memory-stack) (посібник); [Persistent memory: шість збоїв, що ніколи не викликають помилки](https://www.florian.bruniaux.com/guides/persistent-memory-silent-failures/) (стаття автора)
+- **Докладніше:** [Memory systems: нативний стек пам'яті Claude Code](memory-systems.uk.md#2-нативний-стек-памяті-claude-code) (посібник); [Persistent memory: шість збоїв, що ніколи не викликають помилки](https://www.florian.bruniaux.com/guides/persistent-memory-silent-failures/) (стаття автора)
 
 ### Adapter
 
@@ -179,7 +179,7 @@ keywords:
 - **У Claude Code:** [Hooks UserPromptSubmit і PostToolUse](https://code.claude.com/docs/en/hooks)
 - **Режим відмови:** класичний стек декораторів має фіксований порядок. Відповідні hooks виконуються паралельно, тож обгортка, що припускає, що інша обгортка вже відпрацювала, — це гонка.
 - **Як перевірити:** пишіть кожен hook так, щоб він проходив, коли виконується сам, і тестуйте його з вимкненими іншими hooks.
-- **Докладніше:** [Довідник подій hooks](hooks-events-reference.uk.md) (посібник); [Smart-Suggest routing: hook UserPromptSubmit, що додає кандидатів-skills до промпту](../workflows/smart-suggest-routing.uk.md#claude-code-architecture) (посібник)
+- **Докладніше:** [Довідник подій hooks](hooks-events-reference.uk.md) (посібник); [Smart-Suggest routing: hook UserPromptSubmit, що додає кандидатів-skills до промпту](../workflows/smart-suggest-routing.uk.md#архітектура-claude-code) (посібник)
 - **Дивитися:** Mark Pollack, Christian Tzolov, Josh Long, James Ward (Devoxx), [Bootiful Spring AI](https://www.youtube.com/watch?v=Sw3PlFXfWj4&t=703s) на 11:43: доповідач пояснює advisors у Spring AI як фільтр чи препроцесор, що обгортає виклики до моделі й від неї та може змінювати або логувати кожен запит.
 - **Дивитися:** Thariq Shihipar, [Claude Agent SDK [Full Workshop]](https://www.youtube.com/watch?v=TqC1qOfiVcQ&t=6430s) на 107:10: доповідач Anthropic каже, що hooks спрацьовують як події в Agent SDK і використовуються для детермінованої перевірки або для вставлення контексту.
 
@@ -322,7 +322,7 @@ keywords:
 - **У Claude Code:** [Автоматичне делегування за описом subagent](https://code.claude.com/docs/en/sub-agents); [Вибір skill за описом](https://code.claude.com/docs/en/skills)
 - **Режим відмови:** описи, що перекриваються, спрямовують той самий запит до різних обробників від запуску до запуску.
 - **Як перевірити:** тримайте набір промптів маршрутизації з очікуваним subagent чи skill і повторно запускайте його після кожної зміни опису.
-- **Докладніше:** [BM25 router, крок за кроком](../workflows/smart-suggest-routing.uk.md#bm25-router-step-by-step) (посібник); [Робочий hook маршрутизації BM25](https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/examples/hooks/bm25-routing/README.md) (шаблон); [cc-skill-usage: рахує реальні виклики Skill у транскриптах](https://github.com/FlorianBruniaux/cc-skill-usage) (проєкт автора)
+- **Докладніше:** [BM25 router, крок за кроком](../workflows/smart-suggest-routing.uk.md#маршрутизатор-bm25-крок-за-кроком) (посібник); [Робочий hook маршрутизації BM25](https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/examples/hooks/bm25-routing/README.md) (шаблон); [cc-skill-usage: рахує реальні виклики Skill у транскриптах](https://github.com/FlorianBruniaux/cc-skill-usage) (проєкт автора)
 - **Дивитися:** Goulven Le Dû (Doctolib), [Alfred le système Agentic AI de Doctolib au service des professionnels de santé](https://www.youtube.com/watch?v=uTM3fRgbUN0&t=252s) на 4:12: Alfred у Doctolib має агента маршрутизації, що використовує модель класифікації намірів, щоб надіслати кожен запит спеціалізованому агентові.
 - **Дивитися:** Renato Guerra Cavalcanti (Devoxx), [Akka: an enterprise runtime for resilient agentic AI](https://www.youtube.com/watch?v=PrIh_9HomfI&t=821s) на 13:41: доповідач описує маршрутизатор, що отримує повідомлення й вирішує, який агент його отримає, за допомогою LLM або простих if та else.
 
@@ -369,7 +369,7 @@ keywords:
 - **У Claude Code:** [Обмежене виконання: --max-turns і --max-budget-usd (print mode)](https://code.claude.com/docs/en/cli-reference); [maxTurns у frontmatter subagent](https://code.claude.com/docs/en/sub-agents)
 - **Режим відмови:** ці ліміти — обмежене виконання, а не breaker. Circuit breaker стежить за збоями й розмикається; ці ліміти фіксуються до запуску й збоїв не відстежують. --max-turns за замовчуванням не має межі й рахує ходи, а не вартість. --max-budget-usd зупиняє за оцінкою вартості на боці клієнта, і документація попереджає, що витрати можуть перевищити ліміт, тож залишайте запас.
 - **Як перевірити:** запустіть автоматизоване завдання із заданими --max-turns і --max-budget-usd на завданні, розрахованому на зациклення, і перевірте, що воно завершується з помилкою та наскільки звітні витрати перевищили ліміт.
-- **Докладніше:** [Loop & Graph Engineering: напишіть контракт циклу](loop-graph-engineering.uk.md#2-write-a-loop-contract) (посібник); [Designing a bounded review loop](https://www.florian.bruniaux.com/guides/bounded-code-review-loop/) (стаття автора)
+- **Докладніше:** [Loop & Graph Engineering: напишіть контракт циклу](loop-graph-engineering.uk.md#2-напишіть-контракт-циклу) (посібник); [Designing a bounded review loop](https://www.florian.bruniaux.com/guides/bounded-code-review-loop/) (стаття автора)
 - **Дивитися:** Sandipan Bhaumik, [From Chaos to Choreography: Multi-Agent Orchestration Patterns That Actually Work](https://www.youtube.com/watch?v=2czYyrTzILg&t=1011s) на 16:51: доповідач застосовує circuit breaker до викликів між агентами: після повторних збоїв ланцюг розмикається, швидко завершується помилкою, потім напіврозмикається, щоб перевірити відновлення.
 - **Дивитися:** Tisha Chawla і Susheem Koul, [FinOps for AI Agents: Who Spent All the Tokens?](https://www.youtube.com/watch?v=GJX19pNhmSw&t=1056s) на 17:36: у демонстрації агент, що перевищує свій бюджет на запуск, негайно зупиняється, що доповідач називає простим circuit breaker.
 
@@ -384,7 +384,7 @@ keywords:
 - **У Claude Code:** [Немає нативної saga: checkpoints плюс скриптова компенсація](https://code.claude.com/docs/en/checkpointing)
 - **Режим відмови:** rewind помилково приймають за компенсацію. Він відновлює лише локальні редагування файлів; push, виклик API чи запис у базу даних лишаються виконаними.
 - **Як перевірити:** для кожного кроку плану агента з побічним ефектом запишіть його компенсувальну дію до запуску й протестуйте цю дію один раз.
-- **Докладніше:** [Loop & Graph Engineering: узгоджуйте перервані ефекти перед повторною спробою](loop-graph-engineering.uk.md#reconcile-interrupted-effects-before-retrying) (посібник); [Production safety](../security/production-safety.uk.md) (посібник)
+- **Докладніше:** [Loop & Graph Engineering: узгоджуйте перервані ефекти перед повторною спробою](loop-graph-engineering.uk.md#звіряйте-перервані-ефекти-перед-повторною-спробою) (посібник); [Production safety](../security/production-safety.uk.md) (посібник)
 - **Дивитися:** Sandipan Bhaumik, [From Chaos to Choreography: Multi-Agent Orchestration Patterns That Actually Work](https://www.youtube.com/watch?v=2czYyrTzILg&t=1142s) на 19:02: доповідач представляє патерн компенсації, або saga: кожен агент має execute і compensate, а при збої оркестратор іде назад і викликає compensate.
 - **Дивитися:** Salman Munaf, [AI Agents Are Just Distributed Systems Now](https://www.youtube.com/watch?v=hD9-V56FNRI&t=730s) на 12:10: доповідач каже, що багатокроковий агент, який збоїть посередині, має скасувати всю транзакцію в усіх системах і потребує визначеної операції компенсації.
 
@@ -491,7 +491,7 @@ keywords:
 - **Що нового:** найближчий класичний патерн — Bulkhead. Тут ресурс, що захищається, — це вікно контексту, а не потоки чи з'єднання.
 - **У Claude Code:** [Subagents працюють у власному контексті й звітують підсумком](https://code.claude.com/docs/en/sub-agents)
 - **Джерела:** [Lance Martin](https://rlancemartin.github.io/2026/01/09/agent_design/), [Claude Code docs: Subagents](https://code.claude.com/docs/en/sub-agents)
-- **Докладніше:** [Agent Harness Engineering: керування sub-agent](agent-harness.uk.md#24-sub-agent-management) (посібник)
+- **Докладніше:** [Agent Harness Engineering: керування sub-agent](agent-harness.uk.md#24-керування-субагентами) (посібник)
 - **Дивитися:** Colin (LangChain), [Dynamic Subagents: How to Run Parallel Agents Reliably in Deep Agents](https://www.youtube.com/watch?v=5AkdMangfNk&t=110s) на 1:50: subagent дають ізоляцію контексту: кожен працює у власному вікні контексту й повертає лише свої результати, тож контекст головного агента лишається чистим.
 - **Дивитися:** Frank Coyle, [Anthropic's CCA Exam as a Field-Guide for Agentic Engineering](https://www.youtube.com/watch?v=Z-c11pV_uvU&t=917s) на 15:17: доповідач називає антипатерном дозвіл кожному підзавданню скидати весь свій вивід в основну гілку й радить натомість ізолювати вивід підзавдань.
 
@@ -504,7 +504,7 @@ keywords:
 - **Що нового:** стан втрачається за задумом: те, що підсумок відкидає, залишає активний контекст, доки щось його не перезавантажить. Claude Code повторно впроваджує CLAUDE.md проєкту, auto memory, план і викликані skills (з обмеженням) і повторно читає до п'яти нещодавніх файлів; решта розмови виживає лише як підсумок.
 - **У Claude Code:** [Auto compaction і /compact](https://code.claude.com/docs/en/context-window)
 - **Джерела:** [Lance Martin](https://rlancemartin.github.io/2026/01/09/agent_design/), [Nikola Balic and contributors](https://github.com/nibzard/awesome-agentic-patterns), [Claude Code docs: Context window](https://code.claude.com/docs/en/context-window)
-- **Докладніше:** [Architecture: auto-compaction](architecture.uk.md#auto-compaction) (посібник); [Memory systems: тримайте історію окремо від compaction](memory-systems.uk.md#keep-history-distinct-from-compaction) (посібник)
+- **Докладніше:** [Architecture: auto-compaction](architecture.uk.md#автоматичне-стиснення-auto-compaction) (посібник); [Memory systems: тримайте історію окремо від compaction](memory-systems.uk.md#тримайте-історію-окремо-від-compaction) (посібник)
 - **Дивитися:** Louis-François Bouchard, Omar Solano і Samridhi Vaid (Towards AI), [Context Engineering in 2026](https://www.youtube.com/watch?v=WP3hjUXd918&t=535s) на 8:55: доповідачі визначають compaction як збереження найменшого контексту, що все ще може відповісти на запитання, і відкидання чи збереження решти.
 - **Дивитися:** Ishaan Sehgal, [The Log Is The Agent](https://www.youtube.com/watch?v=UPwGaM2MKHY&t=272s) на 4:32: доповідач пояснює, що журнал може рости безмежно, а погляд моделі — ні, тож журнал треба ущільнити до меншого репрезентативного подання з втратами.
 

@@ -21,16 +21,16 @@ tags: [workflow, agents, orchestration, parallel, ultracode]
 
 ## Зміст
 
-1. [Коли використовувати workflows (проти інструмента Agent і Skills)](#1-when-to-use-workflows-vs-agent-tool-vs-skills)
-2. [Довідник примітивів](#2-primitive-reference)
-3. [Поведінкові гарантії](#3-behavioral-guarantees)
+1. [Коли використовувати workflows (проти інструмента Agent і Skills)](#1-коли-використовувати-workflows-проти-інструмента-agent-і-skills)
+2. [Довідник примітивів](#2-довідник-примітивів)
+3. [Поведінкові гарантії](#3-поведінкові-гарантії)
 4. [pipeline() проти parallel(): коли і чому](#4-pipeline-vs-parallel--when-and-why)
-5. [Структуровані схемою виводи між фазами](#5-schema-structured-outputs-across-phases)
-6. [Поширені патерни](#6-common-patterns)
-7. [Реальний приклад workflow: dev-flow (від Issue до PR)](#7-real-workflow-example-dev-flow-issue-to-pr)
-8. [Коли НЕ використовувати workflows](#8-when-not-to-use-workflows)
-9. [Примітки щодо вартості та продуктивності](#9-cost-and-performance-notes)
-10. [Дивіться також](#10-see-also)
+5. [Структуровані схемою виводи між фазами](#5-структуровані-схемою-виводи-між-фазами)
+6. [Поширені патерни](#6-поширені-патерни)
+7. [Реальний приклад workflow: dev-flow (від Issue до PR)](#7-реальний-приклад-workflow-dev-flow-від-issue-до-pr)
+8. [Коли НЕ використовувати workflows](#8-коли-не-використовувати-workflows)
+9. [Примітки щодо вартості та продуктивності](#9-примітки-щодо-вартості-та-продуктивності)
+10. [Дивіться також](#10-дивіться-також)
 
 ---
 
@@ -840,7 +840,7 @@ Dynamic workflows мають реальні накладні витрати: о�
 ## 10. Дивіться також
 
 - **[AI Design Patterns](../core/ai-design-patterns.uk.md#orchestrator-workers)**: Orchestrator-workers і Scatter-Gather як іменовані патерни з їхніми режимами відмов і перевірками
-- **[Довідник інструментів, розділ Workflow](../core/tools-reference.uk.md#workflow-dynamic-workflows-v21154)**: канонічний опис інструмента, ключове слово-тригер і CLI-прапорці
+- **[Довідник інструментів, розділ Workflow](../core/tools-reference.uk.md#workflow-динамічні-workflow-v21154)**: канонічний опис інструмента, ключове слово-тригер і CLI-прапорці
 - **[Agent Teams](./agent-teams.uk.md)**: експериментальна багатоагентна координація для завдань із переважно читанням, із peer-to-peer повідомленнями; відрізняється від workflows (без JS-оркестратора, координація через git)
 - **[Plan-Driven Workflow](./plan-driven.uk.md)**: патерн «спочатку план, потім виконання» з людиною в циклі; доречний, коли ви хочете переглянути план до початку виконання
 - **[Керування завданнями](./task-management.uk.md)**: Tasks API для збереження між сесіями; доповнює workflows, відстежуючи високорівневий стан поза сесією

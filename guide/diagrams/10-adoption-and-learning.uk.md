@@ -69,7 +69,7 @@ Team lead:
 
 </details>
 
-> **Джерело**: [Підходи до впровадження](../roles/adoption-approaches.uk.md#start--build--scale-a-practical-navigation-layer)
+> **Джерело**: [Підходи до впровадження](../roles/adoption-approaches.uk.md#start--build--scale-практичний-навігаційний-шар)
 
 > Це запропоновані шляхи, а не виміряний час проходження. Офіційний quickstart охоплює встановлення, підтримувані акаунти та перші завдання; організація має самостійно оцінювати результати свого пілота. [Офіційний quickstart](https://code.claude.com/docs/en/quickstart).
 
@@ -232,7 +232,7 @@ flowchart TD
 
 </details>
 
-> **Джерело**: [Рев'ю результату машини як третій режим](../roles/learning-with-ai.uk.md#reviewing-machine-output-is-a-third-mode). Три запитання є синтезом цього посібника, що спирається на [Resisting Cognitive Surrender](https://knlb.dev/essays/surrender) і [Kaufman et al.](https://arxiv.org/abs/2607.08885), результат якого стосується пояснень згенерованих тверджень; застосування його до обґрунтувань agent є екстраполяцією.
+> **Джерело**: [Рев'ю результату машини як третій режим](../roles/learning-with-ai.uk.md#ревю-машинного-виводу-є-третім-режимом). Три запитання є синтезом цього посібника, що спирається на [Resisting Cognitive Surrender](https://knlb.dev/essays/surrender) і [Kaufman et al.](https://arxiv.org/abs/2607.08885), результат якого стосується пояснень згенерованих тверджень; застосування його до обґрунтувань agent є екстраполяцією.
 
 ---
 **Локалізація**: [Serhii (MacPlus Software)](https://macplus-software.com)

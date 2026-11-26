@@ -14,14 +14,14 @@ tags: [workflow, code-review, git-notes, provenance, comprehension]
 
 ## Зміст
 
-1. [Чому diff недостатньо](#why-the-diff-is-not-enough)
-2. [Що фіксує нотатка агента](#what-an-agent-note-records)
-3. [Де зберігається нотатка](#where-the-note-lives)
-4. [Прив'язка та застарілі нотатки](#anchoring-and-stale-notes)
-5. [Відгук у вигляді запитання або зміни](#feedback-typed-as-a-question-or-a-change)
-6. [Шаблон agent-rationale](#the-agent-rationale-template)
-7. [Що не доведено](#what-is-not-established)
-8. [Див. також](#see-also)
+1. [Чому diff недостатньо](#чому-diff-недостатньо)
+2. [Що фіксує нотатка агента](#що-фіксує-нотатка-агента)
+3. [Де зберігається нотатка](#де-зберігається-нотатка)
+4. [Прив'язка та застарілі нотатки](#привязка-та-застарілі-нотатки)
+5. [Відгук у вигляді запитання або зміни](#відгук-у-вигляді-запитання-або-зміни)
+6. [Шаблон agent-rationale](#шаблон-agent-rationale)
+7. [Що не доведено](#що-не-доведено)
+8. [Див. також](#див-також)
 
 ---
 
@@ -36,13 +36,13 @@ tags: [workflow, code-review, git-notes, provenance, comprehension]
 
 Жодне з досліджень не перевіряло обґрунтування агента поруч з його власним diff. Вони підтверджують вужче твердження: у цих дослідженнях пояснення змінювали довіру чи впевненість, і жодне не показало кращого виявлення помилкового виводу. Нотатка корисна, коли дає рецензентові що перевірити: відкинуту альтернативу для зважування, ризик для тестування, доказ для повторного запуску.
 
-[Рев'ю машинного виводу — це третій режим](../roles/learning-with-ai.uk.md#reviewing-machine-output-is-a-third-mode) розглядає automation bias і перевірку перед схваленням, що йде разом із цією сторінкою.
+[Рев'ю машинного виводу — це третій режим](../roles/learning-with-ai.uk.md#ревю-машинного-виводу-є-третім-режимом) розглядає automation bias і перевірку перед схваленням, що йде разом із цією сторінкою.
 
 ---
 
 ## Що фіксує нотатка агента
 
-Цей посібник пропонує п'ять полів на hunk. Вони походять із порівняння того, що фіксують наявні інструменти ([локальні поверхні рев'ю](./multi-provider-code-review.uk.md#local-review-surfaces-for-agent-written-changes), [сліди походження агентів](https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/docs/resource-evaluations/agent-provenance-traces.md)), а не з дослідження того, які поля допомагають рецензентам.
+Цей посібник пропонує п'ять полів на hunk. Вони походять із порівняння того, що фіксують наявні інструменти ([локальні поверхні рев'ю](./multi-provider-code-review.uk.md#локальні-поверхні-ревю-для-змін-написаних-агентом), [сліди походження агентів](https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/docs/resource-evaluations/agent-provenance-traces.md)), а не з дослідження того, які поля допомагають рецензентам.
 
 | Поле | Що писати | Навіщо воно рецензентові |
 |---|---|---|
@@ -76,7 +76,7 @@ tags: [workflow, code-review, git-notes, provenance, comprehension]
 
 «Перевірено» стосується запусків, що стоять за [git-ai: атрибуцією ШІ на рівні рядків у git notes](https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/docs/resource-evaluations/git-ai-provenance-notes.md), і власних тестів шаблону: по одному локальному репозиторію, git 2.56.0. Рядки для файлового сховища й forge походять із читання коду інструментів, а не з їх запуску.
 
-Git notes зберігають історію коду чистою й лишаються поза diff, але ціною додаткового налаштування: `git config notes.rewriteRef refs/notes/rationale` для amend і rebase та явний `git push origin refs/notes/rationale`, оскільки звичайний push їх не надсилає. Squash або rebase, виконані кнопкою merge у forge, відбуваються на сервері й не перевірялися; див. [Provenance in git notes](../ops/ai-traceability.uk.md#35-provenance-in-git-notes).
+Git notes зберігають історію коду чистою й лишаються поза diff, але ціною додаткового налаштування: `git config notes.rewriteRef refs/notes/rationale` для amend і rebase та явний `git push origin refs/notes/rationale`, оскільки звичайний push їх не надсилає. Squash або rebase, виконані кнопкою merge у forge, відбуваються на сервері й не перевірялися; див. [Provenance in git notes](../ops/ai-traceability.uk.md#35-походження-provenance-у-git-notes).
 
 Не кладіть у нотатку секрети чи дані клієнтів. Нотатки надсилаються разом із refs репозиторію, і кожен, хто може їх отримати, може їх прочитати.
 
@@ -164,7 +164,7 @@ python3 -I examples/skills/agent-rationale/scripts/test_rationale.py
 
 ## Див. також
 
-- [Multi-provider code review: локальні поверхні рев'ю](./multi-provider-code-review.uk.md#local-review-surfaces-for-agent-written-changes): порівняння diffo, glassbox, hunk, drift, ai-pr-review, guidedreview
-- [Provenance in git notes](../ops/ai-traceability.uk.md#35-provenance-in-git-notes): git-ai, AgentNote і docket та що переживає переписування історії
-- [Схвалюйте лише те, що можете пояснити](../diagrams/10-adoption-and-learning.uk.md#approve-only-what-you-can-explain): перевірка перед схваленням виводу агента
-- [Три місця, де пояснюється зміна агента](../diagrams/06-development-workflows.uk.md#three-places-an-agent-change-gets-explained)
+- [Multi-provider code review: локальні поверхні рев'ю](./multi-provider-code-review.uk.md#локальні-поверхні-ревю-для-змін-написаних-агентом): порівняння diffo, glassbox, hunk, drift, ai-pr-review, guidedreview
+- [Provenance in git notes](../ops/ai-traceability.uk.md#35-походження-provenance-у-git-notes): git-ai, AgentNote і docket та що переживає переписування історії
+- [Схвалюйте лише те, що можете пояснити](../diagrams/10-adoption-and-learning.uk.md#схвалюйте-лише-те-що-можете-пояснити): перевірка перед схваленням виводу агента
+- [Три місця, де пояснюється зміна агента](../diagrams/06-development-workflows.uk.md#три-місця-де-пояснюється-зміна-агента)

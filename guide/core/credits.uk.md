@@ -48,7 +48,7 @@ Packmind підтримує робочу конфігурацію Claude Code у
 
 ### Патерн 5: Тріада передачі з семантикою злиття (Handoff Triad with Merge Semantics)
 
-**Розділ посібника**: [Патерн передачі сесії (Handoff)](../ultimate-guide.uk.md#session-handoff-pattern) та шаблони у `examples/commands/handoff/`
+**Розділ посібника**: [Патерн передачі сесії (Handoff)](../ultimate-guide.uk.md#патерн-передавання-сесії) та шаблони у `examples/commands/handoff/`
 **Джерело**: `.claude/commands/create-handoff.md`, `resume-handoff.md`, `update-handoff.md`
 
 Протокол із трьох команд для безперервності сесій: `create-handoff` ініціалізує структурований документ, `update-handoff` застосовує специфічні правила злиття розділів (додавання в кінець для логу роботи, заміна для статусу), а `resume-handoff` завантажує останній документ у контекст.
@@ -127,19 +127,19 @@ IFTTD це французький технічний подкаст (360+ вип
 **Випуски-джерела**: 311, 326, 329, 338, 341, 346, 349, 351, 357, 360, 361, 362, 363, 364, 371, 372, 373
 Зведений дайджест парафразованих спостережень, згрупований за темами (context engineering, агентні патерни, оцінка LLM, безпека агентів, DevX і впровадження).
 
-**Розділ посібника**: [§6 RAG Optimization: Query-Side Indexing](../ecosystem/context-engineering-tools.uk.md#query-side-indexing-semantic-chunking-and-synthetic-questions)
+**Розділ посібника**: [§6 RAG Optimization: Query-Side Indexing](../ecosystem/context-engineering-tools.uk.md#індексація-на-боці-запиту-семантичний-чанкінг-і-синтетичні-запитання)
 **Джерело**: випуск 361, Guillaume Laforge (Developer Advocate, Google Cloud)
 Погляд практика на семантичний чанкінг і генерацію синтетичних запитань під час індексації, що доповнює наявну документацію про Anthropic Contextual Retrieval.
 
-**Розділ посібника**: [§17 Attention Mechanics: Lost-in-the-Middle](../core/context-engineering.uk.md#the-lost-in-the-middle-problem)
+**Розділ посібника**: [§17 Attention Mechanics: Lost-in-the-Middle](../core/context-engineering.uk.md#проблема-загубленого-посередині)
 **Джерело**: випуск 361, Guillaume Laforge
 Нотатка практика про антипатерни великих контекстних вікон, додана до наявного посилання на дослідження Liu et al.
 
-**Розділ посібника**: [Evaluating Probabilistic Systems](../roles/agent-evaluation.uk.md#evaluating-probabilistic-systems)
+**Розділ посібника**: [Evaluating Probabilistic Systems](../roles/agent-evaluation.uk.md#оцінювання-імовірнісних-систем)
 **Джерело**: випуск 338 (Louis Pinsard), випуск 329 (Frédéric Barthelet), випуск 311 (Samy Lastmann)
 Зведений розділ про оцінку за наборами з балами, статистичний CI/CD, LLM-as-judge (асинхронний), калібрування галюцинацій та спостережуваність через OpenTelemetry/Langfuse.
 
-**Розділ посібника**: [Why Sandboxing Matters: Field Incidents](../security/sandbox-native.uk.md#why-sandboxing-matters-field-incidents)
+**Розділ посібника**: [Why Sandboxing Matters: Field Incidents](../security/sandbox-native.uk.md#чому-пісочниця-важлива-випадки-з-практики)
 **Джерело**: випуск 326 (Zineb Bendhiba), випуск 360 (Guillaume Lours)
 Задокументовані інциденти з обходом guardrails та втратою даних через агента без нагляду.
 
@@ -147,7 +147,7 @@ IFTTD це французький технічний подкаст (360+ вип
 **Джерело**: випуск 346, Jocelyn N'takpe (Head of Engineering & Architecture, ManoMano)
 Рекомендація щодо allowlist команд, проілюстрована реальним інцидентом.
 
-**Розділ посібника**: [Usage Principles](../ecosystem/mcp-servers-ecosystem.uk.md#usage-principles-beyond-the-evaluation-checklist)
+**Розділ посібника**: [Usage Principles](../ecosystem/mcp-servers-ecosystem.uk.md#принципи-використання-понад-чек-лист-оцінки)
 **Джерело**: випуск 326 (Zineb Bendhiba), випуск 329 (Frédéric Barthelet)
 Нотатки про кількість інструментів, принципи їх проєктування та станність LLM.
 
@@ -182,7 +182,7 @@ IFTTD це французький технічний подкаст (360+ вип
 **Джерело**: Christoph Bühler, Daniel Garnier-Moiroux, 2025-2026
 Патерни контролю доступу до MCP (OAuth, OpenFGA) і зміцнення MCP-серверів.
 
-**Розділ посібника**: [Evaluating Probabilistic Systems](../roles/agent-evaluation.uk.md#evaluating-probabilistic-systems)
+**Розділ посібника**: [Evaluating Probabilistic Systems](../roles/agent-evaluation.uk.md#оцінювання-імовірнісних-систем)
 **Джерело**: Brian Vermeer, Mete Atamel, Jettro Coenradie, Daniël Spee, Tom Cools, 2025-2026
 Детермінізм, поєднання фреймворків оцінки, оцінка агентів на основі впевненості.
 
@@ -217,7 +217,7 @@ Markdown як спільна стійка пам'ять у парі з файл�
 **Джерело**: Emmanuel Sciara, Florian Allainmat, 2026
 Поріг деградації контексту 70%, шкода зростання CLAUDE.md для продуктивності та патерн передачі research-plan-implement.
 
-**Розділ посібника**: [Evaluating Probabilistic Systems](../roles/agent-evaluation.uk.md#evaluating-probabilistic-systems)
+**Розділ посібника**: [Evaluating Probabilistic Systems](../roles/agent-evaluation.uk.md#оцінювання-імовірнісних-систем)
 **Джерело**: Alexandre Balmes, Emmanuel Sciara, Negouai, Drode, 2026
 Міфи про детермінізм при temperature zero і самовдосконалення skills як навчання з підкріпленням.
 
@@ -244,7 +244,7 @@ Markdown як спільна стійка пам'ять у парі з файл�
 **Джерело**: ByteByteGo, "7 System Design Concepts," 2025
 Принцип «почни просто, виміряй, потім ускладнюй», застосований до агентних конфігурацій.
 
-**Розділ посібника**: [Usage Principles](../ecosystem/mcp-servers-ecosystem.uk.md#usage-principles-beyond-the-evaluation-checklist)
+**Розділ посібника**: [Usage Principles](../ecosystem/mcp-servers-ecosystem.uk.md#принципи-використання-понад-чек-лист-оцінки)
 **Джерело**: ByteByteGo, "MCP" (2025), "Back-of-the-Envelope Estimation" (2022), "URL Shortener" (2025)
 MCP як стандартизований інтеграційний шар і оцінка потужності за QPS для трафіку, який створюють агенти.
 
@@ -267,7 +267,7 @@ MCP як стандартизований інтеграційний шар і �
 **Джерело**: Denny Zhou, Stanford CS25 V5, 2025; CS25 2026; CS230 Lecture 8, 2025
 Chain-of-thought як формальне розширення обчислень і генерація в контексті проти fine-tuning.
 
-**Розділ посібника**: [Evaluating Probabilistic Systems](../roles/agent-evaluation.uk.md#evaluating-probabilistic-systems)
+**Розділ посібника**: [Evaluating Probabilistic Systems](../roles/agent-evaluation.uk.md#оцінювання-імовірнісних-систем)
 **Джерело**: Yann Dubois, CS224N, 2024; ISLR; CS230
 Вибір метрик оцінювання за етапом конвеєра та перевірка необхідності перед додаванням моделі.
 
