@@ -34,8 +34,8 @@
 ## Місця інтеграції
 
 - [Основний посібник: межа знань](../../guide/ultimate-guide.uk.md#9252-what-the-agent-cant-see-doesnt-exist) і [локальна планка якості](../../guide/ultimate-guide.uk.md#make-the-local-quality-bar-recoverable).
-- [Пам'ять: спостереження MLD](../../guide/core/memory-systems.uk.md#mld-observations-for-the-harness-builder).
-- [Цикл оновлення контексту](../../guide/core/context-engineering.uk.md#the-update-loop) і [контракт публікації](../../guide/core/context-engineering.uk.md#publication-contract-for-curated-context).
-- [Епохи оцінювання та чотири годинники](../../guide/roles/agent-evaluation.uk.md#evaluation-epochs-and-four-clocks).
+- [Пам'ять: спостереження MLD](../../guide/core/memory-systems.uk.md#mld-спостереження-для-того-хто-будує-harness).
+- [Цикл оновлення контексту](../../guide/core/context-engineering.uk.md#цикл-оновлення-the-update-loop) і [контракт публікації](../../guide/core/context-engineering.uk.md#контракт-публікації-для-курованого-контексту).
+- [Епохи оцінювання та чотири годинники](../../guide/roles/agent-evaluation.uk.md#епохи-оцінювання-та-чотири-годинники).
 
 Розширення для блогу залишаються окремими редакторськими пропозиціями. Ця оцінка не встановлює, що будь-яку статтю портфоліо було змінено чи опубліковано.

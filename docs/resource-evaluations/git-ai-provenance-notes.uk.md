@@ -1,6 +1,6 @@
 # git-ai: построкова атрибуція AI у git notes, перевірена на переписуванні історії
 
-**Переглянуто**: 2026-11-08. **Оцінка**: 4/5, інтегровано в [AI Traceability §3.4 і §3.5](../../guide/ops/ai-traceability.uk.md#35-provenance-in-git-notes) та як діаграму в [Enterprise Governance](../../guide/diagrams/12-enterprise-governance.uk.md#ai-attribution-through-history-rewrites). Пов'язане: [трасування походження агентів](agent-provenance-traces.uk.md), [Entire CLI](entire-cli.uk.md).
+**Переглянуто**: 2026-11-08. **Оцінка**: 4/5, інтегровано в [AI Traceability §3.4 і §3.5](../../guide/ops/ai-traceability.uk.md#35-походження-provenance-у-git-notes) та як діаграму в [Enterprise Governance](../../guide/diagrams/12-enterprise-governance.uk.md#атрибуція-ai-через-переписування-історії). Пов'язане: [трасування походження агентів](agent-provenance-traces.uk.md), [Entire CLI](entire-cli.uk.md).
 
 [git-ai](https://github.com/git-ai-project/git-ai/tree/5420ab9081d2cd57ffdafced09a8028d6dabf4bd) фіксує, які рядки написав агент, зберігає цю атрибуцію в git notes під `refs/notes/ai` і переносить її, коли історію переписують. Для цієї оцінки версію 1.7.7 зібрано з вихідного коду на `5420ab9` (2026-11-05) і проведено тест переписування. Серед інструментів відстеження походження, оцінених у цьому циклі, лише його було запущено.
 

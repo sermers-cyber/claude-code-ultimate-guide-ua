@@ -80,7 +80,7 @@ python3 scripts/check-translations.py --check --require-current-maintained
 
 Пакет MCP надає свій вбудований реєстр як `claude-code-guide://translations`. Другий коміт у послідовності оновлення нижче відновлює побайтову рівність із канонічним реєстром.
 
-Канонічна провенансність є двокомітною операцією. Спершу закомітьте `guide/ultimate-guide.md` і пов'язані індекси, потім запустіть `python3 scripts/check-translations.py --update-local`, віддзеркальте результат у `mcp-server/content/translations.json`, перевірте побайтову рівність і закомітьте ці два реєстри окремо. Засіб оновлення відмовляється працювати з брудним канонічним посібником, бо незакомічений хеш файлу не можна віднести до старішого коміту. Див. [Translation Status Workflow](../docs/workflows/translations.uk.md#after-changing-the-english-full-guide).
+Канонічна провенансність є двокомітною операцією. Спершу закомітьте `guide/ultimate-guide.md` і пов'язані індекси, потім запустіть `python3 scripts/check-translations.py --update-local`, віддзеркальте результат у `mcp-server/content/translations.json`, перевірте побайтову рівність і закомітьте ці два реєстри окремо. Засіб оновлення відмовляється працювати з брудним канонічним посібником, бо незакомічений хеш файлу не можна віднести до старішого коміту. Див. [Translation Status Workflow](../docs/workflows/translations.uk.md#після-зміни-англійського-повного-посібника).
 
 ### Статус розповсюдження
 
@@ -95,7 +95,7 @@ python3 -m unittest scripts/test-check-distribution-channels.py
 
 ### Розрізнення понять
 
-Почніть із [AI Concept Boundaries](../guide/core/ai-concept-boundaries.uk.md), коли питання змішує контекст із пам'яттю, модель з її harness, агента з workflow, інструмент з MCP, інструкції з примусовим доступом, результати оцінювання з доказами з продакшну або архітектуру, розмір, модальність і мітки задач моделі. Кожне розрізнення веде до детального розділу посібника та має оригінальну [перевірку за сценарієм](../guide/core/ai-concept-boundaries.uk.md#check-your-understanding).
+Почніть із [AI Concept Boundaries](../guide/core/ai-concept-boundaries.uk.md), коли питання змішує контекст із пам'яттю, модель з її harness, агента з workflow, інструмент з MCP, інструкції з примусовим доступом, результати оцінювання з доказами з продакшну або архітектуру, розмір, модальність і мітки задач моделі. Кожне розрізнення веде до детального розділу посібника та має оригінальну [перевірку за сценарієм](../guide/core/ai-concept-boundaries.uk.md#перевірте-своє-розуміння).
 
 [Оцінка Lexigraph](../docs/resource-evaluations/lexigraph-ai-lexicon.uk.md) фіксує джерело, атрибуцію CC BY 4.0, прогалини експорту та причини вибіркової адаптації. Сторінка про поняття адаптує структуру навчання та окремі розрізнення; вона не імпортує корпус, банк тестових питань чи інфографіку. Для поведінки runtime використовуйте продуктові довідки посібника.
 
@@ -109,12 +109,12 @@ python3 -m unittest scripts/test-check-distribution-channels.py
 
 | Потреба | Точка входу |
 |---|---|
-| Контракт архітектор-інженер, ADR, стани задач/запусків, зворотний зв'язок рецензії | [Dual-instance planning](../guide/workflows/dual-instance-planning.uk.md), [шаблон плану](../guide/workflows/dual-instance-planning.uk.md#plan-template) і [вихідна оцінка](../docs/resource-evaluations/honkonen-architect-engineer.uk.md) |
+| Контракт архітектор-інженер, ADR, стани задач/запусків, зворотний зв'язок рецензії | [Dual-instance planning](../guide/workflows/dual-instance-planning.uk.md), [шаблон плану](../guide/workflows/dual-instance-planning.uk.md#шаблон-плану) і [вихідна оцінка](../docs/resource-evaluations/honkonen-architect-engineer.uk.md) |
 | Стабільні контракти проти організаційних знань і живого стану | [Межа знань](../guide/ultimate-guide.uk.md#9252-what-the-agent-cant-see-doesnt-exist) |
 | Локальні вимоги до якості, семантичні власники, канонічні приклади, завершення міграції | [Відновлювана планка якості](../guide/ultimate-guide.uk.md#make-the-local-quality-bar-recoverable) |
-| Спостереження агента до просування в пам'ять | [Телеметрія MLD](../guide/core/memory-systems.uk.md#mld-observations-for-the-harness-builder) і [цикл оновлення на основі доказів](../guide/core/context-engineering.uk.md#the-update-loop) |
-| Ізоляція кандидатів, права публікації, фіксація ревізій і строк дії | [Публікація курованого контексту](../guide/core/context-engineering.uk.md#publication-contract-for-curated-context) |
-| Повторна кваліфікація після оновлень; окремі годинники зворотного зв'язку, запуску, уваги, приймання | [Епохи оцінювання та чотири годинники](../guide/roles/agent-evaluation.uk.md#evaluation-epochs-and-four-clocks) |
+| Спостереження агента до просування в пам'ять | [Телеметрія MLD](../guide/core/memory-systems.uk.md#mld-спостереження-для-того-хто-будує-harness) і [цикл оновлення на основі доказів](../guide/core/context-engineering.uk.md#цикл-оновлення-the-update-loop) |
+| Ізоляція кандидатів, права публікації, фіксація ревізій і строк дії | [Публікація курованого контексту](../guide/core/context-engineering.uk.md#контракт-публікації-для-курованого-контексту) |
+| Повторна кваліфікація після оновлень; окремі годинники зворотного зв'язку, запуску, уваги, приймання | [Епохи оцінювання та чотири годинники](../guide/roles/agent-evaluation.uk.md#епохи-оцінювання-та-чотири-годинники) |
 
 Ці доповнення адаптують практичні матеріали. [Антологія Lopopolo](../docs/resource-evaluations/lopopolo-harness-engineering.uk.md) є корпусом контексту, а не виконуваним runtime. Команди `eng` від Honkonen належать до його власного інструментарію. Жодне з джерел не встановлює виміряних локальних здобутків у якості, вартості чи доставці.
 
@@ -122,11 +122,11 @@ python3 -m unittest scripts/test-check-distribution-channels.py
 
 | Потреба | Точка входу |
 |---|---|
-| Класифікувати пам'ять за змістом, формою, областю дії та життєвим циклом | [Типи пам'яті: координати, а не стек](../guide/core/memory-systems.uk.md#memory-types-coordinates-not-a-stack) |
-| Дізнатися, чи пам'ять лишається на одній машині, чи доходить до команди (Claude Code, Codex, Gemini CLI, Copilot, Kiro) | [Де живе пам'ять](../guide/core/memory-systems.uk.md#where-memory-lives-local-repository-shared) |
-| Перевірити, що ін'єктована пам'ять змінює поведінку агента | [Шестиетапний конвеєр](../guide/core/memory-systems.uk.md#from-captured-to-effective-the-six-stage-pipeline) і [бенчмарки використання 2026](../guide/core/memory-systems.uk.md#measuring-whether-memory-is-used-2026) |
-| Обрати чи провести аудит міжсесійного інструмента (claude-mem, agentmemory, memorix, basic-memory) | [Міжсесійні інструменти](../guide/core/memory-systems.uk.md#3-cross-session-tools-single-user) і [порівняльна таблиця](../guide/core/memory-systems.uk.md#39-master-comparison-table) |
-| Докази отруєння постійної пам'яті | [Отруєння пам'яті](../guide/core/memory-systems.uk.md#71-memory-poisoning-via-prompt-injection) |
+| Класифікувати пам'ять за змістом, формою, областю дії та життєвим циклом | [Типи пам'яті: координати, а не стек](../guide/core/memory-systems.uk.md#типи-памяті-координати-а-не-стек) |
+| Дізнатися, чи пам'ять лишається на одній машині, чи доходить до команди (Claude Code, Codex, Gemini CLI, Copilot, Kiro) | [Де живе пам'ять](../guide/core/memory-systems.uk.md#де-живе-память-локально-у-репозиторії-спільно) |
+| Перевірити, що ін'єктована пам'ять змінює поведінку агента | [Шестиетапний конвеєр](../guide/core/memory-systems.uk.md#від-захопленого-до-дієвого-шестиетапний-конвеєр) і [бенчмарки використання 2026](../guide/core/memory-systems.uk.md#вимірювання-того-чи-використовується-память-2026) |
+| Обрати чи провести аудит міжсесійного інструмента (claude-mem, agentmemory, memorix, basic-memory) | [Міжсесійні інструменти](../guide/core/memory-systems.uk.md#3-інструменти-між-сесіями-один-користувач) і [порівняльна таблиця](../guide/core/memory-systems.uk.md#39-головна-порівняльна-таблиця) |
+| Докази отруєння постійної пам'яті | [Отруєння пам'яті](../guide/core/memory-systems.uk.md#71-отруєння-памяті-через-prompt-injection) |
 
 Факти про інструменти зчитано з тегів релізів і документації постачальників 2026-11-03. Типові значення, версії та кількість зірок змінюються; перевіряйте перед цитуванням.
 
@@ -137,7 +137,7 @@ python3 -m unittest scripts/test-check-distribution-channels.py
 | Потреба | Точка входу |
 |---|---|
 | Архітектура runtime, компоненти, контролі, реалізація в Claude Code і протокол оцінювання оптимізаторів | [Agent Harness Engineering](../guide/core/agent-harness.uk.md) |
-| Контрольні тести, абляції рецензентів, незалежні критерії приймання та вартість за прийняту задачу | [Agent Evaluation](../guide/roles/agent-evaluation.uk.md#freeze-the-oracle-and-the-decision-rule) і [вихідна оцінка](../docs/resource-evaluations/harness-evidence-marmelab-2026.uk.md) |
+| Контрольні тести, абляції рецензентів, незалежні критерії приймання та вартість за прийняту задачу | [Agent Evaluation](../guide/roles/agent-evaluation.uk.md#зафіксуйте-оракул-і-правило-прийняття-рішення) і [вихідна оцінка](../docs/resource-evaluations/harness-evidence-marmelab-2026.uk.md) |
 | Контракти циклів, контракти графів, розподіл суджень, довговічність, спостережуваність і вибір структури керування | [Loop & Graph Engineering](../guide/core/loop-graph-engineering.uk.md) |
 | Класичні патерни проєктування, зіставлені з механізмами agent harness, із режимами збоїв, перевірками, джерелами та посиланнями в кожній картці на пов'язані workflow, шаблони, а також інструменти й статті автора | [AI Design Patterns](../guide/core/ai-design-patterns.uk.md) і [`ai-design-patterns.json`](./ai-design-patterns.json) |
 | Датована міжпродуктова карта, класифікація, вибір, протокол тест-драйву та дослідницький шар мета-harness | [Agent Harness Landscape](../guide/ecosystem/agent-harness-landscape.uk.md) |

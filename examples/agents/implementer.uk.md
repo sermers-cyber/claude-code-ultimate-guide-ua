@@ -62,4 +62,4 @@ Haiku у 60 разів дешевший за Opus за вхідні токени
 
 **Джерела**:
 - Посібник з вибору моделі: [Розділ 2.5](../../guide/ultimate-guide.uk.md#25-model-selection--thinking-guide)
-- Патерн Planner/Implementer: [Розділ 2.5 Model per Agent Patterns](../../guide/ultimate-guide.uk.md#model-per-agent-patterns)
+- Патерн Planner/Implementer: [Розділ 2.5 Model per Agent Patterns](../../guide/ultimate-guide.uk.md#патерни-модель-для-агента)

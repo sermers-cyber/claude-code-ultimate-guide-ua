@@ -4,7 +4,7 @@
 
 Hook має рекомендаційний характер. Він видає лише `additionalContext`. Він ніколи не викликає skill і не схвалює жодних дій.
 
-У термінах патернів проєктування цей hook — детермінований [Content-Based Router](../../../guide/core/ai-design-patterns.uk.md#content-based-router), розміщений перед власним вибором skill моделлю. [Покрокове пояснення](../../../guide/workflows/smart-suggest-routing.uk.md#bm25-router-step-by-step) розбирає кожне рішення на цьому шляху.
+У термінах патернів проєктування цей hook — детермінований [Content-Based Router](../../../guide/core/ai-design-patterns.uk.md#content-based-router), розміщений перед власним вибором skill моделлю. [Покрокове пояснення](../../../guide/workflows/smart-suggest-routing.uk.md#маршрутизатор-bm25-крок-за-кроком) розбирає кожне рішення на цьому шляху.
 
 ## Що змінилося порівняно з першим прикладом
 

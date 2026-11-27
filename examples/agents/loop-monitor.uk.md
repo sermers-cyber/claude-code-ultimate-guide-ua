@@ -9,7 +9,7 @@ tools: Read, Bash
 
 Стежить за запущеною автономною сесією Claude, виявляючи режими збою, які не породжують помилок: зависання, некероване витрачання токенів і повторювані дії без прогресу. Працює як легкий спостерігач: читає логи й повідомляє статус, не втручаючись у роботу основного агента.
 
-**Роль**: шар безпеки для сесій без нагляду. Для повного покриття поєднуй із heartbeat-watchdog (див. [Production Safety: Rule 6](../../guide/security/production-safety.uk.md#rule-6-autonomous-loop-safety)).
+**Роль**: шар безпеки для сесій без нагляду. Для повного покриття поєднуй із heartbeat-watchdog (див. [Production Safety: Rule 6](../../guide/security/production-safety.uk.md#правило-6-безпека-автономних-циклів-autonomous-loop-safety)).
 
 ## Що виявляє цей агент
 
@@ -116,6 +116,6 @@ done
 ---
 
 **Див. також**:
-- [Production Safety: Rule 6](../../guide/security/production-safety.uk.md#rule-6-autonomous-loop-safety): heartbeat-перемикач «мертвої руки» (доповнює)
-- [Agent Teams Workflow: Iterative Retrieval](../../guide/workflows/agent-teams.uk.md#9-iterative-retrieval-for-sub-agents): патерни контексту для subagents
+- [Production Safety: Rule 6](../../guide/security/production-safety.uk.md#правило-6-безпека-автономних-циклів-autonomous-loop-safety): heartbeat-перемикач «мертвої руки» (доповнює)
+- [Agent Teams Workflow: Iterative Retrieval](../../guide/workflows/agent-teams.uk.md#9-ітеративне-отримання-для-sub-agents): патерни контексту для subagents
 - [Hook Profile Gating](../../guide/ultimate-guide.uk.md#76-hook-profiles): профіль `minimal` для автономних сесій

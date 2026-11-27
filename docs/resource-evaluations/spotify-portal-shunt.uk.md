@@ -50,7 +50,7 @@ API GitHub і клон репозиторію, 2026-09-29.
 | Економія code-write | Скрипт бенчмарку за побудовою встановлює вартість «з shunt» у 0 і зважує згенеровані token з коефіцієнтом 5x |
 | "Portal caps a single invocation at 30 seconds" (стаття) | Скрипт у поставці встановлює `SHUNT_TIMEOUT_SECONDS` за замовчуванням у 180 |
 
-Перш ніж цитувати цю цифру, застосуйте чекліст із [How to read a vendor's cost-reduction claim](../../guide/ops/ai-unit-economics.uk.md#6-how-to-read-a-vendors-cost-reduction-claim).
+Перш ніж цитувати цю цифру, застосуйте чекліст із [How to read a vendor's cost-reduction claim](../../guide/ops/ai-unit-economics.uk.md#6-як-читати-заяву-вендора-про-зниження-вартості).
 
 ## Дефекти
 

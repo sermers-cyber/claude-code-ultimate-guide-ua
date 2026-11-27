@@ -156,9 +156,9 @@ claude
 
 ## 📚 Пов'язані ресурси
 
-- [Передачі сесії (Ultimate Guide)](../../guide/ultimate-guide.uk.md#session-handoff-pattern)
-- [Дослідження автокомпактизації (Architecture)](../../guide/core/architecture.uk.md#auto-compaction)
-- [Шаблон свіжого контексту (Ultimate Guide)](../../guide/ultimate-guide.uk.md#fresh-context-pattern-ralph-loop)
+- [Передачі сесії (Ultimate Guide)](../../guide/ultimate-guide.uk.md#патерн-передавання-сесії)
+- [Дослідження автокомпактизації (Architecture)](../../guide/core/architecture.uk.md#автоматичне-стиснення-auto-compaction)
+- [Шаблон свіжого контексту (Ultimate Guide)](../../guide/ultimate-guide.uk.md#патерн-свіжого-контексту-цикл-ralph)
 - Оригінальний допис Лоренца (оригінальний допис у LinkedIn недоступний)
 
 ---

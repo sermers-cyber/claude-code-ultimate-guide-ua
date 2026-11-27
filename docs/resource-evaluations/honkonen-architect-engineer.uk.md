@@ -34,7 +34,7 @@
 
 - [Робочий процес із двома екземплярами та шаблон плану](../../guide/workflows/dual-instance-planning.uk.md).
 - [Огляд у головному посібнику](../../guide/ultimate-guide.uk.md#alternative-pattern-dual-instance-planning-vertical-separation).
-- [Безперервність завдань](../../guide/workflows/task-management.uk.md#how-this-composes-with-the-handoff-triad).
+- [Безперервність завдань](../../guide/workflows/task-management.uk.md#як-це-узгоджується-з-тріадою-передачі-роботи).
 - Шаблони для поширення: [create](../../examples/skills/handoff-create/SKILL.uk.md), [resume](../../examples/skills/handoff-resume/SKILL.uk.md) і [update](../../examples/skills/handoff-update/SKILL.uk.md). Ці правки не встановлюють і не активують skills у жодному з хостів.
 
 Пропозиції для блогу лишаються окремо від цієї інтеграції в посібник. Не заявляється ні про публікацію статті, ні про виміряний локальний результат.

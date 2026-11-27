@@ -110,7 +110,7 @@ flowchart LR
 
 </details>
 
-> **Джерело**: [Розуміння скілів](../ultimate-guide.uk.md#51-розуміння-скілів)
+> **Джерело**: [Розуміння скілів](../ultimate-guide.uk.md#51-розуміння-skills)
 >
 > **Офіційний довідник**: [Skills and command compatibility](https://code.claude.com/docs/en/skills) та [subagent definitions](https://code.claude.com/docs/en/sub-agents).
 

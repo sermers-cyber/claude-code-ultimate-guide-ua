@@ -34,7 +34,7 @@ Liza — мультиагентна система для програмуван
 
 Оновлена класифікація — **репозиторний harness плюс суміжна площина керування**, а не runtime harness. [Каталог провайдерів](https://github.com/liza-mas/liza/blob/a22c12381c5d884d2586a48aaaa517bca184f9cf/provider-catalog.yaml) Liza викликає зовнішні CLI coding agents, які зберігають власність над своїми внутрішніми циклами «модель–інструменти». Він також виявляє головну межу безпеки: кілька адаптерів вмикають широкі режими, як-от `--approve-all`, `--dangerously-skip-permissions` чи `--permission-mode dangerous`. Ізоляція worktree зменшує колізії в git, але не обмежує доступ до файлової системи, облікових даних чи мережі.
 
-Поточні метадані GitHub на 2026-08-28: 363 зірки, 49 форків, Apache-2.0, останній реліз [v0.8.0](https://github.com/liza-mas/liza/releases/tag/v0.8.0) від 2026-06-03. Тепер Liza має окремий [профіль в Agent Tools](../../guide/ecosystem/agentic-tools.uk.md#48-liza) і фігурує як п'ятнадцята суміжна площина керування в [Agent Harness Map](../../guide/ecosystem/agent-harness-landscape.uk.md#liza-a-repository-harness-and-control-plane-combined).
+Поточні метадані GitHub на 2026-08-28: 363 зірки, 49 форків, Apache-2.0, останній реліз [v0.8.0](https://github.com/liza-mas/liza/releases/tag/v0.8.0) від 2026-06-03. Тепер Liza має окремий [профіль в Agent Tools](../../guide/ecosystem/agentic-tools.uk.md#48-liza) і фігурує як п'ятнадцята суміжна площина керування в [Agent Harness Map](../../guide/ecosystem/agent-harness-landscape.uk.md#liza-репозиторний-harness-і-площина-керування-в-одному).
 
 ### Оновлення щодо циклів, графів і відповідальності: 2026-08-29
 
@@ -50,7 +50,7 @@ Liza — мультиагентна система для програмуван
 
 ### Додаткове джерело: Agent Harness Landscape
 
-2026-09-02 мейнтейнер Liza Tangi Vass переглянув [профіль в Agent Harness Landscape](../../guide/ecosystem/agent-harness-landscape.uk.md#liza-a-repository-harness-and-control-plane-combined), визнав його синтез точним і запропонував три вузькі уточнення. Зафіксований репозиторій підтверджує всі три:
+2026-09-02 мейнтейнер Liza Tangi Vass переглянув [профіль в Agent Harness Landscape](../../guide/ecosystem/agent-harness-landscape.uk.md#liza-репозиторний-harness-і-площина-керування-в-одному), визнав його синтез точним і запропонував три вузькі уточнення. Зафіксований репозиторій підтверджує всі три:
 
 1. **Перелік провайдерів.** [Каталог провайдерів](https://github.com/liza-mas/liza/blob/a22c12381c5d884d2586a48aaaa517bca184f9cf/provider-catalog.yaml) містить дев'ять адаптерів, зокрема Cursor. У цьому знімку Gemini і Mistral вимкнено.
 2. **Обсяг шляхів дозволів.** П'ять адаптерів надають необов'язковий шлях ACP з `--approve-all`, але лише OpenCode і Devin використовують широкі режими дозволів на своїх стандартних шляхах CLI. Codex, Cursor і Qwen використовують широкий прапорець лише через ACP; Claude за замовчуванням використовує `--permission-mode auto`.

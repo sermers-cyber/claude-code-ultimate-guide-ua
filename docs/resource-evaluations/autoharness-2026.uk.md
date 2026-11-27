@@ -22,7 +22,7 @@
 
 Зберегти поділ на пропозицію/валідацію/запис, а потім уточнити кожну межу: зв'язок із джерелом, розв'язання суперечностей, власник просування, валідацію кандидата цілком, власність файлів, узгоджену активацію та відновлення. Розглядати «переглянуто», «викликано», «успішно» і «корисно» як різні події. Обмежувати пригаданий контекст незалежно від збереженого сховища; захищати обов'язкові рідкісні правила під час експериментів з вилученням.
 
-Використовуйте [Memory Systems](../../guide/core/memory-systems.uk.md#qualify-learned-rules-before-promotion), [Agent Harness Engineering](../../guide/core/agent-harness.uk.md) і [Loop & Graph Engineering](../../guide/core/loop-graph-engineering.uk.md). Нова [локальна контрольна вправа](https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/examples/workflows/review-control-demo.py) є незалежним змодельованим прикладом; вона не виправляє й не сертифікує AutoHarness.
+Використовуйте [Memory Systems](../../guide/core/memory-systems.uk.md#кваліфікуйте-вивчені-правила-перед-просуванням), [Agent Harness Engineering](../../guide/core/agent-harness.uk.md) і [Loop & Graph Engineering](../../guide/core/loop-graph-engineering.uk.md). Нова [локальна контрольна вправа](https://github.com/FlorianBruniaux/claude-code-ultimate-guide/blob/main/examples/workflows/review-control-demo.py) є незалежним змодельованим прикладом; вона не виправляє й не сертифікує AutoHarness.
 
 ## Обмеження
 

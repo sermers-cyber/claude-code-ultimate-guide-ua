@@ -403,5 +403,5 @@ export const Small: Story = {
 ## Див. також
 
 - [Воркфлоу «дизайн у код»](../../guide/workflows/design-to-code.uk.md): повний посібник із воркфлоу Figma MCP
-- [Розділ про Figma MCP](../../guide/ultimate-guide.uk.md#figma-mcp-integration): технічні подробиці
-- [Робота із зображеннями](../../guide/ultimate-guide.uk.md#working-with-images-and-screenshots): основи візуального аналізу
+- [Розділ про Figma MCP](../../guide/ultimate-guide.uk.md#інтеграція-figma-mcp): технічні подробиці
+- [Робота із зображеннями](../../guide/ultimate-guide.uk.md#робота-із-зображеннями-та-знімками-екрана): основи візуального аналізу

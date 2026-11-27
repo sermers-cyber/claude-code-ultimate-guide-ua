@@ -404,7 +404,7 @@ curl -L -o fr_FR-siwis-high.onnx \
 - **[Каталог голосів](./voice-catalog.uk.md)** - усі 15 голосів зі зразками звучання
 - **[Усунення несправностей](./troubleshooting.uk.md)** - типові проблеми та рішення
 - **[Воркфлоу налаштування TTS](../../../guide/workflows/tts-setup.uk.md)** - покрокове встановлення
-- **[Екосистема AI](../../../guide/ecosystem/ai-ecosystem.uk.md#5-voice-to-text-tools-wispr-flow-superwhisper)** - TTS у контексті AI
+- **[Екосистема AI](../../../guide/ecosystem/ai-ecosystem.uk.md#5-голосові-інструменти-введення-wispr-flow-superwhisper)** - TTS у контексті AI
 
 ---
 

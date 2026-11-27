@@ -13,7 +13,7 @@
 
 ## Рішення
 
-Інтегрувати приклад граничної вартості та уточнити наявні рекомендації в [Agent Harness Engineering](../../guide/core/agent-harness.uk.md#price-generated-artifacts-against-cached-context), [Context Engineering](../../guide/core/context-engineering.uk.md#scratchpad-pattern), а також в [англійській](../../guide/ultimate-guide.uk.md#925-repository-harness-engineering) і [французькій](../../guide/ultimate-guide.fr.md#925-repository-harness-engineering) повних версіях посібника. Наявні розділи про найменший достатній harness, поступове розкриття, вилучення компонентів і епохи оцінювання вже охоплюють більшу частину тези.
+Інтегрувати приклад граничної вартості та уточнити наявні рекомендації в [Agent Harness Engineering](../../guide/core/agent-harness.uk.md#оцінюйте-згенеровані-артефакти-проти-кешованого-контексту), [Context Engineering](../../guide/core/context-engineering.uk.md#патерн-scratchpad), а також в [англійській](../../guide/ultimate-guide.uk.md#925-repository-harness-engineering) і [французькій](../../guide/ultimate-guide.fr.md#925-repository-harness-engineering) повних версіях посібника. Наявні розділи про найменший достатній harness, поступове розкриття, вилучення компонентів і епохи оцінювання вже охоплюють більшу частину тези.
 
 Не робити висновку, що вивід домінує в кожному рахунку, що коротші інструкції гарантують вищу якість чи що сильніші моделі роблять верифікацію та дозволи непотрібними. Плани й нотатки для передачі роботи можуть слугувати людям, довготривалим рішенням і відновленню. Оцінюйте їх вилучення за тими самими критеріями приймання й враховуйте невдалі спроби, координацію, людське рев'ю та переробки.
 

@@ -57,8 +57,8 @@ effort: medium
 | [Act 4](#act-4) | {1-line summary} |
 | [Act 5](#act-5) | {1-line summary} |
 | [Conclusion](#conclusion) | {1-line summary} |
-| [Master Table](#master-table) | All concepts + URLs |
-| [Q&A Cheat-sheet](#qa-cheat-sheet) | {n} anticipated questions + answers |
+| [Master Table](#головна-таблиця) | All concepts + URLs |
+| [Q&A Cheat-sheet](#шпаргалка-qa) | {n} anticipated questions + answers |
 | [Resources](#external-resources) | Links mentioned in the talk |
 
 ---

@@ -1,6 +1,6 @@
 # Опір когнітивній капітуляції (knlb.dev, листопад 2026)
 
-**Переглянуто**: 2026-11-08. **Оцінка**: 3/5, інтегровано як короткий фрагмент у [Reviewing machine output is a third mode](../../guide/roles/learning-with-ai.uk.md#reviewing-machine-output-is-a-third-mode) і як діаграму в [Adoption & Learning](../../guide/diagrams/10-adoption-and-learning.uk.md#approve-only-what-you-can-explain). Пов'язана оцінка: [#077 Comprehension debt](077-comprehension-debt-ai-coding.uk.md).
+**Переглянуто**: 2026-11-08. **Оцінка**: 3/5, інтегровано як короткий фрагмент у [Reviewing machine output is a third mode](../../guide/roles/learning-with-ai.uk.md#ревю-машинного-виводу-є-третім-режимом) і як діаграму в [Adoption & Learning](../../guide/diagrams/10-adoption-and-learning.uk.md#схвалюйте-лише-те-що-можете-пояснити). Пов'язана оцінка: [#077 Comprehension debt](077-comprehension-debt-ai-coding.uk.md).
 
 Есей Kunal — це розповідь практика про роботу з coding agents без втрати розуміння системи. Його цінність для цього посібника — проста назва та одна конкретна тривожна ознака для режиму збою, який посібник уже охоплює, а також тактики рев'ю, що полегшують розуміння виводу агента. Жодних вимірювань у ньому немає.
 

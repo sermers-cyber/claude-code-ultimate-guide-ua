@@ -44,7 +44,7 @@ WP05: Deploying with a Team *(whitepaper, незабаром)* — зокрем�
 
 1. Встановити Claude Code (5 хв) → [Розділ 1.1 Посібника](../guide/ultimate-guide.uk.md#11-встановлення).
 2. Вивчити одну формулу промпту → [Розділ 2.8: Структуровані промпти](../guide/ultimate-guide.uk.md#28-structured-prompting-with-xml-tags).
-3. Зрозуміти, як давати контекст → [Розділ 3.1: CLAUDE.md](../guide/ultimate-guide.uk.md#31-файли-памяті-claudemd).
+3. Зрозуміти, як давати контекст → [Розділ 3.1: CLAUDE.md](../guide/ultimate-guide.uk.md#31-memory-files-claudemd).
 
 Цього достатньо для першого тижня.
 

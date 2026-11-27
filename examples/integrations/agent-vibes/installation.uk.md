@@ -295,7 +295,7 @@ cat .claude/tts-voice.txt
 
 **Очікувано**: аудіо відтворюється французьким чоловічим голосом.
 
-**Усунення несправностей**: якщо звуку немає, див. [посібник з усунення несправностей](./troubleshooting.uk.md#issue-1-no-audio-output).
+**Усунення несправностей**: якщо звуку немає, див. [посібник з усунення несправностей](./troubleshooting.uk.md#проблема-1-немає-звуку).
 
 ### Контрольна точка 4: конфігурацію завершено ✅
 
@@ -533,7 +533,7 @@ echo "Test" | piper -m ~/.claude/piper-voices/fr_FR-tom-medium.onnx \
 1. **[Каталог голосів](./voice-catalog.uk.md)** - перегляньте 15 голосів і оберіть улюблений
 2. **[README](./README.uk.md)** - вивчіть основні команди та сценарії використання
 3. **[Усунення несправностей](./troubleshooting.uk.md)** - розв'язуйте типові проблеми
-4. **[Екосистема AI](../../../guide/ecosystem/ai-ecosystem.uk.md#5-voice-to-text-tools-wispr-flow-superwhisper)** - TTS у ширшому контексті AI
+4. **[Екосистема AI](../../../guide/ecosystem/ai-ecosystem.uk.md#5-голосові-інструменти-введення-wispr-flow-superwhisper)** - TTS у ширшому контексті AI
 
 ---
 
