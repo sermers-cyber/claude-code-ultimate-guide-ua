@@ -81,3 +81,5 @@ graphify-out/
 
 # Ukrainian translations of .claude/ (kept outside so Claude Code does not load them)
 !uk/.claude/
+!uk/**/.claude/
+!uk/**/.agents/
