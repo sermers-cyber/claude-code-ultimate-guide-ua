@@ -78,3 +78,6 @@ graphify-out/
  LOCALIZATION_LOG.uk.md
  TRANSLATIONS.md
  audit-prompt.md
+
+# Ukrainian translations of .claude/ (kept outside so Claude Code does not load them)
+!uk/.claude/
