@@ -1,10 +1,10 @@
 ---
-title: "PDF Generation with Claude Code"
-description: "Generate professional PDFs using Claude Code with Quarto and Typst stack"
+title: "Генерація PDF із Claude Code"
+description: "Генеруйте професійні PDF із Claude Code на стеку Quarto і Typst"
 tags: [workflow, guide, integration]
 ---
 
-# PDF Generation з Claude Code
+# Генерація PDF із Claude Code
 
 > **Confidence**: Tier 2 — На основі перевіреного на практиці воркфлоу зі стеком Quarto/Typst.
 
@@ -12,17 +12,17 @@ tags: [workflow, guide, integration]
 
 ---
 
-## Table of Contents
+## Зміст
 
 1. [TL;DR](#tldr)
-2. [When to Use](#when-to-use)
-3. [Stack Overview](#stack-overview)
-4. [Setup](#setup)
-5. [Workflow](#workflow)
-6. [Integration with Claude Code](#integration-with-claude-code)
-7. [Customization](#customization)
-8. [Troubleshooting](#troubleshooting)
-9. [See Also](#see-also)
+2. [Коли використовувати](#коли-використовувати)
+3. [Огляд стеку](#огляд-стеку)
+4. [Налаштування](#налаштування)
+5. [Воркфлоу](#воркфлоу)
+6. [Інтеграція з Claude Code](#інтеграція-з-claude-code)
+7. [Кастомізація](#кастомізація)
+8. [Усунення проблем](#усунення-проблем)
+9. [Див. також](#див-також)
 
 ---
 
@@ -43,9 +43,9 @@ quarto preview document.qmd  # Hot-reload
 
 ---
 
-## When to Use
+## Коли використовувати
 
-| Use Case | Good Fit | Alternative |
+| Випадок використання | Підходить | Альтернатива |
 |----------|----------|-------------|
 | Технічна документація | ✅ | — |
 | Звіти / Аналітика | ✅ | — |
@@ -58,7 +58,7 @@ quarto preview document.qmd  # Hot-reload
 
 ---
 
-## Stack Overview
+## Огляд стеку
 
 ```
 ┌─────────────────────────────────────────────────┐
@@ -92,7 +92,7 @@ quarto preview document.qmd  # Hot-reload
 └─────────────────────────────────────────────────┘
 ```
 
-### Output Formats & Commands
+### Формати виводу та команди
 
 ```
   FORMAT                COMMANDE                      SORTIE
@@ -111,7 +111,7 @@ quarto preview document.qmd  # Hot-reload
   Preview         →  quarto preview doc.qmd           hot-reload navigateur
 ```
 
-### Extension Structure
+### Структура розширення
 
 ```
   _extensions/
@@ -124,7 +124,7 @@ quarto preview document.qmd  # Hot-reload
       garder les 3 fichiers typst-template.typ synchronisés
 ```
 
-### Troubleshooting Rapide
+### Швидке усунення проблем
 
 ```
   SYMPTÔME                        CAUSE                    FIX
@@ -140,7 +140,7 @@ quarto preview document.qmd  # Hot-reload
   "Extension not found"            Mauvais répertoire        Vérifier _extensions/ path
 ```
 
-| Component | Version | Role |
+| Компонент | Версія | Роль |
 |-----------|---------|------|
 | **Quarto** | ≥1.4.0 | Оркестрація, розширення, підтримка кількох форматів |
 | **Typst** | 0.13.0 | Сучасна типографіка (замінює LaTeX) |
@@ -148,9 +148,9 @@ quarto preview document.qmd  # Hot-reload
 
 ---
 
-## Setup
+## Налаштування
 
-### Installation
+### Встановлення
 
 **macOS**:
 ```bash
@@ -168,12 +168,12 @@ sudo dpkg -i quarto-1.4.555-linux-amd64.deb
 winget install Posit.Quarto
 ```
 
-**Verify**:
+**Перевірка**:
 ```bash
 quarto --version  # Має бути ≥1.4.0
 ```
 
-### Project Structure
+### Структура проєкту
 
 ```
 project/
@@ -189,7 +189,7 @@ project/
     └── logo.png           # Спільні ресурси
 ```
 
-### Minimal Document
+### Мінімальний документ
 
 Створіть `document.qmd`:
 
@@ -230,9 +230,9 @@ quarto render document.qmd  # Створює document.pdf
 
 ---
 
-## Workflow
+## Воркфлоу
 
-### 1. Content-First Approach
+### 1. Підхід «спочатку контент»
 
 ```
 1. Write content in Markdown (.qmd)
@@ -242,9 +242,9 @@ quarto render document.qmd  # Створює document.pdf
 5. Version control both source and PDF
 ```
 
-### 2. Available YAML Parameters
+### 2. Доступні YAML-параметри
 
-| Parameter | Type | Description | Example |
+| Параметр | Тип | Опис | Приклад |
 |-----------|------|-------------|---------|
 | `title` | string | Головний заголовок | `"Technical Guide"` |
 | `subtitle` | string | Підзаголовок | `"v2.0 Edition"` |
@@ -256,7 +256,7 @@ quarto render document.qmd  # Створює document.pdf
 | `lang` | string | Мова документа | `fr` або `en` |
 | `section-numbering` | string | Формат нумерації розділів | `"1.1"` |
 
-### 3. Markdown Features
+### 3. Можливості Markdown
 
 **Page Breaks (Розриви сторінок)**:
 ```markdown
@@ -288,9 +288,9 @@ function hello(): string {
 
 ---
 
-## Integration with Claude Code
+## Інтеграція з Claude Code
 
-### Using the pdf-generator Skill
+### Використання skill pdf-generator
 
 Викличте навичку (skill) для покрокової генерації PDF:
 
@@ -304,7 +304,7 @@ function hello(): string {
 - Поради щодо вирішення поширених проблем
 - Команди генерації
 
-### Prompt Examples
+### Приклади prompt
 
 **Згенерувати документацію**:
 ```
@@ -328,7 +328,7 @@ Create a Quarto extension for our company's document style:
 - Inter font for body, JetBrains Mono for code
 ```
 
-### With Plan Mode
+### З plan mode
 
 Для складних документів:
 ```
@@ -342,7 +342,7 @@ Plan the structure:
 4. Version management
 ```
 
-### With Hooks
+### З hooks
 
 Автоматично генеруйте PDF після редагувань за допомогою hook'а `PostToolUse`:
 
@@ -362,9 +362,9 @@ Plan the structure:
 
 ---
 
-## Customization
+## Кастомізація
 
-### Custom Template Extension
+### Власне розширення шаблону
 
 Створіть `_extensions/mytemplate/_extension.yml`:
 
@@ -380,7 +380,7 @@ contributes:
         - typst-show.typ
 ```
 
-### Typst Template Variables
+### Змінні шаблону Typst
 
 У файлі `typst-template.typ`:
 
@@ -413,7 +413,7 @@ contributes:
 }
 ```
 
-### Callout Boxes
+### Блоки-виноски (callout)
 
 Визначте в шаблоні:
 
@@ -441,9 +441,9 @@ contributes:
 
 ---
 
-## Troubleshooting
+## Усунення проблем
 
-### Quick Checks
+### Швидкі перевірки
 
 ```bash
 # Verify Quarto
@@ -459,9 +459,9 @@ grep -c '^```' document.qmd
 file -i document.qmd  # Should show utf-8
 ```
 
-### Common Issues
+### Типові проблеми
 
-| Issue | Symptom | Fix |
+| Проблема | Симптом | Виправлення |
 |-------|---------|-----|
 | Вкладені кодові блоки | Вміст виривається з блоку | Використовуйте 4+ бектреки для зовнішнього блоку |
 | Таблиці як код | Сірий фон | Перевірте непарний символ ` ``` ` вище |
@@ -469,7 +469,7 @@ file -i document.qmd  # Should show utf-8
 | Попередження про шрифти | "unknown font family" | Це нормально; використовуються альтернативи |
 | Зламані спецсимволи | `?` або спотворення тексту | Конвертуйте файл у UTF-8 |
 
-### Nested Code Blocks
+### Вкладені блоки коду
 
 **Проблема**: Внутрішній кодовий блок передчасно закриває зовнішній блок.
 
@@ -487,7 +487,7 @@ Outer block continues...
 ````
 `````
 
-### Validation Script
+### Скрипт валідації
 
 ```bash
 #!/bin/bash
@@ -503,7 +503,7 @@ done
 
 ---
 
-## See Also
+## Див. також
 
 - [Quarto Documentation](https://quarto.org/docs/guide/)
 - [Typst Documentation](https://typst.app/docs/)

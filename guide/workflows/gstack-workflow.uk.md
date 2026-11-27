@@ -1,10 +1,10 @@
 ---
-title: "Cognitive Mode Switching"
-description: "A selected path through gstack: challenge demand, review architecture and code, test behavior, ship, and reflect"
+title: "Перемикання когнітивних режимів"
+description: "Відібраний шлях через gstack: поставити під сумнів попит, переглянути архітектуру й код, перевірити поведінку, випустити й підбити підсумки"
 tags: [workflow, skills, planning, review, shipping, browser-automation]
 ---
 
-# Cognitive mode switching
+# Перемикання когнітивних режимів
 
 > **Джерело**: [gstack](https://github.com/garrytan/gstack) від Garry Tan. Ця сторінка добирає шість кроків робочого процесу з більшого пакета skills, що розвивається; актуальний список команд дивіться в репозиторії.
 
@@ -31,9 +31,9 @@ tags: [workflow, skills, planning, review, shipping, browser-automation]
 
 ---
 
-## Six selected gates
+## Шість відібраних гейтів
 
-| Command | Role | Core question | When to switch |
+| Команда | Роль | Ключове питання | Коли перемикатися |
 |---------|------|---------------|----------------|
 | `/plan-ceo-review` | Founder / CEO | "Are we building the right thing?" | When product direction is uncertain |
 | `/plan-eng-review` | Eng manager / tech lead | "How do we make this buildable?" | After direction is locked |
@@ -44,7 +44,7 @@ tags: [workflow, skills, planning, review, shipping, browser-automation]
 
 ---
 
-## The gap this fills: Pre-Implementation strategic gate
+## Прогалина, яку це закриває: стратегічний гейт перед реалізацією
 
 Найважче завдання при роботі з AI-помічником для написання коду — це не сама реалізація. Це питання, яке передує їй: **чи правильну річ ми будуємо?**
 
@@ -66,7 +66,7 @@ Claude Code оптимізований для того, щоб створюва�
 
 ---
 
-## /plan-eng-review: Making the idea buildable
+## /plan-eng-review: як зробити ідею придатною до реалізації
 
 Як тільки напрямок затверджено, когнітивний режим перемикається з продуктової інтуїції на інженерну суворість. `/plan-eng-review` — це місце, де завершується генерація ідей і починається архітектура.
 
@@ -82,7 +82,7 @@ Claude Code оптимізований для того, щоб створюва�
 
 ---
 
-## /review: Paranoid staff engineer mode
+## /review: режим параноїдального staff-інженера
 
 Успішне проходження тестів ще не означає, що гілка безпечна. `/review` створений для пошуку тієї категорії багів, які проходять через CI та все одно потрапляють у production.
 
@@ -100,7 +100,7 @@ Claude Code оптимізований для того, щоб створюва�
 
 ---
 
-## Browser QA: `/qa` and `/browse`
+## Браузерний QA: `/qa` і `/browse`
 
 Актуальний gstack розділяє браузерний драйвер і робочий процес QA. [`/browse`](https://github.com/garrytan/gstack/blob/main/docs/skills.md) відкриває сторінки та перевіряє взаємодії; `/qa` обирає глибину тестування, фіксує докази й може відтворити дефект до виправлення. Для браузера він використовує Aside, якщо той доступний, а інакше власний браузер gstack. Ця сторінка не стверджує, що він швидший за інші браузерні інструменти.
 
@@ -108,7 +108,7 @@ Lean-питання: чи виявляє ця перевірка дефекти 
 
 ---
 
-## Full cycle demo
+## Демо повного циклу
 
 Це ілюстративна послідовність, а не виміряний результат gstack.
 
@@ -159,7 +159,7 @@ Claude: [Runs release checks, then commits, pushes and opens a PR when authorize
 
 ---
 
-## Install
+## Встановлення
 
 ```bash
 # Install globally (~/.claude/skills/)
@@ -177,9 +177,9 @@ cd ~/.claude/skills/gstack && ./setup
 
 ---
 
-## When to use this vs. other workflows
+## Коли використовувати це, а коли інші воркфлоу
 
-| Situation | This workflow | Alternative |
+| Ситуація | Цей воркфлоу | Альтернатива |
 |-----------|---------------|-------------|
 | Complex feature, direction uncertain | `/plan-ceo-review` спочатку | [Spec-First](./spec-first.uk.md) |
 | Direction clear, architecture complex | `/plan-eng-review` | [Plan Pipeline](./plan-pipeline.uk.md) |
@@ -192,7 +192,7 @@ cd ~/.claude/skills/gstack && ./setup
 
 ---
 
-## See also
+## Див. також
 
 - [Plan Pipeline](./plan-pipeline.uk.md) — Автоматизований воркфлоу з 3 команд із навчальним циклом ADR
 - [Plan-Driven Development](./plan-driven.uk.md): Основи планування перед написанням коду

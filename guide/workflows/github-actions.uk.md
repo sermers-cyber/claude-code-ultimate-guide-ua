@@ -1,10 +1,10 @@
 ---
-title: "GitHub Actions Workflows with Claude Code"
-description: "Step-by-step setup for claude-code-action in GitHub Actions: PR code review on mention, automatic review on push, issue triage. Includes permissions config and real YAML examples."
+title: "Воркфлоу GitHub Actions із Claude Code"
+description: "Покрокове налаштування claude-code-action у GitHub Actions: рев'ю PR за згадкою, автоматичне рев'ю при push, тріаж issue. Включає налаштування дозволів і реальні приклади YAML."
 tags: [workflow, ci-cd, github-actions, automation]
 ---
 
-# GitHub Actions workflows з Claude Code
+# Воркфлоу GitHub Actions із Claude Code
 
 > **Confidence**: Tier 1, офіційний Anthropic action (`anthropics/claude-code-action`, 8.5K зірок станом на 2026-07-27, було 6.2k, v1.0).
 
@@ -12,20 +12,20 @@ tags: [workflow, ci-cd, github-actions, automation]
 
 ---
 
-## Table of contents
+## Зміст
 
 1. [TL;DR](#tldr)
-2. [Two models](#two-models)
-3. [Setup](#setup)
-4. [Pattern 1: PR code review on @claude mention](#pattern-1-pr-code-review-on-claude-mention)
-5. [Pattern 2: Automatic PR review on push](#pattern-2-automatic-pr-review-on-push)
-6. [Pattern 3: Issue triage and labeling](#pattern-3-issue-triage-and-labeling)
-7. [Pattern 4: Security-Focused review](#pattern-4-security-focused-review)
-8. [Pattern 5: Scheduled repo maintenance](#pattern-5-scheduled-repo-maintenance)
-9. [Authentication alternatives](#authentication-alternatives)
-10. [Cost control](#cost-control)
-11. [Security checklist](#security-checklist)
-12. [See also](#see-also)
+2. [Дві моделі](#дві-моделі)
+3. [Налаштування](#налаштування)
+4. [Патерн 1: рев'ю PR за згадкою @claude](#патерн-1-ревю-pr-за-згадкою-claude)
+5. [Патерн 2: автоматичне рев'ю PR при push](#патерн-2-автоматичне-ревю-pr-при-push)
+6. [Патерн 3: тріаж і маркування issue](#патерн-3-тріаж-і-маркування-issue)
+7. [Патерн 4: рев'ю з фокусом на безпеку](#патерн-4-ревю-з-фокусом-на-безпеку)
+8. [Патерн 5: планове обслуговування репозиторію](#патерн-5-планове-обслуговування-репозиторію)
+9. [Альтернативи автентифікації](#альтернативи-автентифікації)
+10. [Контроль витрат](#контроль-витрат)
+11. [Контрольний список безпеки](#контрольний-список-безпеки)
+12. [Див. також](#див-також)
 
 ---
 
@@ -56,9 +56,9 @@ jobs:
 
 ---
 
-## Two models
+## Дві моделі
 
-| Model | Trigger | Use case |
+| Модель | Тригер | Випадок використання |
 |-------|---------|----------|
 | **Interactive** | `@claude` mention in PR/issue comment | On-demand reviews, questions, fixes |
 | **Automated** | Push, PR open, schedule, label | Continuous quality gates, triage |
@@ -67,9 +67,9 @@ jobs:
 
 ---
 
-## Setup
+## Налаштування
 
-### Quickstart (30 seconds)
+### Швидкий старт (30 секунд)
 
 У вашому терміналі Claude Code всередині будь-якого проєкту, підключеного до GitHub-репозиторію:
 
@@ -79,7 +79,7 @@ jobs:
 
 Це допоможе вам створити GitHub App, додати `ANTHROPIC_API_KEY` до секретів вашого репозиторію та згенерувати базовий воркфлоу `claude.yml`.
 
-### Manual setup
+### Ручне налаштування
 
 1. Додайте `ANTHROPIC_API_KEY` до секретів вашого GitHub-репозиторію
 2. Створіть `.github/workflows/claude.yml` (див. патерни нижче)
@@ -87,7 +87,7 @@ jobs:
 
 ---
 
-## Pattern 1: PR code review on @claude mention
+## Патерн 1: рев'ю PR за згадкою @claude
 
 Ініційовано людиною. Розробник залишає коментар `@claude review this PR`, і Claude відповідає безпосередньо в обговоренні.
 
@@ -125,7 +125,7 @@ jobs:
 
 ---
 
-## Pattern 2: Automatic PR review on push
+## Патерн 2: автоматичне рев'ю PR при push
 
 Кожен PR отримує рев'ю в момент відкриття або оновлення. Згадка не потрібна.
 
@@ -174,7 +174,7 @@ jobs:
 
 ---
 
-## Pattern 3: Issue triage and labeling
+## Патерн 3: тріаж і маркування issue
 
 Claude читає нові ішью, призначає лейбли та додає структурований коментар сортування.
 
@@ -210,7 +210,7 @@ jobs:
 
 ---
 
-## Pattern 4: Security-Focused review
+## Патерн 4: рев'ю з фокусом на безпеку
 
 Запускається спеціально для PR, що зачіпають чутливі шляхи (auth, payments, config).
 
@@ -254,7 +254,7 @@ jobs:
 
 ---
 
-## Pattern 5: Scheduled repo maintenance
+## Патерн 5: планове обслуговування репозиторію
 
 Щотижнева перевірка стану: запускається без жодного тригера від людини.
 
@@ -292,7 +292,7 @@ jobs:
 
 ---
 
-## Authentication alternatives
+## Альтернативи автентифікації
 
 Наведені вище приклади використовують `ANTHROPIC_API_KEY` безпосередньо. Для команд, які використовують хмарних провайдерів:
 
@@ -323,7 +323,7 @@ jobs:
 
 ---
 
-## Cost control
+## Контроль витрат
 
 Автоматизовані воркфлоу запускаються без участі людини: встановлюйте явні обмеження.
 
@@ -340,7 +340,7 @@ jobs:
 
 **Рекомендації щодо бюджету за патернами:**
 
-| Pattern | Model | Approx. cost / run |
+| Патерн | Модель | Орієнтовна вартість / запуск |
 |---------|-------|--------------------|
 | PR review (medium PR) | Sonnet | $0.05–0.15 |
 | Issue triage | Haiku | $0.01–0.03 |
@@ -364,7 +364,7 @@ jobs:
 
 ---
 
-## Security checklist
+## Контрольний список безпеки
 
 Перед розгортанням у репозиторії команди переконайтеся:
 
@@ -384,7 +384,7 @@ jobs:
 
 ---
 
-## See also
+## Див. також
 
 - [AI Design Patterns: Pipes and Filters](../core/ai-design-patterns.uk.md#pipes-and-filters): `claude -p` як один фільтр у shell- або CI-пайплайні
 - [Monitor, Channels and Safe Delegation to Codex](./monitor-event-delegation.uk.md): безпечний патерн Codex із розділенням на окремі job і чому hosted runner відокремлений від локального Monitor
